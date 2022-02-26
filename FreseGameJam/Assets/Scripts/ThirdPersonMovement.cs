@@ -53,15 +53,34 @@ public class ThirdPersonMovement : MonoBehaviour
             velocity.y = -2f;
         }
 
-        //Jump
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        //States
+        if (GetComponent<StateController>().human)
         {
-            controller.slopeLimit = 100f;
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            //Jump
+            if (Input.GetButtonDown("Jump") && isGrounded)
+            {
+                controller.slopeLimit = 100f;
+                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            }
+
+            //Gravity
+            velocity.y += gravity * Time.deltaTime;
+            controller.Move(velocity * Time.deltaTime);
+        }
+        if (GetComponent<StateController>().frog)
+        {
+            //Jump
+            if (Input.GetButtonDown("Jump") && isGrounded)
+            {
+                controller.slopeLimit = 100f;
+                velocity.y = Mathf.Sqrt(jumpHeight * 10 * -2f * gravity);
+            }
+
+            //Gravity
+            velocity.y += gravity * Time.deltaTime;
+            controller.Move(velocity * Time.deltaTime);
         }
 
-        //Gravity
-        velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
+
     }
 }
