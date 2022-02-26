@@ -20,6 +20,16 @@ public class StateController : MonoBehaviour
     [SerializeField] GameObject frogVisuell;
     [SerializeField] GameObject craneVisuell;
 
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("hit");
+        if (other.gameObject.CompareTag("Crane"))
+        {
+            Debug.Log("hit2");
+            availableCrane = true;
+        }
+    }
+
     private void Start()
     {
         human = true;

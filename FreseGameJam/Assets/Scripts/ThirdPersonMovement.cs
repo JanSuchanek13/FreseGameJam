@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class ThirdPersonMovement : MonoBehaviour
 {
@@ -134,8 +135,13 @@ public class ThirdPersonMovement : MonoBehaviour
             }
 
             //Gravity
-            velocity.y += gravity/10 * Time.deltaTime; //low gravity
+            //float curve = 1 ^ Time.deltaTime;
+            velocity.y = gravity/(3000 * Time.deltaTime); //low gravity
+            
             controller.Move(velocity * Time.deltaTime);
+
+            //velocity.y += gravity/10 * Time.deltaTime; //low gravity
+            //controller.Move(velocity * Time.deltaTime);
         }
 
         
