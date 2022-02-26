@@ -22,12 +22,26 @@ public class ThirdPersonMovement : MonoBehaviour
     public LayerMask groundMask;
     bool isGrounded;
 
-
+    //for Animation
+    public bool idle;
+    public bool walking;
+    public bool falling;
     
 
     // Update is called once per frame
     void Update()
     {
+        // animation
+        if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+        {
+            walking = true; 
+        }
+        else
+        {
+            walking = false;
+            idle = true;
+        }
+
         //Camera and Movement
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
@@ -49,11 +63,22 @@ public class ThirdPersonMovement : MonoBehaviour
         //Check Ground
         //controller = GetComponent<CharacterController>();
 
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        if (isGrounded && velocity.y < 0)
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance * 8, groundMask);
+        if (!isGrounded)
         {
+            falling = true; //animation
+        }
+
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        if (isGrounded && velocity.y < 0) //is falling
+        {
+            falling = false; //animation
             controller.slopeLimit = 45.0f;
-            velocity.y = -2f;
+            velocity.y = -4f;
+        }
+        else
+        {
+            //falling = true; //animation
         }
 
         //States
@@ -65,7 +90,7 @@ public class ThirdPersonMovement : MonoBehaviour
             //Jump
             if (Input.GetButtonDown("Jump") && isGrounded)
             {
-                controller.slopeLimit = 100f;
+                controller.slopeLimit = 80f;
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             }
 
@@ -105,7 +130,7 @@ public class ThirdPersonMovement : MonoBehaviour
             if (Input.GetButtonDown("Jump") && isGrounded)
             {
                 controller.slopeLimit = 50f; //low climp
-                velocity.y = Mathf.Sqrt(jumpHeight/6 * -2f * gravity);  //low jump
+                velocity.y = Mathf.Sqrt(jumpHeight/150 * -2f * gravity);  //low jump
             }
 
             //Gravity
