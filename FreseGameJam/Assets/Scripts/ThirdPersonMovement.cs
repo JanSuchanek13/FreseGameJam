@@ -22,6 +22,9 @@ public class ThirdPersonMovement : MonoBehaviour
     public LayerMask groundMask;
     bool isGrounded;
 
+
+    
+
     // Update is called once per frame
     void Update()
     {
@@ -56,6 +59,9 @@ public class ThirdPersonMovement : MonoBehaviour
         //States
         if (GetComponent<StateController>().human)
         {
+            //Move 
+            speed = 6f;
+
             //Jump
             if (Input.GetButtonDown("Jump") && isGrounded)
             {
@@ -69,18 +75,46 @@ public class ThirdPersonMovement : MonoBehaviour
         }
         if (GetComponent<StateController>().frog)
         {
+            //Move 
+            speed = 6f;
+
             //Jump
             if (Input.GetButtonDown("Jump") && isGrounded)
             {
                 controller.slopeLimit = 100f;
-                velocity.y = Mathf.Sqrt(jumpHeight * 10 * -2f * gravity);
+                velocity.y = Mathf.Sqrt(jumpHeight * 10 * -2f * gravity); //high jump
             }
 
             //Gravity
             velocity.y += gravity * Time.deltaTime;
             controller.Move(velocity * Time.deltaTime);
         }
+        if (GetComponent<StateController>().crane)
+        {
+            //Move
+            if (isGrounded && velocity.y < 0)
+            {
+                speed = 1f; //walk speed
+            }
+            else
+            {
+                speed = 6f; //fly speed
+            }
 
+            //Jump
+            if (Input.GetButtonDown("Jump") && isGrounded)
+            {
+                controller.slopeLimit = 50f; //low climp
+                velocity.y = Mathf.Sqrt(jumpHeight/6 * -2f * gravity);  //low jump
+            }
 
+            //Gravity
+            velocity.y += gravity/10 * Time.deltaTime; //low gravity
+            controller.Move(velocity * Time.deltaTime);
+        }
+
+        
     }
+
+    
 }
