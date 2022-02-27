@@ -22,10 +22,10 @@ public class StateController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("hit");
+        
         if (other.gameObject.CompareTag("Crane"))
         {
-            Debug.Log("hit2");
+            Debug.Log("hit:Crane");
             availableCrane = true;
         }
     }

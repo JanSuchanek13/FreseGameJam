@@ -17,6 +17,7 @@ public class ThirdPersonMovement : MonoBehaviour
     Vector3 velocity;
     public float gravity = -9.81f;
     public float jumpHeight = 3f;
+    public int flyCurve = 3000;
 
     public Transform groundCheck;
     public float groundDistance = 0.4f;
@@ -120,7 +121,7 @@ public class ThirdPersonMovement : MonoBehaviour
             //Move
             if (isGrounded && velocity.y < 0)
             {
-                speed = 1f; //walk speed
+                speed = 0f; //walk speed
             }
             else
             {
@@ -136,7 +137,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
             //Gravity
             //float curve = 1 ^ Time.deltaTime;
-            velocity.y = gravity/(3000 * Time.deltaTime); //low gravity
+            velocity.y = gravity/(flyCurve * Time.deltaTime); //low gravity
             
             controller.Move(velocity * Time.deltaTime);
 
