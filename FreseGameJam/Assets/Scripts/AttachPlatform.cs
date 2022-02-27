@@ -37,7 +37,12 @@ public class AttachPlatform : MonoBehaviour
 	{
 		// Returns if no points have been set up
 		if (points.Length == 0)
+        {
+			
 			return;
+		}
+			
+
 
 		// Set the agent to go to the currently selected destination.
 		agent.destination = points[destPoint].position;
@@ -45,6 +50,18 @@ public class AttachPlatform : MonoBehaviour
 		// Choose the next point in the array as the destination,
 		// cycling to the start if necessary.
 		destPoint = (destPoint + 1) % points.Length;
+
+		if (destPoint == 1)
+        {
+			gameObject.transform.GetChild(0).position += new Vector3 (0,-0.6f,0);
+			//gameObject.GetComponent<MeshRenderer>().enabled = false;
+			//gameObject.GetComponent<BoxCollider>().enabled = false;
+			Debug.Log("ende");
+		}
+		else if(destPoint == 2)
+		{
+			gameObject.transform.GetChild(0).position += new Vector3(0, +0.6f, 0);
+		}
 	}
 
 	void FixedUpdate()
@@ -63,6 +80,7 @@ public class AttachPlatform : MonoBehaviour
 		// close to the current one.
 		if (!agent.pathPending && agent.remainingDistance < 0.5f)
 			GotoNextPoint();
+
 	}
 	private void OnTriggerEnter(Collider other)
 	{
@@ -72,8 +90,18 @@ public class AttachPlatform : MonoBehaviour
 	private void OnTriggerStay(Collider other)
 	{
 		if (other.tag == "Player")
-			cc.Move(rb.velocity * Time.deltaTime);
+        {
+			//cc.Move(rb.velocity * Time.deltaTime);
+			//cc.Move(transform.position.normalized * Time.deltaTime*3.5f );
+			other.transform.parent = transform;
+		}
+
+	}
+	private void OnTriggerExit(Collider other)
+	{
+		if (other.tag == "Player")
+			other.transform.parent = null;
 	}
 
-	
+
 }
