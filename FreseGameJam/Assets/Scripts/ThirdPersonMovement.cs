@@ -92,7 +92,7 @@ public class ThirdPersonMovement : MonoBehaviour
             //Jump
             if (Input.GetButtonDown("Jump") && isGrounded)
             {
-                controller.slopeLimit = 80f;
+                controller.slopeLimit = 45f;
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             }
 
