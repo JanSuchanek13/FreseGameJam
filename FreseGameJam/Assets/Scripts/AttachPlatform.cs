@@ -5,6 +5,10 @@ using UnityEngine.AI;
 
 public class AttachPlatform : MonoBehaviour
 {
+	private IEnumerator coroutine;
+	public int countdown = 3;
+	bool isStanding;
+
 	public Transform startPoint;
 	public Transform endPoint;
 	public float travelTime;
@@ -15,6 +19,8 @@ public class AttachPlatform : MonoBehaviour
 	public Transform[] points;
 	private int destPoint = 0;
 	private NavMeshAgent agent;
+
+	public GameObject[] Fire;
 
 	private void Start()
 	{
@@ -84,8 +90,16 @@ public class AttachPlatform : MonoBehaviour
 	}
 	private void OnTriggerEnter(Collider other)
 	{
+		isStanding = true;
+		StartCoroutine(moveCountDown());
+
 		if (other.tag == "Player")
 			cc = other.GetComponent<CharacterController>();
+
+		foreach (GameObject i in Fire)
+        {
+			i.SetActive(true);
+        }
 	}
 	private void OnTriggerStay(Collider other)
 	{
@@ -99,9 +113,27 @@ public class AttachPlatform : MonoBehaviour
 	}
 	private void OnTriggerExit(Collider other)
 	{
+		isStanding = false;
+
 		if (other.tag == "Player")
 			other.transform.parent = null;
+
+		foreach (GameObject i in Fire)
+		{
+			i.SetActive(false);
+		}
 	}
 
+	private IEnumerator moveCountDown()
+    {
 
+
+		yield return new WaitForSeconds(countdown);
+		if (isStanding)
+        {
+			gameObject.transform.GetChild(0).position += new Vector3(0, -0.6f, 0);
+			yield return new WaitForSeconds(countdown);
+			gameObject.transform.GetChild(0).position += new Vector3(0, +0.6f, 0);
+		}
+	}
 }
