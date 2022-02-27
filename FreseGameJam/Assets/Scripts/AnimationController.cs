@@ -7,6 +7,9 @@ public class AnimationController : MonoBehaviour
     Animator animator;
     ThirdPersonMovement Movement;
 
+    [SerializeField] AudioSource walking_Sound;
+    [SerializeField] AudioSource falling_Sound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +25,10 @@ public class AnimationController : MonoBehaviour
     {
         
         animator.SetBool("isWalking", Movement.walking);
+        walking_Sound.enabled = Movement.walking;
+
         animator.SetBool("isFalling", Movement.falling);
+        falling_Sound.enabled = Movement.falling;
         
     }
 }

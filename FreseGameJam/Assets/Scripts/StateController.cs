@@ -20,6 +20,8 @@ public class StateController : MonoBehaviour
     [SerializeField] GameObject frogVisuell;
     [SerializeField] GameObject craneVisuell;
 
+    [SerializeField] AudioSource PickUp_Sound;
+
     private void OnTriggerEnter(Collider other)
     {
         
@@ -27,6 +29,8 @@ public class StateController : MonoBehaviour
         {
             Debug.Log("hit:Crane");
             availableCrane = true;
+            PickUp_Sound.enabled = true;
+            Destroy(other);
         }
     }
 
