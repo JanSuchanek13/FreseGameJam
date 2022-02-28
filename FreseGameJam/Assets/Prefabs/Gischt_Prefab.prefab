@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5588455262212639831}
   - component: {fileID: 8800585519300330482}
   - component: {fileID: 6756809766972372792}
+  - component: {fileID: 8741886017023358869}
   m_Layer: 0
   m_Name: Gischt_Prefab
   m_TagString: Untagged
@@ -81,3 +82,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8741886017023358869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5099762387367007981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deb8ca8a2b597f244a55f5d427254c4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startTime: 1
+  repetitionTime: 5
