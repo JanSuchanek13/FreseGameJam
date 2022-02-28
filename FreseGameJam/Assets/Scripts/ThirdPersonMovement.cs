@@ -14,7 +14,7 @@ public class ThirdPersonMovement : MonoBehaviour
     float turnSmoothVelocity;
 
 
-    Vector3 velocity;
+    public Vector3 velocity;
     public float gravity = -9.81f;
     public float jumpHeight = 3f;
     public int flyCurve = 3000;
