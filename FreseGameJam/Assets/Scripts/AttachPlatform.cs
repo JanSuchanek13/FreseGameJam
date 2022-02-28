@@ -96,11 +96,13 @@ public class AttachPlatform : MonoBehaviour
 	}
 	private void OnTriggerEnter(Collider other)
 	{
-		isStanding = true;
-		StartCoroutine(moveCountDown());
+		
 
 		if (other.tag == "Player")
         {
+			isStanding = true;
+			StartCoroutine(moveCountDown());
+
 			cc = other.GetComponent<CharacterController>();
 
 			foreach (GameObject i in Fire)
