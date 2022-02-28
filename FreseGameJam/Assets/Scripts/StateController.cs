@@ -65,7 +65,7 @@ public class StateController : MonoBehaviour
                         StartCoroutine(changeModell(i));
                         break;
 
-                    case 2:
+                    case 3:
                         if (availableFrog)
                         {
                             ball = false;
@@ -76,7 +76,7 @@ public class StateController : MonoBehaviour
                         }
                         break;
 
-                    case 3:
+                    case 2:
                         if (availableCrane)
                         {
                             ball = false;
@@ -109,12 +109,12 @@ public class StateController : MonoBehaviour
                 ballVisuell.SetActive(false);
                 break;
 
-            case 2:
+            case 3:
                 frogVisuell.SetActive(true);
                 ballVisuell.SetActive(false);
                 break;
 
-            case 3:
+            case 2:
                 craneVisuell.SetActive(true);
                 ballVisuell.SetActive(false);
                 break;

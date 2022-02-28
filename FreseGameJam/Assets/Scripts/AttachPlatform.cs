@@ -63,10 +63,16 @@ public class AttachPlatform : MonoBehaviour
 			//gameObject.GetComponent<MeshRenderer>().enabled = false;
 			//gameObject.GetComponent<BoxCollider>().enabled = false;
 			Debug.Log("ende");
+			foreach (GameObject i in Fire)
+			{
+				i.SetActive(true);
+			}
+			StartCoroutine(submerge());
 		}
 		else if(destPoint == 2)
 		{
 			gameObject.transform.GetChild(0).position += new Vector3(0, +0.6f, 0);
+			
 		}
 	}
 
@@ -94,12 +100,17 @@ public class AttachPlatform : MonoBehaviour
 		StartCoroutine(moveCountDown());
 
 		if (other.tag == "Player")
+        {
 			cc = other.GetComponent<CharacterController>();
 
-		foreach (GameObject i in Fire)
-        {
-			i.SetActive(true);
-        }
+			foreach (GameObject i in Fire)
+			{
+				i.SetActive(true);
+			}
+		}
+
+
+		
 	}
 	private void OnTriggerStay(Collider other)
 	{
@@ -116,12 +127,16 @@ public class AttachPlatform : MonoBehaviour
 		isStanding = false;
 
 		if (other.tag == "Player")
+        {
 			other.transform.parent = null;
-
-		foreach (GameObject i in Fire)
-		{
-			i.SetActive(false);
+			foreach (GameObject i in Fire)
+			{
+				i.SetActive(false);
+			}
 		}
+			
+
+		
 	}
 
 	private IEnumerator moveCountDown()
@@ -134,6 +149,15 @@ public class AttachPlatform : MonoBehaviour
 			gameObject.transform.GetChild(0).position += new Vector3(0, -0.6f, 0);
 			yield return new WaitForSeconds(countdown);
 			gameObject.transform.GetChild(0).position += new Vector3(0, +0.6f, 0);
+		}
+	}
+
+	private IEnumerator submerge()
+    {
+		yield return new WaitForSeconds(1f);
+		foreach (GameObject i in Fire)
+		{
+			i.SetActive(false);
 		}
 	}
 }
