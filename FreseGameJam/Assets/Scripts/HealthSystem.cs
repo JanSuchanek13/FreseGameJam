@@ -44,7 +44,7 @@ public class HealthSystem : MonoBehaviour
             Cam.SetActive(false);
             GetComponent<ThirdPersonMovement>().gravity = gravity / 10;
             yield return new WaitForSeconds(1f);
-            gameObject.transform.position = new Vector3(0, 0, 0);//+ RespawnPoint;
+            gameObject.transform.position = new Vector3(0, -3, 0) + RespawnPoint;
             Cam.SetActive(true);
             GetComponent<ThirdPersonMovement>().gravity = gravity;
             inUse = false;

@@ -30,7 +30,14 @@ public class StateController : MonoBehaviour
             Debug.Log("hit:Crane");
             availableCrane = true;
             PickUp_Sound.enabled = true;
-            Destroy(other);
+            Destroy(other.gameObject, 1f);
+        }
+        if (other.gameObject.CompareTag("Crown"))
+        {
+            Debug.Log("hit:Crown");
+            //PickUp_Sound.enabled = true;
+            // PickUp_Sound.enabled = false;
+            Destroy(other.gameObject);
         }
     }
 
