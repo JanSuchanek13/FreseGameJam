@@ -7,6 +7,7 @@ public class AttachPlatform : MonoBehaviour
 {
 	private IEnumerator coroutine;
 	public int countdown = 3;
+	public float resetSpeed = 8;
 	bool isStanding;
 
 	public Transform startPoint;
@@ -20,6 +21,9 @@ public class AttachPlatform : MonoBehaviour
 	private int destPoint = 0;
 	private NavMeshAgent agent;
 	private float obstacleAvoidance;
+	private ObstacleAvoidanceType type;
+	private float height;
+	private float speed;
 
 	public GameObject[] Fire;
 
@@ -30,6 +34,9 @@ public class AttachPlatform : MonoBehaviour
 		agent = GetComponent<NavMeshAgent>();
 
 		obstacleAvoidance = agent.radius;
+		type = agent.obstacleAvoidanceType;
+		height = agent.height;
+		speed = agent.speed;
 		//Debug.Log(obstacleAvoidance);
 
 
@@ -71,11 +78,17 @@ public class AttachPlatform : MonoBehaviour
 			}
 			StartCoroutine(submerge());
 			agent.radius = .01f;
+			agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+			agent.height = 0;
+			agent.speed = resetSpeed;
 		}
 		else if(destPoint == 2)
 		{
 			gameObject.transform.GetChild(0).position += new Vector3(0, +0.6f, 0);
 			agent.radius = obstacleAvoidance;
+			agent.obstacleAvoidanceType = type;
+			agent.height = height;
+			agent.speed = speed;
 		}
 	}
 
