@@ -19,6 +19,7 @@ public class AttachPlatform : MonoBehaviour
 	public Transform[] points;
 	private int destPoint = 0;
 	private NavMeshAgent agent;
+	private float obstacleAvoidance;
 
 	public GameObject[] Fire;
 
@@ -28,7 +29,8 @@ public class AttachPlatform : MonoBehaviour
 
 		agent = GetComponent<NavMeshAgent>();
 
-
+		obstacleAvoidance = agent.radius;
+		//Debug.Log(obstacleAvoidance);
 
 
 		// Disabling auto-braking allows for continuous movement
@@ -68,11 +70,12 @@ public class AttachPlatform : MonoBehaviour
 				i.SetActive(true);
 			}
 			StartCoroutine(submerge());
+			agent.radius = .01f;
 		}
 		else if(destPoint == 2)
 		{
 			gameObject.transform.GetChild(0).position += new Vector3(0, +0.6f, 0);
-			
+			agent.radius = obstacleAvoidance;
 		}
 	}
 
