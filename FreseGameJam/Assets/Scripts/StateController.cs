@@ -21,6 +21,8 @@ public class StateController : MonoBehaviour
     [SerializeField] GameObject craneVisuell;
 
     [SerializeField] AudioSource PickUp_Sound;
+    [SerializeField] AudioSource PickUp_Sound2;
+    [SerializeField] AudioSource Friend_Sound;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -29,15 +31,31 @@ public class StateController : MonoBehaviour
         {
             Debug.Log("hit:Crane");
             availableCrane = true;
-            PickUp_Sound.enabled = true;
-            Destroy(other.gameObject, 1f);
+            PickUp_Sound2.enabled = true;
+            Destroy(other.gameObject, .3f);
+        }
+        if (other.gameObject.CompareTag("Frog"))
+        {
+            Debug.Log("hit:Frog");
+            availableFrog = true;
+            PickUp_Sound2.enabled = true;
+            Destroy(other.gameObject, .3f);
         }
         if (other.gameObject.CompareTag("Crown"))
         {
             Debug.Log("hit:Crown");
+            PickUp_Sound.enabled = true;
             //PickUp_Sound.enabled = true;
             // PickUp_Sound.enabled = false;
-            Destroy(other.gameObject);
+            Destroy(other.gameObject, 1f);
+        }
+        if (other.gameObject.CompareTag("Friend"))
+        {
+            Debug.Log("hit:Friend");
+            Friend_Sound.enabled = true;
+            //PickUp_Sound.enabled = true;
+            // PickUp_Sound.enabled = false;
+            //Destroy(other.gameObject);
         }
     }
 
