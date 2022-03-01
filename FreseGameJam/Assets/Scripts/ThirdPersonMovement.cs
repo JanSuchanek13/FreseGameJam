@@ -103,7 +103,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if (GetComponent<StateController>().frog)
         {
             //Move 
-            speed = 1f;
+            speed = 6f;
 
             //Jump
             if (Input.GetButtonDown("Jump") && isGrounded)
