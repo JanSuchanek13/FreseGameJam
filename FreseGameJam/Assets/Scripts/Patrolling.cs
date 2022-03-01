@@ -10,6 +10,9 @@ public class Patrolling : MonoBehaviour
     private int destPoint = 0;
     private NavMeshAgent agent;
     bool ReachedTarget = false;
+    [SerializeField] GameObject _turnOffElements;
+    [SerializeField] GameObject _turnOnElements;
+
 
 
 
@@ -66,6 +69,8 @@ public class Patrolling : MonoBehaviour
         {
             ReachedTarget = true;
             Debug.Log("I reached my destination!!!!");
+            _turnOffElements.SetActive(false);
+            _turnOnElements.SetActive(true);
         }
 
     }
