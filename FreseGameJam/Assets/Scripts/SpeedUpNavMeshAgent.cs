@@ -7,7 +7,13 @@ public class SpeedUpNavMeshAgent : MonoBehaviour
 {
 
     private IEnumerator coroutine;
+    private float speed;
 
+
+    private void Start()
+    {
+        speed = gameObject.GetComponent<NavMeshAgent>().speed;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -27,13 +33,13 @@ public class SpeedUpNavMeshAgent : MonoBehaviour
     {
         gameObject.GetComponent<NavMeshAgent>().speed = 10;
         yield return new WaitForSeconds(2f);
-        gameObject.GetComponent<NavMeshAgent>().speed = 1;
+        gameObject.GetComponent<NavMeshAgent>().speed = speed;
     }
 
     public IEnumerator SlowDown()
     {
         gameObject.GetComponent<NavMeshAgent>().speed = 0.01f;
         yield return new WaitForSeconds(5f);
-        gameObject.GetComponent<NavMeshAgent>().speed = 1;
+        gameObject.GetComponent<NavMeshAgent>().speed = speed;
     }
 }
