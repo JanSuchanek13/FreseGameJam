@@ -10,6 +10,16 @@ public class HealthSystem : MonoBehaviour
     Vector3 RespawnPoint;
     bool inUse;
 
+    GameObject Cam;
+    float gravity;
+
+    private void Start()
+    {
+        Cam = GetComponentInChildren<CinemachineFreeLook>().gameObject;
+
+        gravity = GetComponent<ThirdPersonMovement>().gravity;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Checkpoint"))
@@ -25,10 +35,7 @@ public class HealthSystem : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        
-    }
+    
 
     private IEnumerator deadAndRespawn()
     {
@@ -36,11 +43,10 @@ public class HealthSystem : MonoBehaviour
 
         if (!inUse)
         {
+            GameObject.Find("riverBoat_Friend_Fire").GetComponent<SpeedUpNavMeshAgent>().StopForDead();
             inUse = true;
             Debug.Log(RespawnPoint);
-            GameObject Cam = GetComponentInChildren<CinemachineFreeLook>().gameObject;
-
-            float gravity = GetComponent<ThirdPersonMovement>().gravity;
+           
             Cam.SetActive(false);
             GetComponent<ThirdPersonMovement>().gravity = gravity / 10;
             yield return new WaitForSeconds(1f);

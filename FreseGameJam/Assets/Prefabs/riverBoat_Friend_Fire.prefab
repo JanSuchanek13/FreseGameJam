@@ -262,6 +262,8 @@ GameObject:
   - component: {fileID: 2052718164548843883}
   - component: {fileID: 2052718164548843796}
   - component: {fileID: 2052718164548843881}
+  - component: {fileID: 6459930878049463726}
+  - component: {fileID: 676716786185579869}
   m_Layer: 0
   m_Name: riverBoat_Friend_Fire
   m_TagString: Untagged
@@ -406,6 +408,31 @@ MonoBehaviour:
   points:
   - {fileID: 2158319237748356676}
   - {fileID: 3844070334449793663}
+--- !u!135 &6459930878049463726
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1206350738844784832}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 3.6
+  m_Center: {x: -7.096883e-10, y: 0.5979337, z: 0.023813186}
+--- !u!114 &676716786185579869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1206350738844784832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a66ff88a975161e4a9ab7a8a0e0cfb5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1446566758844063673
 GameObject:
   m_ObjectHideFlags: 0

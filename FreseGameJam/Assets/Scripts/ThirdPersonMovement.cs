@@ -72,7 +72,7 @@ public class ThirdPersonMovement : MonoBehaviour
         }
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        if (isGrounded && velocity.y < 0) //is falling
+        if (isGrounded && velocity.y < 0.5) //is falling
         {
             falling = false; //animation
             controller.slopeLimit = 45.0f;
@@ -103,7 +103,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if (GetComponent<StateController>().frog)
         {
             //Move 
-            speed = 6f;
+            speed = 1f;
 
             //Jump
             if (Input.GetButtonDown("Jump") && isGrounded)
