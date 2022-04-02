@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class LevelScript : MonoBehaviour
 {
+    float[] timer = new float[3];
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
@@ -16,6 +18,10 @@ public class LevelScript : MonoBehaviour
 
     public void Pass()
     {
+        
+
+
+        //safe level
         int currentLevel = SceneManager.GetActiveScene().buildIndex;
 
         if (currentLevel >= PlayerPrefs.GetInt("levelIsUnlocked"))
@@ -24,6 +30,11 @@ public class LevelScript : MonoBehaviour
         }
 
         Debug.Log("LEVEL" + PlayerPrefs.GetInt("levelIsUnlocked") + " UNLOCKED");
+
+
+        //safe Time
+        timer[(currentLevel - 2)] = PlayerPrefs.GetFloat("timer" + (currentLevel - 2));
+        PlayerPrefs.SetFloat("timer" + (currentLevel - 2), Time.timeSinceLevelLoad);
 
     }
 }

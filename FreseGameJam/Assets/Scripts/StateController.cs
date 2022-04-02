@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StateController : MonoBehaviour
 {
+    int[] crowns = new int[3];
+
     public bool availableFrog;
     public bool availableCrane;
 
@@ -44,10 +47,16 @@ public class StateController : MonoBehaviour
         if (other.gameObject.CompareTag("Crown"))
         {
             Debug.Log("hit:Crown");
+
+            int currentLevel = SceneManager.GetActiveScene().buildIndex;
+            crowns[(currentLevel - 2)] = PlayerPrefs.GetInt("crowns" + (currentLevel-2));
+            PlayerPrefs.SetInt("crowns"+ (currentLevel - 2), crowns[(currentLevel - 2)] + 1);
+            Debug.Log(PlayerPrefs.GetInt("crowns"));
+
             PickUp_Sound.enabled = true;
             //PickUp_Sound.enabled = true;
             // PickUp_Sound.enabled = false;
-            Destroy(other.gameObject, 1f);
+            Destroy(other.gameObject);
         }
         if (other.gameObject.CompareTag("Friend"))
         {
