@@ -18,6 +18,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public float gravity = -9.81f;
     public float jumpHeight = 3f;
     public int flyCurve = 3000;
+    public float capricornSpeed = 25;
 
     public Transform groundCheck;
     public float groundDistance = 0.4f;
@@ -28,7 +29,15 @@ public class ThirdPersonMovement : MonoBehaviour
     public bool idle;
     public bool walking;
     public bool falling;
-    
+
+    //for Lama Shoot
+    [Header("Lama Shoot Stats:")]
+    public float bulletSpeed = 10;
+    [SerializeField] Rigidbody bulletType;
+    private Quaternion restingPosition;
+    [Header("Shoot Sounds:")]
+    [SerializeField] AudioSource[] arrayOfGun_Sounds;
+
 
     // Update is called once per frame
     void Update()
@@ -147,7 +156,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if (GetComponent<StateController>().capricorn)
         {
             //Move 
-            speed = 25f;
+            speed = capricornSpeed;
 
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
@@ -164,9 +173,47 @@ public class ThirdPersonMovement : MonoBehaviour
             velocity.y += gravity * Time.deltaTime;
             controller.Move(velocity * Time.deltaTime);
         }
+        if (GetComponent<StateController>().lama)
+        {
+            //Move 
+            speed = 4f;
+
+            //Jump
+            if (Input.GetButtonDown("Jump") && isGrounded)
+            {
+                controller.slopeLimit = 45f;
+                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            }
+
+            if (Input.GetButtonDown("Fire1"))
+            {
+                Debug.Log("fire");
+                LamaShoot();
+            }
+            //Gravity
+            velocity.y += gravity * Time.deltaTime;
+            controller.Move(velocity * Time.deltaTime);
+        }
 
 
     }
 
     
+    void LamaShoot()
+    {
+        /*
+        if (arrayOfGun_Sounds.Length == 0)
+        {
+            //Debug.Log("trying to play fire sound, why tho");
+            AudioSource gunSound = arrayOfGun_Sounds[UnityEngine.Random.Range(0, arrayOfGun_Sounds.Length)];
+            gunSound.pitch = UnityEngine.Random.Range(1, 2);
+            gunSound.Play();
+        }
+        */
+        //restingPosition = transform.rotation; // needed to reset gun
+        //transform.Rotate(new Vector3(1, 1, 0), UnityEngine.Random.Range(-8f, 8f)); // spray randomly
+        Rigidbody bulletClone = (Rigidbody)Instantiate(bulletType, transform.position, transform.rotation);
+        bulletClone.velocity = transform.forward * bulletSpeed;
+        //transform.rotation = restingPosition; // reset gun
+    }
 }

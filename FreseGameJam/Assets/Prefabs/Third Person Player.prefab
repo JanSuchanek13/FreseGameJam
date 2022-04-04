@@ -204,6 +204,7 @@ MonoBehaviour:
   gravity: -19.62
   jumpHeight: 1
   flyCurve: 3000
+  capricornSpeed: 25
   groundCheck: {fileID: 7262134897974771788}
   groundDistance: 0.4
   groundMask:
@@ -212,6 +213,9 @@ MonoBehaviour:
   idle: 0
   walking: 0
   falling: 0
+  bulletSpeed: 10
+  bulletType: {fileID: 4609266454101518932, guid: 176290e6800cb004181efbbbe36c0770, type: 3}
+  arrayOfGun_Sounds: []
 --- !u!114 &2243296793475462356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,16 +231,19 @@ MonoBehaviour:
   availableFrog: 1
   availableCrane: 1
   availableCapricorn: 1
+  availableLama: 1
   ball: 0
   human: 0
   frog: 0
   crane: 0
   capricorn: 0
+  lama: 0
   ballVisuell: {fileID: 4378348416847723249}
   humanVisuell: {fileID: 1801212013158836726}
   frogVisuell: {fileID: 3575536740123788116}
   craneVisuell: {fileID: 2608153464421334490}
   capricornVisuell: {fileID: 3575536740123788116}
+  lamaVisuell: {fileID: 4947666415012696254}
   PickUp_Sound: {fileID: 6680773262417685388}
   PickUp_Sound2: {fileID: 336891834393652833}
   Friend_Sound: {fileID: 9127435948493354695}

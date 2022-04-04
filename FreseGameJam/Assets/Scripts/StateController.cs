@@ -10,12 +10,14 @@ public class StateController : MonoBehaviour
     public bool availableFrog;
     public bool availableCrane;
     public bool availableCapricorn;
+    public bool availableLama;
 
     public bool ball;
     public bool human = true;
     public bool frog;
     public bool crane;
     public bool capricorn;
+    public bool lama;
     private KeyCode[] keyCodes = new KeyCode[] { KeyCode.Alpha0, KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5, KeyCode.Alpha6, KeyCode.Alpha7, KeyCode.Alpha8, KeyCode.Alpha9 };
 
 
@@ -25,6 +27,8 @@ public class StateController : MonoBehaviour
     [SerializeField] GameObject frogVisuell;
     [SerializeField] GameObject craneVisuell;
     [SerializeField] GameObject capricornVisuell;
+    [SerializeField] GameObject lamaVisuell;
+
 
     [SerializeField] AudioSource PickUp_Sound;
     [SerializeField] AudioSource PickUp_Sound2;
@@ -132,6 +136,19 @@ public class StateController : MonoBehaviour
                         }
                         break;
 
+                    case 5:
+                        if (availableLama)
+                        {
+                            ball = false;
+                            human = false;
+                            frog = false;
+                            crane = false;
+                            capricorn = false;
+                            lama = true;
+                            StartCoroutine(changeModell(i));
+                        }
+                        break;
+
                     default:
                         break;
                 }
@@ -147,6 +164,7 @@ public class StateController : MonoBehaviour
         frogVisuell.SetActive(false);
         craneVisuell.SetActive(false);
         capricornVisuell.SetActive(false);
+        lamaVisuell.SetActive(false);
 
 
         //change to new form
@@ -170,6 +188,11 @@ public class StateController : MonoBehaviour
 
             case 4:
                 capricornVisuell.SetActive(true);
+                ballVisuell.SetActive(false);
+                break;
+
+            case 5:
+                lamaVisuell.SetActive(true);
                 ballVisuell.SetActive(false);
                 break;
 
