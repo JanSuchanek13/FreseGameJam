@@ -9,11 +9,13 @@ public class StateController : MonoBehaviour
 
     public bool availableFrog;
     public bool availableCrane;
+    public bool availableCapricorn;
 
     public bool ball;
     public bool human = true;
     public bool frog;
     public bool crane;
+    public bool capricorn;
     private KeyCode[] keyCodes = new KeyCode[] { KeyCode.Alpha0, KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5, KeyCode.Alpha6, KeyCode.Alpha7, KeyCode.Alpha8, KeyCode.Alpha9 };
 
 
@@ -22,6 +24,7 @@ public class StateController : MonoBehaviour
     [SerializeField] GameObject humanVisuell;
     [SerializeField] GameObject frogVisuell;
     [SerializeField] GameObject craneVisuell;
+    [SerializeField] GameObject capricornVisuell;
 
     [SerializeField] AudioSource PickUp_Sound;
     [SerializeField] AudioSource PickUp_Sound2;
@@ -89,6 +92,7 @@ public class StateController : MonoBehaviour
                         human = true;
                         frog = false;
                         crane = false;
+                        capricorn = false;
                         StartCoroutine(changeModell(i));
                         break;
 
@@ -99,6 +103,7 @@ public class StateController : MonoBehaviour
                             human = false;
                             frog = true;
                             crane = false;
+                            capricorn = false;
                             StartCoroutine(changeModell(i));
                         }
                         break;
@@ -110,6 +115,19 @@ public class StateController : MonoBehaviour
                             human = false;
                             frog = false;
                             crane = true;
+                            capricorn = false;
+                            StartCoroutine(changeModell(i));
+                        }
+                        break;
+
+                    case 4:
+                        if (availableCapricorn)
+                        {
+                            ball = false;
+                            human = false;
+                            frog = false;
+                            crane = false;
+                            capricorn = true;
                             StartCoroutine(changeModell(i));
                         }
                         break;
@@ -123,11 +141,15 @@ public class StateController : MonoBehaviour
 
     private IEnumerator changeModell(int state)
     {
+        //change to ball
         ballVisuell.SetActive(true);
         humanVisuell.SetActive(false);
         frogVisuell.SetActive(false);
         craneVisuell.SetActive(false);
+        capricornVisuell.SetActive(false);
 
+
+        //change to new form
         yield return new WaitForSeconds(.5f);
         switch (state)
         {
@@ -143,6 +165,11 @@ public class StateController : MonoBehaviour
 
             case 2:
                 craneVisuell.SetActive(true);
+                ballVisuell.SetActive(false);
+                break;
+
+            case 4:
+                capricornVisuell.SetActive(true);
                 ballVisuell.SetActive(false);
                 break;
 

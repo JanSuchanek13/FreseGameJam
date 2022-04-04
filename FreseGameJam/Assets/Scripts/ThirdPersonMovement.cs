@@ -144,8 +144,28 @@ public class ThirdPersonMovement : MonoBehaviour
             //velocity.y += gravity/10 * Time.deltaTime; //low gravity
             //controller.Move(velocity * Time.deltaTime);
         }
+        if (GetComponent<StateController>().capricorn)
+        {
+            //Move 
+            speed = 25f;
 
-        
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            controller.Move(moveDir.normalized * speed * Time.deltaTime);
+
+            //Jump
+            if (Input.GetButtonDown("Jump") && isGrounded)
+            {
+                controller.slopeLimit = 100f;
+                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            }
+
+            //Gravity
+            velocity.y += gravity * Time.deltaTime;
+            controller.Move(velocity * Time.deltaTime);
+        }
+
+
     }
 
     

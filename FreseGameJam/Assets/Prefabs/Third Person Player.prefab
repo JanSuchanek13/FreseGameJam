@@ -226,14 +226,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   availableFrog: 1
   availableCrane: 1
+  availableCapricorn: 1
   ball: 0
   human: 0
   frog: 0
   crane: 0
+  capricorn: 0
   ballVisuell: {fileID: 4378348416847723249}
   humanVisuell: {fileID: 1801212013158836726}
   frogVisuell: {fileID: 3575536740123788116}
   craneVisuell: {fileID: 2608153464421334490}
+  capricornVisuell: {fileID: 3575536740123788116}
   PickUp_Sound: {fileID: 6680773262417685388}
   PickUp_Sound2: {fileID: 336891834393652833}
   Friend_Sound: {fileID: 9127435948493354695}
@@ -1325,7 +1328,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8946342515335490470}
-  m_LocalRotation: {x: 0.07490254, y: -0.82789755, z: 0.11398286, w: 0.5440434}
+  m_LocalRotation: {x: 0.07490252, y: -0.82789755, z: 0.11398285, w: 0.5440435}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
