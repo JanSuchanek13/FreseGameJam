@@ -7,7 +7,7 @@ using Cinemachine;
 public class HealthSystem : MonoBehaviour
 {
     private IEnumerator coroutine;
-    Vector3 RespawnPoint;
+    public Vector3 RespawnPoint; // felix made this public for portable respawn position
     bool inUse;
 
     GameObject Cam;
@@ -28,6 +28,7 @@ public class HealthSystem : MonoBehaviour
             RespawnPoint = other.transform.position;
             
             other.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+            //Debug.Log("updated checkpouin"); //felix add
         }
         if (other.gameObject.CompareTag("Damage"))
         {
