@@ -97,6 +97,7 @@ public class StateController : MonoBehaviour
                         frog = false;
                         crane = false;
                         capricorn = false;
+                        lama = false;
                         StartCoroutine(changeModell(i));
                         break;
 
@@ -108,6 +109,7 @@ public class StateController : MonoBehaviour
                             frog = true;
                             crane = false;
                             capricorn = false;
+                            lama = false;
                             StartCoroutine(changeModell(i));
                         }
                         break;
@@ -120,6 +122,7 @@ public class StateController : MonoBehaviour
                             frog = false;
                             crane = true;
                             capricorn = false;
+                            lama = false;
                             StartCoroutine(changeModell(i));
                         }
                         break;
@@ -132,6 +135,7 @@ public class StateController : MonoBehaviour
                             frog = false;
                             crane = false;
                             capricorn = true;
+                            lama = false;
                             StartCoroutine(changeModell(i));
                         }
                         break;

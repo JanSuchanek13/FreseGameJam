@@ -38,10 +38,19 @@ public class ThirdPersonMovement : MonoBehaviour
     [Header("Shoot Sounds:")]
     [SerializeField] AudioSource[] arrayOfGun_Sounds;
 
+    Camera Cam;
+    Vector3 pos = new Vector3(960, 600, 0);
+    Vector3 reticlePosition;
+
+    void Start()
+    {
+        Cam = cam.gameObject.GetComponent<Camera>();
+    }
 
     // Update is called once per frame
     void Update()
     {
+        
         // animation
         if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
         {
@@ -175,6 +184,14 @@ public class ThirdPersonMovement : MonoBehaviour
         }
         if (GetComponent<StateController>().lama)
         {
+            Ray ray = Cam.ScreenPointToRay(pos);
+            Debug.DrawRay(ray.origin, ray.direction * 10, Color.yellow);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            {
+                reticlePosition = hit.point;
+            }
+
             //Move 
             speed = 4f;
 
@@ -195,7 +212,7 @@ public class ThirdPersonMovement : MonoBehaviour
             controller.Move(velocity * Time.deltaTime);
         }
 
-
+        
     }
 
     
@@ -212,7 +229,10 @@ public class ThirdPersonMovement : MonoBehaviour
         */
         //restingPosition = transform.rotation; // needed to reset gun
         //transform.Rotate(new Vector3(1, 1, 0), UnityEngine.Random.Range(-8f, 8f)); // spray randomly
-        Rigidbody bulletClone = (Rigidbody)Instantiate(bulletType, transform.position, transform.rotation);
+        transform.LookAt(reticlePosition);
+
+
+        Rigidbody bulletClone = (Rigidbody)Instantiate(bulletType, transform.position + (transform.forward * 2), transform.rotation);
         bulletClone.velocity = transform.forward * bulletSpeed;
         //transform.rotation = restingPosition; // reset gun
     }
