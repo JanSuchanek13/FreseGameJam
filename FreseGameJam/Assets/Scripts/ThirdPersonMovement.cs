@@ -30,6 +30,9 @@ public class ThirdPersonMovement : MonoBehaviour
     public bool walking;
     public bool falling;
 
+    //for capricorn Dash
+    bool dashing = true;
+
     //for Lama Shoot
     [Header("Lama Shoot Stats:")]
     public float bulletSpeed = 10;
@@ -166,10 +169,11 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             //Move 
             speed = capricornSpeed;
-
+            /*
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
+            */
 
             //Jump
             if (Input.GetButtonDown("Jump") && isGrounded)
@@ -177,6 +181,13 @@ public class ThirdPersonMovement : MonoBehaviour
                 controller.slopeLimit = 100f;
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             }
+
+            if (Input.GetButtonDown("Fire1"))
+            {
+                Debug.Log("fire");
+                StartCoroutine("CapricornDash");
+            }
+            
 
             //Gravity
             velocity.y += gravity * Time.deltaTime;
@@ -207,6 +218,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 Debug.Log("fire");
                 LamaShoot();
             }
+
             //Gravity
             velocity.y += gravity * Time.deltaTime;
             controller.Move(velocity * Time.deltaTime);
@@ -215,7 +227,38 @@ public class ThirdPersonMovement : MonoBehaviour
         
     }
 
-    
+
+    IEnumerator CapricornDash()
+    {
+        GetComponent<Rigidbody>();
+        for (int i = 0; i < 10; i++)
+        {
+            float horizontal = Input.GetAxisRaw("Horizontal");
+            float vertical = Input.GetAxisRaw("Vertical");
+            Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            controller.Move(moveDir.normalized * (speed*3) * Time.deltaTime);
+            yield return new WaitForSeconds(.0001f);
+
+            //extra push power
+            Collider[] allObjects = Physics.OverlapSphere(transform.position, 3);   //all Objects in explosion Range
+
+
+            foreach (Collider j in allObjects)
+            {
+                Rigidbody rig = j.GetComponent<Rigidbody>();
+                if (rig != null)
+                {
+                    rig.AddExplosionForce(5, transform.position, 1, 1f, ForceMode.Impulse);
+                }
+            }
+        }
+        
+        
+        
+    }
+
     void LamaShoot()
     {
         /*
