@@ -11,20 +11,21 @@ public class BreakingObj : MonoBehaviour
 
     Vector3 resetPos;
     Vector3 resetRot;
-    List<Vector3> resetPosChildren;
-    List<Vector3> resetRotChildren;
+    List<Vector3> resetPosChildren = new List<Vector3>();
+    List<Vector3> resetRotChildren = new List<Vector3>();
 
     private void Start()
     {
+        
         if (reset)
         {
-            Debug.Log("1");
+            
             if (breakingChildren)
             {
                 foreach (Transform child in transform)
                 {
-                    resetPosChildren.Add(child.GetComponent<Transform>().position);
-                    resetRotChildren.Add(child.GetComponent<Transform>().rotation.eulerAngles);
+                    resetPosChildren.Add(child.gameObject.GetComponent<Transform>().position);
+                    resetRotChildren.Add(child.gameObject.GetComponent<Transform>().rotation.eulerAngles);
                 }
             }
             else
@@ -81,7 +82,7 @@ public class BreakingObj : MonoBehaviour
 
         if (reset)
         {
-            Debug.Log("2");
+            
             Invoke("Reset", 5);
         }
     }
@@ -102,7 +103,6 @@ public class BreakingObj : MonoBehaviour
         else
         {
             GetComponent<Rigidbody>().isKinematic = true;
-            Debug.Log("3");
             Debug.Log(resetPos);
             transform.position = resetPos;
             transform.rotation = Quaternion.Euler(resetRot);
