@@ -35,7 +35,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     //for Lama Shoot
     [Header("Lama Shoot Stats:")]
-    public float bulletSpeed = 10;
+    public float bulletSpeed = 50;
     [SerializeField] Rigidbody bulletType;
     private Quaternion restingPosition;
     [Header("Shoot Sounds:")]
@@ -231,7 +231,7 @@ public class ThirdPersonMovement : MonoBehaviour
     IEnumerator CapricornDash()
     {
         GetComponent<Rigidbody>();
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 50; i++)
         {
             float horizontal = Input.GetAxisRaw("Horizontal");
             float vertical = Input.GetAxisRaw("Vertical");
@@ -250,7 +250,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 Rigidbody rig = j.GetComponent<Rigidbody>();
                 if (rig != null)
                 {
-                    rig.AddExplosionForce(5, transform.position, 1, 1f, ForceMode.Impulse);
+                    rig.AddExplosionForce(1, transform.position, 1, 1f, ForceMode.Impulse);
                 }
             }
         }
