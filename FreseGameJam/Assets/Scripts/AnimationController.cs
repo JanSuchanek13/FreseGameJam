@@ -29,6 +29,9 @@ public class AnimationController : MonoBehaviour
 
         animator.SetBool("isFalling", Movement.falling);
         falling_Sound.enabled = Movement.falling;
+
+        animator.SetBool("isJumping", Movement.jumping);
+
         
     }
 }

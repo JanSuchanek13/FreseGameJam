@@ -29,6 +29,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public bool idle;
     public bool walking;
     public bool falling;
+    public bool jumping;
 
     //for capricorn Dash
     bool dashing = true;
@@ -96,6 +97,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if (isGrounded && velocity.y < 0.5) //is falling
         {
             falling = false; //animation
+            jumping = false; //animation
             controller.slopeLimit = 45.0f;
             velocity.y = -4f;
         }
@@ -129,6 +131,7 @@ public class ThirdPersonMovement : MonoBehaviour
             //Jump
             if (Input.GetButtonDown("Jump") && isGrounded)
             {
+                jumping = true; //animation
                 controller.slopeLimit = 100f;
                 velocity.y = Mathf.Sqrt(jumpHeight * 10 * -2f * gravity); //high jump
             }
