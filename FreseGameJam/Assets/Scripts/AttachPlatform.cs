@@ -71,7 +71,7 @@ public class AttachPlatform : MonoBehaviour
 			gameObject.transform.GetChild(0).position += new Vector3 (0,-0.6f,0);
 			//gameObject.GetComponent<MeshRenderer>().enabled = false;
 			//gameObject.GetComponent<BoxCollider>().enabled = false;
-			Debug.Log("ende");
+			//Debug.Log("ende");
 			foreach (GameObject i in Fire)
 			{
 				i.SetActive(true);
