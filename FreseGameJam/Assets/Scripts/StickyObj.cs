@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StickyObj : MonoBehaviour
 {
-    public int stickyTime = 3;
+    public int stickyTime = 12;
 
     void OnCollisionEnter(Collision collision)
     {

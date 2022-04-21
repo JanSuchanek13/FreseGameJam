@@ -24,12 +24,18 @@ public class ThirdPersonMovement : MonoBehaviour
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
     bool isGrounded;
+    public bool onBridge;
 
     //for Animation
     public bool idle;
     public bool walking;
     public bool falling;
     public bool jumping;
+
+    //cooldown
+    bool isInCooldown;
+    public float cooldownTime = 3;
+
 
     //for capricorn Dash
     bool dashing = true;
@@ -50,6 +56,25 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         Cam = cam.gameObject.GetComponent<Camera>();
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Bridge"))
+        {
+            GetComponent<CharacterController>().stepOffset = 1f;
+            onBridge = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Bridge"))
+        {
+            GetComponent<CharacterController>().stepOffset = 0.5f;
+            onBridge = false;
+        }
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -171,7 +196,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if (GetComponent<StateController>().capricorn)
         {
             //Move 
-            speed = capricornSpeed;
+            speed = 0;
             /*
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
@@ -185,10 +210,13 @@ public class ThirdPersonMovement : MonoBehaviour
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             }
 
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetButtonDown("Fire1") & !isInCooldown)
             {
+                
                 Debug.Log("fire");
                 StartCoroutine("CapricornDash");
+                isInCooldown = true;
+                StartCoroutine("Cooldown");
             }
             
 
@@ -216,10 +244,12 @@ public class ThirdPersonMovement : MonoBehaviour
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             }
 
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetButtonDown("Fire1") & !isInCooldown)
             {
                 Debug.Log("fire");
                 LamaShoot();
+                isInCooldown = true;
+                StartCoroutine("Cooldown");
             }
 
             //Gravity
@@ -230,19 +260,27 @@ public class ThirdPersonMovement : MonoBehaviour
         
     }
 
+    IEnumerator Cooldown()
+    {
+        yield return new WaitForSeconds(cooldownTime);
+        isInCooldown = false;
+    }
 
     IEnumerator CapricornDash()
     {
+        //speed = capricornSpeed;
         GetComponent<Rigidbody>();
         for (int i = 0; i < 50; i++)
         {
+            speed = capricornSpeed;
             float horizontal = Input.GetAxisRaw("Horizontal");
             float vertical = Input.GetAxisRaw("Vertical");
             Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDir.normalized * (speed*3) * Time.deltaTime);
-            yield return new WaitForSeconds(.0001f);
+            yield return new WaitForSeconds(.001f);
+            Debug.Log("lauf");
 
             //extra push power
             Collider[] allObjects = Physics.OverlapSphere(transform.position, 3);   //all Objects in explosion Range
@@ -257,9 +295,9 @@ public class ThirdPersonMovement : MonoBehaviour
                 }
             }
         }
-        
-        
-        
+
+        speed = 0;
+
     }
 
     void LamaShoot()
