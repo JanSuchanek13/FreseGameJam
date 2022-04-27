@@ -30,7 +30,7 @@ public class AnimationController : MonoBehaviour
         animator.SetBool("isFalling", Movement.falling);
         falling_Sound.enabled = Movement.falling;
 
-        if (Movement.jumping != null)
+        if (GetComponentInParent<StateController>().frog)
         {
             animator.SetBool("isJumping", Movement.jumping);
         }
