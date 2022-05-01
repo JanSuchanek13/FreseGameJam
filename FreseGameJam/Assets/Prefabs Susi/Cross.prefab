@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4e897e99b9cbd14e9bfbe7f4d74ad46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationVector: {x: 0, y: 1, z: -13}
+  rotationVector: {x: 0, y: 1, z: 0}
   speed: 50
 --- !u!1 &8664628380992581805
 GameObject:
@@ -138,7 +138,7 @@ GameObject:
   - component: {fileID: 8664628380992581804}
   m_Layer: 0
   m_Name: Cross
-  m_TagString: Untagged
+  m_TagString: Damage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -284,5 +284,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4e897e99b9cbd14e9bfbe7f4d74ad46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationVector: {x: 0, y: 1, z: -13}
+  rotationVector: {x: 0, y: 1, z: 0}
   speed: 50
