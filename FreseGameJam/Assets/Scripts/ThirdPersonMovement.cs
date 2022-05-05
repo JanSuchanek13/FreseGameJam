@@ -226,10 +226,10 @@ public class ThirdPersonMovement : MonoBehaviour
         }
         if (GetComponent<StateController>().lama)
         {
-            Ray ray = Cam.ScreenPointToRay(pos);
+            Ray ray = Cam.ScreenPointToRay(pos + new Vector3(0, 30, 0));
             Debug.DrawRay(ray.origin, ray.direction * 10, Color.yellow);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            if (Physics.Raycast(ray , out hit, Mathf.Infinity))
             {
                 reticlePosition = hit.point;
             }
