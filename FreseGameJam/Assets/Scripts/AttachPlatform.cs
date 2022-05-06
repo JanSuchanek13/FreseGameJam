@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class AttachPlatform : MonoBehaviour
 {
+	public bool MagmaJump = true;
+
 	private IEnumerator coroutine;
 	public int countdown = 3;
 	public float resetSpeed = 8;
@@ -45,7 +47,11 @@ public class AttachPlatform : MonoBehaviour
 		// approaches a destination point).
 		agent.autoBraking = false;
 
-		GotoNextPoint();
+        if (MagmaJump)
+        {
+			GotoNextPoint();
+		}
+		
 	}
 
 	void GotoNextPoint()
@@ -66,30 +72,40 @@ public class AttachPlatform : MonoBehaviour
 		// cycling to the start if necessary.
 		destPoint = (destPoint + 1) % points.Length;
 
-		if (destPoint == 1)
+		if (MagmaJump)
         {
-			gameObject.transform.GetChild(0).position += new Vector3 (0,-0.6f,0);
-			//gameObject.GetComponent<MeshRenderer>().enabled = false;
-			//gameObject.GetComponent<BoxCollider>().enabled = false;
-			//Debug.Log("ende");
-			foreach (GameObject i in Fire)
+			if (destPoint == 1)
 			{
-				i.SetActive(true);
+				gameObject.transform.GetChild(0).position += new Vector3(0, -0.6f, 0);
+				//gameObject.GetComponent<MeshRenderer>().enabled = false;
+				//gameObject.GetComponent<BoxCollider>().enabled = false;
+				//Debug.Log("ende");
+				foreach (GameObject i in Fire)
+				{
+					i.SetActive(true);
+				}
+				StartCoroutine(submerge());
+				agent.radius = .01f;
+				agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+				agent.height = 0;
+				agent.speed = resetSpeed;
+				agent.avoidancePriority = 60;
 			}
-			StartCoroutine(submerge());
-			agent.radius = .01f;
-			agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
-			agent.height = 0;
-			agent.speed = resetSpeed;
+			else if (destPoint == 2)
+			{
+				gameObject.transform.GetChild(0).position += new Vector3(0, +0.6f, 0);
+				agent.radius = obstacleAvoidance;
+				agent.obstacleAvoidanceType = type;
+				agent.height = height;
+				agent.speed = speed;
+				agent.avoidancePriority = 50;
+			}
 		}
-		else if(destPoint == 2)
-		{
-			gameObject.transform.GetChild(0).position += new Vector3(0, +0.6f, 0);
-			agent.radius = obstacleAvoidance;
-			agent.obstacleAvoidanceType = type;
-			agent.height = height;
-			agent.speed = speed;
+        else
+        {
+			
 		}
+			
 	}
 
 	void FixedUpdate()
@@ -106,25 +122,41 @@ public class AttachPlatform : MonoBehaviour
 
 		// Choose the next destination point when the agent gets
 		// close to the current one.
-		if (!agent.pathPending && agent.remainingDistance < 2f)
-			GotoNextPoint();
+		if (MagmaJump)
+        {
+			if (!agent.pathPending && agent.remainingDistance < 2f)
+				GotoNextPoint();
+		}
+		if (!MagmaJump & destPoint > 1)
+        {
+			if (!agent.pathPending && agent.remainingDistance < 1f)
+				GotoNextPoint();
+		}
+
+
 
 	}
 	private void OnTriggerEnter(Collider other)
 	{
-		
 
-		if (other.tag == "Player")
+        if (MagmaJump)
         {
-			isStanding = true;
-			StartCoroutine(moveCountDown());
-
-			cc = other.GetComponent<CharacterController>();
-
-			foreach (GameObject i in Fire)
+			if (other.tag == "Player")
 			{
-				i.SetActive(true);
+				isStanding = true;
+				StartCoroutine(moveCountDown());
+
+				cc = other.GetComponent<CharacterController>();
+
+				foreach (GameObject i in Fire)
+				{
+					i.SetActive(true);
+				}
 			}
+		}
+        else
+        {
+			GotoNextPoint();
 		}
 
 

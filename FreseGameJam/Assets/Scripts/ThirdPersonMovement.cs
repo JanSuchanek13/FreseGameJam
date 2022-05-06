@@ -61,7 +61,7 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Bridge"))
         {
-            GetComponent<CharacterController>().stepOffset = 1f;
+            GetComponent<CharacterController>().stepOffset = 2f;
             onBridge = true;
         }
     }
