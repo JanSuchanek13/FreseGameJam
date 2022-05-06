@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4919411119488978000}
   - component: {fileID: 761791626169390881}
   - component: {fileID: 5190502083215148729}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: colliderzones
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,8 +93,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.6936826, y: 1, z: 1}
+  m_Center: {x: 0.15315886, y: -0.0000000019185822, z: 0.00000004452526}
 --- !u!1 &547118103267248583
 GameObject:
   m_ObjectHideFlags: 0
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 8362945341288098061}
   - component: {fileID: 6250415245942772960}
   - component: {fileID: 6677435610306280086}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: colliderzones
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -188,8 +188,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.53394604, y: 1, z: 1}
+  m_Center: {x: -0.23302686, y: 0, z: -0.0000005953118}
 --- !u!1 &567344542706609016
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,7 +200,7 @@ GameObject:
   m_Component:
   - component: {fileID: 906433501542805954}
   - component: {fileID: 5378837661834154362}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -255,7 +255,7 @@ GameObject:
   - component: {fileID: 3017631750095278669}
   - component: {fileID: 1583797177613866058}
   - component: {fileID: 7529742437206998882}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: colliderzones
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -336,8 +336,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.53398025, y: 1, z: 1}
+  m_Center: {x: 0.04348141, y: 0, z: 0.00000044253628}
 --- !u!1 &2362176537883220078
 GameObject:
   m_ObjectHideFlags: 0
@@ -349,7 +349,7 @@ GameObject:
   - component: {fileID: 8401867963603982230}
   - component: {fileID: 5643639515150247322}
   - component: {fileID: 3827935115104707017}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -450,7 +450,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5433941000901290524}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Bonfire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -489,8 +489,8 @@ GameObject:
   - component: {fileID: 3872145414146368712}
   - component: {fileID: 149538152813767533}
   - component: {fileID: 2735852530876932007}
-  - component: {fileID: 2047648668902492237}
-  m_Layer: 0
+  - component: {fileID: 7681281335940866877}
+  m_Layer: 2
   m_Name: StonePlane_Ver4
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -560,8 +560,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2047648668902492237
-MeshCollider:
+--- !u!65 &7681281335940866877
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -570,10 +570,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 8324580739174819017, guid: 23f9fcd95fc1e7840b60eb26a7561ac1, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 0.018794741, y: 0.018683376, z: 0.00078049867}
+  m_Center: {x: 0.000049328497, y: 0.00023255011, z: 0.00039024922}
 --- !u!1 &4721841542672070149
 GameObject:
   m_ObjectHideFlags: 0
@@ -583,7 +582,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7912715735200316026}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Bone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -614,7 +613,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9144611522232685271}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fire_RIG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -636,6 +635,101 @@ Transform:
   m_Father: {fileID: 906433501542805954}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5462877255976310676
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5393656991582401392}
+  - component: {fileID: 3802975668609853635}
+  - component: {fileID: 2504608425454175884}
+  - component: {fileID: 5724473162397349023}
+  m_Layer: 2
+  m_Name: colliderzones
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5393656991582401392
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5462877255976310676}
+  m_LocalRotation: {x: -0.000000029802319, y: -0.000000029802319, z: 0.7078561, w: 0.7063567}
+  m_LocalPosition: {x: -0.007, y: -1.288, z: -0.03}
+  m_LocalScale: {x: 0.65776, y: 3.9589128, z: 0.22041}
+  m_Children: []
+  m_Father: {fileID: 8171083465500527222}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90.122}
+--- !u!33 &3802975668609853635
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5462877255976310676}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2504608425454175884
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5462877255976310676}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &5724473162397349023
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5462877255976310676}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.4894413, y: 0.9395369, z: 1}
+  m_Center: {x: 0.051013064, y: 0.0012091016, z: 0.000000016581184}
 --- !u!1 &5746931091698843712
 GameObject:
   m_ObjectHideFlags: 0
@@ -645,7 +739,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8167751071214263638}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Bone.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -678,8 +772,8 @@ GameObject:
   - component: {fileID: 6187046393122218470}
   - component: {fileID: 7094038573844164163}
   - component: {fileID: 5014724335013108361}
-  - component: {fileID: 6942139279761520417}
-  m_Layer: 0
+  - component: {fileID: 1786777942603224857}
+  m_Layer: 2
   m_Name: StonePlane_Ver1 (5)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -749,8 +843,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6942139279761520417
-MeshCollider:
+--- !u!65 &1786777942603224857
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -759,10 +853,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -89549486890576878, guid: ec6d44a227a97f842b9b6ce848368b8c, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 0.0791849, y: 0.08339928, z: 0.0030941248}
+  m_Center: {x: -0.00047941873, y: -0.00015536316, z: 0.0018186406}
 --- !u!1 &6815948750460670757
 GameObject:
   m_ObjectHideFlags: 0
@@ -774,8 +867,8 @@ GameObject:
   - component: {fileID: 6187046393891883423}
   - component: {fileID: 7094038574680933946}
   - component: {fileID: 5014724334709011184}
-  - component: {fileID: 6942139279994281816}
-  m_Layer: 0
+  - component: {fileID: 7789827888993328001}
+  m_Layer: 2
   m_Name: StonePlane_Ver1 (2)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -845,8 +938,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6942139279994281816
-MeshCollider:
+--- !u!65 &7789827888993328001
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -855,10 +948,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -89549486890576878, guid: ec6d44a227a97f842b9b6ce848368b8c, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 0.07918492, y: 0.083399385, z: 0.0030941293}
+  m_Center: {x: -0.00047942105, y: -0.00015489098, z: 0.0018186455}
 --- !u!1 &6815948750519103583
 GameObject:
   m_ObjectHideFlags: 0
@@ -870,8 +962,8 @@ GameObject:
   - component: {fileID: 6187046393732213477}
   - component: {fileID: 7094038574588896576}
   - component: {fileID: 5014724334415696266}
-  - component: {fileID: 6942139280354769954}
-  m_Layer: 0
+  - component: {fileID: 5819751962798352061}
+  m_Layer: 2
   m_Name: StonePlane_Ver1
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -941,8 +1033,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6942139280354769954
-MeshCollider:
+--- !u!65 &5819751962798352061
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -951,10 +1043,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -89549486890576878, guid: ec6d44a227a97f842b9b6ce848368b8c, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 0.079184905, y: 0.083399355, z: 0.003094127}
+  m_Center: {x: -0.00048037208, y: -0.0001558434, z: 0.0018187049}
 --- !u!1 &6815948750935219176
 GameObject:
   m_ObjectHideFlags: 0
@@ -966,8 +1057,8 @@ GameObject:
   - component: {fileID: 6187046394355941714}
   - component: {fileID: 7094038573132648183}
   - component: {fileID: 5014724336379853373}
-  - component: {fileID: 6942139278325667733}
-  m_Layer: 0
+  - component: {fileID: 4960449863813036310}
+  m_Layer: 2
   m_Name: StonePlane_Ver1 (4)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -1037,8 +1128,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6942139278325667733
-MeshCollider:
+--- !u!65 &4960449863813036310
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1047,10 +1138,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -89549486890576878, guid: ec6d44a227a97f842b9b6ce848368b8c, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 0.07918493, y: 0.08339933, z: 0.0030941262}
+  m_Center: {x: -0.0004775108, y: -0.00015775098, z: 0.0018187639}
 --- !u!1 &6815948751170059658
 GameObject:
   m_ObjectHideFlags: 0
@@ -1062,8 +1152,8 @@ GameObject:
   - component: {fileID: 6187046394121054000}
   - component: {fileID: 7094038572830648469}
   - component: {fileID: 5014724336144981087}
-  - component: {fileID: 6942139278627680759}
-  m_Layer: 0
+  - component: {fileID: 867989650197822840}
+  m_Layer: 2
   m_Name: StonePlane_Ver1 (3)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -1133,8 +1223,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6942139278627680759
-MeshCollider:
+--- !u!65 &867989650197822840
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1143,10 +1233,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -89549486890576878, guid: ec6d44a227a97f842b9b6ce848368b8c, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 0.07918493, y: 0.08339931, z: 0.0030941286}
+  m_Center: {x: -0.0004775133, y: -0.00015727186, z: 0.001818645}
 --- !u!1 &6815948751497668351
 GameObject:
   m_ObjectHideFlags: 0
@@ -1158,8 +1247,8 @@ GameObject:
   - component: {fileID: 6187046395002321989}
   - component: {fileID: 7094038573576778720}
   - component: {fileID: 5014724335817361194}
-  - component: {fileID: 6942139278955162242}
-  m_Layer: 0
+  - component: {fileID: 2359481832025353640}
+  m_Layer: 2
   m_Name: StonePlane_Ver1 (1)
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -1229,8 +1318,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6942139278955162242
-MeshCollider:
+--- !u!65 &2359481832025353640
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1239,10 +1328,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -89549486890576878, guid: ec6d44a227a97f842b9b6ce848368b8c, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 0.079184905, y: 0.0833993, z: 0.0030941265}
+  m_Center: {x: -0.0004789415, y: -0.00015774742, z: 0.0018185261}
 --- !u!1 &7437277932219990085
 GameObject:
   m_ObjectHideFlags: 0
@@ -1252,7 +1340,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7932354775036723122}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Bone.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1284,7 +1372,7 @@ GameObject:
   - component: {fileID: 1764299592743638653}
   - component: {fileID: 241018903533390518}
   - component: {fileID: 160503106292401379}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cube.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1365,7 +1453,7 @@ GameObject:
   - component: {fileID: 5223139504723375063}
   - component: {fileID: 1946127986123174057}
   - component: {fileID: 3981494519246188422}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6168,7 +6256,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8171083465500527222}
   - component: {fileID: 5202398527764713478}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: checkpoint
   m_TagString: Checkpoint
   m_Icon: {fileID: 0}
@@ -6192,6 +6280,7 @@ Transform:
   - {fileID: 9216826493644343704}
   - {fileID: 8187546374416978234}
   - {fileID: 1231836554199882869}
+  - {fileID: 5393656991582401392}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -47.85, z: 0}

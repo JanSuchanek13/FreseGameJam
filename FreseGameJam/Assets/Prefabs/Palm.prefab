@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3420089598939542515}
   - component: {fileID: 5192801147454866421}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: stem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 4938516613808359699}
   - component: {fileID: 2467171826759366311}
   - component: {fileID: 629945223470878347}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Palm
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -137,7 +137,8 @@ GameObject:
   - component: {fileID: 1972063308435334845}
   - component: {fileID: 6834943116547231212}
   - component: {fileID: 8736543218035620134}
-  m_Layer: 0
+  - component: {fileID: 8411122659416118017}
+  m_Layer: 2
   m_Name: Palm
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -209,3 +210,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &8411122659416118017
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7079258069694404851}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.22
+  m_Height: 2.8454113
+  m_Direction: 1
+  m_Center: {x: -0.02570504, y: 1.4408944, z: 0.08531879}
