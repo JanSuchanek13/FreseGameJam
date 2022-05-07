@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 243661406005391728}
   m_LocalRotation: {x: -0.000000029802319, y: -0.000000029802319, z: 0.7078561, w: 0.7063567}
-  m_LocalPosition: {x: -0.007, y: -0.165, z: -0.03}
+  m_LocalPosition: {x: -0.008, y: 0.352, z: -0.03}
   m_LocalScale: {x: 0.65776, y: 3.9589128, z: 0.22041}
   m_Children: []
   m_Father: {fileID: 8171083465500527222}
@@ -122,8 +122,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 547118103267248583}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.45, y: -1.94, z: -0.03}
-  m_LocalScale: {x: 0.65776, y: 3.3587112, z: 0.22041}
+  m_LocalPosition: {x: 1.44, y: -1.45, z: -0.03}
+  m_LocalScale: {x: 0.57545453, y: 4.294784, z: 0.22041}
   m_Children: []
   m_Father: {fileID: 8171083465500527222}
   m_RootOrder: 4
@@ -270,8 +270,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 759617642007914240}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.316, y: -1.94, z: -0.029}
-  m_LocalScale: {x: 0.65776, y: 3.3587112, z: 0.22041}
+  m_LocalPosition: {x: -1.316, y: -1.45, z: -0.029}
+  m_LocalScale: {x: 0.57545453, y: 4.294784, z: 0.22041}
   m_Children: []
   m_Father: {fileID: 8171083465500527222}
   m_RootOrder: 3
@@ -569,7 +569,7 @@ BoxCollider:
   m_GameObject: {fileID: 4537182086220119666}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.018794741, y: 0.018683376, z: 0.00078049867}
   m_Center: {x: 0.000049328497, y: 0.00023255011, z: 0.00039024922}
@@ -662,7 +662,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5462877255976310676}
   m_LocalRotation: {x: -0.000000029802319, y: -0.000000029802319, z: 0.7078561, w: 0.7063567}
-  m_LocalPosition: {x: -0.007, y: -1.288, z: -0.03}
+  m_LocalPosition: {x: -0.01, y: -0.85, z: -0.03}
   m_LocalScale: {x: 0.65776, y: 3.9589128, z: 0.22041}
   m_Children: []
   m_Father: {fileID: 8171083465500527222}
@@ -947,7 +947,7 @@ BoxCollider:
   m_GameObject: {fileID: 6815948750460670757}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.07918492, y: 0.083399385, z: 0.0030941293}
   m_Center: {x: -0.00047942105, y: -0.00015489098, z: 0.0018186455}
@@ -1042,7 +1042,7 @@ BoxCollider:
   m_GameObject: {fileID: 6815948750519103583}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.079184905, y: 0.083399355, z: 0.003094127}
   m_Center: {x: -0.00048037208, y: -0.0001558434, z: 0.0018187049}
@@ -1137,7 +1137,7 @@ BoxCollider:
   m_GameObject: {fileID: 6815948750935219176}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.07918493, y: 0.08339933, z: 0.0030941262}
   m_Center: {x: -0.0004775108, y: -0.00015775098, z: 0.0018187639}
@@ -1232,7 +1232,7 @@ BoxCollider:
   m_GameObject: {fileID: 6815948751170059658}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.07918493, y: 0.08339931, z: 0.0030941286}
   m_Center: {x: -0.0004775133, y: -0.00015727186, z: 0.001818645}
@@ -1327,7 +1327,7 @@ BoxCollider:
   m_GameObject: {fileID: 6815948751497668351}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.079184905, y: 0.0833993, z: 0.0030941265}
   m_Center: {x: -0.0004789415, y: -0.00015774742, z: 0.0018185261}
@@ -1387,8 +1387,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7655354960740008428}
   m_LocalRotation: {x: 0.5, y: 0.49999997, z: 0.5, w: -0.5}
-  m_LocalPosition: {x: -0, y: -0.112, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0, y: 0.422, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1.1505}
   m_Children: []
   m_Father: {fileID: 8171083465500527222}
   m_RootOrder: 1
@@ -6295,5 +6295,5 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.842767, y: 3.1494408, z: 1}
-  m_Center: {x: -0.0058287377, y: -2.012867, z: -5.5358274e-11}
+  m_Size: {x: 1.4478285, y: 3.1494408, z: 1}
+  m_Center: {x: -0.20329908, y: -2.012867, z: 0.0000028639618}
