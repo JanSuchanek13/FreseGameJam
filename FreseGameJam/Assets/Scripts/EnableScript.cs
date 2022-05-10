@@ -11,7 +11,6 @@ public class EnableScript : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             AttachPlatform myScript = other.gameObject.GetComponent<AttachPlatform>();
-            //You could check if you really attached MyScript here, but I think we skip that. ;-)
             myScript.enabled = true;
         }
     }
