@@ -50,18 +50,34 @@ public class Raft : MonoBehaviour
 			return;
 		}
 
+		
 
 
-		// Set the agent to go to the currently selected destination.
-		agent.destination = points[destPoint].position;
+
+			// Set the agent to go to the currently selected destination.
+			agent.destination = points[destPoint].position;
 
 		// Choose the next point in the array as the destination,
 		// cycling to the start if necessary.
 		destPoint = (destPoint + 1) % points.Length;
 
-		
-		
+		// if Destination reached stop Movement
+		if (destPoint == 1 && started)
+		{
+			Invoke("StopMoving", 1);
 
+		}
+
+	}
+
+	private void StopMoving()
+    {
+		if (destPoint == 1 && started)
+		{
+			GetComponent<NavMeshAgent>().speed = 0;
+
+		}
+		
 	}
 
 	void FixedUpdate()
