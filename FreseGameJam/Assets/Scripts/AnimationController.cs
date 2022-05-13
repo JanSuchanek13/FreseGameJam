@@ -14,10 +14,10 @@ public class AnimationController : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        Debug.Log(animator);
+        //Debug.Log(animator);
 
         Movement = GetComponentInParent<ThirdPersonMovement>();
-        Debug.Log(Movement);
+        //Debug.Log(Movement);
     }
 
     // Update is called once per frame
@@ -30,12 +30,14 @@ public class AnimationController : MonoBehaviour
         animator.SetBool("isFalling", Movement.falling);
         falling_Sound.enabled = Movement.falling;
 
+        animator.SetBool("Action", Movement.action);
+
         if (GetComponentInParent<StateController>().frog)
         {
             animator.SetBool("isJumping", Movement.jumping);
         }
-        
 
+        
         
     }
 }

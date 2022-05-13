@@ -31,6 +31,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public bool walking;
     public bool falling;
     public bool jumping;
+    public bool action;
 
     //cooldown
     bool isInCooldown;
@@ -112,7 +113,7 @@ public class ThirdPersonMovement : MonoBehaviour
         //Check Ground
         //controller = GetComponent<CharacterController>();
 
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance * 8, groundMask);
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance *2, groundMask);
         if (!isGrounded)
         {
             falling = true; //animation
@@ -151,7 +152,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if (GetComponent<StateController>().frog)
         {
             //Move 
-            speed = 6f;
+            speed = 2f;
 
             //Jump
             if (Input.GetButtonDown("Jump") && isGrounded)
@@ -177,6 +178,16 @@ public class ThirdPersonMovement : MonoBehaviour
                 speed = 6f; //fly speed
             }
 
+            //No Player Input -> fly forward
+            if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
+            {
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+                transform.rotation = Quaternion.Euler(0f, angle, 0f);
+                Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+                controller.Move(moveDir.normalized * speed * Time.deltaTime);
+            }
+
             //Jump
             if (Input.GetButtonDown("Jump") && isGrounded)
             {
@@ -196,7 +207,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if (GetComponent<StateController>().capricorn)
         {
             //Move 
-            speed = 0;
+            speed = 2;
             /*
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
@@ -246,8 +257,12 @@ public class ThirdPersonMovement : MonoBehaviour
 
             if (Input.GetButtonDown("Fire1") & !isInCooldown)
             {
+                action = true;
+                //action = false;
                 Debug.Log("fire");
-                LamaShoot();
+                transform.LookAt(reticlePosition);
+                Invoke("LamaShoot", 0.5f);
+                Invoke("EndOfAction", 0.6f);
                 isInCooldown = true;
                 StartCoroutine("Cooldown");
             }
@@ -260,10 +275,16 @@ public class ThirdPersonMovement : MonoBehaviour
         
     }
 
+    private void EndOfAction()
+    {
+        action = false;
+    }
+
     IEnumerator Cooldown()
     {
         yield return new WaitForSeconds(cooldownTime);
         isInCooldown = false;
+        
     }
 
     IEnumerator CapricornDash()
@@ -296,7 +317,7 @@ public class ThirdPersonMovement : MonoBehaviour
             }
         }
 
-        speed = 0;
+        speed = 2;
 
     }
 
@@ -313,7 +334,7 @@ public class ThirdPersonMovement : MonoBehaviour
         */
         //restingPosition = transform.rotation; // needed to reset gun
         //transform.Rotate(new Vector3(1, 1, 0), UnityEngine.Random.Range(-8f, 8f)); // spray randomly
-        transform.LookAt(reticlePosition);
+        //transform.LookAt(reticlePosition);
 
 
         Rigidbody bulletClone = (Rigidbody)Instantiate(bulletType, transform.position + (transform.forward * 2), transform.rotation);
