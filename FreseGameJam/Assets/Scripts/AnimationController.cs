@@ -32,6 +32,8 @@ public class AnimationController : MonoBehaviour
 
         animator.SetBool("Action", Movement.action);
 
+        animator.SetBool("isJumping", Movement.jumping);
+
         if (GetComponentInParent<StateController>().frog)
         {
             animator.SetBool("isJumping", Movement.jumping);
