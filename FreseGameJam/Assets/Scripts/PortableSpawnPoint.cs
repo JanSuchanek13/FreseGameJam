@@ -8,13 +8,21 @@ public class PortableSpawnPoint : MonoBehaviour
     [SerializeField] bool useThisSpawnPosition = false;
     void Start()
     {
-        Debug.Log(this.transform.position);
+        if (useThisSpawnPosition)
+        {
+            Debug.Log("Spawn location: " + this.transform.position);
+            _player = GameObject.Find("Third Person Player");
+            _player.GetComponent<HealthSystem>().RespawnPoint = this.transform.position;
+            Debug.Log("New Respawn location: " + _player.GetComponent<HealthSystem>().RespawnPoint);
+            _player.transform.position = this.transform.position;
+        }
+        /*Debug.Log("Spawn location: " + this.transform.position);
         _player = GameObject.Find("Third Person Player");
         _player.GetComponent<HealthSystem>().RespawnPoint = this.transform.position;
-        Debug.Log(_player.GetComponent<HealthSystem>().RespawnPoint);
+        Debug.Log("New Respawn location: " + _player.GetComponent<HealthSystem>().RespawnPoint);
         if(useThisSpawnPosition == true)
         {
             _player.transform.position = this.transform.position;
-        }
+        }*/
     }
 }
