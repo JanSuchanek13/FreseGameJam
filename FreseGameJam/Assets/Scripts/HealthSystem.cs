@@ -8,7 +8,7 @@ public class HealthSystem : MonoBehaviour
 {
     private IEnumerator coroutine;
     public Vector3 RespawnPoint; // felix made this public for portable respawn position
-    bool inUse;
+    public bool inUse;
 
     GameObject Cam;
     float gravity;
