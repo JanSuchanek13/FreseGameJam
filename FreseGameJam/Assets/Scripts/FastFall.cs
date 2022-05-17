@@ -8,6 +8,7 @@ public class FastFall : MonoBehaviour
     bool _makeHimCrash = false;
     GameObject _player;
     float _gravity = 0f;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -28,6 +29,7 @@ public class FastFall : MonoBehaviour
             {
                 _makeHimCrash = false;
                 _player.GetComponent<ThirdPersonMovement>().gravity = _gravity; // reset gravity
+                Debug.Log("stopp falling fast.");
             }
         }
     }
