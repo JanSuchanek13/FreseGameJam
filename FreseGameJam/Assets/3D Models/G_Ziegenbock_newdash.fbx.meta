@@ -5,17 +5,22 @@ ModelImporter:
   internalIDToNameTable:
   - first:
       74: 8924330522101977378
-    second: ZiegenbockRig|Ziegenbock_dash
+    second: Ziegenbock_dash
   - first:
       74: 7505583751015617911
-    second: ZiegenbockRig|Ziegenbock_falling
+    second: Ziegenbock_falling
   - first:
       74: -6636074899647048415
-    second: ZiegenbockRig|Ziegenbock_Idle
+    second: Ziegenbock_Idle
   - first:
       74: 5331307876558821173
     second: ZiegenbockRig|Ziegenbock_dash
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Paperman
+    second: {fileID: 2100000, guid: f848d7cc47c4b4345a142ccb1cb78e01, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -44,7 +49,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: ZiegenbockRig|Ziegenbock_falling
+      name: Ziegenbock_falling
       takeName: ZiegenbockRig|Ziegenbock_falling
       internalID: 0
       firstFrame: 0
@@ -73,7 +78,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: ZiegenbockRig|Ziegenbock_Idle
+      name: Ziegenbock_Idle
       takeName: ZiegenbockRig|Ziegenbock_Idle
       internalID: 0
       firstFrame: 0
@@ -102,7 +107,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: ZiegenbockRig|Ziegenbock_dash
+      name: Ziegenbock_dash
       takeName: ZiegenbockRig|ZiegenbockRigAction
       internalID: 0
       firstFrame: 0
