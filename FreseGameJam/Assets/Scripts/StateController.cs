@@ -76,7 +76,7 @@ public class StateController : MonoBehaviour
             PlayerPrefs.SetInt("crowns"+ (currentLevel - 2), crowns[(currentLevel - 2)] + 1);
             Debug.Log(PlayerPrefs.GetInt("crowns"));
 
-            PickUp_Sound.enabled = true;
+            PickUp_Sound.Play(0);
             //PickUp_Sound.enabled = true;
             // PickUp_Sound.enabled = false;
             Destroy(other.gameObject);

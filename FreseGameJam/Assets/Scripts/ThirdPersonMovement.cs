@@ -219,12 +219,13 @@ public class ThirdPersonMovement : MonoBehaviour
             if (Input.GetButtonDown("Jump") && isGrounded)
             {
                 controller.slopeLimit = 100f;
-                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                velocity.y = Mathf.Sqrt(jumpHeight/150 * -2f * gravity);
             }
 
             if (Input.GetButtonDown("Fire1") & !isInCooldown)
             {
-                
+                action = true;
+                Invoke("EndOfAction", 1.2f);
                 Debug.Log("fire");
                 StartCoroutine("CapricornDash");
                 isInCooldown = true;
@@ -253,7 +254,7 @@ public class ThirdPersonMovement : MonoBehaviour
             if (Input.GetButtonDown("Jump") && isGrounded)
             {
                 controller.slopeLimit = 45f;
-                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                velocity.y = Mathf.Sqrt(jumpHeight/150 * -2f * gravity);
             }
 
             if (Input.GetButtonDown("Fire1") & !isInCooldown)
@@ -290,6 +291,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     IEnumerator CapricornDash()
     {
+        yield return new WaitForSeconds(1f);
         //speed = capricornSpeed;
         GetComponent<Rigidbody>();
         for (int i = 0; i < 50; i++)
@@ -301,7 +303,7 @@ public class ThirdPersonMovement : MonoBehaviour
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDir.normalized * (speed*3) * Time.deltaTime);
-            yield return new WaitForSeconds(.001f);
+            yield return new WaitForSeconds(.005f);
             Debug.Log("lauf");
 
             //extra push power
