@@ -1,20 +1,23 @@
 fileFormatVersion: 2
-guid: 85f6e951176e29046bee8f2f493e145e
+guid: 88e5702170c6ad34dac538cc2e2fafcb
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
-      74: 8924330522101977378
-    second: Ziegenbock_dash
+      74: 1293023224980549605
+    second: ZiegenbockRig|Paperfrog_RIGAction
   - first:
       74: 7505583751015617911
     second: Ziegenbock_falling
   - first:
       74: -6636074899647048415
-    second: Ziegenbock_Idle
+    second: Ziegenbock_idle
   - first:
-      74: 5331307876558821173
-    second: ZiegenbockRig|Ziegenbock_dash
+      74: 4656315054309105271
+    second: Ziegenbock_walk
+  - first:
+      74: 8924330522101977378
+    second: Ziegenbock_dash
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -78,7 +81,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Ziegenbock_Idle
+      name: Ziegenbock_idle
       takeName: ZiegenbockRig|Ziegenbock_Idle
       internalID: 0
       firstFrame: 0
@@ -107,8 +110,37 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
+      name: Ziegenbock_walk
+      takeName: ZiegenbockRig|Ziegenbock_Walk
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 120
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
       name: Ziegenbock_dash
-      takeName: ZiegenbockRig|ZiegenbockRigAction
+      takeName: ZiegenbockRig|Ziegenbock_dash
       internalID: 0
       firstFrame: 0
       lastFrame: 120
@@ -171,7 +203,7 @@ ModelImporter:
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
-    tangentImportMode: 3
+    tangentImportMode: 2
     normalCalculationMode: 4
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
