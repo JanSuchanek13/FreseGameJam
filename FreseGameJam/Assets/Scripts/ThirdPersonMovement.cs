@@ -25,6 +25,12 @@ public class ThirdPersonMovement : MonoBehaviour
     public LayerMask groundMask;
     public bool isGrounded;
     public bool onBridge;
+    
+
+    //Slide Down
+    private bool willSlideOnSlopes = true;
+    private float slopeSpeed = 8f;
+    private Vector3 hitPointNormal;
 
     //for Animation
     public bool idle;
@@ -52,6 +58,50 @@ public class ThirdPersonMovement : MonoBehaviour
     Camera Cam;
     Vector3 pos = new Vector3(960, 600, 0);
     Vector3 reticlePosition;
+
+
+    //test if sliding
+    public bool isSliding
+    {
+        get
+        {
+            Debug.DrawRay(transform.position + new Vector3(0, 0, 0.4f), Vector3.down,Color.red);
+            if((Physics.Raycast(transform.position, Vector3.down, out RaycastHit slopeHit, 1f)/* || (Physics.Raycast(transform.position + new Vector3(0.4f,0,0), Vector3.down, out slopeHit, 1f)) || (Physics.Raycast(transform.position + new Vector3(0, 0, -0.4f), Vector3.down, out slopeHit, 1f)) || (Physics.Raycast(transform.position + new Vector3(0, 0, 0.4f), Vector3.down, out slopeHit, 1f)) || (Physics.Raycast(transform.position + new Vector3(-0.4f, 0, 0), Vector3.down, out slopeHit, 1f))*/))
+            {
+                Debug.Log("Treffer");
+                hitPointNormal = slopeHit.normal;
+                return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit;
+            }
+            else if (Physics.Raycast(transform.position + new Vector3(0.4f, 0, 0), Vector3.down, out slopeHit, 1f))
+            {
+                Debug.Log("Treffer1");
+                hitPointNormal = slopeHit.normal;
+                return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit;
+            }
+            else if (Physics.Raycast(transform.position + new Vector3(0, 0, -0.4f), Vector3.down, out slopeHit, 1f))
+            {
+                Debug.Log("Treffer2");
+                hitPointNormal = slopeHit.normal;
+                return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit;
+            }
+            else if (Physics.Raycast(transform.position + new Vector3(0, 0, 0.4f), Vector3.down, out slopeHit, 1f))
+            {
+                Debug.Log("Treffer3");
+                hitPointNormal = slopeHit.normal;
+                return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit;
+            }
+            else if (Physics.Raycast(transform.position + new Vector3(-0.4f, 0, 0), Vector3.down, out slopeHit, 1f))
+            {
+                Debug.Log("Treffer4");
+                hitPointNormal = slopeHit.normal;
+                return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
 
     void Start()
     {
@@ -97,18 +147,24 @@ public class ThirdPersonMovement : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
-        if (direction.magnitude >= .1f)
+        if (direction.magnitude >= .1f || isSliding)
         {
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+
+            //if sliding the move direction will be overwriten
+            if(willSlideOnSlopes && isSliding)
+            {
+                moveDir = new Vector3(hitPointNormal.x, -hitPointNormal.y, hitPointNormal.z) * slopeSpeed;
+            }
+
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
 
-
-           
         }
+
 
         //Check Ground
         //controller = GetComponent<CharacterController>();
@@ -149,6 +205,7 @@ public class ThirdPersonMovement : MonoBehaviour
             //Gravity
             velocity.y += gravity * Time.deltaTime;
             controller.Move(velocity * Time.deltaTime);
+            controller.slopeLimit = 45f;
         }
         if (GetComponent<StateController>().frog)
         {
