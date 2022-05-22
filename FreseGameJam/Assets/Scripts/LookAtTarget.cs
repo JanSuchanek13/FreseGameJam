@@ -4,10 +4,17 @@ public class LookAtTarget : MonoBehaviour
 {
     Vector3 reticlePosition;
     GameObject _player;
+    Camera _mainCamera;
+    [SerializeField] bool uiInterface = false;
+    [SerializeField] GameObject lookAtObject;
 
     private void Start()
     {
+        if (!uiInterface && lookAtObject == null)
+        {
             _player = GameObject.Find("Third Person Player");
+        }
+        _mainCamera = Camera.main;
     }
     private void Update()
     {
@@ -27,12 +34,15 @@ public class LookAtTarget : MonoBehaviour
                }
                transform.LookAt(reticlePosition); // this will only work with a CharacterController component
            } */
-
-        transform.LookAt(_player.transform.position);
-
-
-
-
-
+        if (!uiInterface && lookAtObject == null)
+        {
+            transform.LookAt(_player.transform.position);
+        }else if (lookAtObject != null)
+        {
+            transform.LookAt(lookAtObject.transform.position);
+        }else
+        {
+            transform.LookAt(_mainCamera.transform.position);
+        }
     }
 }
