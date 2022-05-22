@@ -68,31 +68,31 @@ public class ThirdPersonMovement : MonoBehaviour
             Debug.DrawRay(transform.position + new Vector3(0, 0, 0.4f), Vector3.down,Color.red);
             if((Physics.Raycast(transform.position, Vector3.down, out RaycastHit slopeHit, 1f)/* || (Physics.Raycast(transform.position + new Vector3(0.4f,0,0), Vector3.down, out slopeHit, 1f)) || (Physics.Raycast(transform.position + new Vector3(0, 0, -0.4f), Vector3.down, out slopeHit, 1f)) || (Physics.Raycast(transform.position + new Vector3(0, 0, 0.4f), Vector3.down, out slopeHit, 1f)) || (Physics.Raycast(transform.position + new Vector3(-0.4f, 0, 0), Vector3.down, out slopeHit, 1f))*/))
             {
-                Debug.Log("Treffer");
+                //Debug.Log("Treffer");
                 hitPointNormal = slopeHit.normal;
                 return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit;
             }
             else if (Physics.Raycast(transform.position + new Vector3(0.4f, 0, 0), Vector3.down, out slopeHit, 1f))
             {
-                Debug.Log("Treffer1");
+                //Debug.Log("Treffer1");
                 hitPointNormal = slopeHit.normal;
                 return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit;
             }
             else if (Physics.Raycast(transform.position + new Vector3(0, 0, -0.4f), Vector3.down, out slopeHit, 1f))
             {
-                Debug.Log("Treffer2");
+                //Debug.Log("Treffer2");
                 hitPointNormal = slopeHit.normal;
                 return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit;
             }
             else if (Physics.Raycast(transform.position + new Vector3(0, 0, 0.4f), Vector3.down, out slopeHit, 1f))
             {
-                Debug.Log("Treffer3");
+                //Debug.Log("Treffer3");
                 hitPointNormal = slopeHit.normal;
                 return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit;
             }
             else if (Physics.Raycast(transform.position + new Vector3(-0.4f, 0, 0), Vector3.down, out slopeHit, 1f))
             {
-                Debug.Log("Treffer4");
+                //Debug.Log("Treffer4");
                 hitPointNormal = slopeHit.normal;
                 return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit;
             }
@@ -156,7 +156,7 @@ public class ThirdPersonMovement : MonoBehaviour
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
 
             //if sliding the move direction will be overwriten
-            if(willSlideOnSlopes && isSliding)
+            if(willSlideOnSlopes && isSliding )
             {
                 moveDir = new Vector3(hitPointNormal.x, -hitPointNormal.y, hitPointNormal.z) * slopeSpeed;
             }

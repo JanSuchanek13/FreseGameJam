@@ -32,7 +32,7 @@ public class BreakingObj : MonoBehaviour
             {
                 resetPos = transform.position;
                 resetRot = transform.rotation.eulerAngles;
-                Debug.Log(transform.position);
+                //Debug.Log(transform.position);
             }
         }
     }

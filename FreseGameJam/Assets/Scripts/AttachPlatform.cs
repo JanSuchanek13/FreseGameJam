@@ -101,10 +101,7 @@ public class AttachPlatform : MonoBehaviour
 				agent.avoidancePriority = 50;
 			}
 		}
-        else
-        {
-			
-		}
+        
 			
 	}
 
@@ -124,14 +121,10 @@ public class AttachPlatform : MonoBehaviour
 		// close to the current one.
 		if (MagmaJump)
         {
-			if (!agent.pathPending && agent.remainingDistance < 2f)
-				GotoNextPoint();
-		}
-		if (!MagmaJump & destPoint > 1)
-        {
 			if (!agent.pathPending && agent.remainingDistance < 1f)
 				GotoNextPoint();
 		}
+		
 
 
 
@@ -154,10 +147,7 @@ public class AttachPlatform : MonoBehaviour
 				}
 			}
 		}
-        else
-        {
-			GotoNextPoint();
-		}
+        
 
 
 		
