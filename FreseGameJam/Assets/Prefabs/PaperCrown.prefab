@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6478536213147159724, guid: d335327713c4e48f3a17a1660803261b, type: 3}
+  - {fileID: 2100000, guid: ff8c1e11753947d4c8267f1bfdcc2ee7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -111,6 +111,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationVector: {x: 0, y: -1, z: 0}
   speed: 30
+  partialRotation: 0
+  maxRotationLeft: 100
+  maxRotationRight: -100
 --- !u!114 &3498060690871478095
 MonoBehaviour:
   m_ObjectHideFlags: 0
