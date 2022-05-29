@@ -107,7 +107,7 @@ public class StateController : MonoBehaviour
             {
                 if (Input.GetKeyDown(keyCodes[i]))
                 {
-                    Debug.Log(i * 3);
+                    //Debug.Log(i * 3);
                     isChanging = true;
 
                     switch (i)//change Movement state

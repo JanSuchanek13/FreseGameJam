@@ -7,6 +7,7 @@ public class CrownCounter : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI CrownCounters;
     [SerializeField] TextMeshProUGUI TimeCounter;
+    [SerializeField] TextMeshProUGUI DeathCounters;
     [SerializeField] int level;
     int crowns = 0;
     
@@ -24,6 +25,11 @@ public class CrownCounter : MonoBehaviour
         if (TimeCounter != null)
         {
             TimeCounter.text = PlayerPrefs.GetFloat("timer" + level, 0).ToString();
+        }
+
+        if (DeathCounters != null)
+        {
+            DeathCounters.text = PlayerPrefs.GetInt("deaths" + level, 1).ToString();
         }
     }
 

@@ -14,10 +14,13 @@ public class Level_Manager : MonoBehaviour
     
     public int[] crowns = new int[3];
 
+    public int[] deaths = new int[3];
+
 
     public Button[] buttons;
     public TextMeshProUGUI[] CrownCounters;
     public TextMeshProUGUI[] TimeCounters;
+    public TextMeshProUGUI[] DeathCounters;
 
     // Start is called before the first frame update
     void Start()
@@ -58,6 +61,13 @@ public class Level_Manager : MonoBehaviour
             timer[i] = PlayerPrefs.GetFloat("timer" + i, 0);
             TimeCounters[i].text = timer[i].ToString();
         }
+
+        //Death
+        for (int i = 0; i < levelIsUnlocked; i++)
+        {
+            deaths[i] = PlayerPrefs.GetInt("deaths" + i, 0);
+            DeathCounters[i].text = timer[i].ToString();
+        }
     }
 
     public void LoadLevel(int levelIndex)
@@ -77,6 +87,10 @@ public class Level_Manager : MonoBehaviour
         foreach (float i in timer)
         {
             PlayerPrefs.SetFloat("timer" + i, 0);
+        }
+        foreach(int i in deaths)
+        {
+            PlayerPrefs.SetInt("deaths" + i, 0);
         }
     }
 
