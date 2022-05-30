@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using TMPro;
 
 public class ToTextFile : MonoBehaviour
 {
-    public InputField inputFieldChat;
+    //public InputField inputFieldChat;
+   [SerializeField] TMP_InputField inputFieldChat;
 
 
-   void Start()
+    void Start()
     {
         Directory.CreateDirectory(Application.streamingAssetsPath + "/Chat_Logs/");
 

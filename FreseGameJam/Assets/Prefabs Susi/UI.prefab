@@ -6206,7 +6206,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 801cfe037bea6c749be7ed6caa627f82, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 19c48dbb7d58ce046853d0e6cd04227c, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -8469,6 +8469,7 @@ MonoBehaviour:
   - 0
   - 0
   crowns: 000000000000000000000000
+  deaths: 000000000000000000000000
   buttons:
   - {fileID: 1731036823005612672}
   - {fileID: 1731036822464212149}
@@ -8481,6 +8482,7 @@ MonoBehaviour:
   - {fileID: 1731036822993337459}
   - {fileID: 1731036823664164947}
   - {fileID: 1731036823358633674}
+  DeathCounters: []
 --- !u!1 &1731036824141841469
 GameObject:
   m_ObjectHideFlags: 0
@@ -9216,6 +9218,7 @@ MonoBehaviour:
   - 0
   - 0
   crowns: 000000000000000000000000
+  deaths: 000000000000000000000000
   buttons:
   - {fileID: 1731036822921299587}
   - {fileID: 1731036823162569249}
@@ -9228,6 +9231,7 @@ MonoBehaviour:
   - {fileID: 1731036822880622632}
   - {fileID: 1731036823378398900}
   - {fileID: 1731036823834009353}
+  DeathCounters: []
 --- !u!1 &1731036824331813060
 GameObject:
   m_ObjectHideFlags: 0
