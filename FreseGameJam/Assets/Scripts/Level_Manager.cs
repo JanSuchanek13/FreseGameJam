@@ -22,6 +22,10 @@ public class Level_Manager : MonoBehaviour
     public TextMeshProUGUI[] TimeCounters;
     public TextMeshProUGUI[] DeathCounters;
 
+    public TextMeshProUGUI[] HS_CrownCounters;
+    public TextMeshProUGUI[] HS_TimeCounters;
+    public TextMeshProUGUI[] HS_DeathCounters;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -51,6 +55,7 @@ public class Level_Manager : MonoBehaviour
         {
             crowns[i] = PlayerPrefs.GetInt("crowns"+ i, 1);
             CrownCounters[i].text = crowns[i].ToString();
+            HS_CrownCounters[i].text = crowns[i].ToString();
         }
 
 
@@ -59,14 +64,38 @@ public class Level_Manager : MonoBehaviour
         for (int i = 0; i < levelIsUnlocked; i++)
         {
             timer[i] = PlayerPrefs.GetFloat("timer" + i, 0);
-            TimeCounters[i].text = timer[i].ToString();
+
+            //FelixBeginn:
+            //experiment
+            /*public string FormatTime( float time )
+            {
+                int minutes = (int) time / 60 ;
+                int seconds = (int) time - 60 * minutes;
+                int milliseconds = (int) (1000 * (time - minutes * 60 - seconds));
+                return string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds );
+            }
+            void Start()
+            {
+                Debug.Log( FormatTime( 79.230 ) ) ; // Outputs 01:19:230
+            }*/
+            Debug.Log(timer[i].ToString()); // this should show jans number
+            int minutes = (int)timer[i] / 60;
+            int seconds = (int)timer[i] - 60 * minutes;
+            int milliseconds = (int)(1000 * (timer[i] - minutes * 60 - seconds));
+            TimeCounters[i].text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
+            HS_TimeCounters[i].text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds); // to display current stats in Highscore (HS) interface of start screen
+            Debug.Log(timer[i].ToString()); // this should STILL show jans number
+            //FelixEnd:
+            
+            //TimeCounters[i].text = timer[i].ToString(); //Jans original
         }
 
         //Death
         for (int i = 0; i < levelIsUnlocked; i++)
         {
             deaths[i] = PlayerPrefs.GetInt("deaths" + i, 0);
-            DeathCounters[i].text = timer[i].ToString();
+            DeathCounters[i].text = deaths[i].ToString();
+            HS_DeathCounters[i].text = deaths[i].ToString();
         }
     }
 
