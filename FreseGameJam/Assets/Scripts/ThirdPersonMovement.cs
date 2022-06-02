@@ -31,6 +31,7 @@ public class ThirdPersonMovement : MonoBehaviour
     private bool willSlideOnSlopes = true;
     private float slopeSpeed = 8f;
     private Vector3 hitPointNormal;
+    public LayerMask SlideMasks;
 
     //for Animation
     public bool idle;
@@ -66,31 +67,31 @@ public class ThirdPersonMovement : MonoBehaviour
         get
         {
             Debug.DrawRay(transform.position + new Vector3(0, 0, 0.4f), Vector3.down,Color.red);
-            if((Physics.Raycast(transform.position, Vector3.down, out RaycastHit slopeHit, 1f)/* || (Physics.Raycast(transform.position + new Vector3(0.4f,0,0), Vector3.down, out slopeHit, 1f)) || (Physics.Raycast(transform.position + new Vector3(0, 0, -0.4f), Vector3.down, out slopeHit, 1f)) || (Physics.Raycast(transform.position + new Vector3(0, 0, 0.4f), Vector3.down, out slopeHit, 1f)) || (Physics.Raycast(transform.position + new Vector3(-0.4f, 0, 0), Vector3.down, out slopeHit, 1f))*/))
+            if ((Physics.Raycast(transform.position, Vector3.down, out RaycastHit slopeHit, 1f, SlideMasks, QueryTriggerInteraction.Ignore )/* || (Physics.Raycast(transform.position + new Vector3(0.4f,0,0), Vector3.down, out slopeHit, 1f)) || (Physics.Raycast(transform.position + new Vector3(0, 0, -0.4f), Vector3.down, out slopeHit, 1f)) || (Physics.Raycast(transform.position + new Vector3(0, 0, 0.4f), Vector3.down, out slopeHit, 1f)) || (Physics.Raycast(transform.position + new Vector3(-0.4f, 0, 0), Vector3.down, out slopeHit, 1f))*/))
             {
                 //Debug.Log("Treffer");
                 hitPointNormal = slopeHit.normal;
                 return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit;
             }
-            else if (Physics.Raycast(transform.position + new Vector3(0.4f, 0, 0), Vector3.down, out slopeHit, 1f))
+            else if (Physics.Raycast(transform.position + new Vector3(0.4f, 0, 0), Vector3.down, out slopeHit, 1f, SlideMasks, QueryTriggerInteraction.Ignore))
             {
                 //Debug.Log("Treffer1");
                 hitPointNormal = slopeHit.normal;
                 return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit;
             }
-            else if (Physics.Raycast(transform.position + new Vector3(0, 0, -0.4f), Vector3.down, out slopeHit, 1f))
+            else if (Physics.Raycast(transform.position + new Vector3(0, 0, -0.4f), Vector3.down, out slopeHit, 1f, SlideMasks, QueryTriggerInteraction.Ignore))
             {
                 //Debug.Log("Treffer2");
                 hitPointNormal = slopeHit.normal;
                 return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit;
             }
-            else if (Physics.Raycast(transform.position + new Vector3(0, 0, 0.4f), Vector3.down, out slopeHit, 1f))
+            else if (Physics.Raycast(transform.position + new Vector3(0, 0, 0.4f), Vector3.down, out slopeHit, 1f, SlideMasks, QueryTriggerInteraction.Ignore))
             {
                 //Debug.Log("Treffer3");
                 hitPointNormal = slopeHit.normal;
                 return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit;
             }
-            else if (Physics.Raycast(transform.position + new Vector3(-0.4f, 0, 0), Vector3.down, out slopeHit, 1f))
+            else if (Physics.Raycast(transform.position + new Vector3(-0.4f, 0, 0), Vector3.down, out slopeHit, 1f, SlideMasks, QueryTriggerInteraction.Ignore))
             {
                 //Debug.Log("Treffer4");
                 hitPointNormal = slopeHit.normal;
@@ -156,7 +157,7 @@ public class ThirdPersonMovement : MonoBehaviour
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
 
             //if sliding the move direction will be overwriten
-            if(willSlideOnSlopes && isSliding )
+            if(willSlideOnSlopes && isSliding && !onBridge)
             {
                 moveDir = new Vector3(hitPointNormal.x, -hitPointNormal.y, hitPointNormal.z) * slopeSpeed;
             }
@@ -348,7 +349,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     IEnumerator CapricornDash()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.8f);
         //speed = capricornSpeed;
         GetComponent<Rigidbody>();
         for (int i = 0; i < 50; i++)
@@ -361,7 +362,7 @@ public class ThirdPersonMovement : MonoBehaviour
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDir.normalized * (speed*3) * Time.deltaTime);
             yield return new WaitForSeconds(.005f);
-            Debug.Log("lauf");
+            //Debug.Log("lauf");
 
             //extra push power
             Collider[] allObjects = Physics.OverlapSphere(transform.position, 3);   //all Objects in explosion Range

@@ -11,7 +11,10 @@ public class HealthSystem : MonoBehaviour
     public Vector3 RespawnPoint; // felix made this public for portable respawn position
     public bool inUse;
 
-    GameObject Cam;
+    [SerializeField] GameObject Cam;
+    [SerializeField] GameObject Cam2;
+    CloseQuarterCamera CamScript;
+    CharacterController Character;
     float gravity;
 
     //safe Level
@@ -24,7 +27,10 @@ public class HealthSystem : MonoBehaviour
 
     private void Start()
     {
-        Cam = GetComponentInChildren<CinemachineFreeLook>().gameObject;
+        //Cam = GetComponentInChildren<CinemachineFreeLook>().gameObject; //old
+        //Debug.Log(Cam);
+        CamScript = GetComponentInChildren<CloseQuarterCamera>();
+        Character = GetComponentInChildren<CharacterController>();
 
         gravity = GetComponent<ThirdPersonMovement>().gravity;
 
@@ -63,7 +69,7 @@ public class HealthSystem : MonoBehaviour
                 }
             }
             PlayerPrefs.SetInt("lastCheckpoint" + (currentLevel - 2), lastCheckpoint[(currentLevel - 2)]);
-            Debug.Log(PlayerPrefs.GetInt("lastCheckpoint" + (currentLevel - 2)));
+            //Debug.Log(PlayerPrefs.GetInt("lastCheckpoint" + (currentLevel - 2)));
 
             other.gameObject.transform.GetChild(0).gameObject.SetActive(true);
             //Debug.Log("updated checkpouin"); //felix add
@@ -93,13 +99,17 @@ public class HealthSystem : MonoBehaviour
             GameObject.Find("riverBoat_Friend_Fire").GetComponent<SpeedUpNavMeshAgent>().StopForDead();
             inUse = true;
             Debug.Log(RespawnPoint);
-            
+
             //Respawn Player
+            CamScript.enabled = false;
+            Cam2.SetActive(false);
             Cam.SetActive(false);
             GetComponent<ThirdPersonMovement>().gravity = gravity / 10;
             yield return new WaitForSeconds(1f);
             gameObject.transform.position = new Vector3(0, -3, 0) + RespawnPoint;
+            Cam2.SetActive(true);
             Cam.SetActive(true);
+            CamScript.enabled = true;
             GetComponent<ThirdPersonMovement>().gravity = gravity;
             inUse = false;
         }
