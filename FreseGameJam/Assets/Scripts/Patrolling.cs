@@ -57,22 +57,28 @@ public class Patrolling : MonoBehaviour
     {
         // Choose the next destination point when the agent gets
         // close to the current one.
-        if (!agent.pathPending && agent.remainingDistance < 0.5f)
-            GotoNextPoint();
+        if (!ReachedTarget)
+        {
+            if (!agent.pathPending && agent.remainingDistance < 0.5f)
+                GotoNextPoint();
+        }else
+        {
+            enabled = false;
+        }
     }
 
 
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Destination"))
+        if (other.CompareTag("Destination") && !ReachedTarget)
         {
             ReachedTarget = true;
             Debug.Log("I reached my destination!!!!");
             _turnOffElements.SetActive(false);
             _turnOnElements.SetActive(true);
+            agent.isStopped = true;
         }
-
     }
 
 
