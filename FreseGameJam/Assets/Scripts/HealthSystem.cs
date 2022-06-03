@@ -22,7 +22,7 @@ public class HealthSystem : MonoBehaviour
     int[] deaths = new int[3];
     public List<GameObject> CheckpointsGO;
     List<Vector3> Checkpoints = new List<Vector3>(); // list of all Checkpoints in this Level
-    int[] lastCheckpoint = new int[3];// int of the last Checkpoint in each Level, for Continue the Game
+    public int[] lastCheckpoint = new int[3];// int of the last Checkpoint in each Level, for Continue the Game
 
 
     private void Start()

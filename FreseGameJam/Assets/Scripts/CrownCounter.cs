@@ -5,6 +5,7 @@ using TMPro;
 
 public class CrownCounter : MonoBehaviour
 {
+    //Script shows Stats in the Transition
     [SerializeField] TextMeshProUGUI CrownCounters;
     [SerializeField] TextMeshProUGUI TimeCounter;
     [SerializeField] TextMeshProUGUI DeathCounters;
@@ -24,7 +25,8 @@ public class CrownCounter : MonoBehaviour
 
         if (TimeCounter != null)
         {
-            TimeCounter.text = PlayerPrefs.GetFloat("timer" + level, 0).ToString();
+            float fullTime = PlayerPrefs.GetFloat("timer" + level, 0) + PlayerPrefs.GetFloat("lastTimer" + level, 0);
+            TimeCounter.text = fullTime.ToString();
         }
 
         if (DeathCounters != null)

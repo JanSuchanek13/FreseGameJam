@@ -8,6 +8,7 @@ using TMPro;
 
 public class Level_Manager : MonoBehaviour
 {
+    public int numberOfLevels = 1; //delete this if we have 3 Level
 
     int levelIsUnlocked;
     public float[] timer = new float[3];
@@ -15,6 +16,8 @@ public class Level_Manager : MonoBehaviour
     public int[] crowns = new int[3];
 
     public int[] deaths = new int[3];
+
+    public int[] checkpoints = new int[3];
 
 
     public Button[] buttons;
@@ -51,11 +54,15 @@ public class Level_Manager : MonoBehaviour
         crowns[1] = PlayerPrefs.GetInt("crowns", 0);
         crowns[2] = PlayerPrefs.GetInt("crowns", 0);
         */
-        for (int i = 0; i < levelIsUnlocked; i++)
+        for (int i = 0; i < levelIsUnlocked; i++)   // shows only stats for unlocked levels
         {
             crowns[i] = PlayerPrefs.GetInt("crowns"+ i, 1);
-            CrownCounters[i].text = crowns[i].ToString();
-            HS_CrownCounters[i].text = crowns[i].ToString();
+            if (i < numberOfLevels)     // fixes error cause only 1 Level is shown
+            {
+                CrownCounters[i].text = crowns[i].ToString();
+                HS_CrownCounters[i].text = crowns[i].ToString();
+            }
+            
         }
 
 
@@ -63,7 +70,7 @@ public class Level_Manager : MonoBehaviour
         //Timer
         for (int i = 0; i < levelIsUnlocked; i++)
         {
-            timer[i] = PlayerPrefs.GetFloat("timer" + i, 0);
+            timer[i] = PlayerPrefs.GetFloat("timer" + i, 0) + PlayerPrefs.GetFloat("lastTimer" + i, 0);
 
             //FelixBeginn:
             //experiment
@@ -82,8 +89,12 @@ public class Level_Manager : MonoBehaviour
             int minutes = (int)timer[i] / 60;
             int seconds = (int)timer[i] - 60 * minutes;
             int milliseconds = (int)(1000 * (timer[i] - minutes * 60 - seconds));
-            TimeCounters[i].text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
-            HS_TimeCounters[i].text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds); // to display current stats in Highscore (HS) interface of start screen
+            if (i < numberOfLevels)
+            {
+                TimeCounters[i].text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
+                HS_TimeCounters[i].text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds); // to display current stats in Highscore (HS) interface of start screen
+            }
+            
             Debug.Log(timer[i].ToString()); // this should STILL show jans number
             //FelixEnd:
             
@@ -94,12 +105,16 @@ public class Level_Manager : MonoBehaviour
         for (int i = 0; i < levelIsUnlocked; i++)
         {
             deaths[i] = PlayerPrefs.GetInt("deaths" + i, 0);
-            DeathCounters[i].text = deaths[i].ToString();
-            HS_DeathCounters[i].text = deaths[i].ToString();
+            if (i < numberOfLevels)
+            {
+                DeathCounters[i].text = deaths[i].ToString();
+                HS_DeathCounters[i].text = deaths[i].ToString();
+            }
+            
         }
     }
 
-    public void LoadLevel(int levelIndex)
+    public void LoadLevel(int levelIndex)   //not in use
     {
         SceneManager.LoadScene(levelIndex);
         PlayerPrefs.SetInt("crowns" + (levelIndex - 2), 0);
@@ -108,7 +123,7 @@ public class Level_Manager : MonoBehaviour
     public void ResetLevel()
     {
         PlayerPrefs.SetInt("levelIsUnlocked", 1);
-        Start();
+        
         foreach(int i in crowns)
         {
             PlayerPrefs.SetInt("crowns" + i, 0);
@@ -116,11 +131,18 @@ public class Level_Manager : MonoBehaviour
         foreach (float i in timer)
         {
             PlayerPrefs.SetFloat("timer" + i, 0);
+            PlayerPrefs.SetFloat("lastTimer" + i, 0);
         }
         foreach(int i in deaths)
         {
             PlayerPrefs.SetInt("deaths" + i, 0);
         }
+        foreach (int i in checkpoints)
+        {
+            PlayerPrefs.SetInt("lastCheckpoint" + i, 0);
+        }
+
+        Start();
     }
 
     public void ContinueLevel()
