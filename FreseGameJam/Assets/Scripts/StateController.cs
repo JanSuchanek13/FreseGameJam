@@ -35,6 +35,8 @@ public class StateController : MonoBehaviour
     [SerializeField] AudioSource PickUp_Sound2;
     [SerializeField] AudioSource Friend_Sound;
 
+    CollectedCrowns CollectedCrowns;
+
     private void OnTriggerEnter(Collider other)
     {
         
@@ -71,6 +73,7 @@ public class StateController : MonoBehaviour
         {
             Debug.Log("hit:Crown");
 
+            // for Level Stats
             int currentLevel = SceneManager.GetActiveScene().buildIndex;
             crowns[(currentLevel - 2)] = PlayerPrefs.GetInt("crowns" + (currentLevel-2));
             PlayerPrefs.SetInt("crowns"+ (currentLevel - 2), crowns[(currentLevel - 2)] + 1);
@@ -79,7 +82,11 @@ public class StateController : MonoBehaviour
             PickUp_Sound.Play(0);
             //PickUp_Sound.enabled = true;
             // PickUp_Sound.enabled = false;
-            Destroy(other.gameObject);
+            //Destroy(other.gameObject);
+            other.gameObject.SetActive(false);
+
+            // for CollectedCrowns
+            CollectedCrowns.MakeBoolArray(false);
         }
         if (other.gameObject.CompareTag("Friend"))
         {
@@ -94,6 +101,8 @@ public class StateController : MonoBehaviour
     private void Start()
     {
         human = true;
+        CollectedCrowns = GameObject.Find("GameManager").GetComponent<CollectedCrowns>();
+        
     }
 
     // Update is called once per frame

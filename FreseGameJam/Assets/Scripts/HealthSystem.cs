@@ -41,7 +41,7 @@ public class HealthSystem : MonoBehaviour
         {
             
             Checkpoints.Add(CheckpointsGO[i].transform.position);
-            Debug.Log(Checkpoints[i]);
+            //Debug.Log(Checkpoints[i]);
         }
         
 
