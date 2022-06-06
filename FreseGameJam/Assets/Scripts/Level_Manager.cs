@@ -127,6 +127,14 @@ public class Level_Manager : MonoBehaviour
         foreach(int i in crowns)
         {
             PlayerPrefs.SetInt("crowns" + i, 0);
+
+            //reset for collected Crowns
+            char[] bits = PlayerPrefs.GetString("bitString" + (i)).ToCharArray();
+            for (int j = 0; j < bits.Length; j++)
+            {
+                bits[j] = '1';
+            }
+            PlayerPrefs.SetString("bitString" + (i), bits.ArrayToString());
         }
         foreach (float i in timer)
         {
@@ -141,6 +149,7 @@ public class Level_Manager : MonoBehaviour
         {
             PlayerPrefs.SetInt("lastCheckpoint" + i, 0);
         }
+        
 
         Start();
     }

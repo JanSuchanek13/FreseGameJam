@@ -47,10 +47,7 @@ public class CollectedCrowns : MonoBehaviour
 				boolValuesArr.Add(Crowns[i].activeInHierarchy);
 			}
 
-			Debug.Log("second");
-			
 			bitString = PlayerPrefs.GetString("bitString" + (currentLevel - 2));
-			Debug.Log("first");
 			UnpackDataFromBitString();
 			DeactivateCrowns();
 			//PackDataToBitString();
@@ -96,11 +93,11 @@ public class CollectedCrowns : MonoBehaviour
 			bits[i] = boolValuesArr[i] == true ? '1' : '0';
 		}
 		bitString = new string(bits);
-		Debug.Log("Packed data: " + bitString);
+		//Debug.Log("Packed data: " + bitString);
 
 		// safe String
 		PlayerPrefs.SetString("bitString" + (currentLevel - 2), bitString);
-		Debug.Log("PlayerPrefs data: " + PlayerPrefs.GetString("bitString" + (currentLevel - 2)));
+		//Debug.Log("PlayerPrefs data: " + PlayerPrefs.GetString("bitString" + (currentLevel - 2)));
 
 	}
 
@@ -112,7 +109,7 @@ public class CollectedCrowns : MonoBehaviour
 		for (int i = 0; i < bits.Length; i++)
 		{
 			boolValuesArr[i] = bits[i] == '1' ? true : false;
-			Debug.Log("unpacked data: " + boolValuesArr[i]);
+			//Debug.Log("unpacked data: " + boolValuesArr[i]);
 		}
 		
 	}
