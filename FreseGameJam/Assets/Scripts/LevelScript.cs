@@ -9,8 +9,23 @@ public class LevelScript : MonoBehaviour
     public int nextLevel = 3;
 
     float[] timer = new float[3];
+    float[] lastTimer = new float[3];
+    int currentLevel;
 
+    private void Start()
+    {
+        //safe level
+        currentLevel = SceneManager.GetActiveScene().buildIndex;
 
+        //add time of last run
+        lastTimer[(currentLevel - 2)] = PlayerPrefs.GetFloat("lastTimer" + (currentLevel - 2));
+    }
+
+    private void Update()
+    {
+        //safe time per frame
+        PlayerPrefs.SetFloat("lastTimer" + (currentLevel - 2), Time.timeSinceLevelLoad + lastTimer[(currentLevel - 2)]);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -37,12 +52,10 @@ public class LevelScript : MonoBehaviour
 
         Debug.Log("LEVEL" + PlayerPrefs.GetInt("levelIsUnlocked") + " UNLOCKED");
 
-
-        //safe Time
-        timer[(currentLevel - 2)] = PlayerPrefs.GetFloat("timer" + (currentLevel - 2));
-        PlayerPrefs.SetFloat("timer" + (currentLevel - 2), Time.timeSinceLevelLoad);
-
+       
         
+
+
 
         //change Level
         StartCoroutine(LoadLevel(nextLevel));

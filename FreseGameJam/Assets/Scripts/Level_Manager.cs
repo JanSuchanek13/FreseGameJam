@@ -19,6 +19,8 @@ public class Level_Manager : MonoBehaviour
 
     public int[] checkpoints = new int[3];
 
+    public int[] states = new int[3];
+
 
     public Button[] buttons;
     public TextMeshProUGUI[] CrownCounters;
@@ -148,6 +150,10 @@ public class Level_Manager : MonoBehaviour
         foreach (int i in checkpoints)
         {
             PlayerPrefs.SetInt("lastCheckpoint" + i, 0);
+        }
+        foreach (int i in states)
+        {
+            PlayerPrefs.SetInt("State" + i, 0);
         }
         
 

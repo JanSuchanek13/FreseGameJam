@@ -23,7 +23,7 @@ public class ButtonFunction : MonoBehaviour
     private void Update()
     {
         //safe time per frame
-        PlayerPrefs.SetFloat("lastTimer" + (currentLevel - 2), Time.timeSinceLevelLoad + lastTimer[(currentLevel - 2)]);
+        //PlayerPrefs.SetFloat("lastTimer" + (currentLevel - 2), Time.timeSinceLevelLoad + lastTimer[(currentLevel - 2)]);
 
         if (Input.GetButtonDown("Cancel"))
         {
@@ -33,13 +33,5 @@ public class ButtonFunction : MonoBehaviour
         }
     }
 
-    /*  Do not use (old code, just for example if safe time on Update won´t work)
-    public void SafeTime() 
-    {
-        //safe Time
-        lastTimer[(currentLevel - 2)] = PlayerPrefs.GetFloat("lastTimer" + (currentLevel - 2));
-        PlayerPrefs.SetFloat("lastTimer" + (currentLevel - 2), Time.timeSinceLevelLoad + PlayerPrefs.GetFloat("lastTimer" + (currentLevel - 2)));
-        Debug.Log("Safe Time");
-    }
-    */
+    
 }

@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class StateController : MonoBehaviour
 {
+    int currentLevel;
+
     int[] crowns = new int[3];
 
     public bool availableFrog;
@@ -19,6 +21,7 @@ public class StateController : MonoBehaviour
     public bool capricorn;
     public bool lama;
     bool isChanging;
+    public int StateNumber = 0;
     private KeyCode[] keyCodes = new KeyCode[] { KeyCode.Alpha0, KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5, KeyCode.Alpha6, KeyCode.Alpha7, KeyCode.Alpha8, KeyCode.Alpha9 };
 
 
@@ -46,6 +49,7 @@ public class StateController : MonoBehaviour
             availableCrane = true;
             PickUp_Sound2.enabled = true;
             Destroy(other.gameObject, .3f);
+            PlayerPrefs.SetInt("State" + (currentLevel - 2), 1);
         }
         if (other.gameObject.CompareTag("Frog"))
         {
@@ -53,6 +57,7 @@ public class StateController : MonoBehaviour
             availableFrog = true;
             PickUp_Sound2.enabled = true;
             Destroy(other.gameObject, .3f);
+            PlayerPrefs.SetInt("State" + (currentLevel - 2), 4);
         }
 
         if (other.gameObject.CompareTag("Capricorn"))
@@ -61,6 +66,7 @@ public class StateController : MonoBehaviour
             availableCapricorn = true;
             PickUp_Sound2.enabled = true;
             Destroy(other.gameObject, .3f);
+            PlayerPrefs.SetInt("State" + (currentLevel - 2), 2);
         }
         if (other.gameObject.CompareTag("Lama"))
         {
@@ -68,13 +74,14 @@ public class StateController : MonoBehaviour
             availableLama = true;
             PickUp_Sound2.enabled = true;
             Destroy(other.gameObject, .3f);
+            PlayerPrefs.SetInt("State" + (currentLevel - 2), 3);
         }
         if (other.gameObject.CompareTag("Crown"))
         {
             Debug.Log("hit:Crown");
 
             // for Level Stats
-            int currentLevel = SceneManager.GetActiveScene().buildIndex;
+            currentLevel = SceneManager.GetActiveScene().buildIndex;
             crowns[(currentLevel - 2)] = PlayerPrefs.GetInt("crowns" + (currentLevel-2));
             PlayerPrefs.SetInt("crowns"+ (currentLevel - 2), crowns[(currentLevel - 2)] + 1);
             Debug.Log(PlayerPrefs.GetInt("crowns"));
@@ -100,9 +107,38 @@ public class StateController : MonoBehaviour
 
     private void Start()
     {
+        currentLevel = SceneManager.GetActiveScene().buildIndex;
         human = true;
         CollectedCrowns = GameObject.Find("GameManager").GetComponent<CollectedCrowns>();
-        
+
+        //PlayerPrefs.SetInt("State" + currentLevel, 0);
+        // activate the available States
+        bool[] availableStates = new bool[] { availableCrane, availableCapricorn, availableLama, availableFrog };
+        StateNumber = PlayerPrefs.GetInt("State" + (currentLevel - 2));
+        for (int i = 0; i < StateNumber; i++)
+        {
+            switch (i+1)
+            {
+                case 1:
+                    availableCrane = true;
+                    break;
+
+                case 2:
+                    availableCapricorn = true;
+                    break;
+
+                case 3:
+                    availableLama = true;
+                    break;
+
+                case 4:
+                    availableFrog = true;
+                    break;
+
+                default:
+                    break;
+            }
+        }
     }
 
     // Update is called once per frame
@@ -131,7 +167,7 @@ public class StateController : MonoBehaviour
                             StartCoroutine(changeModell(i));
                             break;
 
-                        case 3:
+                        case 5:
                             if (availableFrog)
                             {
                                 ball = false;
@@ -157,7 +193,7 @@ public class StateController : MonoBehaviour
                             }
                             break;
 
-                        case 4:
+                        case 3:
                             if (availableCapricorn)
                             {
                                 ball = false;
@@ -170,7 +206,7 @@ public class StateController : MonoBehaviour
                             }
                             break;
 
-                        case 5:
+                        case 4:
                             if (availableLama)
                             {
                                 ball = false;
@@ -181,6 +217,10 @@ public class StateController : MonoBehaviour
                                 lama = true;
                                 StartCoroutine(changeModell(i));
                             }
+                            break;
+
+                        case 6&7&8&9:
+                            isChanging = false;
                             break;
 
                         default:
@@ -212,7 +252,7 @@ public class StateController : MonoBehaviour
                 ballVisuell.SetActive(false);
                 break;
 
-            case 3:
+            case 5:
                 frogVisuell.SetActive(true);
                 ballVisuell.SetActive(false);
                 break;
@@ -222,12 +262,12 @@ public class StateController : MonoBehaviour
                 ballVisuell.SetActive(false);
                 break;
 
-            case 4:
+            case 3:
                 capricornVisuell.SetActive(true);
                 ballVisuell.SetActive(false);
                 break;
 
-            case 5:
+            case 4:
                 lamaVisuell.SetActive(true);
                 ballVisuell.SetActive(false);
                 break;
