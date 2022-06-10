@@ -9,6 +9,7 @@ using TMPro;
 public class Level_Manager : MonoBehaviour
 {
     public int numberOfLevels = 1; //delete this if we have 3 Level
+    [SerializeField] Highscore highscore;
 
     int levelIsUnlocked;
     public float[] timer = new float[3];
@@ -72,7 +73,7 @@ public class Level_Manager : MonoBehaviour
         //Timer
         for (int i = 0; i < levelIsUnlocked; i++)
         {
-            timer[i] = PlayerPrefs.GetFloat("timer" + i, 0) + PlayerPrefs.GetFloat("lastTimer" + i, 0);
+            timer[i] = PlayerPrefs.GetFloat("timer" + i, 0);
 
             //FelixBeginn:
             //experiment
@@ -87,7 +88,7 @@ public class Level_Manager : MonoBehaviour
             {
                 Debug.Log( FormatTime( 79.230 ) ) ; // Outputs 01:19:230
             }*/
-            Debug.Log(timer[i].ToString()); // this should show jans number
+            //Debug.Log(timer[i].ToString()); // this should show jans number
             int minutes = (int)timer[i] / 60;
             int seconds = (int)timer[i] - 60 * minutes;
             int milliseconds = (int)(1000 * (timer[i] - minutes * 60 - seconds));
@@ -97,7 +98,7 @@ public class Level_Manager : MonoBehaviour
                 HS_TimeCounters[i].text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds); // to display current stats in Highscore (HS) interface of start screen
             }
             
-            Debug.Log(timer[i].ToString()); // this should STILL show jans number
+            //Debug.Log(timer[i].ToString()); // this should STILL show jans number
             //FelixEnd:
             
             //TimeCounters[i].text = timer[i].ToString(); //Jans original
@@ -124,6 +125,8 @@ public class Level_Manager : MonoBehaviour
 
     public void ResetLevel()
     {
+        highscore.SafeLastStats();
+        
         PlayerPrefs.SetInt("levelIsUnlocked", 1);
         
         foreach(int i in crowns)
@@ -141,7 +144,7 @@ public class Level_Manager : MonoBehaviour
         foreach (float i in timer)
         {
             PlayerPrefs.SetFloat("timer" + i, 0);
-            PlayerPrefs.SetFloat("lastTimer" + i, 0);
+            //PlayerPrefs.SetFloat("lastTimer" + i, 0);
         }
         foreach(int i in deaths)
         {
