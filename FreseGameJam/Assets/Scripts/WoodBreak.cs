@@ -8,10 +8,12 @@ public class WoodBreak : MonoBehaviour
     [SerializeField] AudioSource[] arrayOfBreakingSounds;
     [SerializeField] ParticleSystem Wood;
 
+    [SerializeField] bool _canBreak = true;
+
     void OnTriggerEnter(Collider other)
     {
 
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" && _canBreak )
         {
             AudioSource randomBreakingSound = arrayOfBreakingSounds[Random.Range(0, arrayOfBreakingSounds.Length)];
             randomBreakingSound.Play();
