@@ -6,6 +6,7 @@ public class WoodBreak : MonoBehaviour
 {
 
     [SerializeField] AudioSource[] arrayOfBreakingSounds;
+    [SerializeField] ParticleSystem Wood;
 
     void OnTriggerEnter(Collider other)
     {
@@ -14,6 +15,9 @@ public class WoodBreak : MonoBehaviour
         {
             AudioSource randomBreakingSound = arrayOfBreakingSounds[Random.Range(0, arrayOfBreakingSounds.Length)];
             randomBreakingSound.Play();
+
+           
+            Wood.Play();
         }
     }
 
