@@ -5,12 +5,14 @@ public class CloseQuarterCamera : MonoBehaviour
     #region variables
     private GameObject _lastTriggerHit;
     private GameObject _cameraRigFar;
+    private GameObject _cameraRigClose;
     private bool _closeQuarterCameraIsActive = false;
     private bool _currentlyInsideTrigger = false;
     #endregion
     void Start()
     {
         _cameraRigFar = this.transform.GetChild(0).gameObject;
+        _cameraRigClose = this.transform.GetChild(1).gameObject;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -34,12 +36,14 @@ public class CloseQuarterCamera : MonoBehaviour
     void ZoomIn()
     {
         _cameraRigFar.SetActive(false);
+        _cameraRigClose.SetActive(true);
         _closeQuarterCameraIsActive = true;
         Debug.Log("zoom in");
     }
     void ZoomOut()
     {
         _cameraRigFar.SetActive(true);
+        _cameraRigClose.SetActive(false);
         _closeQuarterCameraIsActive = false;
         Debug.Log("zoom out");
     }

@@ -166,6 +166,7 @@ MonoBehaviour:
   - {fileID: 5811222063297732774}
   - {fileID: 2337212548166368220}
   Wood: {fileID: 8790322891342870971}
+  _canBreak: 1
 --- !u!198 &8790322891342870971
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -180,7 +181,7 @@ ParticleSystem:
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 0
   useUnscaledTime: 0
@@ -5036,16 +5037,16 @@ AudioSource:
   m_GameObject: {fileID: 3882348853598706262}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: ffa9568dedd0906478bae5ae0dd642cf, type: 2}
   m_audioClip: {fileID: 8300000, guid: 666a2d3cad915f0448e3f08424a2f2d1, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 100
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -5163,16 +5164,16 @@ AudioSource:
   m_GameObject: {fileID: 6493290970587912544}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: ffa9568dedd0906478bae5ae0dd642cf, type: 2}
   m_audioClip: {fileID: 8300000, guid: 2894e4024ad2c144184c9168fa40df40, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 100
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -5290,16 +5291,16 @@ AudioSource:
   m_GameObject: {fileID: 7510539603724103012}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: ffa9568dedd0906478bae5ae0dd642cf, type: 2}
   m_audioClip: {fileID: 8300000, guid: 798504ba9f52941428c4e0545a9565ee, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 100
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500

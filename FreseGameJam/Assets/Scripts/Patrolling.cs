@@ -12,6 +12,8 @@ public class Patrolling : MonoBehaviour
     bool ReachedTarget = false;
     [SerializeField] GameObject _turnOffElements;
     [SerializeField] GameObject _turnOnElements;
+    private bool _waitingForPlayer = false;
+    private float _defaultSpeed;
 
 
 
@@ -24,7 +26,7 @@ public class Patrolling : MonoBehaviour
         // between points (ie, the agent doesn't slow down as it
         // approaches a destination point).
         agent.autoBraking = false;
-
+        _defaultSpeed = agent.speed;
         GotoNextPoint();
     }
 
@@ -32,7 +34,7 @@ public class Patrolling : MonoBehaviour
     void GotoNextPoint()
     {
 
-        if (ReachedTarget == false)
+        if (ReachedTarget == false && !_waitingForPlayer)
 
         {
             // Returns if no points have been set up
@@ -57,7 +59,7 @@ public class Patrolling : MonoBehaviour
     {
         // Choose the next destination point when the agent gets
         // close to the current one.
-        if (!ReachedTarget)
+        if (!ReachedTarget && !_waitingForPlayer)
         {
             if (!agent.pathPending && agent.remainingDistance < 0.5f)
                 GotoNextPoint();
@@ -82,5 +84,15 @@ public class Patrolling : MonoBehaviour
     }
 
 
-
+    // polish: this makes friend wait when touching trigger at a given location, needs a wake-up-trigger to call "StopWaiting()".
+    public void WaitForPlayer()
+    {
+        agent.speed = 0;
+        Debug.Log("now waiting for player");
+    }
+    public void StopWaiting()
+    {
+        agent.speed = _defaultSpeed;
+        Debug.Log("continuing travel");
+    }
 }
