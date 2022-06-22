@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Shuffle : MonoBehaviour
 {
-    [SerializeField] float shuffleDistance = 2f;
-    [SerializeField] float speed = 1f;
+    public float shuffleDistance = 2f;
+    public float speed = 1f;
     [SerializeField] bool useCustomDirection = false;
     [SerializeField] GameObject patrolPoint;
     private Vector3 _startPosition;

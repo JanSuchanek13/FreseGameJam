@@ -32,6 +32,9 @@ public class Level_Manager : MonoBehaviour
     public TextMeshProUGUI[] HS_TimeCounters;
     public TextMeshProUGUI[] HS_DeathCounters;
 
+    // Felix add:
+    //[SerializeField] GameObject immersePlayerIntoWorldKit;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -166,6 +169,10 @@ public class Level_Manager : MonoBehaviour
     public void ContinueLevel()
     {
         SceneManager.LoadScene(levelIsUnlocked + 1);
+
+        //Felix added for juice:
+        //GetComponent<PlayWasPressed>().ImmersePlayer(1);
+           // immersePlayerIntoWorldKit.SetActive(true);
     }
 
     // Update is called once per frame
