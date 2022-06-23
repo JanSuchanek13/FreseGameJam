@@ -131,6 +131,8 @@ public class Level_Manager : MonoBehaviour
         highscore.SafeLastStats();
         
         PlayerPrefs.SetInt("levelIsUnlocked", 1);
+        PlayerPrefs.SetInt("_cutSceneHasAlreadyPlayed", 0);
+        PlayerPrefs.SetInt("_boatPosition", 0);
         
         foreach(int i in crowns)
         {

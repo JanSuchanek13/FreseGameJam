@@ -9,9 +9,11 @@ public class TriggerSound : MonoBehaviour
     #endregion
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("something collided wuitg water");
         if (other.CompareTag("Player"))
         {
             gotActivated = true; // this tells "DelaySound" to play its sound.
+            Debug.Log("it was player");
         }
     }
 }

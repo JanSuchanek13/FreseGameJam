@@ -20,20 +20,21 @@ public class PlayWasPressed : MonoBehaviour
     private float _speedIncreaseIncrement;
     private bool _startFading;
     private float _increaceColorAlphaIncrement;
-
     private float _color_R_component;
     private float _color_G_component;
     private float _color_B_component;
     private float _color_A_component;
 
-
-
-
     void Start()
     {
-        _shuffleIncreaseIncrement = 5f / ((delayBeforeStarting+1) * 50f); 
+        Debug.Log("start was called");
+        _shuffleIncreaseIncrement = 5f / ((delayBeforeStarting+1) * 50f);
+        Debug.Log(_shuffleIncreaseIncrement); // TST:
         _speedIncreaseIncrement = 2.5f / ((delayBeforeStarting+1) * 50f);
+        Debug.Log(_speedIncreaseIncrement); // TST:
         _increaceColorAlphaIncrement = 255 / ((delayBeforeStarting * .6f) * 50f);
+        Debug.Log(_increaceColorAlphaIncrement); // TST:
+
         fadeToBlackBlende_Image = fadeToBlackBlende.GetComponent<Image>();
         _color_R_component = fadeToBlackBlende_Image.color.r;
         _color_G_component = fadeToBlackBlende_Image.color.g;
@@ -92,7 +93,13 @@ public class PlayWasPressed : MonoBehaviour
         panickedScream.pitch = _randomPitch;
         panickedScream.Play();
         helpScream.PlayDelayed(delayBeforeStarting/2f);
-        _moveTowardIsland = true;
+
+        //_moveTowardIsland = true; // testing new "MoveTowardPoint" script:
+        leftBoat.GetComponent<Shuffle>().enabled = false;
+        rightBoat.GetComponent<Shuffle>().enabled = false;
+        leftBoat.GetComponent<MoveTowardPoint>().MoveIt();
+        rightBoat.GetComponent<MoveTowardPoint>().MoveIt();
+
         Invoke("StartDelayedFade", delayBeforeStarting * .4f);
     }
     void StartNewRound()

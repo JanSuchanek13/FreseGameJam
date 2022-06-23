@@ -21,6 +21,9 @@ public class FocusPlayerViewOnObject : MonoBehaviour
     private GameObject _playerCharacter;
     private bool _turnPlayerTowardsObject = false;
     private GameObject _gameManager;
+
+    // save whether the cutscene already played:
+    int _cutSceneHasAlreadyPlayed = 0;
     #endregion
     private void Start()
     {
@@ -30,7 +33,27 @@ public class FocusPlayerViewOnObject : MonoBehaviour
     public void FocusTarget(GameObject focusObject, float lookAtThisForThisLong) // focus camera:
     {
         // pause background track:
-        _gameManager.GetComponent<BackgroundSoundPlayer>().PauseMusic();
+        if(PlayerPrefs.GetInt("_cutSceneHasAlreadyPlayed") == 0)
+        {
+            _gameManager.GetComponent<BackgroundSoundPlayer>().PauseMusic();
+
+            _focusTargetObject = focusObject;
+            Invoke("TurnOffFocus", lookAtThisForThisLong);
+            _playerCharacter.transform.LookAt(_focusTargetObject.transform.position); // turn player towards target GO:
+            _playerCharacter.GetComponent<ThirdPersonMovement>().enabled = false;
+            _turnPlayerTowardsObject = true;
+            focusCameraRig.GetComponent<CinemachineFreeLook>().LookAt = _focusTargetObject.transform; // turn camera:
+            focusCameraRig.SetActive(true);
+            // save if cutscene has played:
+            _cutSceneHasAlreadyPlayed++;
+            PlayerPrefs.SetInt("_cutSceneHasAlreadyPlayed", _cutSceneHasAlreadyPlayed);
+
+            // MISSING: Activate waving-animation at target GO here!
+            //_playerCharacter.GetComponent<Movement(?)>().StartWaving();
+            //jansAnimationControlls.SetActive(false);
+            //wavingAnimation.Play();
+        }
+        /*_gameManager.GetComponent<BackgroundSoundPlayer>().PauseMusic();
 
         _focusTargetObject = focusObject;
         Invoke("TurnOffFocus", lookAtThisForThisLong);
@@ -39,14 +62,16 @@ public class FocusPlayerViewOnObject : MonoBehaviour
         _turnPlayerTowardsObject = true;
         focusCameraRig.GetComponent<CinemachineFreeLook>().LookAt = _focusTargetObject.transform; // turn camera:
         focusCameraRig.SetActive(true);
+        _cutSceneHasAlreadyPlayed++;
+        PlayerPrefs.SetInt("_cutSceneHasAlreadyPlayed", _cutSceneHasAlreadyPlayed);
+
         // MISSING: Activate waving-animation at target GO here!
         //_playerCharacter.GetComponent<Movement(?)>().StartWaving();
         //jansAnimationControlls.SetActive(false);
-        //wavingAnimation.Play();
+        //wavingAnimation.Play();*/
     }
     void TurnOffFocus() // reset camera:
     {
-        _focusTargetObject = null;
         focusCameraRig.SetActive(false);
         Invoke("ReactivatePlayer", juicyDelayBeforePlayerResumesControll);
         // unpause background track:
@@ -54,6 +79,7 @@ public class FocusPlayerViewOnObject : MonoBehaviour
     }
     void ReactivatePlayer() // this is seperate from TurnOffFocus, so the player sees the avatar still looking at target GO:
     {
+        _focusTargetObject = null;
         _turnPlayerTowardsObject = false;
         _playerCharacter.GetComponent<ThirdPersonMovement>().enabled = true;
         // MISSING: Deactivate waving-animation at target GO here!

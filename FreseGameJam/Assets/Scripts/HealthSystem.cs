@@ -24,6 +24,10 @@ public class HealthSystem : MonoBehaviour
     List<Vector3> Checkpoints = new List<Vector3>(); // list of all Checkpoints in this Level
     public int[] lastCheckpoint = new int[3];// int of the last Checkpoint in each Level, for Continue the Game
 
+    // Felix:
+    [SerializeField] AudioSource[] arrayOfScreams;
+    [SerializeField] bool superDramaticDeath = true;
+
 
     private void Start()
     {
@@ -105,7 +109,26 @@ public class HealthSystem : MonoBehaviour
             Cam2.SetActive(false);
             Cam.SetActive(false);
             GetComponent<ThirdPersonMovement>().gravity = gravity / 10;
-            yield return new WaitForSeconds(1f);
+
+            // Felix:
+            GetComponent<ThirdPersonMovement>().enabled = false; // no movement hopefully stops me from being able to survive death zones
+            GetComponent<CharacterController>().enabled = false; // no colission = sink into even shallow deathzones
+            GetComponent<Rigidbody>().isKinematic = false;
+            AudioSource _randomDeathScream = arrayOfScreams[UnityEngine.Random.Range(0, arrayOfScreams.Length)];
+            float _lengthOfScream = _randomDeathScream.clip.length;
+            _randomDeathScream.Play();
+            if (superDramaticDeath)
+            {
+                yield return new WaitForSeconds(_lengthOfScream);
+            }else
+            {
+                yield return new WaitForSeconds(1f);
+            }
+            // Felix:
+            GetComponent<Rigidbody>().isKinematic = true;
+            GetComponent<ThirdPersonMovement>().enabled = true; // no movement hopefully stops me from being able to survive death zones
+            GetComponent<CharacterController>().enabled = true;
+
             gameObject.transform.position = new Vector3(0, -3, 0) + RespawnPoint;
             Cam2.SetActive(true);
             Cam.SetActive(true);

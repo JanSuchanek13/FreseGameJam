@@ -21,7 +21,7 @@ public class CloseQuarterCamera : MonoBehaviour
         {
             _lastTriggerHit = other.gameObject;
             _lastTriggerHit.GetComponent<BoxCollider>().enabled = false;
-            Invoke("ReactivateTrigger", 1f);
+            Invoke("ReactivateTrigger", 5f);
             _currentlyInsideTrigger = true; // redundant here, as turning on/off the collider solves the same issue.
 
             if (!_closeQuarterCameraIsActive)

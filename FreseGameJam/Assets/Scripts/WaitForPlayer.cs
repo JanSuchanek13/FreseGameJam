@@ -4,6 +4,7 @@ public class WaitForPlayer : MonoBehaviour
 {
     [SerializeField] bool stopSomethingWhenItGetsHere = false;
     [SerializeField] GameObject objectThatShouldWait;
+    private bool _perpetuallyEnableBoat = false;
     //[SerializeField] GameObject ObjectThatShouldWait;
     private void OnTriggerEnter(Collider other)
     {
@@ -18,9 +19,16 @@ public class WaitForPlayer : MonoBehaviour
         else if (!stopSomethingWhenItGetsHere && other.CompareTag("Player"))
         {
             Debug.Log("i was impacted by the player");
-
-            objectThatShouldWait.GetComponent<Patrolling>().StopWaiting();
+            _perpetuallyEnableBoat = true;
+            //objectThatShouldWait.GetComponent<Patrolling>().StopWaiting();
             //other.GetComponent<Patrolling>().StopWaiting();
+        }
+    }
+    private void Update()
+    {
+        if (_perpetuallyEnableBoat)
+        {
+            objectThatShouldWait.GetComponent<Patrolling>().StopWaiting(); // this lets the boat sail past stoppoint when continuing a round and having already passed the unlock-spot!
         }
     }
 }

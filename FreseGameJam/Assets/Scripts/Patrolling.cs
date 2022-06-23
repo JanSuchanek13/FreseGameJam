@@ -14,13 +14,19 @@ public class Patrolling : MonoBehaviour
     [SerializeField] GameObject _turnOnElements;
     private bool _waitingForPlayer = false;
     private float _defaultSpeed;
-
-
-
+    // save current position of boat:
+    int _boatPosition = 0;
 
     void Start()
     {
-       agent = GetComponent<NavMeshAgent>();
+        _boatPosition = PlayerPrefs.GetInt("_boatPosition"); // update _boatPosition:
+        if (PlayerPrefs.GetInt("_boatPosition") != 0)
+        {
+            destPoint = PlayerPrefs.GetInt("_boatPosition") + 1;
+            this.transform.position = points[PlayerPrefs.GetInt("_boatPosition")].transform.position;
+        }
+
+        agent = GetComponent<NavMeshAgent>();
 
         // Disabling auto-braking allows for continuous movement
         // between points (ie, the agent doesn't slow down as it
@@ -30,12 +36,14 @@ public class Patrolling : MonoBehaviour
         GotoNextPoint();
     }
 
+    // save if cutscene has played:
+    //_cutSceneHasAlreadyPlayed++;
+    //        PlayerPrefs.SetInt("_cutSceneHasAlreadyPlayed", _cutSceneHasAlreadyPlayed);
 
     void GotoNextPoint()
     {
 
         if (ReachedTarget == false && !_waitingForPlayer)
-
         {
             // Returns if no points have been set up
             if (points.Length == 0)
@@ -47,8 +55,10 @@ public class Patrolling : MonoBehaviour
             // Choose the next point in the array as the destination,
             // cycling to the start if necessary.
             destPoint = (destPoint + 1) % points.Length;
-        }
-      else
+
+            // save boat position:
+            SaveBoatPosition();
+        }else
         {
             agent.enabled = false;
         }
@@ -68,7 +78,11 @@ public class Patrolling : MonoBehaviour
             enabled = false;
         }
     }
-
+    void SaveBoatPosition()
+    {
+        PlayerPrefs.SetInt("_boatPosition", _boatPosition);
+        _boatPosition++;
+    }
 
 
     private void OnTriggerEnter(Collider other)
