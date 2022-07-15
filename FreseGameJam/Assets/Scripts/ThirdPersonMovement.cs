@@ -25,13 +25,16 @@ public class ThirdPersonMovement : MonoBehaviour
     public LayerMask groundMask;
     public bool isGrounded;
     public bool onBridge;
-    
+    public bool movingDownwards;
+    Vector3 oldtransform;
+
 
     //Slide Down
     private bool willSlideOnSlopes = true;
     private float slopeSpeed = 8f;
     private Vector3 hitPointNormal;
     public LayerMask SlideMasks;
+    private float rayDistance = 0.31f;
 
     //for Animation
     public bool idle;
@@ -66,32 +69,32 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         get
         {
-            Debug.DrawRay(transform.position + new Vector3(0, 0, 0.4f), Vector3.down,Color.red);
-            if ((Physics.Raycast(transform.position, Vector3.down, out RaycastHit slopeHit, 1f, SlideMasks, QueryTriggerInteraction.Ignore )/* || (Physics.Raycast(transform.position + new Vector3(0.4f,0,0), Vector3.down, out slopeHit, 1f)) || (Physics.Raycast(transform.position + new Vector3(0, 0, -0.4f), Vector3.down, out slopeHit, 1f)) || (Physics.Raycast(transform.position + new Vector3(0, 0, 0.4f), Vector3.down, out slopeHit, 1f)) || (Physics.Raycast(transform.position + new Vector3(-0.4f, 0, 0), Vector3.down, out slopeHit, 1f))*/))
+            Debug.DrawRay(transform.position + new Vector3(0, 0, rayDistance), Vector3.down, Color.red);
+            if ((Physics.Raycast(transform.position, Vector3.down, out RaycastHit slopeHit, 1f, SlideMasks, QueryTriggerInteraction.Ignore)/* || (Physics.Raycast(transform.position + new Vector3(0.4f,0,0), Vector3.down, out slopeHit, 1f)) || (Physics.Raycast(transform.position + new Vector3(0, 0, -0.4f), Vector3.down, out slopeHit, 1f)) || (Physics.Raycast(transform.position + new Vector3(0, 0, 0.4f), Vector3.down, out slopeHit, 1f)) || (Physics.Raycast(transform.position + new Vector3(-0.4f, 0, 0), Vector3.down, out slopeHit, 1f))*/))
             {
                 //Debug.Log("Treffer");
                 hitPointNormal = slopeHit.normal;
                 return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit;
             }
-            else if (Physics.Raycast(transform.position + new Vector3(0.4f, 0, 0), Vector3.down, out slopeHit, 1f, SlideMasks, QueryTriggerInteraction.Ignore))
+            else if (Physics.Raycast(transform.position + new Vector3(rayDistance, 0, 0), Vector3.down, out slopeHit, 1f, SlideMasks, QueryTriggerInteraction.Ignore))
             {
                 //Debug.Log("Treffer1");
                 hitPointNormal = slopeHit.normal;
                 return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit;
             }
-            else if (Physics.Raycast(transform.position + new Vector3(0, 0, -0.4f), Vector3.down, out slopeHit, 1f, SlideMasks, QueryTriggerInteraction.Ignore))
+            else if (Physics.Raycast(transform.position + new Vector3(0, 0, -rayDistance), Vector3.down, out slopeHit, 1f, SlideMasks, QueryTriggerInteraction.Ignore))
             {
                 //Debug.Log("Treffer2");
                 hitPointNormal = slopeHit.normal;
                 return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit;
             }
-            else if (Physics.Raycast(transform.position + new Vector3(0, 0, 0.4f), Vector3.down, out slopeHit, 1f, SlideMasks, QueryTriggerInteraction.Ignore))
+            else if (Physics.Raycast(transform.position + new Vector3(0, 0, rayDistance), Vector3.down, out slopeHit, 1f, SlideMasks, QueryTriggerInteraction.Ignore))
             {
                 //Debug.Log("Treffer3");
                 hitPointNormal = slopeHit.normal;
                 return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit;
             }
-            else if (Physics.Raycast(transform.position + new Vector3(-0.4f, 0, 0), Vector3.down, out slopeHit, 1f, SlideMasks, QueryTriggerInteraction.Ignore))
+            else if (Physics.Raycast(transform.position + new Vector3(-rayDistance, 0, 0), Vector3.down, out slopeHit, 1f, SlideMasks, QueryTriggerInteraction.Ignore))
             {
                 //Debug.Log("Treffer4");
                 hitPointNormal = slopeHit.normal;
@@ -131,11 +134,11 @@ public class ThirdPersonMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
         // animation
         if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
         {
-            walking = true; 
+            walking = true;
         }
         else
         {
@@ -157,7 +160,7 @@ public class ThirdPersonMovement : MonoBehaviour
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
 
             //if sliding the move direction will be overwriten
-            if(willSlideOnSlopes && isSliding && !onBridge)
+            if (willSlideOnSlopes && isSliding && !onBridge)
             {
                 moveDir = new Vector3(hitPointNormal.x, -hitPointNormal.y, hitPointNormal.z) * slopeSpeed;
             }
@@ -167,21 +170,29 @@ public class ThirdPersonMovement : MonoBehaviour
         }
 
 
+        movingDownwards = transform.position.y +.1 < oldtransform.y;
+        oldtransform = transform.position;
+
         //Check Ground
         //controller = GetComponent<CharacterController>();
 
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance *2, groundMask);
-        if (!isGrounded)
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance * 2, groundMask);
+        if (!isGrounded && velocity.y < -15 && movingDownwards)
         {
             falling = true; //animation
+        }
+        else
+        {
+            falling = false;
         }
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
         if (isGrounded && velocity.y < 0.5) //is falling
         {
+            controller.stepOffset = 0.5f;
             falling = false; //animation
             jumping = false; //animation
-            controller.slopeLimit = 45.0f;
+            //controller.slopeLimit = 45.0f;
             velocity.y = -4f;
         }
         else
@@ -198,8 +209,9 @@ public class ThirdPersonMovement : MonoBehaviour
             //Jump
             if (Input.GetButtonDown("Jump") && isGrounded)
             {
+                controller.stepOffset = 0;
                 jumping = true; //animation
-                controller.slopeLimit = 100f;
+                //controller.slopeLimit = 100f;
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             }
 
@@ -251,13 +263,13 @@ public class ThirdPersonMovement : MonoBehaviour
             if (Input.GetButtonDown("Jump") && isGrounded)
             {
                 controller.slopeLimit = 50f; //low climp
-                velocity.y = Mathf.Sqrt(jumpHeight/150 * -2f * gravity);  //low jump
+                velocity.y = Mathf.Sqrt(jumpHeight / 150 * -2f * gravity);  //low jump
             }
 
             //Gravity
             //float curve = 1 ^ Time.deltaTime;
-            velocity.y = gravity/(flyCurve * Time.deltaTime); //low gravity
-            
+            velocity.y = gravity / (flyCurve * Time.deltaTime); //low gravity
+
             controller.Move(velocity * Time.deltaTime);
 
             //velocity.y += gravity/10 * Time.deltaTime; //low gravity
@@ -277,7 +289,7 @@ public class ThirdPersonMovement : MonoBehaviour
             if (Input.GetButtonDown("Jump") && isGrounded)
             {
                 controller.slopeLimit = 100f;
-                velocity.y = Mathf.Sqrt(jumpHeight/150 * -2f * gravity);
+                velocity.y = Mathf.Sqrt(jumpHeight / 150 * -2f * gravity);
             }
 
             if (Input.GetButtonDown("Fire1") & !isInCooldown)
@@ -289,7 +301,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 isInCooldown = true;
                 StartCoroutine("Cooldown");
             }
-            
+
 
             //Gravity
             velocity.y += gravity * Time.deltaTime;
@@ -300,7 +312,7 @@ public class ThirdPersonMovement : MonoBehaviour
             Ray ray = Cam.ScreenPointToRay(pos + new Vector3(0, 30, 0));
             Debug.DrawRay(ray.origin, ray.direction * 10, Color.yellow);
             RaycastHit hit;
-            if (Physics.Raycast(ray , out hit, Mathf.Infinity))
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
                 reticlePosition = hit.point;
             }
@@ -312,7 +324,7 @@ public class ThirdPersonMovement : MonoBehaviour
             if (Input.GetButtonDown("Jump") && isGrounded)
             {
                 controller.slopeLimit = 45f;
-                velocity.y = Mathf.Sqrt(jumpHeight/150 * -2f * gravity);
+                velocity.y = Mathf.Sqrt(jumpHeight / 150 * -2f * gravity);
             }
 
             if (Input.GetButtonDown("Fire1") & !isInCooldown)
@@ -332,7 +344,7 @@ public class ThirdPersonMovement : MonoBehaviour
             controller.Move(velocity * Time.deltaTime);
         }
 
-        
+
     }
 
     private void EndOfAction()
@@ -344,7 +356,7 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(cooldownTime);
         isInCooldown = false;
-        
+
     }
 
     IEnumerator CapricornDash()
@@ -360,7 +372,7 @@ public class ThirdPersonMovement : MonoBehaviour
             Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            controller.Move(moveDir.normalized * (speed*3) * Time.deltaTime);
+            controller.Move(moveDir.normalized * (speed * 3) * Time.deltaTime);
             yield return new WaitForSeconds(.005f);
             //Debug.Log("lauf");
 

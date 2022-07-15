@@ -94,6 +94,7 @@ public class HealthSystem : MonoBehaviour
 
         if (!inUse)
         {
+            inUse = true;
             //count deaths and save them
             deaths[(currentLevel - 2)] = PlayerPrefs.GetInt("deaths" + (currentLevel - 2));
             PlayerPrefs.SetInt("deaths" + (currentLevel - 2), deaths[(currentLevel - 2)] + 1);
@@ -101,16 +102,18 @@ public class HealthSystem : MonoBehaviour
 
             //stop Riverboat
             GameObject.Find("riverBoat_Friend_Fire").GetComponent<SpeedUpNavMeshAgent>().StopForDead();
-            inUse = true;
+            
             Debug.Log(RespawnPoint);
 
             //Respawn Player
             CamScript.enabled = false;
             Cam2.SetActive(false);
             Cam.SetActive(false);
-            GetComponent<ThirdPersonMovement>().gravity = gravity / 10;
+            GetComponent<ThirdPersonMovement>().gravity = 0;
+            //yield return new WaitForSeconds(1f);
 
             // Felix:
+            
             GetComponent<ThirdPersonMovement>().enabled = false; // no movement hopefully stops me from being able to survive death zones
             GetComponent<CharacterController>().enabled = false; // no colission = sink into even shallow deathzones
             GetComponent<Rigidbody>().isKinematic = false;
@@ -124,12 +127,17 @@ public class HealthSystem : MonoBehaviour
             {
                 yield return new WaitForSeconds(1f);
             }
+
+            gameObject.transform.position = new Vector3(0, -3, 0) + RespawnPoint;
+
             // Felix:
             GetComponent<Rigidbody>().isKinematic = true;
             GetComponent<ThirdPersonMovement>().enabled = true; // no movement hopefully stops me from being able to survive death zones
             GetComponent<CharacterController>().enabled = true;
+            
 
-            gameObject.transform.position = new Vector3(0, -3, 0) + RespawnPoint;
+            
+            Debug.Log("respawned");
             Cam2.SetActive(true);
             Cam.SetActive(true);
             CamScript.enabled = true;
