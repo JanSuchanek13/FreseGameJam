@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2847720779192445356}
   - component: {fileID: 1165017647315461641}
   - component: {fileID: 4021167088077656771}
-  - component: {fileID: 8918088885881552195}
+  - component: {fileID: 5701541697915233653}
   m_Layer: 6
   m_Name: StonePlane_Ver2
   m_TagString: Ground
@@ -82,8 +82,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8918088885881552195
-MeshCollider:
+--- !u!65 &5701541697915233653
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -92,7 +92,6 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -4655613040032916602, guid: fab482e0f40fb13489ba2ac5da2cae91, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 0.018192511, y: 0.018813085, z: 0.0006608394}
+  m_Center: {x: -0.00004899269, y: 0, z: 0.0003304197}

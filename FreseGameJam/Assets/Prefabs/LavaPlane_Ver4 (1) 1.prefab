@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 417575450471850821}
   - component: {fileID: 3631129719065504992}
   - component: {fileID: 1549425688154708010}
-  - component: {fileID: 8526467870286088210}
+  - component: {fileID: 1443859890249562078}
   m_Layer: 0
   m_Name: LavaPlane_Ver4 (1) 1
   m_TagString: Damage
@@ -82,17 +82,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8526467870286088210
-MeshCollider:
+--- !u!65 &1443859890249562078
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1044929690658945535}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 8324580739174819017, guid: c2bbd3224d5b7c0488a80445d7ba4b35, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 0.018794745, y: 0.018683372, z: 0.00078049826}
+  m_Center: {x: 0.000049805734, y: 0.00023207345, z: 0.00039024913}

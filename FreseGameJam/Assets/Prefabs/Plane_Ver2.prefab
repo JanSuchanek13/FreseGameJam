@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6483509455426309169}
   - component: {fileID: 7950497021505127316}
   - component: {fileID: 5310062419753416542}
-  - component: {fileID: 1154627929588267410}
+  - component: {fileID: 5441398188013786675}
   m_Layer: 6
   m_Name: Plane_Ver2
   m_TagString: Ground
@@ -82,8 +82,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1154627929588267410
-MeshCollider:
+--- !u!65 &5441398188013786675
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -92,7 +92,6 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -4655613040032916602, guid: 49d4f07d745f7024e9c379ce05fffe4f, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 0.018192511, y: 0.018813085, z: 0.0006608394}
+  m_Center: {x: -0.00004899269, y: 0, z: 0.0003304197}
