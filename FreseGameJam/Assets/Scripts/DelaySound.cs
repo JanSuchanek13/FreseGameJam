@@ -19,6 +19,10 @@ public class DelaySound : MonoBehaviour
     [SerializeField] bool activateFocusPlayerViewOnObjectWhenSoundPlays = false;
     [SerializeField] float lookAtThisForThisLong = 4f;
     [SerializeField] GameObject playerCharacter;
+    [SerializeField] GameObject lookAtThisObjectAfterwards;
+    [SerializeField] int _thisCutscene_Nr;
+
+
     #endregion
 
     void Start()
@@ -29,13 +33,29 @@ public class DelaySound : MonoBehaviour
             Invoke("PlaySound", audioDelayTime);
         }
     }
-    void PlaySound()
+    public void PlaySound()
     {
+        //_currentCutscene = GameObject.Find("GameManager").GetComponent<GameManager>()._currentCutscene;
+
         if (activateFocusPlayerViewOnObjectWhenSoundPlays) // when having the camera look at AudioSource:
         {
-            playerCharacter.GetComponent<FocusPlayerViewOnObject>().FocusTarget(this.gameObject, lookAtThisForThisLong);
+            playerCharacter.GetComponent<FocusPlayerViewOnObject>().FocusTarget(this.gameObject, lookAtThisForThisLong, _thisCutscene_Nr);
+            Debug.Log("called ForcusTarget with cutscene nr. " + _thisCutscene_Nr);
+
+            if(lookAtThisObjectAfterwards != null)
+            {
+                Invoke("LookAtThisNext", lookAtThisForThisLong);
+            }
         }
-        targetAudioSource.Play();
+        if(targetAudioSource != null)
+        {
+            targetAudioSource.Play();
+        }
+    }
+
+    void LookAtThisNext()
+    {
+        lookAtThisObjectAfterwards.GetComponent<DelaySound>().PlaySound();
     }
     void Update() // when using a trigger:
     {
