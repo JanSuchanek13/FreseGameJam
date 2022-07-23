@@ -60,7 +60,7 @@ public class FocusPlayerViewOnObject : MonoBehaviour
             case 1:
                 if (PlayerPrefs.GetInt("_cutScene_1_HasAlreadyPlayed") == 0)
                 {
-                    _gameManager.GetComponent<BackgroundSoundPlayer>().PauseMusic();
+                    //_gameManager.GetComponent<BackgroundSoundPlayer>().PauseMusic();
 
                     _focusTargetObject = focusObject;
                     Invoke("TurnOffFocus", lookAtThisForThisLong);
@@ -76,7 +76,7 @@ public class FocusPlayerViewOnObject : MonoBehaviour
             case 2:
                 if (PlayerPrefs.GetInt("_cutScene_2_HasAlreadyPlayed") == 0)
                 {
-                    _gameManager.GetComponent<BackgroundSoundPlayer>().PauseMusic();
+                    //_gameManager.GetComponent<BackgroundSoundPlayer>().PauseMusic();
 
                     _focusTargetObject = focusObject;
                     Invoke("TurnOffFocus", lookAtThisForThisLong);
@@ -87,6 +87,22 @@ public class FocusPlayerViewOnObject : MonoBehaviour
                     focusCameraRig.SetActive(true);
                     // save if cutscene has played:
                     PlayerPrefs.SetInt("_cutScene_2_HasAlreadyPlayed", 1);
+                }
+                break;
+            case 3:
+                if (PlayerPrefs.GetInt("_cutScene_3_HasAlreadyPlayed") == 0)
+                {
+                    //_gameManager.GetComponent<BackgroundSoundPlayer>().PauseMusic();
+
+                    _focusTargetObject = focusObject;
+                    Invoke("TurnOffFocus", lookAtThisForThisLong);
+                    _playerCharacter.transform.LookAt(_focusTargetObject.transform.position); // turn player towards target GO:
+                    _playerCharacter.GetComponent<ThirdPersonMovement>().enabled = false;
+                    _turnPlayerTowardsObject = true;
+                    focusCameraRig.GetComponent<CinemachineFreeLook>().LookAt = _focusTargetObject.transform; // turn camera:
+                    focusCameraRig.SetActive(true);
+                    // save if cutscene has played:
+                    PlayerPrefs.SetInt("_cutScene_3_HasAlreadyPlayed", 1);
                 }
                 break;
 
