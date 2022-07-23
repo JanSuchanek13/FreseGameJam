@@ -152,79 +152,88 @@ public class StateController : MonoBehaviour
             {
                 if (Input.GetKeyDown(keyCodes[i]))
                 {
-                    //Debug.Log(i * 3);
-                    isChanging = true;
-
-                    switch (i)//change Movement state
+                    if (isChanging == false)
                     {
-                        case 1:
-                            ball = false;
-                            human = true;
-                            frog = false;
-                            crane = false;
-                            capricorn = false;
-                            lama = false;
-                            StartCoroutine(changeModell(i));
-                            break;
 
-                        case 5:
-                            if (availableFrog)
-                            {
+                    
+                        //Debug.Log(i * 3);
+                        isChanging = true;
+
+                        switch (i)//change Movement state
+                        {
+                            case 1:
                                 ball = false;
-                                human = false;
-                                frog = true;
+                                human = true;
+                                frog = false;
                                 crane = false;
                                 capricorn = false;
                                 lama = false;
                                 StartCoroutine(changeModell(i));
-                            }
-                            break;
+                                break;
 
-                        case 2:
-                            if (availableCrane)
-                            {
-                                ball = false;
-                                human = false;
-                                frog = false;
-                                crane = true;
-                                capricorn = false;
-                                lama = false;
-                                StartCoroutine(changeModell(i));
-                            }
-                            break;
+                            case 5:
+                                if (availableFrog)
+                                {
+                                    ball = false;
+                                    human = false;
+                                    frog = true;
+                                    crane = false;
+                                    capricorn = false;
+                                    lama = false;
+                                    StartCoroutine(changeModell(i));
+                                }
+                                break;
 
-                        case 3:
-                            if (availableCapricorn)
-                            {
-                                ball = false;
-                                human = false;
-                                frog = false;
-                                crane = false;
-                                capricorn = true;
-                                lama = false;
-                                StartCoroutine(changeModell(i));
-                            }
-                            break;
+                            case 2:
+                                if (availableCrane)
+                                {
+                                    ball = false;
+                                    human = false;
+                                    frog = false;
+                                    crane = true;
+                                    capricorn = false;
+                                    lama = false;
+                                    StartCoroutine(changeModell(i));
+                                }
+                                break;
 
-                        case 4:
-                            if (availableLama)
-                            {
-                                ball = false;
-                                human = false;
-                                frog = false;
-                                crane = false;
-                                capricorn = false;
-                                lama = true;
-                                StartCoroutine(changeModell(i));
-                            }
-                            break;
+                            case 3:
+                                if (availableCapricorn)
+                                {
+                                    ball = false;
+                                    human = false;
+                                    frog = false;
+                                    crane = false;
+                                    capricorn = true;
+                                    lama = false;
+                                    StartCoroutine(changeModell(i));
+                                }
+                                break;
 
-                        case 6&7&8&9:
-                            isChanging = false;
-                            break;
+                            case 4:
+                                if (availableLama)
+                                {
+                                    ball = false;
+                                    human = false;
+                                    frog = false;
+                                    crane = false;
+                                    capricorn = false;
+                                    lama = true;
+                                    StartCoroutine(changeModell(i));
+                                }
+                                break;
 
-                        default:
-                            break;
+                            case 6:
+                            case 7:
+                            case 8:
+                            case 9:
+                            case 0:
+                                isChanging = false;
+                                break;
+
+                            default:
+                                break;
+                        }
                     }
                     
                 }
