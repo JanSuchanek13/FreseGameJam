@@ -138,7 +138,7 @@ public class HealthSystem : MonoBehaviour
 
             
             Debug.Log("respawned");
-            Cam2.SetActive(true);
+            Cam2.SetActive(false);
             Cam.SetActive(true);
             CamScript.enabled = true;
             GetComponent<ThirdPersonMovement>().gravity = gravity;
