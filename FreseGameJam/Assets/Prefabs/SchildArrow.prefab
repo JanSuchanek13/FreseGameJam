@@ -25,8 +25,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1193684811328459590}
-  m_LocalRotation: {x: 0.012107848, y: 0.99917865, z: -0.002451071, w: -0.03859534}
-  m_LocalPosition: {x: -134.779, y: 6.955, z: 135.705}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1525712328450039812}
@@ -36,7 +36,7 @@ Transform:
   - {fileID: 1525712328032581064}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0.227, y: -175.573, z: 1.397}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5133327761004137700
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -97,7 +97,6 @@ GameObject:
   - component: {fileID: 1525712327257562362}
   - component: {fileID: 1525712327257562359}
   - component: {fileID: 1525712327257562356}
-  - component: {fileID: 1525712327257562357}
   m_Layer: 6
   m_Name: StonePlane_Ver1 (9)
   m_TagString: Ground
@@ -112,13 +111,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1525712327257562363}
-  m_LocalRotation: {x: 0.84323406, y: 0.28326017, z: -0.18879196, w: 0.4160261}
-  m_LocalPosition: {x: 0.179, y: 0.188, z: 0.232}
-  m_LocalScale: {x: 4.382442, y: 3.9287004, z: 17.901598}
+  m_LocalRotation: {x: 0.37282458, y: -0.2867641, z: -0.41614854, w: 0.7781958}
+  m_LocalPosition: {x: 0.067, y: 0.208, z: 0.215}
+  m_LocalScale: {x: 0.5881189, y: 0.5881189, z: 0.5881189}
   m_Children: []
   m_Father: {fileID: 4145382073297532547}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 126.04401, y: 8.080002, z: -33.018005}
+  m_LocalEulerAnglesHint: {x: 160.026, y: -233.614, z: -246.44101}
 --- !u!33 &1525712327257562359
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -126,7 +125,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1525712327257562363}
-  m_Mesh: {fileID: -89549486890576878, guid: ec6d44a227a97f842b9b6ce848368b8c, type: 3}
+  m_Mesh: {fileID: 1521148156147869960, guid: 04064cef8b805e240a42151e8ba22604, type: 3}
 --- !u!23 &1525712327257562356
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -168,20 +167,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1525712327257562357
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1525712327257562363}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -89549486890576878, guid: ec6d44a227a97f842b9b6ce848368b8c, type: 3}
 --- !u!1 &1525712327283080267
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,7 +178,6 @@ GameObject:
   - component: {fileID: 1525712327283080266}
   - component: {fileID: 1525712327283080263}
   - component: {fileID: 1525712327283080260}
-  - component: {fileID: 1525712327283080261}
   m_Layer: 6
   m_Name: StonePlane_Ver1 (7)
   m_TagString: Ground
@@ -208,13 +192,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1525712327283080267}
-  m_LocalRotation: {x: -0.5649446, y: -0.5848961, z: -0.5015188, w: 0.29531875}
-  m_LocalPosition: {x: -0.1476033, y: 0.109925754, z: -0.2738029}
-  m_LocalScale: {x: 8.0942, y: 3.9287002, z: 15.184904}
+  m_LocalRotation: {x: -0.5963755, y: -0.52029824, z: -0.5682553, w: 0.22519289}
+  m_LocalPosition: {x: -0.296, y: 0.323, z: -0.315}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4145382073297532547}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: -130.227, y: 20.399002, z: -49.390015}
+  m_LocalEulerAnglesHint: {x: -120.692, y: -60.319, z: -45.595}
 --- !u!33 &1525712327283080263
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -222,7 +206,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1525712327283080267}
-  m_Mesh: {fileID: -89549486890576878, guid: ec6d44a227a97f842b9b6ce848368b8c, type: 3}
+  m_Mesh: {fileID: 1521148156147869960, guid: 04064cef8b805e240a42151e8ba22604, type: 3}
 --- !u!23 &1525712327283080260
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -264,20 +248,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1525712327283080261
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1525712327283080267}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -89549486890576878, guid: ec6d44a227a97f842b9b6ce848368b8c, type: 3}
 --- !u!1 &1525712328032581065
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,7 +259,6 @@ GameObject:
   - component: {fileID: 1525712328032581064}
   - component: {fileID: 1525712328032581061}
   - component: {fileID: 1525712328032581066}
-  - component: {fileID: 1525712328032581067}
   m_Layer: 6
   m_Name: StonePlane_Ver1 (6)
   m_TagString: Ground
@@ -304,13 +273,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1525712328032581065}
-  m_LocalRotation: {x: -0.51479316, y: -0.1871687, z: -0.5397967, w: 0.639199}
-  m_LocalPosition: {x: 0.257, y: 0.206, z: -0.238}
-  m_LocalScale: {x: 8.094198, y: 5.13874, z: 20.583529}
+  m_LocalRotation: {x: -0.24130471, y: -0.3738588, z: -0.4320211, w: 0.7844485}
+  m_LocalPosition: {x: 0.294, y: 0.213, z: -0.049}
+  m_LocalScale: {x: 0.97480786, y: 0.97480786, z: 0.97480786}
   m_Children: []
   m_Father: {fileID: 4145382073297532547}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: -48.092, y: 132.813, z: -130.792}
+  m_LocalEulerAnglesHint: {x: -44.556, y: -32.043, z: -44.267}
 --- !u!33 &1525712328032581061
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -318,7 +287,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1525712328032581065}
-  m_Mesh: {fileID: -89549486890576878, guid: ec6d44a227a97f842b9b6ce848368b8c, type: 3}
+  m_Mesh: {fileID: 1521148156147869960, guid: 04064cef8b805e240a42151e8ba22604, type: 3}
 --- !u!23 &1525712328032581066
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -360,20 +329,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1525712328032581067
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1525712328032581065}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -89549486890576878, guid: ec6d44a227a97f842b9b6ce848368b8c, type: 3}
 --- !u!1 &1525712328450039813
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,7 +340,6 @@ GameObject:
   - component: {fileID: 1525712328450039812}
   - component: {fileID: 1525712328450039809}
   - component: {fileID: 1525712328450039814}
-  - component: {fileID: 1525712328450039815}
   m_Layer: 6
   m_Name: StonePlane_Ver1 (10)
   m_TagString: Ground
@@ -400,13 +354,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1525712328450039813}
-  m_LocalRotation: {x: -0.2770883, y: -0.77857447, z: -0.516067, w: 0.22520803}
-  m_LocalPosition: {x: 0.194, y: 0.124, z: -0.526}
-  m_LocalScale: {x: 8.094198, y: 3.9287004, z: 19.9583}
+  m_LocalRotation: {x: 0.71148235, y: -0.53061235, z: -0.4555314, w: 0.06880874}
+  m_LocalPosition: {x: 0.169, y: 0.21, z: -0.3}
+  m_LocalScale: {x: 0.65845, y: 0.65845, z: 0.65845}
   m_Children: []
   m_Father: {fileID: 4145382073297532547}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -68.186, y: -169.974, z: 32.385}
+  m_LocalEulerAnglesHint: {x: -22.675, y: -128.589, z: -117.596}
 --- !u!33 &1525712328450039809
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -414,7 +368,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1525712328450039813}
-  m_Mesh: {fileID: -89549486890576878, guid: ec6d44a227a97f842b9b6ce848368b8c, type: 3}
+  m_Mesh: {fileID: 1521148156147869960, guid: 04064cef8b805e240a42151e8ba22604, type: 3}
 --- !u!23 &1525712328450039814
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -456,20 +410,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1525712328450039815
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1525712328450039813}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -89549486890576878, guid: ec6d44a227a97f842b9b6ce848368b8c, type: 3}
 --- !u!1 &1525712328580207596
 GameObject:
   m_ObjectHideFlags: 0
@@ -481,7 +421,6 @@ GameObject:
   - component: {fileID: 1525712328580207599}
   - component: {fileID: 1525712328580207592}
   - component: {fileID: 1525712328580207593}
-  - component: {fileID: 1525712328580207598}
   m_Layer: 6
   m_Name: StonePlane_Ver1 (8)
   m_TagString: Ground
@@ -496,13 +435,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1525712328580207596}
-  m_LocalRotation: {x: 0.28235516, y: -0.33840075, z: -0.8972111, w: 0.027800068}
-  m_LocalPosition: {x: -0.235, y: 0.153, z: 0.092}
-  m_LocalScale: {x: 7.57248, y: 5.1548467, z: 22.30404}
+  m_LocalRotation: {x: 0.21383175, y: 0.24499072, z: -0.9270827, w: 0.18647592}
+  m_LocalPosition: {x: -0.318, y: 0.418, z: 0.25}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4145382073297532547}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: -51.75, y: 43.176, z: -180}
+  m_LocalEulerAnglesHint: {x: 32.276, y: -21.154, z: -163.44}
 --- !u!33 &1525712328580207592
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -510,7 +449,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1525712328580207596}
-  m_Mesh: {fileID: -89549486890576878, guid: ec6d44a227a97f842b9b6ce848368b8c, type: 3}
+  m_Mesh: {fileID: 1521148156147869960, guid: 04064cef8b805e240a42151e8ba22604, type: 3}
 --- !u!23 &1525712328580207593
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -552,17 +491,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1525712328580207598
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1525712328580207596}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -89549486890576878, guid: ec6d44a227a97f842b9b6ce848368b8c, type: 3}
