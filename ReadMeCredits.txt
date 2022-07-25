@@ -2,10 +2,6 @@ ReadMe Credits
 
 
 
-Credits:
-
-
-
 Textures:
 Cardboard Texture: by qubodup, https://opengameart.org/content/tiling-cardboard-texture/n 
 Recycling Logo:https://pixabay.com/de/vectors/recycling-symbol-logo-grün-öko-304974/?download/n
@@ -29,12 +25,10 @@ https://freesound.org/people/danielpodlovics/sounds/530359/
 https://freesound.org/people/14FPanska_Nemec_Petr/sounds/420223/
 https://freesound.org/people/cabled_mess/sounds/350903/
 https://freesound.org/people/danielpodlovics/sounds/530359/
-https://freesound.org/people/chaosportal/sounds/133448/
-https://freesound.org/people/qubodup/sounds/160548/
 
 
 
-Attributions
+not public domain, needs attribution:
 
 "Fantasy Sound Effects Library » Jingle_Win_00.wav" by LittleRobotSoundFactory of Freesound.org https://freesound.org/people/LittleRobotSoundFactory/sounds/270402/
  fire.crackling.mp3 by dobroide of Freesound.org https://freesound.org/people/dobroide/sounds/4211/
@@ -45,6 +39,9 @@ Attributions
  https://freesound.org/people/jorickhoofd/sounds/180347/
  https://freesound.org/people/Maemi_no_yume/sounds/398634/ 
  https://freesound.org/people/felixyadomi/sounds/456375/
+https://freesound.org/people/chaosportal/sounds/133448/
+https://freesound.org/people/qubodup/sounds/160548/
+
 
 Font:
 Comodorepapers by Reza Mfck: https://www.dafont.com/de/comodorepapers.font
