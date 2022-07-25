@@ -141,10 +141,7 @@ public class AttachPlatform : MonoBehaviour
 
 				cc = other.GetComponent<CharacterController>();
 
-				foreach (GameObject i in Fire)
-				{
-					i.SetActive(true);
-				}
+				
 			}
 		}
         
@@ -169,24 +166,38 @@ public class AttachPlatform : MonoBehaviour
 		if (other.tag == "Player")
         {
 			other.transform.parent = null;
-			foreach (GameObject i in Fire)
-			{
-				i.SetActive(false);
-			}
+			StopCoroutine(clearFire());
 		}
 			
 
 		
 	}
 
+	private IEnumerator clearFire()	//made Coroutine so that the Frame time for enable/disable fire is the same
+    {
+		
+		foreach (GameObject i in Fire)
+		{
+
+			i.SetActive(false);
+		}
+		yield return new WaitForSeconds(0f);
+	}
+
 	private IEnumerator moveCountDown()
     {
 
-
-		yield return new WaitForSeconds(countdown);
+		foreach (GameObject i in Fire)
+		{
+			yield return new WaitForSeconds(0.9f);
+			
+			i.SetActive(true);
+		}
+		//yield return new WaitForSeconds(countdown);
 		if (isStanding)
         {
 			gameObject.transform.GetChild(0).position += new Vector3(0, -0.6f, 0);
+			
 			yield return new WaitForSeconds(countdown);
 			gameObject.transform.GetChild(0).position += new Vector3(0, +0.6f, 0);
 		}

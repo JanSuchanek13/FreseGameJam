@@ -6,6 +6,7 @@ using System;
 public class ThirdPersonMovement : MonoBehaviour
 {
     public CharacterController controller;
+    private StateController stateController;
     public Transform cam;
 
     public float speed = 6f;
@@ -110,6 +111,7 @@ public class ThirdPersonMovement : MonoBehaviour
     void Start()
     {
         Cam = cam.gameObject.GetComponent<Camera>();
+        stateController = GetComponent<StateController>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -213,6 +215,23 @@ public class ThirdPersonMovement : MonoBehaviour
                 jumping = true; //animation
                 //controller.slopeLimit = 100f;
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+
+                
+            }
+            if (Input.GetButtonDown("Jump") && !isGrounded) // double jump change you into crane
+            {
+                
+                if (stateController.availableCrane)
+                {
+                    stateController.ball = false;
+                    stateController.human = false;
+                    stateController.frog = false;
+                    stateController.crane = true;
+                    stateController.capricorn = false;
+                    stateController.lama = false;
+                    StartCoroutine(GetComponent<StateController>().changeModell(2));
+                }
+                
             }
 
             //Gravity
@@ -243,6 +262,17 @@ public class ThirdPersonMovement : MonoBehaviour
             if (isGrounded && velocity.y < 0)
             {
                 speed = 0f; //walk speed
+
+                //change back to human on ground
+
+                StartCoroutine(GetComponent<StateController>().changeModell(1));
+                stateController.ball = false;
+                stateController.human = true;
+                stateController.frog = false;
+                stateController.crane = false;
+                stateController.capricorn = false;
+                stateController.lama = false;
+                //StartCoroutine(GetComponent<StateController>().changeModell(1));
             }
             else
             {
@@ -262,7 +292,7 @@ public class ThirdPersonMovement : MonoBehaviour
             //Jump
             if (Input.GetButtonDown("Jump") && isGrounded)
             {
-                controller.slopeLimit = 50f; //low climp
+                controller.slopeLimit = 0f; //low climp
                 velocity.y = Mathf.Sqrt(jumpHeight / 150 * -2f * gravity);  //low jump
             }
 

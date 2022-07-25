@@ -241,7 +241,7 @@ public class StateController : MonoBehaviour
         }
     }
 
-    private IEnumerator changeModell(int state)
+    public IEnumerator changeModell(int state)
     {
         //change to ball
         ballVisuell.SetActive(true);
@@ -257,6 +257,7 @@ public class StateController : MonoBehaviour
         switch (state)
         {
             case 1:
+                craneVisuell.SetActive(false);
                 humanVisuell.SetActive(true);
                 ballVisuell.SetActive(false);
                 break;
