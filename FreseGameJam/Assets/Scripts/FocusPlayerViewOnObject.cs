@@ -35,7 +35,7 @@ public class FocusPlayerViewOnObject : MonoBehaviour
         // pause background track:
         switch (cutsceneNr)
         {
-            case 0:
+            case 0: // cutscene at start
                 if (PlayerPrefs.GetInt("_cutScene_0_HasAlreadyPlayed") == 0)
                 {
                     _gameManager.GetComponent<BackgroundSoundPlayer>().PauseMusic();
@@ -57,7 +57,7 @@ public class FocusPlayerViewOnObject : MonoBehaviour
                     //wavingAnimation.Play();
                 }
                 break;
-            case 1:
+            case 1: // cutscene at bird
                 if (PlayerPrefs.GetInt("_cutScene_1_HasAlreadyPlayed") == 0)
                 {
                     //_gameManager.GetComponent<BackgroundSoundPlayer>().PauseMusic();
@@ -73,17 +73,22 @@ public class FocusPlayerViewOnObject : MonoBehaviour
                     PlayerPrefs.SetInt("_cutScene_1_HasAlreadyPlayed", 1);
                 }
                 break;
-            case 2:
+            case 2: // cutscene at goat #1
                 if (PlayerPrefs.GetInt("_cutScene_2_HasAlreadyPlayed") == 0)
                 {
                     //_gameManager.GetComponent<BackgroundSoundPlayer>().PauseMusic();
 
                     _focusTargetObject = focusObject;
+                    //Vector3 _focusTargetObjectPosition = new Vector3(focusObject.transform.position.x, (focusObject.transform.position.y + focusObject.GetComponent<MeshRenderer>().bounds.size.y), focusObject.transform.position.z);
                     Invoke("TurnOffFocus", lookAtThisForThisLong);
                     _playerCharacter.transform.LookAt(_focusTargetObject.transform.position); // turn player towards target GO:
                     _playerCharacter.GetComponent<ThirdPersonMovement>().enabled = false;
                     _turnPlayerTowardsObject = true;
+
+                    focusCameraRig.GetComponent<CinemachineFreeLook>().m_Lens.NearClipPlane = 0.1f;
+                    focusCameraRig.GetComponent<CinemachineCollider>().enabled = true;
                     focusCameraRig.GetComponent<CinemachineFreeLook>().LookAt = _focusTargetObject.transform; // turn camera:
+
                     focusCameraRig.SetActive(true);
                     // save if cutscene has played:
                     PlayerPrefs.SetInt("_cutScene_2_HasAlreadyPlayed", 1);
