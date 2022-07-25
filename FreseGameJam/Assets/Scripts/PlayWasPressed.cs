@@ -27,13 +27,13 @@ public class PlayWasPressed : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("start was called");
+        //Debug.Log("start was called");
         _shuffleIncreaseIncrement = 5f / ((delayBeforeStarting+1) * 50f);
-        Debug.Log(_shuffleIncreaseIncrement); // TST:
+        //Debug.Log(_shuffleIncreaseIncrement); // TST:
         _speedIncreaseIncrement = 2.5f / ((delayBeforeStarting+1) * 50f);
-        Debug.Log(_speedIncreaseIncrement); // TST:
+        //Debug.Log(_speedIncreaseIncrement); // TST:
         _increaceColorAlphaIncrement = 255 / ((delayBeforeStarting * .6f) * 50f);
-        Debug.Log(_increaceColorAlphaIncrement); // TST:
+        //Debug.Log(_increaceColorAlphaIncrement); // TST:
 
         fadeToBlackBlende_Image = fadeToBlackBlende.GetComponent<Image>();
         _color_R_component = fadeToBlackBlende_Image.color.r;

@@ -5,6 +5,7 @@ using System;
 using Cinemachine;
 using UnityEngine.SceneManagement;
 
+
 public class HealthSystem : MonoBehaviour
 {
     private IEnumerator coroutine;
@@ -98,12 +99,12 @@ public class HealthSystem : MonoBehaviour
             //count deaths and save them
             deaths[(currentLevel - 2)] = PlayerPrefs.GetInt("deaths" + (currentLevel - 2));
             PlayerPrefs.SetInt("deaths" + (currentLevel - 2), deaths[(currentLevel - 2)] + 1);
-            Debug.Log(PlayerPrefs.GetInt("deaths" + (currentLevel - 2)));
+            //Debug.Log(PlayerPrefs.GetInt("deaths" + (currentLevel - 2)));
 
             //stop Riverboat
             GameObject.Find("riverBoat_Friend_Fire").GetComponent<SpeedUpNavMeshAgent>().StopForDead();
             
-            Debug.Log(RespawnPoint);
+            //Debug.Log(RespawnPoint);
 
             //Respawn Player
             CamScript.enabled = false;
@@ -111,15 +112,25 @@ public class HealthSystem : MonoBehaviour
             Cam.SetActive(false);
             GetComponent<ThirdPersonMovement>().gravity = 0;
             //yield return new WaitForSeconds(1f);
-
-            // Felix:
             
+            #region Felix stuff:
             GetComponent<ThirdPersonMovement>().enabled = false; // no movement hopefully stops me from being able to survive death zones
             GetComponent<CharacterController>().enabled = false; // no colission = sink into even shallow deathzones
             GetComponent<Rigidbody>().isKinematic = false;
+
+            #region Audio:
+            // Get random sound:
             AudioSource _randomDeathScream = arrayOfScreams[UnityEngine.Random.Range(0, arrayOfScreams.Length)];
             float _lengthOfScream = _randomDeathScream.clip.length;
+
+            // Random pitch:
+            float _randomPitch = UnityEngine.Random.Range(1.5f, 2.5f);
+            _randomDeathScream.pitch = _randomPitch;
+
+            // Play the sound:
             _randomDeathScream.Play();
+            #endregion
+
             if (superDramaticDeath)
             {
                 yield return new WaitForSeconds(_lengthOfScream);
@@ -130,16 +141,15 @@ public class HealthSystem : MonoBehaviour
 
             gameObject.transform.position = new Vector3(0, -3, 0) + RespawnPoint;
 
-            // Felix:
             GetComponent<Rigidbody>().isKinematic = true;
             GetComponent<ThirdPersonMovement>().enabled = true; // no movement hopefully stops me from being able to survive death zones
             GetComponent<CharacterController>().enabled = true;
-            
 
-            
-            Debug.Log("respawned");
             Cam2.SetActive(false);
             Cam.SetActive(true);
+            #endregion
+
+
             CamScript.enabled = true;
             GetComponent<ThirdPersonMovement>().gravity = gravity;
             inUse = false;

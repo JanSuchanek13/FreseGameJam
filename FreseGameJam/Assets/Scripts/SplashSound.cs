@@ -3,18 +3,21 @@ using UnityEngine;
 public class SplashSound : MonoBehaviour
 {
     #region variables:
-    [SerializeField] AudioSource splashSound;
+    [SerializeField] AudioSource[] arrayOfSplashSounds;
     #endregion
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            splashSound.Play();
+            AudioSource _randomTrack = arrayOfSplashSounds[Random.Range(0, arrayOfSplashSounds.Length)];
+            _randomTrack.Play();
             GetComponent<Collider>().enabled = false; // splash just once!
-            Invoke("Reset", 1f);
-            Debug.Log("this was triggered");
+            Invoke("Reset", 3f);
+            Debug.Log("water splash: \"" + _randomTrack.name + "\" should have played!");
         }
     }
+
     private void Reset()
     {
         GetComponent<Collider>().enabled = true;
