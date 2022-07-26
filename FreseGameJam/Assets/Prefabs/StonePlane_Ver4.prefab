@@ -12,6 +12,9 @@ GameObject:
   - component: {fileID: 1658090897247541224}
   - component: {fileID: 3523591355356898082}
   - component: {fileID: 3067926026332835420}
+  - component: {fileID: 183040363179835633}
+  - component: {fileID: 9136700905300686456}
+  - component: {fileID: 8603171658677714463}
   m_Layer: 6
   m_Name: StonePlane_Ver4
   m_TagString: Ground
@@ -93,5 +96,44 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.018794745, y: 0.018683372, z: 0.00078049826}
-  m_Center: {x: 0.000049805734, y: 0.00023207345, z: 0.00039024913}
+  m_Size: {x: 0.017741498, y: 0.007815546, z: 0.00078050955}
+  m_Center: {x: -0.000045946123, y: 0.005019679, z: 0.0003902547}
+--- !u!65 &183040363179835633
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3163413541638161143}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.013959325, y: 0.0033631148, z: 0.0007805124}
+  m_Center: {x: -0.0022482434, y: -0.00331074, z: 0.00039025611}
+--- !u!65 &9136700905300686456
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3163413541638161143}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.0035702134, y: 0.0047036028, z: 0.0007805056}
+  m_Center: {x: -0.00603047, y: -0.0064466475, z: 0.00039025274}
+--- !u!65 &8603171658677714463
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3163413541638161143}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.010105296, y: 0.0029800844, z: 0.00078051316}
+  m_Center: {x: -0.0032895615, y: -0.00024667286, z: 0.0003902565}

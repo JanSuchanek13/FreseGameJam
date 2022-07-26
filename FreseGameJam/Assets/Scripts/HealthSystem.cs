@@ -28,6 +28,8 @@ public class HealthSystem : MonoBehaviour
     // Felix:
     [SerializeField] AudioSource[] arrayOfScreams;
     [SerializeField] bool superDramaticDeath = true;
+    [SerializeField] AudioSource choireHymnn;
+    [SerializeField] AudioSource fireSwoosh;
 
 
     private void Start()
@@ -62,6 +64,9 @@ public class HealthSystem : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Checkpoint"))
         {
+            // play Sounds when reaching checkpoint:
+            choireHymnn.Play();
+            fireSwoosh.Play();
 
             RespawnPoint = other.transform.position;
 
