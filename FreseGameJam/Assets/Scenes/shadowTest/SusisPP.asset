@@ -25,7 +25,7 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.2
+    m_Value: 0.35
     min: 0
     max: 1
   smoothness:
@@ -36,7 +36,54 @@ MonoBehaviour:
   rounded:
     m_OverrideState: 0
     m_Value: 0
---- !u!114 &-5676330621793215619
+--- !u!114 &-3805492316510870767
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97c23e3b12dc18c42a140437e53d3951, type: 3}
+  m_Name: Tonemapping
+  m_EditorClassIdentifier: 
+  active: 1
+  m_AdvancedMode: 0
+  mode:
+    m_OverrideState: 1
+    m_Value: 2
+--- !u!114 &-204888250905173536
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccf1aba9553839d41ae37dd52e9ebcce, type: 3}
+  m_Name: MotionBlur
+  m_EditorClassIdentifier: 
+  active: 1
+  m_AdvancedMode: 0
+  mode:
+    m_OverrideState: 0
+    m_Value: 0
+  quality:
+    m_OverrideState: 1
+    m_Value: 1
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0.15
+    min: 0
+    max: 1
+  clamp:
+    m_OverrideState: 0
+    m_Value: 0.05
+    min: 0
+    max: 0.2
+--- !u!114 &-77308242404094234
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -48,30 +95,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c01700fd266d6914ababb731e09af2eb, type: 3}
   m_Name: DepthOfField
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   m_AdvancedMode: 0
   mode:
     m_OverrideState: 1
     m_Value: 1
   gaussianStart:
-    m_OverrideState: 0
-    m_Value: 10
+    m_OverrideState: 1
+    m_Value: 54.9
     min: 0
   gaussianEnd:
-    m_OverrideState: 0
-    m_Value: 30
+    m_OverrideState: 1
+    m_Value: 100
     min: 0
   gaussianMaxRadius:
-    m_OverrideState: 0
-    m_Value: 1
+    m_OverrideState: 1
+    m_Value: 0.84
     min: 0.5
     max: 1.5
   highQualitySampling:
     m_OverrideState: 0
     m_Value: 0
   focusDistance:
-    m_OverrideState: 0
-    m_Value: 10
+    m_OverrideState: 1
+    m_Value: 0.1
     min: 0.1
   aperture:
     m_OverrideState: 0
@@ -98,23 +145,6 @@ MonoBehaviour:
     m_Value: 0
     min: -180
     max: 180
---- !u!114 &-3805492316510870767
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97c23e3b12dc18c42a140437e53d3951, type: 3}
-  m_Name: Tonemapping
-  m_EditorClassIdentifier: 
-  active: 1
-  m_AdvancedMode: 0
-  mode:
-    m_OverrideState: 1
-    m_Value: 2
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,15 +155,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d7fd9488000d3734a9e00ee676215985, type: 3}
-  m_Name: PP Profile
+  m_Name: SusisPP
   m_EditorClassIdentifier: 
   components:
   - {fileID: -5725579749599004196}
   - {fileID: -3805492316510870767}
   - {fileID: 6496941474890583776}
-  - {fileID: -5676330621793215619}
+  - {fileID: -77308242404094234}
   - {fileID: 1988589375111416336}
   - {fileID: 7411262604133929965}
+  - {fileID: -204888250905173536}
 --- !u!114 &1988589375111416336
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -150,13 +181,13 @@ MonoBehaviour:
   m_AdvancedMode: 0
   shadows:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: -0.044219743}
+    m_Value: {x: 0.74500734, y: 0.7981745, z: 1, w: 0.0974233}
   midtones:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: {x: 1, y: 1, z: 1, w: -0.10107392}
   highlights:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: 0}
+    m_Value: {x: 0.9934995, y: 1, z: 0.6059472, w: 0.14164308}
   shadowsStart:
     m_OverrideState: 0
     m_Value: 0
@@ -189,15 +220,15 @@ MonoBehaviour:
   m_AdvancedMode: 0
   postExposure:
     m_OverrideState: 1
-    m_Value: 0.2
+    m_Value: 0.5
   contrast:
     m_OverrideState: 1
-    m_Value: 19.5
+    m_Value: 5
     min: -100
     max: 100
   colorFilter:
     m_OverrideState: 0
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_Value: {r: 1.0118003, g: 0.89248425, b: 0.9312789, a: 1}
     hdr: 1
     showAlpha: 0
     showEyeDropper: 1
@@ -207,8 +238,8 @@ MonoBehaviour:
     min: -180
     max: 180
   saturation:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 10
     min: -100
     max: 100
 --- !u!114 &7411262604133929965
@@ -227,6 +258,6 @@ MonoBehaviour:
   m_AdvancedMode: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0.095
+    m_Value: 0.021
     min: 0
     max: 1
