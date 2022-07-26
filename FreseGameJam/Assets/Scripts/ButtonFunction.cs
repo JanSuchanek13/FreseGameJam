@@ -28,8 +28,8 @@ public class ButtonFunction : MonoBehaviour
         _lastTimer[(_currentLevel - 2)] = PlayerPrefs.GetFloat("lastTimer" + (_currentLevel - 2));
 
         // Get the default settings for the game from the Game Manager:
-        //_defaultVolumeSettings = GameObject.Find("Game Manager").GetComponent<GameManager>().defaultVolumeSettings;
-        //_defaultMouseSensitivitySettings = GameObject.Find("Game Manager").GetComponent<GameManager>().defaultMouseSensitivitySettings;
+        _defaultVolumeSettings = GameObject.Find("Game Manager").GetComponent<GameManager>().defaultVolumeSettings;
+        _defaultMouseSensitivitySettings = GameObject.Find("Game Manager").GetComponent<GameManager>().defaultMouseSensitivitySettings;
     }
 
     private void Update()
