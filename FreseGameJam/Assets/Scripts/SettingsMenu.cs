@@ -19,18 +19,18 @@ public class SettingsMenu : MonoBehaviour
 
     private void Start()
     {
-        if (PlayerPrefs.HasKey("Sensitivity"))
+        if (PlayerPrefs.HasKey("mouseSensitivitySettings"))
         {
             
-            mouseSensitivitySlider.value = PlayerPrefs.GetFloat("Sensitivity");
+            mouseSensitivitySlider.value = PlayerPrefs.GetFloat("mouseSensitivitySettings");
             Debug.Log("Loaded a Sensitivity of:" + mouseSensitivitySlider.value);
 
             cinemachineFreeLook.GetComponent<CinemachineFreeLook>().m_XAxis.m_MaxSpeed = mouseSensitivitySlider.value;
             cinemachineFreeLook.GetComponent<CinemachineFreeLook>().m_YAxis.m_MaxSpeed = mouseSensitivitySlider.value /100;
         }
-        if (PlayerPrefs.HasKey("Sound"))
+        if (PlayerPrefs.HasKey("volumeSettings"))
         {
-            SoundSlider.value = PlayerPrefs.GetFloat("Sound");
+            SoundSlider.value = PlayerPrefs.GetFloat("volumeSettings");
             Debug.Log("Loaded a Sound Value of:" + SoundSlider.value);
             audioMixer.SetFloat("volume", SoundSlider.value);
         }
@@ -44,7 +44,7 @@ public class SettingsMenu : MonoBehaviour
         if (!initialized) return;
         if (!Application.isPlaying) return;
 
-        PlayerPrefs.SetFloat("Sensitivity", val);
+        PlayerPrefs.SetFloat("mouseSensitivitySettings", val);
         Debug.Log("Set Sensitivity to:" + val);
 
 
@@ -57,7 +57,7 @@ public class SettingsMenu : MonoBehaviour
         if (!initialized) return;
         if (!Application.isPlaying) return;
 
-        PlayerPrefs.SetFloat("Sound", volume);
+        PlayerPrefs.SetFloat("volumeSettings", volume);
         Debug.Log("Set volume to:" + volume);
 
 

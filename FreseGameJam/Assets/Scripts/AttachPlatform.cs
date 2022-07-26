@@ -136,8 +136,15 @@ public class AttachPlatform : MonoBehaviour
         {
 			if (other.tag == "Player")
 			{
+				Debug.Log("enter");
+
 				isStanding = true;
 				StartCoroutine(moveCountDown());
+				foreach (GameObject i in Fire)
+				{
+
+					i.SetActive(true);
+				}
 
 				cc = other.GetComponent<CharacterController>();
 
@@ -165,8 +172,15 @@ public class AttachPlatform : MonoBehaviour
 
 		if (other.tag == "Player")
         {
+			Debug.Log("exit");
+
 			other.transform.parent = null;
-			StopCoroutine(clearFire());
+			//StartCoroutine(clearFire());
+			foreach (GameObject i in Fire)
+			{
+
+				i.SetActive(false);
+			}
 		}
 			
 
@@ -186,14 +200,15 @@ public class AttachPlatform : MonoBehaviour
 
 	private IEnumerator moveCountDown()
     {
-
+		/*
 		foreach (GameObject i in Fire)
 		{
 			yield return new WaitForSeconds(0.9f);
 			
 			i.SetActive(true);
 		}
-		//yield return new WaitForSeconds(countdown);
+		*/
+		yield return new WaitForSeconds(countdown);
 		if (isStanding)
         {
 			gameObject.transform.GetChild(0).position += new Vector3(0, -0.6f, 0);

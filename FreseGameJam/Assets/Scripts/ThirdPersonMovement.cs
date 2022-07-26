@@ -71,6 +71,7 @@ public class ThirdPersonMovement : MonoBehaviour
         get
         {
             Debug.DrawRay(transform.position + new Vector3(0, 0, rayDistance), Vector3.down, Color.red);
+            
             if ((Physics.Raycast(transform.position, Vector3.down, out RaycastHit slopeHit, 1f, SlideMasks, QueryTriggerInteraction.Ignore)/* || (Physics.Raycast(transform.position + new Vector3(0.4f,0,0), Vector3.down, out slopeHit, 1f)) || (Physics.Raycast(transform.position + new Vector3(0, 0, -0.4f), Vector3.down, out slopeHit, 1f)) || (Physics.Raycast(transform.position + new Vector3(0, 0, 0.4f), Vector3.down, out slopeHit, 1f)) || (Physics.Raycast(transform.position + new Vector3(-0.4f, 0, 0), Vector3.down, out slopeHit, 1f))*/))
             {
                 //Debug.Log("Treffer");
@@ -100,6 +101,25 @@ public class ThirdPersonMovement : MonoBehaviour
                 //Debug.Log("Treffer4");
                 hitPointNormal = slopeHit.normal;
                 return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+
+    //test if player is high enough for double Jump to crane
+    public bool isTooCloseToGround
+    {
+        get
+        {
+            
+            Debug.DrawRay(transform.position, Vector3.down *10, Color.blue);
+            if ((Physics.Raycast(transform.position, Vector3.down *10, 1f, SlideMasks, QueryTriggerInteraction.Ignore)))
+            {
+                
+                return true;
             }
             else
             {
@@ -218,7 +238,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
                 
             }
-            if (Input.GetButtonDown("Jump") && !isGrounded) // double jump change you into crane
+            if (Input.GetButtonDown("Jump") && !isGrounded && !(Physics.Raycast(transform.position, Vector3.down * 10, 1f, SlideMasks, QueryTriggerInteraction.Ignore))) // double jump change you into crane
             {
                 
                 if (stateController.availableCrane)
