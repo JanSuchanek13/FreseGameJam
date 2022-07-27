@@ -238,11 +238,12 @@ public class ThirdPersonMovement : MonoBehaviour
 
                 
             }
-            if (Input.GetButtonDown("Jump") && !isGrounded && !(Physics.Raycast(transform.position, Vector3.down * 10, 1f, SlideMasks, QueryTriggerInteraction.Ignore))) // double jump change you into crane
+            if (Input.GetButtonDown("Jump") && !isGrounded && !(Physics.Raycast(transform.position, Vector3.down, 4f)) && !GetComponent<StateController>().isChanging) // double jump change you into crane
             {
                 
                 if (stateController.availableCrane)
                 {
+                    GetComponent<StateController>().isChanging = true;
                     stateController.ball = false;
                     stateController.human = false;
                     stateController.frog = false;
@@ -279,12 +280,11 @@ public class ThirdPersonMovement : MonoBehaviour
         if (GetComponent<StateController>().crane)
         {
             //Move
-            if (isGrounded && velocity.y < 0)
+            if (isGrounded && velocity.y < 0 && !GetComponent<StateController>().isChanging)
             {
                 speed = 0f; //walk speed
 
                 //change back to human on ground
-
                 StartCoroutine(GetComponent<StateController>().changeModell(1));
                 stateController.ball = false;
                 stateController.human = true;
@@ -314,6 +314,19 @@ public class ThirdPersonMovement : MonoBehaviour
             {
                 controller.slopeLimit = 0f; //low climp
                 velocity.y = Mathf.Sqrt(jumpHeight / 150 * -2f * gravity);  //low jump
+            }
+            else if(Input.GetButtonDown("Jump") && !isGrounded && !GetComponent<StateController>().isChanging)
+            {
+                //change back to human
+                GetComponent<StateController>().isChanging = true;
+                
+                stateController.ball = false;
+                stateController.human = true;
+                stateController.frog = false;
+                stateController.crane = false;
+                stateController.capricorn = false;
+                stateController.lama = false;
+                StartCoroutine(GetComponent<StateController>().changeModell(1));
             }
 
             //Gravity
