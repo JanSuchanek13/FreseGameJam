@@ -16,6 +16,7 @@ namespace Gentleforge
 
         [Header("JUMP")]
         public AnimationCurve gravityCurve;
+        private float time;
         [Tooltip("The force that we apply to the Jump")]
         public float jumpForce = 100;
         [Tooltip("The upper limit of the Jump Velocity")]
@@ -79,7 +80,7 @@ namespace Gentleforge
         }
 
         /// <summary>
-        /// We kimit the velocity of the rigidbody
+        /// We limit the velocity of the rigidbody
         /// </summary>
         public void LimitVelocity()
         {
@@ -99,6 +100,10 @@ namespace Gentleforge
                 tempVelocity.y = maxJumpVelocity.y;
             if (tempVelocity.y < maxJumpVelocity.x)
                 tempVelocity.y = maxJumpVelocity.x;
+            if (tempVelocity.y < 0)
+                tempVelocity.y = gravityCurve.Evaluate(time) * 10;
+            time += Time.deltaTime;
+
 
             myRigidbody.velocity = tempVelocity;
         }
