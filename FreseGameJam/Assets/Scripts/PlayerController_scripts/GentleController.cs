@@ -100,9 +100,7 @@ namespace Gentleforge
                 tempVelocity.y = maxJumpVelocity.y;
             if (tempVelocity.y < maxJumpVelocity.x)
                 tempVelocity.y = maxJumpVelocity.x;
-            if (tempVelocity.y < 0)
-                tempVelocity.y = gravityCurve.Evaluate(time) * 10;
-            time += Time.deltaTime;
+            
 
 
             myRigidbody.velocity = tempVelocity;
