@@ -11,6 +11,7 @@ public class SettingsMenu : MonoBehaviour
 {
     public bool initialized = false;
     public CinemachineFreeLook cinemachineFreeLook;
+    public CinemachineFreeLook CloseUpCam;
     public Slider mouseSensitivitySlider;
     public Slider SoundSlider;
     public AudioMixer audioMixer;
@@ -25,8 +26,10 @@ public class SettingsMenu : MonoBehaviour
             mouseSensitivitySlider.value = PlayerPrefs.GetFloat("mouseSensitivitySettings");
             Debug.Log("Loaded a Sensitivity of:" + mouseSensitivitySlider.value);
 
-            cinemachineFreeLook.GetComponent<CinemachineFreeLook>().m_XAxis.m_MaxSpeed = mouseSensitivitySlider.value;
+            cinemachineFreeLook.GetComponent<CinemachineFreeLook>().m_XAxis.m_MaxSpeed = mouseSensitivitySlider.value;      //for Normal Cam
             cinemachineFreeLook.GetComponent<CinemachineFreeLook>().m_YAxis.m_MaxSpeed = mouseSensitivitySlider.value /100;
+            CloseUpCam.GetComponent<CinemachineFreeLook>().m_XAxis.m_MaxSpeed = mouseSensitivitySlider.value;               //for closeUp Cam
+            CloseUpCam.GetComponent<CinemachineFreeLook>().m_YAxis.m_MaxSpeed = mouseSensitivitySlider.value / 100;
         }
         if (PlayerPrefs.HasKey("volumeSettings"))
         {
@@ -50,6 +53,8 @@ public class SettingsMenu : MonoBehaviour
 
         cinemachineFreeLook.GetComponent<CinemachineFreeLook>().m_XAxis.m_MaxSpeed = val;
         cinemachineFreeLook.GetComponent<CinemachineFreeLook>().m_YAxis.m_MaxSpeed = val/ 100;
+        CloseUpCam.GetComponent<CinemachineFreeLook>().m_XAxis.m_MaxSpeed = val;
+        CloseUpCam.GetComponent<CinemachineFreeLook>().m_YAxis.m_MaxSpeed = val / 100;
     }
 
     public void SetVolume (float volume)

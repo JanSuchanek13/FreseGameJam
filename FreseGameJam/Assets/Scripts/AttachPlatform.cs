@@ -29,6 +29,15 @@ public class AttachPlatform : MonoBehaviour
 
 	public GameObject[] Fire;
 
+	//Boxcast
+	float m_MaxDistance;
+	float m_Speed;
+	float m_Scale = 1;
+	bool m_HitDetect;
+	Collider m_Collider;
+	RaycastHit m_Hit;
+	Vector3 oldPos;
+
 	private void Start()
 	{
 		rb = GetComponent<Rigidbody>();
@@ -51,7 +60,12 @@ public class AttachPlatform : MonoBehaviour
         {
 			GotoNextPoint();
 		}
-		
+
+		//Boxcast
+		//Choose the distance the Box can reach to
+		m_MaxDistance = 1.0f;
+		m_Speed = 20.0f;
+		m_Collider = GetComponent<Collider>();
 	}
 
 	void GotoNextPoint()
@@ -124,11 +138,49 @@ public class AttachPlatform : MonoBehaviour
 			if (!agent.pathPending && agent.remainingDistance < 2f)
 				GotoNextPoint();
 		}
-		
 
 
+		//boxCast
+		DrawBoxCastBox(m_Collider.bounds.center + new Vector3(0, -1f, 0), transform.localScale * m_Scale, transform.rotation, transform.up, m_MaxDistance, Color.red);
+		m_HitDetect = Physics.BoxCast(m_Collider.bounds.center + new Vector3(0,-1f,0), transform.localScale * m_Scale, transform.up, out m_Hit, transform.rotation, m_MaxDistance);
+		if (m_HitDetect)
+		{
+			Debug.Log("Hit : " + m_Hit.collider.name);
+			Vector3 direction = transform.position - oldPos;
+			m_Hit.transform.gameObject.GetComponent<CharacterController>().Move(direction.normalized / 50);
+			oldPos = transform.position;
+			if (!isStanding)
+            {
+				//Output the name of the Collider your Box hit
+				Debug.Log("Hit : " + m_Hit.collider.name);
+
+
+
+				if (m_Hit.transform.tag == "Player")
+				{
+					isStanding = true;
+					
+					
+					//m_Hit.transform.gameObject.transform.SetParent(gameObject.transform, true);
+					StartCoroutine(moveCountDown());
+				}
+			}
+			
+		}
+        else
+        {
+			isStanding = false;
+			if(m_Hit.transform != null)
+            {
+				//m_Hit.transform.parent = null;
+			}
+			StartCoroutine(clearFire());
+			StopCoroutine(moveCountDown());
+		}
 
 	}
+
+	/*
 	private void OnTriggerEnter(Collider other)
 	{
 
@@ -186,6 +238,7 @@ public class AttachPlatform : MonoBehaviour
 
 		
 	}
+	*/
 
 	private IEnumerator clearFire()	//made Coroutine so that the Frame time for enable/disable fire is the same
     {
@@ -200,21 +253,27 @@ public class AttachPlatform : MonoBehaviour
 
 	private IEnumerator moveCountDown()
     {
-		/*
+		
 		foreach (GameObject i in Fire)
 		{
-			yield return new WaitForSeconds(0.9f);
-			
+			yield return new WaitForSeconds(0.75f);
+            if (!isStanding)
+            {
+				break;
+            }
 			i.SetActive(true);
 		}
-		*/
-		yield return new WaitForSeconds(countdown);
+		
+		//yield return new WaitForSeconds(countdown);
 		if (isStanding)
         {
+			GetComponent<Collider>().enabled = false;
 			gameObject.transform.GetChild(0).position += new Vector3(0, -0.6f, 0);
-			
+			StartCoroutine(clearFire());
+			GetComponent<Collider>().enabled = false;
 			yield return new WaitForSeconds(countdown);
 			gameObject.transform.GetChild(0).position += new Vector3(0, +0.6f, 0);
+			GetComponent<Collider>().enabled = true;
 		}
 	}
 
@@ -226,4 +285,128 @@ public class AttachPlatform : MonoBehaviour
 			i.SetActive(false);
 		}
 	}
+
+	/*
+	void OnDrawGizmos()
+	{
+		Gizmos.color = Color.red;
+
+		//Check if there has been a hit yet
+		if (m_HitDetect)
+		{
+			//Draw a Ray forward from GameObject toward the hit
+			Gizmos.DrawRay(transform.position, transform.up * m_Hit.distance);
+			//Draw a cube that extends to where the hit exists
+			Gizmos.DrawWireCube(transform.position + transform.up * m_Hit.distance*2, transform.localScale * m_Scale);
+		}
+		//If there hasn't been a hit yet, draw the ray at the maximum distance
+		else
+		{
+			//Draw a Ray forward from GameObject toward the maximum distance
+			Gizmos.DrawRay(transform.position, transform.up * m_MaxDistance);
+			//Draw a cube at the maximum distance
+			Gizmos.DrawWireCube(transform.position + transform.up * m_MaxDistance*2, transform.localScale * m_Scale);
+		}
+	}
+	*/
+	public static void DrawBoxCastBox(Vector3 origin, Vector3 halfExtents, Quaternion orientation, Vector3 direction, float distance, Color color)
+	{
+		direction.Normalize();
+		Box bottomBox = new Box(origin, halfExtents, orientation);
+		Box topBox = new Box(origin + (direction * distance), halfExtents, orientation);
+
+		Debug.DrawLine(bottomBox.backBottomLeft, topBox.backBottomLeft, color);
+		Debug.DrawLine(bottomBox.backBottomRight, topBox.backBottomRight, color);
+		Debug.DrawLine(bottomBox.backTopLeft, topBox.backTopLeft, color);
+		Debug.DrawLine(bottomBox.backTopRight, topBox.backTopRight, color);
+		Debug.DrawLine(bottomBox.frontTopLeft, topBox.frontTopLeft, color);
+		Debug.DrawLine(bottomBox.frontTopRight, topBox.frontTopRight, color);
+		Debug.DrawLine(bottomBox.frontBottomLeft, topBox.frontBottomLeft, color);
+		Debug.DrawLine(bottomBox.frontBottomRight, topBox.frontBottomRight, color);
+
+		DrawBox(bottomBox, color);
+		DrawBox(topBox, color);
+	}
+
+	public static void DrawBox(Vector3 origin, Vector3 halfExtents, Quaternion orientation, Color color)
+	{
+		DrawBox(new Box(origin, halfExtents, orientation), color);
+	}
+	public static void DrawBox(Box box, Color color)
+	{
+		Debug.DrawLine(box.frontTopLeft, box.frontTopRight, color);
+		Debug.DrawLine(box.frontTopRight, box.frontBottomRight, color);
+		Debug.DrawLine(box.frontBottomRight, box.frontBottomLeft, color);
+		Debug.DrawLine(box.frontBottomLeft, box.frontTopLeft, color);
+
+		Debug.DrawLine(box.backTopLeft, box.backTopRight, color);
+		Debug.DrawLine(box.backTopRight, box.backBottomRight, color);
+		Debug.DrawLine(box.backBottomRight, box.backBottomLeft, color);
+		Debug.DrawLine(box.backBottomLeft, box.backTopLeft, color);
+
+		Debug.DrawLine(box.frontTopLeft, box.backTopLeft, color);
+		Debug.DrawLine(box.frontTopRight, box.backTopRight, color);
+		Debug.DrawLine(box.frontBottomRight, box.backBottomRight, color);
+		Debug.DrawLine(box.frontBottomLeft, box.backBottomLeft, color);
+	}
+
+	public struct Box
+	{
+		public Vector3 localFrontTopLeft { get; private set; }
+		public Vector3 localFrontTopRight { get; private set; }
+		public Vector3 localFrontBottomLeft { get; private set; }
+		public Vector3 localFrontBottomRight { get; private set; }
+		public Vector3 localBackTopLeft { get { return -localFrontBottomRight; } }
+		public Vector3 localBackTopRight { get { return -localFrontBottomLeft; } }
+		public Vector3 localBackBottomLeft { get { return -localFrontTopRight; } }
+		public Vector3 localBackBottomRight { get { return -localFrontTopLeft; } }
+
+		public Vector3 frontTopLeft { get { return localFrontTopLeft + origin; } }
+		public Vector3 frontTopRight { get { return localFrontTopRight + origin; } }
+		public Vector3 frontBottomLeft { get { return localFrontBottomLeft + origin; } }
+		public Vector3 frontBottomRight { get { return localFrontBottomRight + origin; } }
+		public Vector3 backTopLeft { get { return localBackTopLeft + origin; } }
+		public Vector3 backTopRight { get { return localBackTopRight + origin; } }
+		public Vector3 backBottomLeft { get { return localBackBottomLeft + origin; } }
+		public Vector3 backBottomRight { get { return localBackBottomRight + origin; } }
+
+		public Vector3 origin { get; private set; }
+
+		public Box(Vector3 origin, Vector3 halfExtents, Quaternion orientation) : this(origin, halfExtents)
+		{
+			Rotate(orientation);
+		}
+		public Box(Vector3 origin, Vector3 halfExtents)
+		{
+			this.localFrontTopLeft = new Vector3(-halfExtents.x, halfExtents.y, -halfExtents.z);
+			this.localFrontTopRight = new Vector3(halfExtents.x, halfExtents.y, -halfExtents.z);
+			this.localFrontBottomLeft = new Vector3(-halfExtents.x, -halfExtents.y, -halfExtents.z);
+			this.localFrontBottomRight = new Vector3(halfExtents.x, -halfExtents.y, -halfExtents.z);
+
+			this.origin = origin;
+		}
+
+
+		public void Rotate(Quaternion orientation)
+		{
+			localFrontTopLeft = RotatePointAroundPivot(localFrontTopLeft, Vector3.zero, orientation);
+			localFrontTopRight = RotatePointAroundPivot(localFrontTopRight, Vector3.zero, orientation);
+			localFrontBottomLeft = RotatePointAroundPivot(localFrontBottomLeft, Vector3.zero, orientation);
+			localFrontBottomRight = RotatePointAroundPivot(localFrontBottomRight, Vector3.zero, orientation);
+		}
+	}
+
+
+	//This should work for all cast types
+	static Vector3 CastCenterOnCollision(Vector3 origin, Vector3 direction, float hitInfoDistance)
+	{
+		return origin + (direction.normalized * hitInfoDistance);
+	}
+
+	static Vector3 RotatePointAroundPivot(Vector3 point, Vector3 pivot, Quaternion rotation)
+	{
+		Vector3 direction = point - pivot;
+		return pivot + rotation * direction;
+	}
 }
+
