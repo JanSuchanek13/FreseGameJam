@@ -213,44 +213,44 @@
                     "id": "70aeb2e3-3a02-4050-9cdf-19944c25c261",
                     "path": "<Gamepad>/dpad/down",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "Scale",
                     "groups": "",
                     "action": "SwitchState",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "1D Axis",
-                    "id": "5b05006c-6edd-46bc-814f-95889d86f98d",
-                    "path": "1DAxis(minValue=1,maxValue=5)",
+                    "name": "",
+                    "id": "c018d4da-4de3-4e38-a477-792426ccda6d",
+                    "path": "<Gamepad>/dpad/left",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "Scale(factor=2)",
                     "groups": "",
                     "action": "SwitchState",
-                    "isComposite": true,
+                    "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "negative",
-                    "id": "2af4063c-133a-4913-8cc0-531140dc6396",
-                    "path": "<Gamepad>/leftShoulder",
+                    "name": "",
+                    "id": "43346039-3b77-4121-a81b-ab986c9071fd",
+                    "path": "<Gamepad>/dpad/right",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "Scale(factor=3)",
                     "groups": "",
                     "action": "SwitchState",
                     "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
                 },
                 {
-                    "name": "positive",
-                    "id": "034019e0-3950-4bb3-a381-2d94b00f7d41",
-                    "path": "<Gamepad>/rightShoulder",
+                    "name": "",
+                    "id": "3a01064d-eea9-4bf1-93b2-543e6f5e97aa",
+                    "path": "<Gamepad>/dpad/up",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "Scale(factor=4)",
                     "groups": "",
                     "action": "SwitchState",
                     "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
                 }
             ]
         }

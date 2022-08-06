@@ -29,6 +29,8 @@ namespace Gentleforge
         public List<RayData> jumpRayList = new List<RayData>();
 
         [Header("REFERENCES")]
+
+        [Tooltip("Reference of the Rigidbody")]
         private Rigidbody myRigidbody;
 
         public void Awake()

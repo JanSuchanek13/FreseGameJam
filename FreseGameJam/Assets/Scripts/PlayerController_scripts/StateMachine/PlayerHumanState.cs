@@ -8,7 +8,7 @@ public class PlayerHumanState : BaseState
     }
     public override void UpdateState(StateManager player)
     {
-        player.SwitchState(player.CraneState);
+        //player.SwitchState(player.CraneState);
 
     }
     public override void OnCollisionState(StateManager player)

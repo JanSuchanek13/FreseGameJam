@@ -14,7 +14,7 @@ public class StateManager : MonoBehaviour
     [Tooltip("holds a Reference to the active state in a state machine")]
     BaseState currentState;
     [Tooltip("Instance of HumanState in a state machine")]
-    public PlayerHumanState humanState = new PlayerHumanState();
+    public PlayerHumanState HumanState = new PlayerHumanState();
     [Tooltip("Instance of CraneState in a state machine")]
     public PlayerCraneState CraneState = new PlayerCraneState();
     [Tooltip("Instance of CapricornState in a state machine")]
@@ -24,26 +24,22 @@ public class StateManager : MonoBehaviour
     [Tooltip("Instance of FrogState in a state machine")]
     public PlayerFrogState FrogState = new PlayerFrogState();
 
-    [Header("Input for switching")]
 
+    [Header("Input for switching")]
+    [Tooltip("Reference to the PlayerInput Action Mapping")]
     private PlayerInput playerInput;
 
-    [Header("Variables switching")]
 
+    [Header("Model switching")]
+
+    [Tooltip("is the Player changing his Model")]
     bool isChanging;
-
+    [Tooltip("In which state is the Player able to move in")]
     public bool availableFrog;
     public bool availableCrane;
     public bool availableCapricorn;
     public bool availableLama;
-
-    public bool ball;
-    public bool human = true;
-    public bool frog;
-    public bool crane;
-    public bool capricorn;
-    public bool lama;
-
+    [Tooltip("Reference to the Model Visuells")]
     [SerializeField] GameObject ballVisuell;
     [SerializeField] GameObject humanVisuell;
     [SerializeField] GameObject frogVisuell;
@@ -75,7 +71,7 @@ public class StateManager : MonoBehaviour
     private void Start()
     {
         //starting State for State machine
-        currentState = humanState;
+        currentState = HumanState;
         //"this" is a reference to the context (this EXACT Monobehavier script)
         currentState.EnterState(this);
     }
@@ -90,23 +86,25 @@ public class StateManager : MonoBehaviour
 
         if (playerInput.CharacterControls.SwitchState.ReadValue<float>() != 0)
         {
-            float i = playerInput.CharacterControls.SwitchState.ReadValue<float>();
+            
             //Debug.Log(i);
             if (isChanging == false)
             {
                 isChanging = true;
+                float i = playerInput.CharacterControls.SwitchState.ReadValue<float>();
+                Debug.Log(i);
 
                 switch (i)//change Movement state
                 {
                     case 1:
-                        
+                        SwitchState(HumanState);
                         StartCoroutine(changeModell(i));
                         break;
 
                     case 5:
                         if (availableFrog)
                         {
-                            
+                            SwitchState(FrogState);
                             StartCoroutine(changeModell(i));
                         }
                         break;
@@ -114,7 +112,7 @@ public class StateManager : MonoBehaviour
                     case 2:
                         if (availableCrane)
                         {
-                            
+                            SwitchState(CraneState);
                             StartCoroutine(changeModell(i));
                         }
                         break;
@@ -122,7 +120,7 @@ public class StateManager : MonoBehaviour
                     case 3:
                         if (availableCapricorn)
                         {
-                            
+                            SwitchState(CapricornState);
                             StartCoroutine(changeModell(i));
                         }
                         break;
@@ -130,7 +128,7 @@ public class StateManager : MonoBehaviour
                     case 4:
                         if (availableLama)
                         {
-                            
+                            SwitchState(LamaState);
                             StartCoroutine(changeModell(i));
                         }
                         break;
@@ -163,6 +161,12 @@ public class StateManager : MonoBehaviour
         state.EnterState(this);
     }
 
+
+    /// <summary>
+    /// changing the Model to current state
+    /// </summary>
+    /// <param name="state"></param>
+    /// <returns></returns>
     public IEnumerator changeModell(float state)
     {
         //change to ball
