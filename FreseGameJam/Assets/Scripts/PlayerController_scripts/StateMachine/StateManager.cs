@@ -26,6 +26,7 @@ public class StateManager : MonoBehaviour
 
 
     [Header("Input for switching")]
+
     [Tooltip("Reference to the PlayerInput Action Mapping")]
     private PlayerInput playerInput;
 
