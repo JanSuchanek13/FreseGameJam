@@ -16,8 +16,6 @@ public class SettingsMenu : MonoBehaviour
     public Slider SoundSlider;
     public AudioMixer audioMixer;
 
-    int pingPongAlpha =1;
-
     private void Start()
     {
         if (PlayerPrefs.HasKey("mouseSensitivitySettings"))

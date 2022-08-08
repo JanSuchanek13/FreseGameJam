@@ -99,7 +99,10 @@ public class HealthManager : MonoBehaviour
     }
 
 
-
+    /// <summary>
+    /// We respawn the Player, Count Death, stop some Movement in the World
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator deadAndRespawn()
     {
         // test if we are currently running through a Respawn
