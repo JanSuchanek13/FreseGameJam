@@ -143,9 +143,9 @@ public class AttachPlatform : MonoBehaviour
 		//boxCast
 		DrawBoxCastBox(m_Collider.bounds.center + new Vector3(0, -1f, 0), transform.localScale * m_Scale, transform.rotation, transform.up, m_MaxDistance, Color.red);
 		m_HitDetect = Physics.BoxCast(m_Collider.bounds.center + new Vector3(0,-1f,0), transform.localScale * m_Scale, transform.up, out m_Hit, transform.rotation, m_MaxDistance);
-		if (m_HitDetect)
+		if (m_HitDetect && m_Hit.transform.gameObject.GetComponent<CharacterController>() != null)
 		{
-			Debug.Log("Hit : " + m_Hit.collider.name);
+			//Debug.Log("Hit : " + m_Hit.collider.name);
 			Vector3 direction = transform.position - oldPos;
 			m_Hit.transform.gameObject.GetComponent<CharacterController>().Move(direction.normalized / 50);
 			oldPos = transform.position;

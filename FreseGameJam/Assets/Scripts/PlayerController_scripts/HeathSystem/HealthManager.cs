@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class HeathManager : MonoBehaviour
+public class HealthManager : MonoBehaviour
 {
     [Header("Cam")]
 
@@ -123,7 +123,6 @@ public class HeathManager : MonoBehaviour
             //Sink into Ground
             GetComponent<Gentleforge.GentleController>().enabled = false; 
             GetComponent<CapsuleCollider>().enabled = false; // no colission = sink into even shallow deathzones
-            GetComponent<Rigidbody>().isKinematic = false;
 
             #region Audio:
             // Get random sound:
@@ -151,9 +150,8 @@ public class HeathManager : MonoBehaviour
             gameObject.transform.position = new Vector3(0, -3, 0) + RespawnPoint;
 
             //disable sink into Ground
-            GetComponent<Rigidbody>().isKinematic = true;
             GetComponent<Gentleforge.GentleController>().enabled = true; // no movement hopefully stops me from being able to survive death zones
-            GetComponent<CharacterController>().enabled = true;
+            GetComponent<CapsuleCollider>().enabled = true;
 
             //activate Main Cam
             Cam2.SetActive(false);
