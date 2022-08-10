@@ -5,15 +5,22 @@ using UnityEngine.SceneManagement;
 
 public class CollectedCrowns : MonoBehaviour
 {
+
+	[Header("safe active Crowns")]
+
+	[Tooltip("List of Crowns in this Level")]
+	public List<GameObject> Crowns;
+	[Tooltip("List of bools represent active Crowns in this Level")]
+	public List<bool> boolValuesArr;
+	[Tooltip("Sting of bits represent boolValueArr")]
+	public string bitString = ""; // To store bits representing bool values
+
+	[Header("REFERENCES")]
+
+	[Tooltip("Reference of the current Level")]
 	int currentLevel;
 
-	//safe active Crowns
-	public List<GameObject> Crowns;
-	
-	public List<bool> boolValuesArr;
-    public string bitString = ""; // To store bits representing bool values
-
-    private void Start()
+	private void Start()
     {
 		currentLevel = SceneManager.GetActiveScene().buildIndex;
 		
@@ -22,7 +29,10 @@ public class CollectedCrowns : MonoBehaviour
 
 	}
 
-
+	/// <summary>
+	/// We make a Bool Array out of enabled/disabled Crowns in this scene
+	/// </summary>
+	/// <param name="Start"></param>
     public void MakeBoolArray(bool Start)
     {
         if (!Start)
@@ -56,6 +66,9 @@ public class CollectedCrowns : MonoBehaviour
 
 	}
 
+	/// <summary>
+	/// We disable all Crowns that are false in the BoolArray
+	/// </summary>
 	void DeactivateCrowns()
     {
         for (int i = 0; i < boolValuesArr.Count; i++)
@@ -77,14 +90,9 @@ public class CollectedCrowns : MonoBehaviour
     }
 	*/
 
-
-
-
-
-
-
-
-	// Read bool array and pack the data into a string.
+	/// <summary>
+	/// Read bool array and pack the data into a string of bits
+	/// </summary>
 	void PackDataToBitString()
 	{
 		char[] bits = new char[boolValuesArr.Count];
@@ -101,7 +109,9 @@ public class CollectedCrowns : MonoBehaviour
 
 	}
 
-	// Read string and unpack the data into a bool array.
+	/// <summary>
+	/// Read string and unpack the data into a bool array
+	/// </summary>
 	void UnpackDataFromBitString()
 	{
 		char[] bits = bitString.ToCharArray();
