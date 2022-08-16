@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8ce9e450156ad7a4199d1f15746f62f9, type: 3}
-  m_Name: OrigamiControllerData_Human
+  m_Name: OrigamiControllerData_Capricorn
   m_EditorClassIdentifier: 
   moveSpeed: 280
-  maxMoveVelocity: 20
-  jumpForce: 700
-  maxJumpVelocity: {x: -10, y: 20}
+  maxMoveVelocity: 10
+  jumpForce: 100
+  maxJumpVelocity: {x: -10, y: 5}
   gravityCurve:
     serializedVersion: 2
     m_Curve:
@@ -31,8 +31,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 2
-      outSlope: 2
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
@@ -40,7 +40,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  gravityStrengthMultiplier: 3
-  gravityCurveSpeed: 0.5
+  gravityStrengthMultiplier: 1
+  gravityCurveSpeed: 1
   baseDrag: 5
-  airDrag: 3
+  airDrag: 1

@@ -12,6 +12,10 @@ namespace Gentleforge
         public float moveSpeed = 5;
         [Tooltip("The upper limit of the Move Velocity")]
         public float maxMoveVelocity = 10;
+        [Tooltip("Var for calculate Mathf.SmoothDampAngle")]
+        float turnSmoothVelocity = 1;
+        [Tooltip("Var for calculate Mathf.SmoothDampAngle")]
+        public float turnSmoothTime = 0.1f;
 
         [Header("JUMP")]
         [Tooltip("The force that we apply to the Jump")]
@@ -46,14 +50,38 @@ namespace Gentleforge
         [Header("REFERENCES")]
         [Tooltip("Reference of the Rigidbody")]
         private Rigidbody myRigidbody;
+        [Tooltip("Reference to the PlayerInput Action Mapping")]
+        private PlayerInput playerInput;
 
         public Vector3 direction;
 
         public void Awake()
         {
             Setup();
+            playerInput = new PlayerInput();
         }
 
+        /// <summary>
+        /// enable Player input
+        /// </summary>
+        private void OnEnable()
+        {
+            OrigamiEvents.onStateChange_Event += GetComponent<OrigamiController>().ChangeState;
+            playerInput.Enable();
+        }
+
+        /// <summary>
+        /// disable Player input
+        /// </summary>
+        private void OnDisable()
+        {
+            OrigamiEvents.onStateChange_Event -= GetComponent<OrigamiController>().ChangeState ;
+            playerInput.Disable();
+        }
+
+        /// <summary>
+        /// Set diffrent Var. at the beginning of the Game
+        /// </summary>
         public void Setup()
         {
             // Rigidbody Setup
@@ -67,7 +95,7 @@ namespace Gentleforge
 
         public void Update()
         {
-            GroundCheckRay();
+            GroundCheckRay(1);
             GetPlayerInput();
             CalculateGravity();
         }
@@ -77,29 +105,60 @@ namespace Gentleforge
         /// </summary>
         public void GetPlayerInput()
         {
+            /*
             direction = new Vector3(transform.position.x, Camera.main.transform.position.y, transform.position.z) - Camera.main.transform.position;
             direction = direction.normalized;
 
             // we get the movemnent of the player
             Vector3 movement = new Vector3((direction.x  * moveSpeed) * Input.GetAxis("Horizontal"), myRigidbody.velocity.y, (direction.z  * moveSpeed)* Input.GetAxis("Vertical"));
             myRigidbody.velocity = movement;
-            
-            
+            */
+
+            //code for Movement with cam and Rotation ________________________________________________________
+            //Camera and Movement
+            float horizontal = playerInput.CharacterControls.Move.ReadValue<Vector2>().x;
+            float vertical = playerInput.CharacterControls.Move.ReadValue<Vector2>().y;
+            Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+            if (direction.magnitude >= .1f)
+            {
+
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + Camera.main.transform.eulerAngles.y;
+                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+                transform.rotation = Quaternion.Euler(0f, angle, 0f);
+                Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+
+                myRigidbody.velocity = moveDir * moveSpeed * Time.deltaTime;
+                //controller.Move(moveDir.normalized * speed * Time.deltaTime);
+            }
+            //____________________________________________________________________________________________________
+
+
 
             // we get the jump input
-            if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-                myRigidbody.AddForce(Vector3.up * jumpForce);
+            if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && isGrounded)
+            {
+                //Ability for Capricorn
+                if (GetComponent<OrigamiController>().curState == OrigamiState.Capricorn)
+                {
+                    StartCoroutine("CapricornDash");
+                }
+                else
+                    myRigidbody.AddForce(Vector3.up * jumpForce);
+            }
+
+            
+
         }
 
         /// <summary>
         /// Ray Check if Player is grounded
         /// </summary>
-        void GroundCheckRay()
+        void GroundCheckRay(int doubleJumpMultiplier)
         {
             RaycastHit hit;
             foreach (RayData ray in jumpRayList)
             {
-                if ((Physics.Raycast(transform.position + ray.position, ray.direction, out hit, ray.length, jumpRayLayer)))
+                if ((Physics.Raycast(transform.position + ray.position, ray.direction, out hit, ray.length * doubleJumpMultiplier, jumpRayLayer)))
                 {
                     if (!isGrounded)
                         OnLanding();
@@ -209,8 +268,50 @@ namespace Gentleforge
                 Gizmos.DrawRay(velocityRay);
             }
             
+
+
+        }
+
+        /// <summary>
+        /// if player is in Capricorn state he can performe a dash
+        /// </summary>
+        /// <returns></returns>
+        IEnumerator CapricornDash()
+        {
+            yield return new WaitForSeconds(.8f);
+            for (int i = 0; i < 50; i++)
+            {
+                float horizontal = playerInput.CharacterControls.Move.ReadValue<Vector2>().x;
+                float vertical = playerInput.CharacterControls.Move.ReadValue<Vector2>().y;
+                Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + Camera.main.transform.eulerAngles.y;
+                //float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+                //transform.rotation = Quaternion.Euler(0f, angle, 0f);
+                Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+                //move Rigidbody
+                myRigidbody.velocity = moveDir.normalized * (moveSpeed * 200) * Time.deltaTime;
+                yield return new WaitForSeconds(.005f);
+
+                //extra push power
+                Collider[] allObjects = Physics.OverlapSphere(transform.position, 3);   //all Objects in explosion Range
+                foreach (Collider j in allObjects)
+                {
+                    Rigidbody rig = j.GetComponent<Rigidbody>();
+                    if (rig != null && rig != myRigidbody)
+                    {
+                        rig.AddExplosionForce(1, transform.position, 1, 1f, ForceMode.Impulse);
+                    }
+                }
+                
+            }
+
+
         }
     }
+
+    
+
+
 
     /// <summary>
     ///  class with variables for the ground check Raycast

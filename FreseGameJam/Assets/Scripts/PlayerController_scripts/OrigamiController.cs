@@ -16,20 +16,25 @@ public class OrigamiController : MonoBehaviour
 
     [Header("REFERENCES")]
     private GentleController myController;
+    [Tooltip("Reference to the PlayerInput Action Mapping")]
+    private PlayerInput playerInput;
 
     private void OnEnable()
     {
         OrigamiEvents.onStateChange_Event += ChangeState;
+        playerInput.Enable();
     }
 
     private void OnDisable()
     {
         OrigamiEvents.onStateChange_Event -= ChangeState;
+        playerInput.Disable();
     }
 
     private void Awake()
     {
         myController = GetComponent<GentleController>();
+        playerInput = new PlayerInput();
     }
 
     private void Start()
@@ -96,14 +101,33 @@ public class OrigamiController : MonoBehaviour
     /// </summary>
     public void GetPlayerInput()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            OrigamiEvents.SendStateChangeEvent(OrigamiState.Human);
+        float i = playerInput.CharacterControls.SwitchState.ReadValue<float>();
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-            OrigamiEvents.SendStateChangeEvent(OrigamiState.Crane);
+        switch (i)//change Movement state
+        {
+            case 1:
+                OrigamiEvents.SendStateChangeEvent(OrigamiState.Human);
+                break;
 
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-            OrigamiEvents.SendStateChangeEvent(OrigamiState.Frog);
+            case 2:
+                    OrigamiEvents.SendStateChangeEvent(OrigamiState.Crane);
+                break;
+
+            case 3:
+                    OrigamiEvents.SendStateChangeEvent(OrigamiState.Capricorn);
+                break;
+
+            case 4:
+
+                break;
+
+            case 5:
+                OrigamiEvents.SendStateChangeEvent(OrigamiState.Frog);
+                break;
+
+            default:
+                break;
+        }
     }
 }
 
