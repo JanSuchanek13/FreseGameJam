@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7955476862797665466
+--- !u!114 &-5787015281410294969
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15,16 +15,16 @@ MonoBehaviour:
   active: 1
   m_AdvancedMode: 0
   threshold:
-    m_OverrideState: 1
-    m_Value: 1.4
+    m_OverrideState: 0
+    m_Value: 0.9
     min: 0
   intensity:
-    m_OverrideState: 1
-    m_Value: 1.7
+    m_OverrideState: 0
+    m_Value: 0
     min: 0
   scatter:
-    m_OverrideState: 1
-    m_Value: 0.534
+    m_OverrideState: 0
+    m_Value: 0.7
     min: 0
     max: 1
   clamp:
@@ -218,7 +218,7 @@ MonoBehaviour:
   - {fileID: 7411262604133929965}
   - {fileID: -204888250905173536}
   - {fileID: 6599401057177512115}
-  - {fileID: -7955476862797665466}
+  - {fileID: -5787015281410294969}
 --- !u!114 &3564257441089515454
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -241,7 +241,7 @@ MonoBehaviour:
     m_Value: {x: 1, y: 0.78703696, z: 0.8604185, w: 0.034482755}
   highlights:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 0.91338503, z: 0.85033077, w: 0.05172414}
+    m_Value: {x: 1, y: 0.9468911, z: 0.65534437, w: 0.05172414}
   shadowsStart:
     m_OverrideState: 0
     m_Value: 0
@@ -293,7 +293,7 @@ MonoBehaviour:
     max: 180
   saturation:
     m_OverrideState: 1
-    m_Value: 17
+    m_Value: 10
     min: -100
     max: 100
 --- !u!114 &6599401057177512115
@@ -343,6 +343,6 @@ MonoBehaviour:
   m_AdvancedMode: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0.06
+    m_Value: 0.05
     min: 0
     max: 1
