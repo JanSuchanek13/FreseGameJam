@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ce9e450156ad7a4199d1f15746f62f9, type: 3}
   m_Name: OrigamiControllerData_Human
   m_EditorClassIdentifier: 
-  moveSpeed: 280
-  maxMoveVelocity: 20
-  jumpForce: 700
-  maxJumpVelocity: {x: -10, y: 20}
+  moveSpeed: 10
+  maxMoveVelocity: 10
+  jumpForce: 300
+  maxJumpVelocity: {x: -10, y: 10}
   gravityCurve:
     serializedVersion: 2
     m_Curve:

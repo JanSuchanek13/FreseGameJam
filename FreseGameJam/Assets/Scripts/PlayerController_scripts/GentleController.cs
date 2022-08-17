@@ -7,6 +7,8 @@ namespace Gentleforge
     [RequireComponent(typeof(Rigidbody))]
     public class GentleController : MonoBehaviour
     {
+        Vector3 directionMove;
+
         [Header("MOVEMENT")]
         [Tooltip("The force that we apply to the movement")]
         public float moveSpeed = 5;
@@ -53,7 +55,7 @@ namespace Gentleforge
         [Tooltip("Reference to the PlayerInput Action Mapping")]
         private PlayerInput playerInput;
 
-        public Vector3 direction;
+        public Vector3 directionGizmo;
 
         public void Awake()
         {
@@ -105,6 +107,7 @@ namespace Gentleforge
         /// </summary>
         public void GetPlayerInput()
         {
+            //code for Movement Mareske ________________________________________________________
             /*
             direction = new Vector3(transform.position.x, Camera.main.transform.position.y, transform.position.z) - Camera.main.transform.position;
             direction = direction.normalized;
@@ -114,7 +117,10 @@ namespace Gentleforge
             myRigidbody.velocity = movement;
             */
 
-            //code for Movement with cam and Rotation ________________________________________________________
+
+
+            /*
+            //code for Movement Old Third Person ________________________________________________________
             //Camera and Movement
             float horizontal = playerInput.CharacterControls.Move.ReadValue<Vector2>().x;
             float vertical = playerInput.CharacterControls.Move.ReadValue<Vector2>().y;
@@ -131,8 +137,13 @@ namespace Gentleforge
                 //controller.Move(moveDir.normalized * speed * Time.deltaTime);
             }
             //____________________________________________________________________________________________________
+            */
 
-
+            //Movement
+            directionMove += playerInput.CharacterControls.Move.ReadValue<Vector2>().x * new Vector3(Camera.main.transform.right.x, 0, Camera.main.transform.right.z) * moveSpeed;
+            directionMove += playerInput.CharacterControls.Move.ReadValue<Vector2>().y * new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z) * moveSpeed;
+            myRigidbody.velocity = new Vector3 (directionMove.x, myRigidbody.velocity.y, directionMove.z);
+            directionMove = Vector3.zero;
 
             // we get the jump input
             if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && isGrounded)
@@ -145,10 +156,9 @@ namespace Gentleforge
                 else
                     myRigidbody.AddForce(Vector3.up * jumpForce);
             }
-
-            
-
         }
+
+        
 
         /// <summary>
         /// Ray Check if Player is grounded
@@ -212,6 +222,17 @@ namespace Gentleforge
         public void FixedUpdate()
         {
             LimitVelocity();
+            Turn();
+        }
+
+        public void Turn()
+        {
+            float horizontal = playerInput.CharacterControls.Move.ReadValue<Vector2>().x;
+            float vertical = playerInput.CharacterControls.Move.ReadValue<Vector2>().y;
+            Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + Camera.main.transform.eulerAngles.y;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
         }
 
         /// <summary>
@@ -258,7 +279,7 @@ namespace Gentleforge
 
             Gizmos.color = Color.black;
             Vector3 RayPosition = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
-            Ray directionRay = new Ray(RayPosition, direction);
+            Ray directionRay = new Ray(RayPosition, directionGizmo);
             Gizmos.DrawRay(directionRay);
 
             if (myRigidbody != null)
@@ -278,9 +299,11 @@ namespace Gentleforge
         /// <returns></returns>
         IEnumerator CapricornDash()
         {
+            Debug.Log("dash");
             yield return new WaitForSeconds(.8f);
             for (int i = 0; i < 50; i++)
             {
+                /*
                 float horizontal = playerInput.CharacterControls.Move.ReadValue<Vector2>().x;
                 float vertical = playerInput.CharacterControls.Move.ReadValue<Vector2>().y;
                 Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
@@ -291,6 +314,11 @@ namespace Gentleforge
                 //move Rigidbody
                 myRigidbody.velocity = moveDir.normalized * (moveSpeed * 200) * Time.deltaTime;
                 yield return new WaitForSeconds(.005f);
+                */
+
+                directionMove += new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z) * moveSpeed;
+                myRigidbody.velocity = new Vector3(directionMove.x, myRigidbody.velocity.y, directionMove.z);
+                directionMove = Vector3.zero;
 
                 //extra push power
                 Collider[] allObjects = Physics.OverlapSphere(transform.position, 3);   //all Objects in explosion Range
