@@ -14,6 +14,10 @@ public class InteractWithNoFlyZone : MonoBehaviour
     bool _inCoroutine;
     #endregion
 
+    [Header("REFERENCES")]
+    [Tooltip("Reference of the Crane Animator")]
+    public Animator animator;
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -41,7 +45,12 @@ public class InteractWithNoFlyZone : MonoBehaviour
         
         _randomTrack.Play();
 
-        // @JAN <---------------------------------------------------------------------------- put your stuff to play the right animation for _lengthOfSound seconds here.
+
+        //play animation for _lengthOfSound seconds
+        animator.SetBool("isShook", true);
+        yield return new WaitForSeconds(_lengthOfSound);
+        animator.SetBool("isShook", false);
+        
 
         // Play optional effect, if assigned:
         if (windGhustEffect != null)
