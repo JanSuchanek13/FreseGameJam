@@ -49,6 +49,19 @@ namespace Gentleforge
         [Tooltip("Drag we apply in air")]
         public float airDrag = 1;
 
+        [Header("Cooldown")]
+        [Tooltip("Time the Cooldown needs to reset")]
+        float cooldownTime = 3;
+        [Tooltip("Is the Controller in the Cooldown phase")]
+        bool isInCooldown = false;
+
+        [Header("Animation")]
+        public bool walking;
+        public bool falling;
+        public bool jumping;
+        public bool action;
+
+
         [Header("REFERENCES")]
         [Tooltip("Reference of the Rigidbody")]
         private Rigidbody myRigidbody;
@@ -97,9 +110,12 @@ namespace Gentleforge
 
         public void Update()
         {
-            GroundCheckRay(1);
+            GroundCheckRay(3);
+            SetAnimationBools();
             GetPlayerInput();
+
             CalculateGravity();
+            
         }
 
         /// <summary>
@@ -152,6 +168,8 @@ namespace Gentleforge
                 if (GetComponent<OrigamiController>().curState == OrigamiState.Capricorn)
                 {
                     StartCoroutine("CapricornDash");
+                    isInCooldown = true;
+                    StartCoroutine("Cooldown");
                 }
                 else
                     myRigidbody.AddForce(Vector3.up * jumpForce);
@@ -163,12 +181,12 @@ namespace Gentleforge
         /// <summary>
         /// Ray Check if Player is grounded
         /// </summary>
-        void GroundCheckRay(int doubleJumpMultiplier)
+        void GroundCheckRay(int lengthMultiplier)
         {
             RaycastHit hit;
             foreach (RayData ray in jumpRayList)
             {
-                if ((Physics.Raycast(transform.position + ray.position, ray.direction, out hit, ray.length * doubleJumpMultiplier, jumpRayLayer)))
+                if ((Physics.Raycast(transform.position + ray.position, ray.direction, out hit, ray.length * lengthMultiplier, jumpRayLayer)))
                 {
                     if (!isGrounded)
                         OnLanding();
@@ -180,6 +198,8 @@ namespace Gentleforge
             if (isGrounded)
                 OnLiftoff();
         }
+
+        
 
         /// <summary>
         /// gets called when standing on the Ground
@@ -219,6 +239,22 @@ namespace Gentleforge
             
         }
 
+        public void SetAnimationBools()
+        {
+            //walking
+            float horizontal = playerInput.CharacterControls.Move.ReadValue<Vector2>().x;
+            float vertical = playerInput.CharacterControls.Move.ReadValue<Vector2>().y;
+            Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+            walking = direction.magnitude >= .1f;
+
+            //falling
+            falling = !isGrounded && gravityCurveTime > gravityCurveLenght/1.5;
+
+            //action
+            jumping = playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && isGrounded;
+            action = playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && !isInCooldown;
+        }
+
         public void FixedUpdate()
         {
             LimitVelocity();
@@ -230,9 +266,12 @@ namespace Gentleforge
             float horizontal = playerInput.CharacterControls.Move.ReadValue<Vector2>().x;
             float vertical = playerInput.CharacterControls.Move.ReadValue<Vector2>().y;
             Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + Camera.main.transform.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            if (direction.magnitude >= .1f)
+            {
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + Camera.main.transform.eulerAngles.y;
+                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+                transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            }
         }
 
         /// <summary>
@@ -293,47 +332,56 @@ namespace Gentleforge
 
         }
 
+        IEnumerator Cooldown()
+        {
+            yield return new WaitForSeconds(cooldownTime);
+            isInCooldown = false;
+
+        }
+
         /// <summary>
         /// if player is in Capricorn state he can performe a dash
         /// </summary>
         /// <returns></returns>
         IEnumerator CapricornDash()
         {
-            Debug.Log("dash");
-            yield return new WaitForSeconds(.8f);
-            for (int i = 0; i < 50; i++)
+            if(!isInCooldown)
             {
-                /*
-                float horizontal = playerInput.CharacterControls.Move.ReadValue<Vector2>().x;
-                float vertical = playerInput.CharacterControls.Move.ReadValue<Vector2>().y;
-                Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
-                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + Camera.main.transform.eulerAngles.y;
-                //float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-                //transform.rotation = Quaternion.Euler(0f, angle, 0f);
-                Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-                //move Rigidbody
-                myRigidbody.velocity = moveDir.normalized * (moveSpeed * 200) * Time.deltaTime;
-                yield return new WaitForSeconds(.005f);
-                */
-
-                directionMove += new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z) * moveSpeed;
-                myRigidbody.velocity = new Vector3(directionMove.x, myRigidbody.velocity.y, directionMove.z);
-                directionMove = Vector3.zero;
-
-                //extra push power
-                Collider[] allObjects = Physics.OverlapSphere(transform.position, 3);   //all Objects in explosion Range
-                foreach (Collider j in allObjects)
+                Debug.Log("dash");
+                yield return new WaitForSeconds(.4f);
+                for (int i = 0; i < 50; i++)
                 {
-                    Rigidbody rig = j.GetComponent<Rigidbody>();
-                    if (rig != null && rig != myRigidbody)
+                    /*
+                    float horizontal = playerInput.CharacterControls.Move.ReadValue<Vector2>().x;
+                    float vertical = playerInput.CharacterControls.Move.ReadValue<Vector2>().y;
+                    Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+                    float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + Camera.main.transform.eulerAngles.y;
+                    //float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+                    //transform.rotation = Quaternion.Euler(0f, angle, 0f);
+                    Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+                    //move Rigidbody
+                    myRigidbody.velocity = moveDir.normalized * (moveSpeed * 200) * Time.deltaTime;
+                    yield return new WaitForSeconds(.005f);
+                    */
+
+                    directionMove += new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z) ;
+                    myRigidbody.velocity = new Vector3(directionMove.x, myRigidbody.velocity.y, directionMove.z) *100;
+                    directionMove = Vector3.zero;
+                    yield return new WaitForSeconds(.0005f);
+
+                    //extra push power
+                    Collider[] allObjects = Physics.OverlapSphere(transform.position, 3);   //all Objects in explosion Range
+                    foreach (Collider j in allObjects)
                     {
-                        rig.AddExplosionForce(1, transform.position, 1, 1f, ForceMode.Impulse);
+                        Rigidbody rig = j.GetComponent<Rigidbody>();
+                        if (rig != null && rig != myRigidbody)
+                        {
+                            rig.AddExplosionForce(1, transform.position, 1, 1f, ForceMode.Impulse);
+                        }
                     }
+
                 }
-                
             }
-
-
         }
     }
 

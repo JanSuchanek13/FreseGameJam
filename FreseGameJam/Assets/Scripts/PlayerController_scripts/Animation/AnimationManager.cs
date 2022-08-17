@@ -33,7 +33,7 @@ public class AnimationManager : MonoBehaviour
     void Update()
     {
         //aktivieren sobald Gentle Controller bools hat für walking,falling,...
-        /*
+        
         animator.SetBool("isWalking", Movement.walking);
         walking_Sound.enabled = Movement.walking;
 
@@ -43,7 +43,7 @@ public class AnimationManager : MonoBehaviour
         animator.SetBool("Action", Movement.action);
 
         animator.SetBool("isJumping", Movement.jumping);
-        */
+        
 
 
 
