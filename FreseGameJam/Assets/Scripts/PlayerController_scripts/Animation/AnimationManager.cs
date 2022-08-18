@@ -5,13 +5,10 @@ using UnityEngine;
 public class AnimationManager : MonoBehaviour
 {
     [Header("Sounds")]
-
     [SerializeField] AudioSource walking_Sound;
     [SerializeField] AudioSource falling_Sound;
 
-
     [Header("REFERENCES")]
-
     [Tooltip("Reference of the Animator")]
     Animator animator;
     [Tooltip("Reference of the Controller")]
@@ -32,21 +29,14 @@ public class AnimationManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //aktivieren sobald Gentle Controller bools hat für walking,falling,...
-        
-        animator.SetBool("isWalking", Movement.walking);
+        animator.SetBool("isGrounded", Movement.isGrounded);
         walking_Sound.enabled = Movement.walking;
-
-        animator.SetBool("isFalling", Movement.falling);
+        if(Mathf.Abs( Movement.myRigidbody.velocity.x) > Mathf.Abs(Movement.myRigidbody.velocity.z))
+            animator.SetFloat("moveVelocity", Mathf.Abs(Movement.myRigidbody.velocity.x));
+        else
+            animator.SetFloat("moveVelocity", Mathf.Abs(Movement.myRigidbody.velocity.z));
         falling_Sound.enabled = Movement.falling;
-
-        animator.SetBool("Action", Movement.action);
-
-        animator.SetBool("isJumping", Movement.jumping);
-        
-
-
-
-
+        animator.SetFloat("jumpVelocity", Movement.myRigidbody.velocity.y);
+        animator.SetFloat("gravityCurveProgress", Movement.gravityCurveTime);
     }
 }

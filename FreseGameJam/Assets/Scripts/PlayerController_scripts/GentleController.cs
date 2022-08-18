@@ -18,6 +18,7 @@ namespace Gentleforge
         float turnSmoothVelocity = 1;
         [Tooltip("Var for calculate Mathf.SmoothDampAngle")]
         public float turnSmoothTime = 0.1f;
+        public bool onWall;
 
         [Header("JUMP")]
         [Tooltip("The force that we apply to the Jump")]
@@ -39,9 +40,11 @@ namespace Gentleforge
         [Tooltip("Speed in which the gravityCurve is played")]
         public float gravityCurveSpeed = 1;
         [Tooltip("current Time in the gravityCurve")]
-        private float gravityCurveTime;
+        [HideInInspector]
+        public float gravityCurveTime;
         [Tooltip("Lenght of the gravityCurve")]
-        private float gravityCurveLenght;
+        [HideInInspector]
+        public float gravityCurveLenght;
 
         [Header("DRAG")]
         [Tooltip("Drag we apply on Ground")]
@@ -64,7 +67,8 @@ namespace Gentleforge
 
         [Header("REFERENCES")]
         [Tooltip("Reference of the Rigidbody")]
-        private Rigidbody myRigidbody;
+        [HideInInspector]
+        public Rigidbody myRigidbody;
         [Tooltip("Reference to the PlayerInput Action Mapping")]
         private PlayerInput playerInput;
 
@@ -113,7 +117,7 @@ namespace Gentleforge
             GroundCheckRay(3);
             SetAnimationBools();
             GetPlayerInput();
-
+            DontStickOnWalls();
             CalculateGravity();
             
         }
@@ -156,10 +160,14 @@ namespace Gentleforge
             */
 
             //Movement
-            directionMove += playerInput.CharacterControls.Move.ReadValue<Vector2>().x * new Vector3(Camera.main.transform.right.x, 0, Camera.main.transform.right.z) * moveSpeed;
-            directionMove += playerInput.CharacterControls.Move.ReadValue<Vector2>().y * new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z) * moveSpeed;
-            myRigidbody.velocity = new Vector3 (directionMove.x, myRigidbody.velocity.y, directionMove.z);
-            directionMove = Vector3.zero;
+            if (!onWall)
+            {
+                directionMove += playerInput.CharacterControls.Move.ReadValue<Vector2>().x * new Vector3(Camera.main.transform.right.x, 0, Camera.main.transform.right.z) * moveSpeed;
+                directionMove += playerInput.CharacterControls.Move.ReadValue<Vector2>().y * new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z) * moveSpeed;
+                myRigidbody.velocity = new Vector3(directionMove.x, myRigidbody.velocity.y, directionMove.z);
+                directionMove = Vector3.zero;
+            }
+            
 
             // we get the jump input
             if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && isGrounded)
@@ -237,6 +245,27 @@ namespace Gentleforge
             if (gravityCurveTime > gravityCurveLenght)
                 gravityCurveTime = gravityCurveLenght;
             
+        }
+
+        void DontStickOnWalls()
+        {
+            Vector3 RayPositionTop = new Vector3(transform.position.x, transform.position.y + 1.9f, transform.position.z);
+            Vector3 RayPositionBottom = new Vector3(transform.position.x, transform.position.y + 0.4f, transform.position.z);
+            Vector3 RayVelocityDirection = new Vector3(myRigidbody.velocity.x, 0, myRigidbody.velocity.z);
+            if (myRigidbody != null)
+            {
+                Debug.DrawRay(RayPositionTop, RayVelocityDirection, Color.red);
+                Debug.DrawRay(RayPositionBottom, RayVelocityDirection, Color.red);
+                if (Physics.Raycast(RayPositionTop, RayVelocityDirection, 0.5f) || Physics.Raycast(RayPositionBottom, RayVelocityDirection, 0.5f))
+                {
+                    //onWall = true;
+                    Debug.Log("hit");
+                    //myRigidbody.velocity = new Vector3(0, myRigidbody.velocity.y,0);
+                }
+                //else
+                    //onWall = false;
+                
+            }
         }
 
         public void SetAnimationBools()
