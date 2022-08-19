@@ -18,7 +18,11 @@ namespace Gentleforge
         float turnSmoothVelocity = 1;
         [Tooltip("Var for calculate Mathf.SmoothDampAngle")]
         public float turnSmoothTime = 0.1f;
+
+        [Header("Step Offset and Stick to Wall")]
         public bool onWall;
+        public float stepheight;
+        public float stepSmooth;
 
         [Header("JUMP")]
         [Tooltip("The force that we apply to the Jump")]
@@ -249,23 +253,56 @@ namespace Gentleforge
 
         void DontStickOnWalls()
         {
-            Vector3 RayPositionTop = new Vector3(transform.position.x, transform.position.y + 1.9f, transform.position.z);
-            Vector3 RayPositionBottom = new Vector3(transform.position.x, transform.position.y + 0.4f, transform.position.z);
+            //step in front of Controller
+            Vector3 RayPositionTop = new Vector3(transform.position.x, transform.position.y + stepheight, transform.position.z);
+            Vector3 RayPositionBottom = new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z);
+            RaycastHit hitLower;
+            Debug.DrawRay(RayPositionBottom, transform.TransformDirection(Vector3.forward), Color.blue);
+            if (Physics.Raycast(RayPositionBottom, transform.TransformDirection(Vector3.forward), out hitLower, 0.3f))
+            {
+                RaycastHit hitUpper;
+                if (!Physics.Raycast(RayPositionTop, transform.TransformDirection(Vector3.forward), out hitUpper, 0.4f))
+                {
+                    myRigidbody.position -= new Vector3(0, -stepSmooth, 0);
+                }
+            }
+            if (Physics.Raycast(RayPositionBottom, transform.TransformDirection(1.5f, 0, 1), out hitLower, 0.3f))
+            {
+                RaycastHit hitUpper;
+                if (!Physics.Raycast(RayPositionTop, transform.TransformDirection(1.5f, 0, 1), out hitUpper, 0.4f))
+                {
+                    myRigidbody.position -= new Vector3(0, -stepSmooth, 0);
+                }
+            }
+            if (Physics.Raycast(RayPositionBottom, transform.TransformDirection(-1.5f, 0, 1), out hitLower, 0.3f))
+            {
+                RaycastHit hitUpper;
+                if (!Physics.Raycast(RayPositionTop, transform.TransformDirection(-1.5f, 0, 1), out hitUpper, 0.4f))
+                {
+                    myRigidbody.position -= new Vector3(0, -stepSmooth, 0);
+                }
+            }
+
+            //wall in front of Controller
+             RayPositionTop = new Vector3(transform.position.x, transform.position.y + 1.9f, transform.position.z);
+             RayPositionBottom = new Vector3(transform.position.x, transform.position.y + 0.4f, transform.position.z);
             Vector3 RayVelocityDirection = new Vector3(myRigidbody.velocity.x, 0, myRigidbody.velocity.z);
             if (myRigidbody != null)
             {
                 Debug.DrawRay(RayPositionTop, RayVelocityDirection, Color.red);
                 Debug.DrawRay(RayPositionBottom, RayVelocityDirection, Color.red);
-                if (Physics.Raycast(RayPositionTop, RayVelocityDirection, 0.5f) || Physics.Raycast(RayPositionBottom, RayVelocityDirection, 0.5f))
+                if (Physics.Raycast(RayPositionTop, RayVelocityDirection, 0.3f) || Physics.Raycast(RayPositionBottom, RayVelocityDirection, 0.3f))
                 {
-                    //onWall = true;
+                    onWall = true;
                     Debug.Log("hit");
-                    //myRigidbody.velocity = new Vector3(0, myRigidbody.velocity.y,0);
+                    myRigidbody.velocity = new Vector3(0, myRigidbody.velocity.y,0);
                 }
-                //else
-                    //onWall = false;
+                else
+                    onWall = false;
                 
             }
+
+            
         }
 
         public void SetAnimationBools()

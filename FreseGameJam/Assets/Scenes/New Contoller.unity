@@ -714,6 +714,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 972c00dbd65e37a4ab63e42f24810aa2, type: 3}
+--- !u!1 &1771048534 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5049950181408726064, guid: 48a2506c2d2dd764f99acc5f62ed67f6, type: 3}
+  m_PrefabInstance: {fileID: 5049950180968373093}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1771048535
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1771048534}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.4, y: 2, z: 0.4}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1001 &1857364636
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -731,15 +749,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5642165958037138609, guid: 423975227886cde4db74459d018dfe29, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.909983
+      value: -8.717176
       objectReference: {fileID: 0}
     - target: {fileID: 5642165958037138609, guid: 423975227886cde4db74459d018dfe29, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.21755409
+      value: -0.23748586
       objectReference: {fileID: 0}
     - target: {fileID: 5642165958037138609, guid: 423975227886cde4db74459d018dfe29, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.4120564
+      value: -1.474
       objectReference: {fileID: 0}
     - target: {fileID: 5642165958037138609, guid: 423975227886cde4db74459d018dfe29, type: 3}
       propertyPath: m_LocalRotation.w
@@ -768,6 +786,10 @@ PrefabInstance:
     - target: {fileID: 5642165958037138609, guid: 423975227886cde4db74459d018dfe29, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5895250251470757862, guid: 423975227886cde4db74459d018dfe29, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 423975227886cde4db74459d018dfe29, type: 3}
@@ -952,6 +974,18 @@ PrefabInstance:
     - target: {fileID: 5049950181408726064, guid: 48a2506c2d2dd764f99acc5f62ed67f6, type: 3}
       propertyPath: m_Name
       value: Origami Controller
+      objectReference: {fileID: 0}
+    - target: {fileID: 5049950181408726067, guid: 48a2506c2d2dd764f99acc5f62ed67f6, type: 3}
+      propertyPath: stepSmooth
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5049950181408726067, guid: 48a2506c2d2dd764f99acc5f62ed67f6, type: 3}
+      propertyPath: stepheight
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5049950181408726077, guid: 48a2506c2d2dd764f99acc5f62ed67f6, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5049950181408726078, guid: 48a2506c2d2dd764f99acc5f62ed67f6, type: 3}
       propertyPath: m_RootOrder
