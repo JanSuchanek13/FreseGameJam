@@ -17,6 +17,8 @@ public class ButtonFunction : MonoBehaviour
     float _defaultVolumeSettings;
     float _defaultMouseSensitivitySettings;
     int _currentLevel;
+
+    CloseQuarterCamera _closeQuarterCamera;
     #endregion
 
     private void Start()
@@ -28,8 +30,11 @@ public class ButtonFunction : MonoBehaviour
         _lastTimer[(_currentLevel - 2)] = PlayerPrefs.GetFloat("lastTimer" + (_currentLevel - 2));
 
         // Get the default settings for the game from the Game Manager:
-        _defaultVolumeSettings = GameObject.Find("Game Manager").GetComponent<GameManager>().defaultVolumeSettings;
-        _defaultMouseSensitivitySettings = GameObject.Find("Game Manager").GetComponent<GameManager>().defaultMouseSensitivitySettings;
+        _defaultVolumeSettings = GameObject.Find("GameManager").GetComponent<GameManager>().defaultVolumeSettings;
+        _defaultMouseSensitivitySettings = GameObject.Find("GameManager").GetComponent<GameManager>().defaultMouseSensitivitySettings;
+
+        // Get CloseQuaterCamera-script reference:
+        _closeQuarterCamera = GameObject.Find("Third Person Player").GetComponent<CloseQuarterCamera>();
     }
 
     private void Update()
@@ -37,6 +42,11 @@ public class ButtonFunction : MonoBehaviour
         if (Input.GetButtonDown("Cancel"))
         {
             Pause();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            ToggleCloseQuaterCamera();
         }
     }
     public void Pause()
@@ -84,5 +94,18 @@ public class ButtonFunction : MonoBehaviour
         // restore default settings now:
         PlayerPrefs.SetFloat("volumeSettings", _defaultVolumeSettings);
         PlayerPrefs.SetFloat("mouseSensitivitySettings", _defaultMouseSensitivitySettings);
+    }
+
+    public void ToggleCloseQuaterCamera()
+    {
+        if (_closeQuarterCamera.closeQuarterCameraIsActive != true)
+        {
+            _closeQuarterCamera.ZoomIn();
+            return;
+        }else
+        {
+            _closeQuarterCamera.ZoomOut();
+            return;
+        }
     }
 }

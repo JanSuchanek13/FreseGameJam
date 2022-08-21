@@ -16,7 +16,7 @@ public class CheckpointFeedback : MonoBehaviour
         _choireHymnn = GameObject.Find("GameManager").GetComponent<GameManager>().choireHymnSound;
         _fireSwoosh = GameObject.Find("GameManager").GetComponent<GameManager>().fireSwooshSound;
 
-        Debug.Log("choire = " + _choireHymnn);
+        //Debug.Log("choire = " + _choireHymnn);
     }
 
     private void OnTriggerEnter(Collider other)

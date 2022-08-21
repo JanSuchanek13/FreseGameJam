@@ -3,10 +3,13 @@ using UnityEngine;
 public class CloseQuarterCamera : MonoBehaviour
 {
     #region variables
+    // public variables:
+    public bool closeQuarterCameraIsActive = false;
+
+    // local variables:
     private GameObject _lastTriggerHit;
     private GameObject _cameraRigFar;
     private GameObject _cameraRigClose;
-    private bool _closeQuarterCameraIsActive = false;
     private bool _currentlyInsideTrigger = false;
     #endregion
     void Start()
@@ -24,7 +27,7 @@ public class CloseQuarterCamera : MonoBehaviour
             Invoke("ReactivateTrigger", 5f);
             _currentlyInsideTrigger = true; // redundant here, as turning on/off the collider solves the same issue.
 
-            if (!_closeQuarterCameraIsActive)
+            if (!closeQuarterCameraIsActive)
             {
                 ZoomIn();
             }else
@@ -33,18 +36,18 @@ public class CloseQuarterCamera : MonoBehaviour
             }
         }
     }
-    void ZoomIn()
+    public void ZoomIn()
     {
         _cameraRigFar.SetActive(false);
         _cameraRigClose.SetActive(true);
-        _closeQuarterCameraIsActive = true;
+        closeQuarterCameraIsActive = true;
         Debug.Log("zoom in");
     }
-    void ZoomOut()
+    public void ZoomOut()
     {
         _cameraRigFar.SetActive(true);
         _cameraRigClose.SetActive(false);
-        _closeQuarterCameraIsActive = false;
+        closeQuarterCameraIsActive = false;
         Debug.Log("zoom out");
     }
 

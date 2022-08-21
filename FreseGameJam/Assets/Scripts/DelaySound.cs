@@ -46,7 +46,7 @@ public class DelaySound : MonoBehaviour
         if (activateFocusPlayerViewOnObjectWhenSoundPlays) // when having the camera look at AudioSource:
         {
             playerCharacter.GetComponent<FocusPlayerViewOnObject>().FocusTarget(pointToLookAt, lookAtThisForThisLong, _thisCutscene_Nr);
-            Debug.Log("called ForcusTarget with cutscene nr. " + _thisCutscene_Nr);
+            //Debug.Log("called ForcusTarget with cutscene nr. " + _thisCutscene_Nr);
 
             if(lookAtThisObjectAfterwards != null)
             {
