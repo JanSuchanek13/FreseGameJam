@@ -7,11 +7,16 @@ public class InteractWithNoFlyZone : MonoBehaviour
     // ask Felix
 
     #region variables:
+    [SerializeField] bool _useNoFlyAnimation;
+
     [SerializeField] AudioSource[] arrayOfWindSounds;
     [SerializeField] ParticleSystem windGhustEffect; // optional if we want some special effect to happen around the player when beign caught in the wind?!
 
     // local variables:
     bool _inCoroutine;
+    
+    
+    
     #endregion
 
     [Header("REFERENCES")]
@@ -45,12 +50,13 @@ public class InteractWithNoFlyZone : MonoBehaviour
         
         _randomTrack.Play();
 
-
-        //play animation for _lengthOfSound seconds
-        animator.SetBool("isShook", true);
-        yield return new WaitForSeconds(_lengthOfSound);
-        animator.SetBool("isShook", false);
-        
+        if (_useNoFlyAnimation)
+        {
+            //play animation for _lengthOfSound seconds
+            animator.SetBool("isShook", true);
+            //yield return new WaitForSeconds(_lengthOfSound);
+            //animator.SetBool("isShook", false);
+        }
 
         // Play optional effect, if assigned:
         if (windGhustEffect != null)
@@ -60,6 +66,12 @@ public class InteractWithNoFlyZone : MonoBehaviour
 
         // Reset:
         yield return new WaitForSeconds(_lengthOfSound);
+
+        if (_useNoFlyAnimation)
+        {
+            animator.SetBool("isShook", false);
+        }
+        //yield return new WaitForSeconds(_lengthOfSound);
 
         _inCoroutine = false;
     }
