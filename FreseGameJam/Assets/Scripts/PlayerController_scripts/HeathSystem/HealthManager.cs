@@ -125,7 +125,7 @@ public class HealthManager : MonoBehaviour
 
             //Sink into Ground
             GetComponent<Gentleforge.GentleController>().enabled = false; 
-            GetComponent<CapsuleCollider>().enabled = false; // no colission = sink into even shallow deathzones
+            GetComponent<BoxCollider>().enabled = false; // no colission = sink into even shallow deathzones
 
             #region Audio:
             // Get random sound:
@@ -154,7 +154,7 @@ public class HealthManager : MonoBehaviour
 
             //disable sink into Ground
             GetComponent<Gentleforge.GentleController>().enabled = true; // no movement hopefully stops me from being able to survive death zones
-            GetComponent<CapsuleCollider>().enabled = true;
+            GetComponent<BoxCollider>().enabled = true;
 
             //activate Main Cam
             Cam2.SetActive(false);

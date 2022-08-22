@@ -28,7 +28,7 @@ public class InteractOnContact : MonoBehaviour
     [Tooltip("Reference to collectedCrowns on GameManager")]
     CollectedCrowns collectedCrowns;
     [Tooltip("Reference to stateManager on Player")]
-    public StateManager stateManager;
+    public OrigamiController origamiController;
     [Tooltip("Reference of the currentLevel with LevelIndex")]
     private int currentLevel;
     
@@ -48,19 +48,19 @@ public class InteractOnContact : MonoBehaviour
             switch (i + 1)
             {
                 case 1:
-                    stateManager.availableCrane = true;
+                    origamiController.possibleStatesList[1].isAvailable = true;
                     break;
 
                 case 2:
-                    stateManager.availableCapricorn = true;
+                    origamiController.possibleStatesList[2].isAvailable = true;
                     break;
 
                 case 3:
-                    stateManager.availableLama = true;
+                    origamiController.possibleStatesList[3].isAvailable = true;
                     break;
 
                 case 4:
-                    stateManager.availableFrog = true;
+                    origamiController.possibleStatesList[4].isAvailable = true;
                     break;
 
                 default:
@@ -75,7 +75,7 @@ public class InteractOnContact : MonoBehaviour
         if (other.gameObject.CompareTag("Crane"))
         {
             Debug.Log("hit:Crane");
-            stateManager.availableCrane = true;
+            origamiController.possibleStatesList[1].isAvailable = true;
             Sound_CollectModel.Play(0);
             Destroy(other.gameObject, .3f);
             PlayerPrefs.SetInt("State" + (currentLevel - 2), 1);
@@ -83,7 +83,7 @@ public class InteractOnContact : MonoBehaviour
         if (other.gameObject.CompareTag("Frog"))
         {
             Debug.Log("hit:Frog");
-            stateManager.availableFrog = true;
+            origamiController.possibleStatesList[3].isAvailable = true;
             Sound_CollectModel.Play(0);
             Destroy(other.gameObject, .3f);
             PlayerPrefs.SetInt("State" + (currentLevel - 2), 4);
@@ -92,7 +92,7 @@ public class InteractOnContact : MonoBehaviour
         if (other.gameObject.CompareTag("Capricorn"))
         {
             Debug.Log("hit:Capricorn");
-            stateManager.availableCapricorn = true;
+            origamiController.possibleStatesList[2].isAvailable = true;
             Sound_CollectModel.Play(0);
             Destroy(other.gameObject, .3f);
             PlayerPrefs.SetInt("State" + (currentLevel - 2), 2);
@@ -100,7 +100,7 @@ public class InteractOnContact : MonoBehaviour
         if (other.gameObject.CompareTag("Lama"))
         {
             Debug.Log("hit:Lama");
-            stateManager.availableLama = true;
+            origamiController.possibleStatesList[4].isAvailable = true;
             Sound_CollectModel.Play(0);
             Destroy(other.gameObject, .3f);
             PlayerPrefs.SetInt("State" + (currentLevel - 2), 3);
