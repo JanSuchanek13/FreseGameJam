@@ -266,7 +266,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
                 
             }
-            if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && !isGrounded && !(Physics.Raycast(transform.position, Vector3.down, 4f)) && !GetComponent<StateController>().isChanging) // double jump change you into crane
+            if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && !isGrounded && !(Physics.CheckSphere(groundCheck.position, groundDistance * 10, groundMask)) && !GetComponent<StateController>().isChanging) // double jump change you into crane
             {
                 
                 if (stateController.availableCrane)
