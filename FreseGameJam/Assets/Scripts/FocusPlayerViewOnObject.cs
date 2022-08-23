@@ -17,6 +17,7 @@ public class FocusPlayerViewOnObject : MonoBehaviour
     [SerializeField] float juicyDelayBeforePlayerResumesControll = 2f;
     [SerializeField] GameObject jansAnimationControlls;
     [SerializeField] Animation wavingAnimation;
+    [SerializeField] Animator _humanAnimator;
     private GameObject _focusTargetObject;
     private GameObject _playerCharacter;
     private bool _turnPlayerTowardsObject = false;
@@ -47,6 +48,10 @@ public class FocusPlayerViewOnObject : MonoBehaviour
                     _turnPlayerTowardsObject = true;
                     focusCameraRig.GetComponent<CinemachineFreeLook>().LookAt = _focusTargetObject.transform; // turn camera:
                     focusCameraRig.SetActive(true);
+
+                    // test JAN:
+                    _humanAnimator.enabled = false;
+
                     // save if cutscene has played:
                     //_cutSceneHasAlreadyPlayed++;
                     PlayerPrefs.SetInt("_cutScene_0_HasAlreadyPlayed", 1);
@@ -69,6 +74,9 @@ public class FocusPlayerViewOnObject : MonoBehaviour
                     _turnPlayerTowardsObject = true;
                     focusCameraRig.GetComponent<CinemachineFreeLook>().LookAt = _focusTargetObject.transform; // turn camera:
                     focusCameraRig.SetActive(true);
+
+                    _humanAnimator.enabled = false;
+
                     // save if cutscene has played:
                     PlayerPrefs.SetInt("_cutScene_1_HasAlreadyPlayed", 1);
                 }
@@ -90,6 +98,9 @@ public class FocusPlayerViewOnObject : MonoBehaviour
                     focusCameraRig.GetComponent<CinemachineFreeLook>().LookAt = _focusTargetObject.transform; // turn camera:
 
                     focusCameraRig.SetActive(true);
+
+                    _humanAnimator.enabled = false;
+
                     // save if cutscene has played:
                     PlayerPrefs.SetInt("_cutScene_2_HasAlreadyPlayed", 1);
                 }
@@ -106,6 +117,9 @@ public class FocusPlayerViewOnObject : MonoBehaviour
                     _turnPlayerTowardsObject = true;
                     focusCameraRig.GetComponent<CinemachineFreeLook>().LookAt = _focusTargetObject.transform; // turn camera:
                     focusCameraRig.SetActive(true);
+
+                    _humanAnimator.enabled = false;
+
                     // save if cutscene has played:
                     PlayerPrefs.SetInt("_cutScene_3_HasAlreadyPlayed", 1);
                 }
@@ -165,6 +179,9 @@ public class FocusPlayerViewOnObject : MonoBehaviour
         _focusTargetObject = null;
         _turnPlayerTowardsObject = false;
         _playerCharacter.GetComponent<ThirdPersonMovement>().enabled = true;
+
+        // test JAN:
+        _humanAnimator.enabled = true;
         // MISSING: Deactivate waving-animation at target GO here!
         //_playerCharacter.GetComponent<Movement(?)>().StopWaving();
         //wavingAnimation.Stop();
