@@ -266,10 +266,12 @@ public class ThirdPersonMovement : MonoBehaviour
 
                 
             }
-            if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && !isGrounded && !(Physics.CheckSphere(groundCheck.position, groundDistance * 10, groundMask)) && !GetComponent<StateController>().isChanging) // double jump change you into crane
-            {
-                
-                if (stateController.availableCrane)
+            if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && !isGrounded && !(Physics.CheckSphere(groundCheck.position, groundDistance * 7, groundMask, QueryTriggerInteraction.Ignore)) && !GetComponent<StateController>().isChanging) // double jump change you into crane
+            //if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && !isGrounded && !CheckForGroundContact() && !GetComponent<StateController>().isChanging) // double jump change you into crane
+
+                {
+
+                    if (stateController.availableCrane)
                 {
                     GetComponent<StateController>().isChanging = true;
                     stateController.ball = false;
@@ -438,6 +440,42 @@ public class ThirdPersonMovement : MonoBehaviour
         }
 
 
+    }
+
+    // Felix:
+    bool CheckForGroundContact()
+    {
+        // cast a tiny sphere downwards to check for groundcontact the size of the footprint: 
+        RaycastHit hit;
+        Physics.SphereCast(groundCheck.position, 0.17f, -groundCheck.up, out hit, 2f, groundMask);
+        
+        // returns either TRUE if a ground was detected or FALSE if no ground was detected.
+        if (hit.collider == null)
+        {
+            Debug.DrawRay(groundCheck.position, -groundCheck.up, Color.green);
+            return true;
+        }else
+        {
+            return false;
+        }/*
+        Gizmos.DrawWireSphere(transform.position, range);
+
+        RaycastHit hit;
+        if (Physics.SphereCast(transform.position, sphereCastRadius, transform.forward * range, out hit, range, layerMask))
+        {
+            Gizmos.color = Color.green;
+            Vector3 sphereCastMidpoint = transform.position + (transform.forward * hit.distance);
+            Gizmos.DrawWireSphere(sphereCastMidpoint, sphereCastRadius);
+            Gizmos.DrawSphere(hit.point, 0.1f);
+            Debug.DrawLine(transform.position, sphereCastMidpoint, Color.green);
+        }
+        else
+        {
+            Gizmos.color = Color.red;
+            Vector3 sphereCastMidpoint = transform.position + (transform.forward * (range - sphereCastRadius));
+            Gizmos.DrawWireSphere(sphereCastMidpoint, sphereCastRadius);
+            Debug.DrawLine(transform.position, sphereCastMidpoint, Color.red);
+        }*/
     }
 
     private void EndOfAction()
