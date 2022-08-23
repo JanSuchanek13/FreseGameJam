@@ -80,6 +80,24 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CamToggle"",
+                    ""type"": ""Button"",
+                    ""id"": ""e885978a-965e-49b5-9482-f43bddd19f45"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Option"",
+                    ""type"": ""Button"",
+                    ""id"": ""81a6aeee-0d0d-455f-ac14-1ea8bfb3a407"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -251,7 +269,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""70aeb2e3-3a02-4050-9cdf-19944c25c261"",
-                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": ""Scale"",
                     ""groups"": """",
@@ -273,7 +291,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""43346039-3b77-4121-a81b-ab986c9071fd"",
-                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": ""Scale(factor=3)"",
                     ""groups"": """",
@@ -368,6 +386,39 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Cheating"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""da5e53bf-e1af-4dac-9b88-0a81e52279c2"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CamToggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""079d5afb-ac3d-42e5-a76d-bf7262053be5"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CamToggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5372f8f1-6ade-4edc-8f1b-a0fd5d791e4f"",
+                    ""path"": ""<DualShockGamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Option"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -382,6 +433,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_CharacterControls_SwitchState = m_CharacterControls.FindAction("SwitchState", throwIfNotFound: true);
         m_CharacterControls_MouseLook = m_CharacterControls.FindAction("MouseLook", throwIfNotFound: true);
         m_CharacterControls_Cheating = m_CharacterControls.FindAction("Cheating", throwIfNotFound: true);
+        m_CharacterControls_CamToggle = m_CharacterControls.FindAction("CamToggle", throwIfNotFound: true);
+        m_CharacterControls_Option = m_CharacterControls.FindAction("Option", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -447,6 +500,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_CharacterControls_SwitchState;
     private readonly InputAction m_CharacterControls_MouseLook;
     private readonly InputAction m_CharacterControls_Cheating;
+    private readonly InputAction m_CharacterControls_CamToggle;
+    private readonly InputAction m_CharacterControls_Option;
     public struct CharacterControlsActions
     {
         private @PlayerInput m_Wrapper;
@@ -457,6 +512,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @SwitchState => m_Wrapper.m_CharacterControls_SwitchState;
         public InputAction @MouseLook => m_Wrapper.m_CharacterControls_MouseLook;
         public InputAction @Cheating => m_Wrapper.m_CharacterControls_Cheating;
+        public InputAction @CamToggle => m_Wrapper.m_CharacterControls_CamToggle;
+        public InputAction @Option => m_Wrapper.m_CharacterControls_Option;
         public InputActionMap Get() { return m_Wrapper.m_CharacterControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -484,6 +541,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Cheating.started -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnCheating;
                 @Cheating.performed -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnCheating;
                 @Cheating.canceled -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnCheating;
+                @CamToggle.started -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnCamToggle;
+                @CamToggle.performed -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnCamToggle;
+                @CamToggle.canceled -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnCamToggle;
+                @Option.started -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnOption;
+                @Option.performed -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnOption;
+                @Option.canceled -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnOption;
             }
             m_Wrapper.m_CharacterControlsActionsCallbackInterface = instance;
             if (instance != null)
@@ -506,6 +569,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Cheating.started += instance.OnCheating;
                 @Cheating.performed += instance.OnCheating;
                 @Cheating.canceled += instance.OnCheating;
+                @CamToggle.started += instance.OnCamToggle;
+                @CamToggle.performed += instance.OnCamToggle;
+                @CamToggle.canceled += instance.OnCamToggle;
+                @Option.started += instance.OnOption;
+                @Option.performed += instance.OnOption;
+                @Option.canceled += instance.OnOption;
             }
         }
     }
@@ -518,5 +587,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnSwitchState(InputAction.CallbackContext context);
         void OnMouseLook(InputAction.CallbackContext context);
         void OnCheating(InputAction.CallbackContext context);
+        void OnCamToggle(InputAction.CallbackContext context);
+        void OnOption(InputAction.CallbackContext context);
     }
 }

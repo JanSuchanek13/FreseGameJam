@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class ButtonFunction : MonoBehaviour
 {
@@ -19,7 +20,31 @@ public class ButtonFunction : MonoBehaviour
     int _currentLevel;
 
     CloseQuarterCamera _closeQuarterCamera;
+
+    [Header("REFERENCES")]
+    [Tooltip("Reference to the PlayerInput Action Mapping")]
+    private PlayerInput playerInput;
     #endregion
+
+
+    private void OnEnable()
+    {
+        playerInput.Enable();
+    }
+
+    private void OnDisable()
+    {
+        playerInput.Disable();
+    }
+
+    private void Awake()
+    {
+        playerInput = new PlayerInput();
+
+
+    }
+
+  
 
     private void Start()
     {
@@ -39,12 +64,12 @@ public class ButtonFunction : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || playerInput.CharacterControls.Option.triggered)
         {
             Pause();
         }
 
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (playerInput.CharacterControls.CamToggle.triggered)
         {
             ToggleCloseQuaterCamera();
         }
@@ -108,4 +133,6 @@ public class ButtonFunction : MonoBehaviour
             return;
         }
     }
+
+    
 }

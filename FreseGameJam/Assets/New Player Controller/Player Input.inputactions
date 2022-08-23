@@ -58,6 +58,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "CamToggle",
+                    "type": "Button",
+                    "id": "e885978a-965e-49b5-9482-f43bddd19f45",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Option",
+                    "type": "Button",
+                    "id": "81a6aeee-0d0d-455f-ac14-1ea8bfb3a407",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -229,7 +247,7 @@
                 {
                     "name": "",
                     "id": "70aeb2e3-3a02-4050-9cdf-19944c25c261",
-                    "path": "<Gamepad>/dpad/down",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "Scale",
                     "groups": "",
@@ -251,7 +269,7 @@
                 {
                     "name": "",
                     "id": "43346039-3b77-4121-a81b-ab986c9071fd",
-                    "path": "<Gamepad>/dpad/right",
+                    "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
                     "processors": "Scale(factor=3)",
                     "groups": "",
@@ -344,6 +362,39 @@
                     "processors": "Scale(factor=5)",
                     "groups": "",
                     "action": "Cheating",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "da5e53bf-e1af-4dac-9b88-0a81e52279c2",
+                    "path": "<Gamepad>/rightStickPress",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CamToggle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "079d5afb-ac3d-42e5-a76d-bf7262053be5",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CamToggle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5372f8f1-6ade-4edc-8f1b-a0fd5d791e4f",
+                    "path": "<DualShockGamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Option",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
