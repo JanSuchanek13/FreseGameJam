@@ -5,6 +5,11 @@ using System;
 
 public class ThirdPersonMovement : MonoBehaviour
 {
+    [Tooltip("Reference to the PlayerInput Action Mapping")]
+    private PlayerInput playerInput;
+
+
+
     public CharacterController controller;
     private StateController stateController;
     public Transform cam;
@@ -128,6 +133,29 @@ public class ThirdPersonMovement : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        playerInput = new PlayerInput();
+    }
+
+    /// <summary>
+    /// enable Player input
+    /// </summary>
+    private void OnEnable()
+    {
+        
+        playerInput.Enable();
+    }
+
+    /// <summary>
+    /// disable Player input
+    /// </summary>
+    private void OnDisable()
+    {
+        
+        playerInput.Disable();
+    }
+
     void Start()
     {
         Cam = cam.gameObject.GetComponent<Camera>();
@@ -158,7 +186,7 @@ public class ThirdPersonMovement : MonoBehaviour
     {
 
         // animation
-        if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+        if (playerInput.CharacterControls.Move.ReadValue<Vector2>().x != 0 || playerInput.CharacterControls.Move.ReadValue<Vector2>().y != 0)
         {
             walking = true;
         }
@@ -169,8 +197,8 @@ public class ThirdPersonMovement : MonoBehaviour
         }
 
         //Camera and Movement
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
+        float horizontal = playerInput.CharacterControls.Move.ReadValue<Vector2>().x;
+        float vertical = playerInput.CharacterControls.Move.ReadValue<Vector2>().y;
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
         if (direction.magnitude >= .1f || isSliding)
@@ -229,7 +257,7 @@ public class ThirdPersonMovement : MonoBehaviour
             speed = 6f;
 
             //Jump
-            if (Input.GetButtonDown("Jump") && isGrounded)
+            if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && isGrounded)
             {
                 controller.stepOffset = 0;
                 jumping = true; //animation
@@ -238,7 +266,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
                 
             }
-            if (Input.GetButtonDown("Jump") && !isGrounded && !(Physics.Raycast(transform.position, Vector3.down, 4f)) && !GetComponent<StateController>().isChanging) // double jump change you into crane
+            if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && !isGrounded && !(Physics.Raycast(transform.position, Vector3.down, 4f)) && !GetComponent<StateController>().isChanging) // double jump change you into crane
             {
                 
                 if (stateController.availableCrane)
@@ -266,7 +294,7 @@ public class ThirdPersonMovement : MonoBehaviour
             speed = 2f;
 
             //Jump
-            if (Input.GetButtonDown("Jump") && isGrounded)
+            if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && isGrounded)
             {
                 jumping = true; //animation
                 controller.slopeLimit = 100f;
@@ -300,7 +328,7 @@ public class ThirdPersonMovement : MonoBehaviour
             }
 
             //No Player Input -> fly forward
-            if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
+            if (playerInput.CharacterControls.Move.ReadValue<Vector2>().x == 0 && playerInput.CharacterControls.Move.ReadValue<Vector2>().y == 0)
             {
                 float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
                 float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
@@ -310,12 +338,12 @@ public class ThirdPersonMovement : MonoBehaviour
             }
 
             //Jump
-            if (Input.GetButtonDown("Jump") && isGrounded)
+            if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && isGrounded)
             {
                 controller.slopeLimit = 0f; //low climp
                 velocity.y = Mathf.Sqrt(jumpHeight / 150 * -2f * gravity);  //low jump
             }
-            else if(Input.GetButtonDown("Jump") && !isGrounded && !GetComponent<StateController>().isChanging)
+            else if(playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && !isGrounded && !GetComponent<StateController>().isChanging)
             {
                 //change back to human
                 GetComponent<StateController>().isChanging = true;
@@ -349,13 +377,15 @@ public class ThirdPersonMovement : MonoBehaviour
             */
 
             //Jump
-            if (Input.GetButtonDown("Jump") && isGrounded)
+            /*
+            if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && isGrounded)
             {
                 controller.slopeLimit = 100f;
                 velocity.y = Mathf.Sqrt(jumpHeight / 150 * -2f * gravity);
             }
+            */
 
-            if (Input.GetButtonDown("Fire1") & !isInCooldown)
+            if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 & !isInCooldown)
             {
                 action = true;
                 Invoke("EndOfAction", 1.2f);
@@ -384,13 +414,13 @@ public class ThirdPersonMovement : MonoBehaviour
             speed = 4f;
 
             //Jump
-            if (Input.GetButtonDown("Jump") && isGrounded)
+            if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && isGrounded)
             {
                 controller.slopeLimit = 45f;
                 velocity.y = Mathf.Sqrt(jumpHeight / 150 * -2f * gravity);
             }
 
-            if (Input.GetButtonDown("Fire1") & !isInCooldown)
+            if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 & !isInCooldown)
             {
                 action = true;
                 //action = false;
@@ -430,8 +460,8 @@ public class ThirdPersonMovement : MonoBehaviour
         for (int i = 0; i < 50; i++)
         {
             speed = capricornSpeed;
-            float horizontal = Input.GetAxisRaw("Horizontal");
-            float vertical = Input.GetAxisRaw("Vertical");
+            float horizontal = playerInput.CharacterControls.Move.ReadValue<Vector2>().x;
+            float vertical = playerInput.CharacterControls.Move.ReadValue<Vector2>().y;
             Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;

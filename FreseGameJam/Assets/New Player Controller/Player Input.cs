@@ -71,6 +71,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Cheating"",
+                    ""type"": ""Button"",
+                    ""id"": ""a7df79bd-3f67-4fc9-bd69-48bf49cef9bd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -177,7 +186,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""0638e677-5661-4983-8e5b-540535ff96b4"",
                     ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Jump"",
@@ -304,6 +313,61 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""MouseLook"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""18180e3b-c072-44c8-ae0c-1549ee2e4b18"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale"",
+                    ""groups"": """",
+                    ""action"": ""Cheating"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""014b72bd-76db-4d05-ab9a-561175e65771"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=2)"",
+                    ""groups"": """",
+                    ""action"": ""Cheating"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c5d72bb9-c67f-496f-8eb7-54fa94b951f0"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=3)"",
+                    ""groups"": """",
+                    ""action"": ""Cheating"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c09dbefc-5ed8-4484-b33a-90cbf8f7f028"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=4)"",
+                    ""groups"": """",
+                    ""action"": ""Cheating"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4d402161-47d0-4d1a-9934-fa02686267f5"",
+                    ""path"": ""<Keyboard>/numpadPlus"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=5)"",
+                    ""groups"": """",
+                    ""action"": ""Cheating"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -317,6 +381,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_CharacterControls_Jump = m_CharacterControls.FindAction("Jump", throwIfNotFound: true);
         m_CharacterControls_SwitchState = m_CharacterControls.FindAction("SwitchState", throwIfNotFound: true);
         m_CharacterControls_MouseLook = m_CharacterControls.FindAction("MouseLook", throwIfNotFound: true);
+        m_CharacterControls_Cheating = m_CharacterControls.FindAction("Cheating", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -381,6 +446,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_CharacterControls_Jump;
     private readonly InputAction m_CharacterControls_SwitchState;
     private readonly InputAction m_CharacterControls_MouseLook;
+    private readonly InputAction m_CharacterControls_Cheating;
     public struct CharacterControlsActions
     {
         private @PlayerInput m_Wrapper;
@@ -390,6 +456,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_CharacterControls_Jump;
         public InputAction @SwitchState => m_Wrapper.m_CharacterControls_SwitchState;
         public InputAction @MouseLook => m_Wrapper.m_CharacterControls_MouseLook;
+        public InputAction @Cheating => m_Wrapper.m_CharacterControls_Cheating;
         public InputActionMap Get() { return m_Wrapper.m_CharacterControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -414,6 +481,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @MouseLook.started -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnMouseLook;
                 @MouseLook.performed -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnMouseLook;
                 @MouseLook.canceled -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnMouseLook;
+                @Cheating.started -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnCheating;
+                @Cheating.performed -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnCheating;
+                @Cheating.canceled -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnCheating;
             }
             m_Wrapper.m_CharacterControlsActionsCallbackInterface = instance;
             if (instance != null)
@@ -433,6 +503,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @MouseLook.started += instance.OnMouseLook;
                 @MouseLook.performed += instance.OnMouseLook;
                 @MouseLook.canceled += instance.OnMouseLook;
+                @Cheating.started += instance.OnCheating;
+                @Cheating.performed += instance.OnCheating;
+                @Cheating.canceled += instance.OnCheating;
             }
         }
     }
@@ -444,5 +517,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnSwitchState(InputAction.CallbackContext context);
         void OnMouseLook(InputAction.CallbackContext context);
+        void OnCheating(InputAction.CallbackContext context);
     }
 }
