@@ -266,8 +266,8 @@ public class ThirdPersonMovement : MonoBehaviour
 
                 
             }
-            if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && !isGrounded && !(Physics.CheckSphere(groundCheck.position, groundDistance * 7, groundMask, QueryTriggerInteraction.Ignore)) && !GetComponent<StateController>().isChanging) // double jump change you into crane
-            //if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && !isGrounded && !CheckForGroundContact() && !GetComponent<StateController>().isChanging) // double jump change you into crane
+            //if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && !isGrounded && !(Physics.CheckSphere(groundCheck.position, groundDistance * 7, groundMask, QueryTriggerInteraction.Ignore)) && !GetComponent<StateController>().isChanging) // double jump change you into crane
+            if ((playerInput.CharacterControls.Jump.ReadValue<float>() != 0) && !isGrounded && !CheckForGroundContact() && !GetComponent<StateController>().isChanging) // double jump change you into crane
 
                 {
 
@@ -445,19 +445,25 @@ public class ThirdPersonMovement : MonoBehaviour
     // Felix:
     bool CheckForGroundContact()
     {
+        //Debug.Log(" ground contact called");
         // cast a tiny sphere downwards to check for groundcontact the size of the footprint: 
         RaycastHit hit;
-        Physics.SphereCast(groundCheck.position, 0.17f, -groundCheck.up, out hit, 2f, groundMask);
+        if(Physics.SphereCast(groundCheck.position, 0.22f, -groundCheck.up, out hit, 2f, groundMask))
+        {
+            Debug.Log("true");
+            return true;
+        }
+        return false;
         
         // returns either TRUE if a ground was detected or FALSE if no ground was detected.
-        if (hit.collider == null)
+        /*if (hit.collider == null)
         {
             Debug.DrawRay(groundCheck.position, -groundCheck.up, Color.green);
             return true;
         }else
         {
             return false;
-        }/*
+        }*//*
         Gizmos.DrawWireSphere(transform.position, range);
 
         RaycastHit hit;
