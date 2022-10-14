@@ -51,11 +51,15 @@ public class ThirdPersonMovement : MonoBehaviour
 
     //cooldown
     bool isInCooldown;
-    public float cooldownTime = 3;
+    public float cooldownTime = 0.5f;
+    
 
 
     //for capricorn Dash
-    bool dashing = true;
+    [Header("Capricorn Dash Stats:")]
+    public float chargeTime = 0.8f;
+    public float dashWidth = 4;
+    public float dashSpeed = 25;
 
     //for Lama Shoot
     [Header("Lama Shoot Stats:")]
@@ -267,7 +271,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 
             }
             //if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && !isGrounded && !(Physics.CheckSphere(groundCheck.position, groundDistance * 7, groundMask, QueryTriggerInteraction.Ignore)) && !GetComponent<StateController>().isChanging) // double jump change you into crane
-            if ((playerInput.CharacterControls.Jump.ReadValue<float>() != 0) && !isGrounded && !CheckForGroundContact() && !GetComponent<StateController>().isChanging) // double jump change you into crane
+            if ((playerInput.CharacterControls.Jump.triggered) && !isGrounded && !CheckForGroundContact() && !GetComponent<StateController>().isChanging) // double jump change you into crane
 
                 {
 
@@ -498,16 +502,16 @@ public class ThirdPersonMovement : MonoBehaviour
 
     IEnumerator CapricornDash()
     {
-        yield return new WaitForSeconds(.8f);
+        yield return new WaitForSeconds(chargeTime);
         //speed = capricornSpeed;
         GetComponent<Rigidbody>();
-        for (int i = 0; i < 50; i++)
+        for (int i = 0; i < dashWidth *5; i++)
         {
-            speed = capricornSpeed;
+            speed = dashSpeed;
             float horizontal = playerInput.CharacterControls.Move.ReadValue<Vector2>().x;
             float vertical = playerInput.CharacterControls.Move.ReadValue<Vector2>().y;
             Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+            float targetAngle = cam.eulerAngles.y;
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDir.normalized * (speed * 3) * Time.deltaTime);
             yield return new WaitForSeconds(.005f);

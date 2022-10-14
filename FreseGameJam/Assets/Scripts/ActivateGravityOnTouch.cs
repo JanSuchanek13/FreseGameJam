@@ -23,12 +23,12 @@ public class ActivateGravityOnTouch : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("somethin ran into me");
+            //Debug.Log("somethin ran into me");
 
 
             GetComponent<Rigidbody>().isKinematic = false;
 
-            Debug.Log("I shouldve turnt off my kinematic rigidbody now..");
+            //Debug.Log("I shouldve turnt off my kinematic rigidbody now..");
         }
     }
 }

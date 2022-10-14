@@ -23,13 +23,13 @@ public class FastFall : MonoBehaviour
         if (_makeHimCrash)
         {
             _player.GetComponent<ThirdPersonMovement>().gravity *= _gravityMultiplier;
-            Debug.Log("current gravity: " + _player.GetComponent<ThirdPersonMovement>().gravity);
+            //Debug.Log("current gravity: " + _player.GetComponent<ThirdPersonMovement>().gravity);
             
             if (_player.GetComponent<HealthSystem>().inUse || _player.GetComponent<ThirdPersonMovement>().isGrounded) //eg.: when dead or no longer falling.
             {
                 _makeHimCrash = false;
                 _player.GetComponent<ThirdPersonMovement>().gravity = _gravity; // reset gravity
-                Debug.Log("stopp falling fast.");
+                //Debug.Log("stopp falling fast.");
             }
         }
     }
