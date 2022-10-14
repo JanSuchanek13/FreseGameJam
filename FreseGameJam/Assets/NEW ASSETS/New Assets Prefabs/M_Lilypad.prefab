@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 8841685806219552553}
   - component: {fileID: 5556353356980250764}
   - component: {fileID: 7708146854773103686}
-  m_Layer: 0
+  - component: {fileID: 7172588227487108303}
+  m_Layer: 6
   m_Name: M_Lilypad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -81,3 +82,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &7172588227487108303
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8212360966070091155}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -7443641480553496655, guid: 55fd6d9110efeeb4b8f151acd272fefd, type: 3}

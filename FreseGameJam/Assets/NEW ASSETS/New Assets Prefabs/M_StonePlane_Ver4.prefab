@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 1079874777525701106}
   - component: {fileID: 4130829961493595735}
   - component: {fileID: 2213326523821011613}
-  m_Layer: 0
+  - component: {fileID: 5251737289502840842}
+  m_Layer: 6
   m_Name: M_StonePlane_Ver4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -81,3 +82,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &5251737289502840842
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411987896504062792}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 8324580739174819017, guid: 6a56ce37ddcd0ad40bbe0d2cf84221c5, type: 3}
