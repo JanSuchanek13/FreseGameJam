@@ -186,7 +186,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 
         // animation
@@ -445,6 +445,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
 
     }
+
 
     // Felix:
     bool CheckForGroundContact()
