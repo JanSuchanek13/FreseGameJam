@@ -492,6 +492,7 @@ public class ThirdPersonMovement : MonoBehaviour
     private void EndOfAction()
     {
         action = false;
+        
     }
 
     IEnumerator Cooldown()
@@ -501,8 +502,13 @@ public class ThirdPersonMovement : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// execute Dash of Capricorn
+    /// </summary>
+    /// <returns></returns>
     IEnumerator CapricornDash()
     {
+        
         yield return new WaitForSeconds(chargeTime);
         //speed = capricornSpeed;
         GetComponent<Rigidbody>();
@@ -520,8 +526,6 @@ public class ThirdPersonMovement : MonoBehaviour
 
             //extra push power
             Collider[] allObjects = Physics.OverlapSphere(transform.position, 3);   //all Objects in explosion Range
-
-
             foreach (Collider j in allObjects)
             {
                 Rigidbody rig = j.GetComponent<Rigidbody>();
@@ -531,9 +535,8 @@ public class ThirdPersonMovement : MonoBehaviour
                 }
             }
         }
-
+        
         speed = 2;
-
     }
 
     void LamaShoot()
