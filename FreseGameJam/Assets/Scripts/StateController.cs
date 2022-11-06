@@ -18,6 +18,7 @@ public class StateController : MonoBehaviour
     public bool availableCrane;
     public bool availableCapricorn;
     public bool availableLama;
+    public bool availableJesus;
 
     public bool ball;
     public bool human = true;
@@ -25,6 +26,7 @@ public class StateController : MonoBehaviour
     public bool crane;
     public bool capricorn;
     public bool lama;
+    public bool jesus;
     public bool isChanging;
     public int StateNumber = 0;
     private KeyCode[] keyCodes = new KeyCode[] { KeyCode.Alpha0, KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5, KeyCode.Alpha6, KeyCode.Alpha7, KeyCode.Alpha8, KeyCode.Alpha9 };
@@ -37,6 +39,7 @@ public class StateController : MonoBehaviour
     [SerializeField] GameObject craneVisuell;
     [SerializeField] GameObject capricornVisuell;
     [SerializeField] GameObject lamaVisuell;
+    [SerializeField] GameObject jesusVisuell;
 
 
     [SerializeField] AudioSource PickUp_Sound;
@@ -85,7 +88,7 @@ public class StateController : MonoBehaviour
             availableFrog = true;
             PickUp_Sound2.enabled = true;
             Destroy(other.gameObject, .3f);
-            PlayerPrefs.SetInt("State" + (currentLevel - 2), 4);
+            PlayerPrefs.SetInt("State" + (currentLevel - 2), 5);
         }
 
         if (other.gameObject.CompareTag("Capricorn"))
@@ -103,6 +106,14 @@ public class StateController : MonoBehaviour
             PickUp_Sound2.enabled = true;
             Destroy(other.gameObject, .3f);
             PlayerPrefs.SetInt("State" + (currentLevel - 2), 3);
+        }
+        if (other.gameObject.CompareTag("Jesus"))
+        {
+            Debug.Log("hit:Jesus");
+            availableJesus = true;
+            PickUp_Sound2.enabled = true;
+            Destroy(other.gameObject, .3f);
+            PlayerPrefs.SetInt("State" + (currentLevel - 2), 4);
         }
         if (other.gameObject.CompareTag("Crown"))
         {
@@ -141,7 +152,7 @@ public class StateController : MonoBehaviour
 
         //PlayerPrefs.SetInt("State" + currentLevel, 0);
         // activate the available States
-        bool[] availableStates = new bool[] { availableCrane, availableCapricorn, availableLama, availableFrog };
+        bool[] availableStates = new bool[] { availableCrane, availableCapricorn, availableLama, availableJesus, availableFrog };
         StateNumber = PlayerPrefs.GetInt("State" + (currentLevel - 2));
         for (int i = 0; i < StateNumber; i++)
         {
@@ -160,6 +171,10 @@ public class StateController : MonoBehaviour
                     break;
 
                 case 4:
+                    availableJesus = true;
+                    break;
+
+                case 5:
                     availableFrog = true;
                     break;
 
@@ -194,18 +209,20 @@ public class StateController : MonoBehaviour
                         crane = false;
                         capricorn = false;
                         lama = false;
+                        jesus = false;
                         StartCoroutine(changeModell(i));
                         break;
 
                     case 5:
-                        if (availableFrog)
+                        if (availableJesus)
                         {
                             ball = false;
                             human = false;
-                            frog = true;
+                            frog = false;
                             crane = false;
                             capricorn = false;
                             lama = false;
+                            jesus = true;
                             StartCoroutine(changeModell(i));
                         }
                         else
@@ -221,6 +238,7 @@ public class StateController : MonoBehaviour
                             crane = true;
                             capricorn = false;
                             lama = false;
+                            jesus = false;
                             StartCoroutine(changeModell(i));
                         }
                         else
@@ -236,6 +254,7 @@ public class StateController : MonoBehaviour
                             crane = false;
                             capricorn = true;
                             lama = false;
+                            jesus = false;
                             StartCoroutine(changeModell(i));
                         }
                         else
@@ -251,6 +270,7 @@ public class StateController : MonoBehaviour
                             crane = false;
                             capricorn = false;
                             lama = true;
+                            jesus = false;
                             StartCoroutine(changeModell(i));
                         }
                         else
@@ -258,6 +278,22 @@ public class StateController : MonoBehaviour
                         break;
 
                     case 6:
+                        if (availableFrog)
+                        {
+                            ball = false;
+                            human = false;
+                            frog = true;
+                            crane = false;
+                            capricorn = false;
+                            lama = false;
+                            jesus = false;
+                            StartCoroutine(changeModell(i));
+                        }
+                        else
+                            isChanging = false;
+                        break;
+
+
                     case 7:
                     case 8:
                     case 9:
@@ -281,61 +317,72 @@ public class StateController : MonoBehaviour
                         crane = false;
                         capricorn = false;
                         lama = false;
+                        jesus = false;
                         StartCoroutine(changeModell(i));
                         break;
 
                     case 5:
-                        
-                            ball = false;
-                            human = false;
-                            frog = true;
-                            crane = false;
-                            capricorn = false;
-                            lama = false;
-                            StartCoroutine(changeModell(i));
+                        ball = false;
+                        human = false;
+                        frog = false;
+                        crane = false;
+                        capricorn = false;
+                        lama = false;
+                        jesus = true;
+                        StartCoroutine(changeModell(i));
                         
                         break;
 
                     case 2:
-                        
-                            ball = false;
-                            human = false;
-                            frog = false;
-                            crane = true;
-                            capricorn = false;
-                            lama = false;
-                            StartCoroutine(changeModell(i));
+                        ball = false;
+                        human = false;
+                        frog = false;
+                        crane = true;
+                        capricorn = false;
+                        lama = false;
+                        jesus = false;
+                        StartCoroutine(changeModell(i));
                         
                             isChanging = false;
                         break;
 
-                    case 3:
-                        
-                            ball = false;
-                            human = false;
-                            frog = false;
-                            crane = false;
-                            capricorn = true;
-                            lama = false;
-                            StartCoroutine(changeModell(i));
+                    case 3:                        
+                        ball = false;
+                        human = false;
+                        frog = false;
+                        crane = false;
+                        capricorn = true;
+                        lama = false;
+                        jesus = false;
+                        StartCoroutine(changeModell(i));
                         
                             isChanging = false;
                         break;
 
                     case 4:
-                       
-                            ball = false;
-                            human = false;
-                            frog = false;
-                            crane = false;
-                            capricorn = false;
-                            lama = true;
-                            StartCoroutine(changeModell(i));
+                        ball = false;
+                        human = false;
+                        frog = false;
+                        crane = false;
+                        capricorn = false;
+                        lama = true;
+                        jesus = false;
+                        StartCoroutine(changeModell(i));
                         
                             isChanging = false;
                         break;
 
                     case 6:
+                        ball = false;
+                        human = false;
+                        frog = true;
+                        crane = false;
+                        capricorn = false;
+                        lama = false;
+                        jesus = false;
+                        StartCoroutine(changeModell(i));
+
+                        break;
                     case 7:
                     case 8:
                     case 9:
@@ -362,6 +409,8 @@ public class StateController : MonoBehaviour
         craneVisuell.SetActive(false);
         capricornVisuell.SetActive(false);
         lamaVisuell.SetActive(false);
+        jesusVisuell.SetActive(false);
+
 
 
         //change to new form
@@ -375,7 +424,7 @@ public class StateController : MonoBehaviour
                 break;
 
             case 5:
-                frogVisuell.SetActive(true);
+                jesusVisuell.SetActive(true);
                 ballVisuell.SetActive(false);
                 break;
 
@@ -391,6 +440,11 @@ public class StateController : MonoBehaviour
 
             case 4:
                 lamaVisuell.SetActive(true);
+                ballVisuell.SetActive(false);
+                break;
+
+            case 6:
+                frogVisuell.SetActive(true);
                 ballVisuell.SetActive(false);
                 break;
 

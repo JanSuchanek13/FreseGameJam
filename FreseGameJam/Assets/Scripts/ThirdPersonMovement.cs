@@ -442,6 +442,39 @@ public class ThirdPersonMovement : MonoBehaviour
             velocity.y += gravity * Time.deltaTime;
             controller.Move(velocity * Time.deltaTime);
         }
+        if (GetComponent<StateController>().jesus)
+        {
+            //Move 
+            speed = 5;
+            /*
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            controller.Move(moveDir.normalized * speed * Time.deltaTime);
+            */
+
+            //Jump
+            if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && isGrounded)
+            {
+                controller.slopeLimit = 100f;
+                velocity.y = Mathf.Sqrt(jumpHeight / 150 * -2f * gravity);
+            }
+            
+
+            if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 & !isInCooldown)
+            {
+                action = true;
+                Invoke("EndOfAction", 1.2f);
+                Debug.Log("fire");
+                StartCoroutine("CapricornDash");
+                isInCooldown = true;
+                StartCoroutine("Cooldown");
+            }
+
+
+            //Gravity
+            velocity.y += gravity * Time.deltaTime;
+            controller.Move(velocity * Time.deltaTime);
+        }
 
 
     }
