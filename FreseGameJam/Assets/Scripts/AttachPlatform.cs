@@ -104,6 +104,7 @@ public class AttachPlatform : MonoBehaviour
 				agent.height = 0;
 				agent.speed = resetSpeed;
 				agent.avoidancePriority = 60;
+				GetComponent<BoxCollider>().enabled = false;
 			}
 			else if (destPoint == 2)
 			{
@@ -113,6 +114,7 @@ public class AttachPlatform : MonoBehaviour
 				agent.height = height;
 				agent.speed = speed;
 				agent.avoidancePriority = 50;
+				GetComponent<BoxCollider>().enabled = true;
 			}
 		}
         
