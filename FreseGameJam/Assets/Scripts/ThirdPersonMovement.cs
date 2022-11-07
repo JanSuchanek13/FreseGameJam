@@ -81,31 +81,31 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             Debug.DrawRay(transform.position + new Vector3(0, 0, rayDistance), Vector3.down, Color.red);
             
-            if ((Physics.Raycast(transform.position, Vector3.down, out RaycastHit slopeHit, 1f, SlideMasks, QueryTriggerInteraction.Ignore)/* || (Physics.Raycast(transform.position + new Vector3(0.4f,0,0), Vector3.down, out slopeHit, 1f)) || (Physics.Raycast(transform.position + new Vector3(0, 0, -0.4f), Vector3.down, out slopeHit, 1f)) || (Physics.Raycast(transform.position + new Vector3(0, 0, 0.4f), Vector3.down, out slopeHit, 1f)) || (Physics.Raycast(transform.position + new Vector3(-0.4f, 0, 0), Vector3.down, out slopeHit, 1f))*/))
+            if ((Physics.Raycast(transform.position, Vector3.down, out RaycastHit slopeHit, 1.2f, SlideMasks, QueryTriggerInteraction.Ignore)/* || (Physics.Raycast(transform.position + new Vector3(0.4f,0,0), Vector3.down, out slopeHit, 1f)) || (Physics.Raycast(transform.position + new Vector3(0, 0, -0.4f), Vector3.down, out slopeHit, 1f)) || (Physics.Raycast(transform.position + new Vector3(0, 0, 0.4f), Vector3.down, out slopeHit, 1f)) || (Physics.Raycast(transform.position + new Vector3(-0.4f, 0, 0), Vector3.down, out slopeHit, 1f))*/))
             {
                 //Debug.Log("Treffer");
                 hitPointNormal = slopeHit.normal;
                 return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit;
             }
-            else if (Physics.Raycast(transform.position + new Vector3(rayDistance, 0, 0), Vector3.down, out slopeHit, 1f, SlideMasks, QueryTriggerInteraction.Ignore))
+            else if (Physics.Raycast(transform.position + new Vector3(rayDistance, 0, 0), Vector3.down, out slopeHit, 1.2f, SlideMasks, QueryTriggerInteraction.Ignore))
             {
                 //Debug.Log("Treffer1");
                 hitPointNormal = slopeHit.normal;
                 return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit;
             }
-            else if (Physics.Raycast(transform.position + new Vector3(0, 0, -rayDistance), Vector3.down, out slopeHit, 1f, SlideMasks, QueryTriggerInteraction.Ignore))
+            else if (Physics.Raycast(transform.position + new Vector3(0, 0, -rayDistance), Vector3.down, out slopeHit, 1.2f, SlideMasks, QueryTriggerInteraction.Ignore))
             {
                 //Debug.Log("Treffer2");
                 hitPointNormal = slopeHit.normal;
                 return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit;
             }
-            else if (Physics.Raycast(transform.position + new Vector3(0, 0, rayDistance), Vector3.down, out slopeHit, 1f, SlideMasks, QueryTriggerInteraction.Ignore))
+            else if (Physics.Raycast(transform.position + new Vector3(0, 0, rayDistance), Vector3.down, out slopeHit, 1.2f, SlideMasks, QueryTriggerInteraction.Ignore))
             {
                 //Debug.Log("Treffer3");
                 hitPointNormal = slopeHit.normal;
                 return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit;
             }
-            else if (Physics.Raycast(transform.position + new Vector3(-rayDistance, 0, 0), Vector3.down, out slopeHit, 1f, SlideMasks, QueryTriggerInteraction.Ignore))
+            else if (Physics.Raycast(transform.position + new Vector3(-rayDistance, 0, 0), Vector3.down, out slopeHit, 1.2f, SlideMasks, QueryTriggerInteraction.Ignore))
             {
                 //Debug.Log("Treffer4");
                 hitPointNormal = slopeHit.normal;
@@ -263,6 +263,7 @@ public class ThirdPersonMovement : MonoBehaviour
             //Jump
             if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && isGrounded)
             {
+                Debug.Log("jump");
                 controller.stepOffset = 0;
                 jumping = true; //animation
                 //controller.slopeLimit = 100f;
