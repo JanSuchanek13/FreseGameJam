@@ -7,8 +7,10 @@ public class BreakingObj : MonoBehaviour
     public bool onlyCapricorn;
     public bool breakingChildren;
     public float timeTillBreak;
+    [SerializeField] float _timeTillReset = 5.0f; // F. added this to determine resetTime
     public bool reset;
 
+    // local variables:
     Vector3 resetPos;
     Vector3 resetRot;
     List<Vector3> resetPosChildren = new List<Vector3>();
@@ -16,10 +18,8 @@ public class BreakingObj : MonoBehaviour
 
     private void Start()
     {
-        
         if (reset)
         {
-            
             if (breakingChildren)
             {
                 foreach (Transform child in transform)
@@ -27,42 +27,32 @@ public class BreakingObj : MonoBehaviour
                     resetPosChildren.Add(child.gameObject.GetComponent<Transform>().position);
                     resetRotChildren.Add(child.gameObject.GetComponent<Transform>().rotation.eulerAngles);
                 }
-            }
-            else
+            }else
             {
                 resetPos = transform.position;
                 resetRot = transform.rotation.eulerAngles;
-                //Debug.Log(transform.position);
             }
         }
     }
 
     void OnTriggerEnter(Collider collision)
     {
-        
         if (onlyCapricorn)
         {
-            
             if (collision.gameObject.tag == "Player")
-            {
-                
+            {  
                 if (collision.gameObject.GetComponent<StateController>().capricorn)
-                {
-                    
+                { 
                     Invoke("Break", timeTillBreak);
                 }
             }
-        }
-        else
+        } else
         {
-            
             if (collision.gameObject.tag == "Player")
             {
                 Invoke("Break", timeTillBreak);
             }
         }
-
-        
     }
 
     void Break()
@@ -73,17 +63,14 @@ public class BreakingObj : MonoBehaviour
             {
                 child.GetComponent<Rigidbody>().isKinematic = false;
             }
-
-        }
-        else
+        }else
         {
             GetComponent<Rigidbody>().isKinematic = false;
         }
 
         if (reset)
         {
-            
-            Invoke("Reset", 5);
+            Invoke("Reset", _timeTillReset);
         }
     }
 
@@ -99,11 +86,9 @@ public class BreakingObj : MonoBehaviour
                 child.transform.rotation = Quaternion.Euler(resetPosChildren[i]);
                 i++;
             }
-        }
-        else
+        }else
         {
             GetComponent<Rigidbody>().isKinematic = true;
-            Debug.Log(resetPos);
             transform.position = resetPos;
             transform.rotation = Quaternion.Euler(resetRot);
         }
