@@ -185,6 +185,31 @@ public class ThirdPersonMovement : MonoBehaviour
     }
 
 
+    void Update()
+    {
+        if (GetComponent<StateController>().human)
+        {
+            //if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && !isGrounded && !(Physics.CheckSphere(groundCheck.position, groundDistance * 7, groundMask, QueryTriggerInteraction.Ignore)) && !GetComponent<StateController>().isChanging) // double jump change you into crane
+            if ((playerInput.CharacterControls.Jump.triggered) && !isGrounded && !CheckForGroundContact() && !GetComponent<StateController>().isChanging) // double jump change you into crane
+
+            {
+
+                if (stateController.availableCrane)
+                {
+                    GetComponent<StateController>().isChanging = true;
+                    stateController.ball = false;
+                    stateController.human = false;
+                    stateController.frog = false;
+                    stateController.crane = true;
+                    stateController.capricorn = false;
+                    stateController.lama = false;
+                    StartCoroutine(GetComponent<StateController>().changeModell(2));
+                }
+
+            }
+        }
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -271,24 +296,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
                 
             }
-            //if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && !isGrounded && !(Physics.CheckSphere(groundCheck.position, groundDistance * 7, groundMask, QueryTriggerInteraction.Ignore)) && !GetComponent<StateController>().isChanging) // double jump change you into crane
-            if ((playerInput.CharacterControls.Jump.triggered) && !isGrounded && !CheckForGroundContact() && !GetComponent<StateController>().isChanging) // double jump change you into crane
-
-                {
-
-                    if (stateController.availableCrane)
-                {
-                    GetComponent<StateController>().isChanging = true;
-                    stateController.ball = false;
-                    stateController.human = false;
-                    stateController.frog = false;
-                    stateController.crane = true;
-                    stateController.capricorn = false;
-                    stateController.lama = false;
-                    StartCoroutine(GetComponent<StateController>().changeModell(2));
-                }
-                
-            }
+            
 
             //Gravity
             velocity.y += gravity * Time.deltaTime;
