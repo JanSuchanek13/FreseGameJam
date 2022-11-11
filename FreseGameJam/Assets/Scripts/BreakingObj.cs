@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BreakingObj : MonoBehaviour
 {
+    public GameObject origamiFriend;
+    public bool levelEnd;
     public bool onlyCapricorn;
     public bool breakingChildren;
     public float timeTillBreak;
@@ -51,6 +53,12 @@ public class BreakingObj : MonoBehaviour
             if (collision.gameObject.tag == "Player")
             {
                 Invoke("Break", timeTillBreak);
+                if (levelEnd)
+                {
+                    collision.gameObject.GetComponent<ThirdPersonMovement>().forcedFalling = true;
+                    origamiFriend.GetComponent<Animator>().SetBool("Falling", true);
+                }
+                    
             }
         }
     }

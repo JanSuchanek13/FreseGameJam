@@ -32,6 +32,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public bool isGrounded;
     public bool onBridge;
     public bool movingDownwards;
+    public bool forcedFalling;
     Vector3 oldtransform;
 
 
@@ -256,7 +257,7 @@ public class ThirdPersonMovement : MonoBehaviour
         //controller = GetComponent<CharacterController>();
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance * 2, groundMask);
-        if (!isGrounded && velocity.y < -15 && movingDownwards)
+        if (!isGrounded && velocity.y < -15 && movingDownwards || forcedFalling)
         {
             falling = true; //animation
         }
@@ -269,7 +270,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if (isGrounded && velocity.y < 0.5) //is falling
         {
             controller.stepOffset = 0.5f;
-            falling = false; //animation
+            //falling = false; //animation
             jumping = false; //animation
             //controller.slopeLimit = 45.0f;
             velocity.y = -4f;

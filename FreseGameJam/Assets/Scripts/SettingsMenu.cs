@@ -24,10 +24,14 @@ public class SettingsMenu : MonoBehaviour
             mouseSensitivitySlider.value = PlayerPrefs.GetFloat("mouseSensitivitySettings");
             Debug.Log("Loaded a Sensitivity of:" + mouseSensitivitySlider.value);
 
-            cinemachineFreeLook.GetComponent<CinemachineFreeLook>().m_XAxis.m_MaxSpeed = mouseSensitivitySlider.value;      //for Normal Cam
-            cinemachineFreeLook.GetComponent<CinemachineFreeLook>().m_YAxis.m_MaxSpeed = mouseSensitivitySlider.value /100;
-            CloseUpCam.GetComponent<CinemachineFreeLook>().m_XAxis.m_MaxSpeed = mouseSensitivitySlider.value;               //for closeUp Cam
-            CloseUpCam.GetComponent<CinemachineFreeLook>().m_YAxis.m_MaxSpeed = mouseSensitivitySlider.value / 100;
+            if(cinemachineFreeLook != null)
+            {
+                cinemachineFreeLook.GetComponent<CinemachineFreeLook>().m_XAxis.m_MaxSpeed = mouseSensitivitySlider.value;      //for Normal Cam
+                cinemachineFreeLook.GetComponent<CinemachineFreeLook>().m_YAxis.m_MaxSpeed = mouseSensitivitySlider.value / 100;
+                CloseUpCam.GetComponent<CinemachineFreeLook>().m_XAxis.m_MaxSpeed = mouseSensitivitySlider.value;               //for closeUp Cam
+                CloseUpCam.GetComponent<CinemachineFreeLook>().m_YAxis.m_MaxSpeed = mouseSensitivitySlider.value / 100;
+            }
+            
         }
         if (PlayerPrefs.HasKey("volumeSettings"))
         {
@@ -48,11 +52,14 @@ public class SettingsMenu : MonoBehaviour
         PlayerPrefs.SetFloat("mouseSensitivitySettings", val);
         Debug.Log("Set Sensitivity to:" + val);
 
-
-        cinemachineFreeLook.GetComponent<CinemachineFreeLook>().m_XAxis.m_MaxSpeed = val;
-        cinemachineFreeLook.GetComponent<CinemachineFreeLook>().m_YAxis.m_MaxSpeed = val/ 100;
-        CloseUpCam.GetComponent<CinemachineFreeLook>().m_XAxis.m_MaxSpeed = val;
-        CloseUpCam.GetComponent<CinemachineFreeLook>().m_YAxis.m_MaxSpeed = val / 100;
+        if (cinemachineFreeLook != null)
+        {
+            cinemachineFreeLook.GetComponent<CinemachineFreeLook>().m_XAxis.m_MaxSpeed = val;
+            cinemachineFreeLook.GetComponent<CinemachineFreeLook>().m_YAxis.m_MaxSpeed = val / 100;
+            CloseUpCam.GetComponent<CinemachineFreeLook>().m_XAxis.m_MaxSpeed = val;
+            CloseUpCam.GetComponent<CinemachineFreeLook>().m_YAxis.m_MaxSpeed = val / 100;
+        }
+        
     }
 
     public void SetVolume (float volume)
