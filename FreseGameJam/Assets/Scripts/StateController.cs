@@ -76,7 +76,7 @@ public class StateController : MonoBehaviour
         
         if (other.gameObject.CompareTag("Crane"))
         {
-            Debug.Log("hit:Crane");
+            //Debug.Log("hit:Crane");
             availableCrane = true;
             PickUp_Sound2.enabled = true;
             Destroy(other.gameObject, .3f);
@@ -84,7 +84,7 @@ public class StateController : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Frog"))
         {
-            Debug.Log("hit:Frog");
+            //Debug.Log("hit:Frog");
             availableFrog = true;
             PickUp_Sound2.enabled = true;
             Destroy(other.gameObject, .3f);
@@ -93,7 +93,7 @@ public class StateController : MonoBehaviour
 
         if (other.gameObject.CompareTag("Capricorn"))
         {
-            Debug.Log("hit:Capricorn");
+            //Debug.Log("hit:Capricorn");
             availableCapricorn = true;
             PickUp_Sound2.enabled = true;
             Destroy(other.gameObject, .3f);
@@ -101,7 +101,7 @@ public class StateController : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Lama"))
         {
-            Debug.Log("hit:Lama");
+            //Debug.Log("hit:Lama");
             availableLama = true;
             PickUp_Sound2.enabled = true;
             Destroy(other.gameObject, .3f);

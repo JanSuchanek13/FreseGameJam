@@ -53,7 +53,13 @@ public class ThirdPersonMovement : MonoBehaviour
     //cooldown
     bool isInCooldown;
     public float cooldownTime = 0.5f;
-    
+
+    //coyote time
+    [Header("CoyoteTime:")]
+    public bool coyoteTime = true;
+    public float coyoteTimeDelay = 0.8f;
+    public bool isCoyoteGrounded;
+
 
 
     //for capricorn Dash
@@ -191,7 +197,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if (GetComponent<StateController>().human)
         {
             //if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && !isGrounded && !(Physics.CheckSphere(groundCheck.position, groundDistance * 7, groundMask, QueryTriggerInteraction.Ignore)) && !GetComponent<StateController>().isChanging) // double jump change you into crane
-            if ((playerInput.CharacterControls.Jump.triggered) && !isGrounded && !CheckForGroundContact() && !GetComponent<StateController>().isChanging) // double jump change you into crane
+            if ((playerInput.CharacterControls.Jump.triggered) && !isGrounded && !isCoyoteGrounded && !CheckForGroundContact() && !GetComponent<StateController>().isChanging) // double jump change you into crane
 
             {
 
@@ -266,19 +272,34 @@ public class ThirdPersonMovement : MonoBehaviour
             falling = false;
         }
 
+        if (coyoteTime)
+        {
+            if(Physics.CheckSphere(groundCheck.position, groundDistance, groundMask))
+            {
+                isCoyoteGrounded = true;
+            }
+            else
+            {
+                Invoke("CoyoteTime", coyoteTimeDelay);
+            }
+        }
+        
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
         if (isGrounded && velocity.y < 0.5) //is falling
         {
             controller.stepOffset = 0.5f;
             //falling = false; //animation
             jumping = false; //animation
-            //controller.slopeLimit = 45.0f;
+                                //controller.slopeLimit = 45.0f;
             velocity.y = -4f;
         }
         else
         {
             //falling = true; //animation
         }
+        
+
+        
 
         //States
         if (GetComponent<StateController>().human)
@@ -287,7 +308,7 @@ public class ThirdPersonMovement : MonoBehaviour
             speed = 6f;
 
             //Jump
-            if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && isGrounded)
+            if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && isCoyoteGrounded)
             {
                 Debug.Log("jump");
                 controller.stepOffset = 0;
@@ -543,6 +564,13 @@ public class ThirdPersonMovement : MonoBehaviour
         yield return new WaitForSeconds(cooldownTime);
         isInCooldown = false;
 
+    }
+
+
+    private void CoyoteTime()
+    {
+        isCoyoteGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        
     }
 
     /// <summary>
