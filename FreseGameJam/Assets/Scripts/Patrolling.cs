@@ -37,7 +37,7 @@ public class Patrolling : MonoBehaviour
     }
 
     // save if cutscene has played:
-    //_cutSceneHasAlreadyPlayed++;
+    // _cutSceneHasAlreadyPlayed++;
     //        PlayerPrefs.SetInt("_cutSceneHasAlreadyPlayed", _cutSceneHasAlreadyPlayed);
 
     void GotoNextPoint()
@@ -90,23 +90,24 @@ public class Patrolling : MonoBehaviour
         if (other.CompareTag("Destination") && !ReachedTarget)
         {
             ReachedTarget = true;
-            Debug.Log("I reached my destination!!!!");
-            _turnOffElements.SetActive(false);
+            //Debug.Log("I reached my destination!!!!");
+            //_turnOffElements.SetActive(false);
             _turnOnElements.SetActive(true);
             agent.isStopped = true;
+            _turnOffElements.SetActive(false);
         }
     }
 
 
-    // polish: this makes friend wait when touching trigger at a given location, needs a wake-up-trigger to call "StopWaiting()".
+    // pollish: this makes friend wait when touching trigger at a given location, needs a wake-up-trigger to call "StopWaiting()".
     public void WaitForPlayer()
     {
         agent.speed = 0;
-        Debug.Log("now waiting for player");
+        //Debug.Log("now waiting for player");
     }
     public void StopWaiting()
     {
         agent.speed = _defaultSpeed;
-        Debug.Log("continuing travel");
+        //Debug.Log("continuing travel");
     }
 }
