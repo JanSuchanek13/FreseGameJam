@@ -278,8 +278,13 @@ public class ThirdPersonMovement : MonoBehaviour
             {
                 isCoyoteGrounded = true;
             }
-            else
+            else 
             {
+                if (jumping)
+                {
+                    isCoyoteGrounded = false;
+                }
+                //if the Player doesn´t touch the ground isCoyoteGrounded will be set to false after the Coyot Delay ends.
                 Invoke("CoyoteTime", coyoteTimeDelay);
             }
         }

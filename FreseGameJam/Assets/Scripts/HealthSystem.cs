@@ -16,6 +16,7 @@ public class HealthSystem : MonoBehaviour
     [SerializeField] GameObject Cam2;
     CloseQuarterCamera CamScript;
     CharacterController Character;
+    public GameObject RiverBoat_Friend;
     float gravity;
 
     //safe Level
@@ -109,7 +110,7 @@ public class HealthSystem : MonoBehaviour
             //Debug.Log(PlayerPrefs.GetInt("deaths" + (currentLevel - 2)));
 
             //stop Riverboat
-            GameObject.Find("riverBoat_Friend_Fire").GetComponent<SpeedUpNavMeshAgent>().StopForDead();
+            RiverBoat_Friend.GetComponent<SpeedUpNavMeshAgent>().StopForDead();
             
             //Debug.Log(RespawnPoint);
 
