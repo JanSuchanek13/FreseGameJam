@@ -23,11 +23,13 @@ public class AnimationController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         if (GetComponentInParent<StateController>().crane)
         {
             Debug.Log("crane");
             transform.rotation = Quaternion.EulerAngles(Vector3.zero);
         }
+        */
         //Debug.Log(gameObject);
         //transform.rotation = Quaternion.EulerAngles(Vector3.zero);
 
