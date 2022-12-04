@@ -1,11 +1,14 @@
 fileFormatVersion: 2
-guid: 1b741e0a615c93b4aa1a5e8d5073ca73
+guid: b19290f68ae3bc746ac6d31cc7522b84
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable:
   - first:
-      74: 6655749478420221139
-    second: Papercrane_shooketh
+      74: 7294412069832511295
+    second: PaperCrane|Flying
+  - first:
+      74: -3713120810355757708
+    second: PaperCrane|Shook
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -36,11 +39,40 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Papercrane_shooketh
-      takeName: Armature.001|Papercrane_shook
+      name: PaperCrane|Flying
+      takeName: Rig|Flying
       internalID: 0
       firstFrame: 0
-      lastFrame: 202
+      lastFrame: 199
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: PaperCrane|Shook
+      takeName: Rig|Shook
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 199
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
