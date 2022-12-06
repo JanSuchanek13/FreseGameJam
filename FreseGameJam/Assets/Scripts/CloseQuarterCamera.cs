@@ -41,14 +41,14 @@ public class CloseQuarterCamera : MonoBehaviour
         _cameraRigFar.SetActive(false);
         _cameraRigClose.SetActive(true);
         closeQuarterCameraIsActive = true;
-        Debug.Log("zoom in");
+        //Debug.Log("zoom in");
     }
     public void ZoomOut()
     {
         _cameraRigFar.SetActive(true);
         _cameraRigClose.SetActive(false);
         closeQuarterCameraIsActive = false;
-        Debug.Log("zoom out");
+        //Debug.Log("zoom out");
     }
 
     void ReactivateTrigger()
@@ -56,6 +56,7 @@ public class CloseQuarterCamera : MonoBehaviour
         _currentlyInsideTrigger = false; // redundant here, as turning on/off the collider solves the same issue.
         _lastTriggerHit.GetComponent<BoxCollider>().enabled = true;
     }
+
     private void Update() // failsafe to enable zones after dying!
     {
         if (GetComponent<HealthSystem>().inUse)

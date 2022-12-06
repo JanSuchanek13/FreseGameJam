@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class DayNightSwitch : MonoBehaviour
 {
-    // ask Felix
+    // this is not ready nor working as the PP's are not set up!
+    // this sits inactive on the GameManager game object
 
     #region variables:
     [Header("Day and Night Post-Processing Settings:")]
