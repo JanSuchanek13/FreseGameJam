@@ -44,7 +44,7 @@ public class HealthSystem : MonoBehaviour
 
         //if continue the Game start at last Checkpoint
         currentLevel = SceneManager.GetActiveScene().buildIndex;
-        Debug.Log(CheckpointsGO.Count);
+        //Debug.Log(CheckpointsGO.Count);
         for (int i = 0; i < CheckpointsGO.Count; i++)
         {
             
@@ -56,7 +56,7 @@ public class HealthSystem : MonoBehaviour
         
         if (Checkpoints[lastCheckpoint[(currentLevel - 2)]] != new Vector3(0, 0, 0))
         {
-            Debug.Log("changed Pos");
+            //Debug.Log("changed Pos");
             gameObject.transform.position = new Vector3(0, -3, 0) + Checkpoints[PlayerPrefs.GetInt("lastCheckpoint" + (currentLevel - 2))];
         }
     }
