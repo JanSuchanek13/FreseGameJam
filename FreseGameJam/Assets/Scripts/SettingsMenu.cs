@@ -22,7 +22,7 @@ public class SettingsMenu : MonoBehaviour
         {
             
             mouseSensitivitySlider.value = PlayerPrefs.GetFloat("mouseSensitivitySettings");
-            //Debug.Log("Loaded a Sensitivity of:" + mouseSensitivitySlider.value);
+            Debug.Log("Loaded a Sensitivity of:" + mouseSensitivitySlider.value);
 
             if(cinemachineFreeLook != null)
             {
@@ -36,7 +36,7 @@ public class SettingsMenu : MonoBehaviour
         if (PlayerPrefs.HasKey("volumeSettings"))
         {
             SoundSlider.value = PlayerPrefs.GetFloat("volumeSettings");
-            //Debug.Log("Loaded a Sound Value of:" + SoundSlider.value);
+            Debug.Log("Loaded a Sound Value of:" + SoundSlider.value);
             audioMixer.SetFloat("volume", SoundSlider.value);
         }
         initialized = true;

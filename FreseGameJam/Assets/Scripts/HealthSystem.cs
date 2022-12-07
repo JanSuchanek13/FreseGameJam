@@ -61,7 +61,7 @@ public class HealthSystem : MonoBehaviour
         }
     }
 
-    
+    bool _wasTriggered = false;
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Checkpoint"))
@@ -110,7 +110,6 @@ public class HealthSystem : MonoBehaviour
             //Debug.Log(PlayerPrefs.GetInt("deaths" + (currentLevel - 2)));
 
             //stop Riverboat
-            if (RiverBoat_Friend.activeInHierarchy)
             RiverBoat_Friend.GetComponent<SpeedUpNavMeshAgent>().StopForDead();
             
             //Debug.Log(RespawnPoint);

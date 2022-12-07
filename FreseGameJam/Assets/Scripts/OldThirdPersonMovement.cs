@@ -45,6 +45,8 @@ public class OldThirdPersonMovement : MonoBehaviour
     public float cooldownTime = 3;
 
 
+    //for capricorn Dash
+    bool dashing = true;
 
     //for Lama Shoot
     [Header("Lama Shoot Stats:")]

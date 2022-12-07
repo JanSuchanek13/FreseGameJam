@@ -8144,8 +8144,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _useNoFlyAnimation: 1
   arrayOfWindSounds:
-  - {fileID: 1130836469946091921}
-  - {fileID: 1130836469946091921}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   windGhustEffect: {fileID: 0}
   animator: {fileID: 57360243113865289}
 --- !u!114 &800911284727499746
@@ -9272,7 +9273,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3335943800848497969}
   m_LocalRotation: {x: 0.000000014901161, y: -0.00000005892244, z: 0.000000008992205, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.0000019073493, y: -0.0000011378286, z: -0.000003641052}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3896869842298420547}
@@ -19450,7 +19451,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8591359076950674518}
   m_LocalRotation: {x: -0, y: -0.000000029461201, z: 0.000000004496098, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.0000019073493, y: -0.0000011378286, z: -0.000003641052}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1613299443490802010}
