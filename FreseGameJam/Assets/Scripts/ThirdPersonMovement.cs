@@ -315,7 +315,6 @@ public class ThirdPersonMovement : MonoBehaviour
             //Jump
             if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && isCoyoteGrounded)
             {
-                Debug.Log("jump");
                 controller.stepOffset = 0;
                 jumping = true; //animation
                 //controller.slopeLimit = 100f;
