@@ -59,7 +59,7 @@ public class ButtonFunction : MonoBehaviour
         _defaultMouseSensitivitySettings = GameObject.Find("GameManager").GetComponent<GameManager>().defaultMouseSensitivitySettings;
 
         // Get CloseQuaterCamera-script reference:
-        _closeQuarterCamera = GameObject.Find("Third Person Player").GetComponent<CloseQuarterCamera>();
+        _closeQuarterCamera = GameObject.Find("Third Person Player_GameLevel_1").GetComponent<CloseQuarterCamera>();
     }
 
     private void Update()

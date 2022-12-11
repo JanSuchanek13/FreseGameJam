@@ -26,19 +26,19 @@ public class BackgroundSoundPlayer : MonoBehaviour
         {
             _randomTrack = arrayOfBackgroundMusic[Random.Range(0, arrayOfBackgroundMusic.Length)];
             float _lengthOfTrack = _randomTrack.clip.length;
-            Debug.Log("this song is " + _lengthOfTrack + " seconds long!");
+            //Debug.Log("this song is " + _lengthOfTrack + " seconds long!");
             Invoke("PlayNextTrack", _lengthOfTrack);
-            Debug.Log("this songs name is " + _randomTrack.clip.name);
+            //Debug.Log("this songs name is " + _randomTrack.clip.name);
             _randomTrack.Play();
             _activeTracK = _randomTrack;
         }else // play a specific track first:
         {
-            Debug.Log("this track: \"" + playThisSongFirst + "\" was explicetly chosen to be the first track");
+            //Debug.Log("this track: \"" + playThisSongFirst + "\" was explicetly chosen to be the first track");
             playThisSongFirst.Play();
             _activeTracK = playThisSongFirst;
             if (playOnlyTheSameSongTheWholeTime)
             {
-                Debug.Log("this track: " + playThisSongFirst + " is on going to loop the whole time");
+                //Debug.Log("this track: " + playThisSongFirst + " is on going to loop the whole time");
                 Invoke("PlayTrack", playThisSongFirst.clip.length); // loop this song indefinitely:
             }else
             {
