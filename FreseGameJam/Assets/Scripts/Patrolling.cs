@@ -19,21 +19,28 @@ public class Patrolling : MonoBehaviour
 
     void Start()
     {
-        _boatPosition = PlayerPrefs.GetInt("_boatPosition"); // update _boatPosition:
-        if (PlayerPrefs.GetInt("_boatPosition") != 0)
+        // if boat had reached final destination in a prior run, do not update the target position any further:
+        if (PlayerPrefs.GetInt("_reachedEndOfTravel") == 0)
         {
-            destPoint = PlayerPrefs.GetInt("_boatPosition") + 1;
-            this.transform.position = points[PlayerPrefs.GetInt("_boatPosition")].transform.position;
+            _boatPosition = PlayerPrefs.GetInt("_boatPosition"); // update _boatPosition:
+            if (PlayerPrefs.GetInt("_boatPosition") != 0)
+            {
+                destPoint = PlayerPrefs.GetInt("_boatPosition") + 1;
+                this.transform.position = points[PlayerPrefs.GetInt("_boatPosition")].transform.position;
+            }
+
+            agent = GetComponent<NavMeshAgent>();
+
+            // Disabling auto-braking allows for continuous movement
+            // between points (ie, the agent doesn't slow down as it
+            // approaches a destination point).
+            agent.autoBraking = false;
+            _defaultSpeed = agent.speed;
+            GotoNextPoint();
+        }else
+        {
+            ReachedTarget = true;   
         }
-
-        agent = GetComponent<NavMeshAgent>();
-
-        // Disabling auto-braking allows for continuous movement
-        // between points (ie, the agent doesn't slow down as it
-        // approaches a destination point).
-        agent.autoBraking = false;
-        _defaultSpeed = agent.speed;
-        GotoNextPoint();
     }
 
     // save if cutscene has played:
@@ -90,6 +97,10 @@ public class Patrolling : MonoBehaviour
         if (other.CompareTag("Destination") && !ReachedTarget)
         {
             ReachedTarget = true;
+
+            // get rid of bug about having waypoints out of array:
+            PlayerPrefs.SetInt("_reachedEndOfTravel", 1);
+
             //Debug.Log("I reached my destination!!!!");
             //_turnOffElements.SetActive(false);
             _turnOnElements.SetActive(true);

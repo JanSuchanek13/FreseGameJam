@@ -91,11 +91,14 @@ public class BreakingObj : MonoBehaviour
         {
             foreach (Transform child in transform)
             {
-                child.GetComponent<Rigidbody>().isKinematic = true;
-                int i = 0;
-                child.transform.position = resetPosChildren[i];
-                child.transform.rotation = Quaternion.Euler(resetPosChildren[i]);
-                i++;
+                if (child.GetComponent<Rigidbody>()) // this allows to search through children who may NOT have a Rigidbody component
+                {
+                    child.GetComponent<Rigidbody>().isKinematic = true;
+                    int i = 0;
+                    child.transform.position = resetPosChildren[i];
+                    child.transform.rotation = Quaternion.Euler(resetPosChildren[i]);
+                    i++;
+                }
             }
         }else
         {
