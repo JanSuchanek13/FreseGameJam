@@ -52,7 +52,7 @@ public class ButtonFunction : MonoBehaviour
         _currentLevel = SceneManager.GetActiveScene().buildIndex;
 
         // add time of last run:
-        _lastTimer[(_currentLevel - 2)] = PlayerPrefs.GetFloat("lastTimer" + (_currentLevel - 2));
+        _lastTimer[0] = PlayerPrefs.GetFloat("lastTimer" + 0.0f); //(_currentLevel - 2) & (_currentLevel - 2) at end
 
         // Get the default settings for the game from the Game Manager:
         _defaultVolumeSettings = GameObject.Find("GameManager").GetComponent<GameManager>().defaultVolumeSettings;

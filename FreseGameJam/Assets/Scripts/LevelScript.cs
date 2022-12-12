@@ -51,7 +51,7 @@ public class LevelScript : MonoBehaviour
         currentLevel = SceneManager.GetActiveScene().buildIndex;
          
         // add time of last run:
-        timer[(currentLevel - 2)] = PlayerPrefs.GetFloat("timer" + (currentLevel - 2));
+        timer[0] = PlayerPrefs.GetFloat("timer" + 0.0f); // (currentLevel - 2) & (currentLevel - 2) at end
 
         // determine time for fading:
         //_fadeIntervalls = (_timeBeforeLoadingNewLevel * 0.3f) / 100.0f; // this works too, but does it need to depend on the total time?! I think not!
@@ -65,7 +65,7 @@ public class LevelScript : MonoBehaviour
         // save time per frame
         if (!_endZoneReached)
         {
-            PlayerPrefs.SetFloat("timer" + (currentLevel - 2), Time.timeSinceLevelLoad + timer[(currentLevel - 2)]);
+            PlayerPrefs.SetFloat("timer" + (currentLevel - 2), Time.timeSinceLevelLoad + timer[0]); //(currentLevel - 2)
         }
     }
 

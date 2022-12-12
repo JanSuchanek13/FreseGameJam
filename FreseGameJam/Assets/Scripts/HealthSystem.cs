@@ -54,7 +54,7 @@ public class HealthSystem : MonoBehaviour
         
 
         
-        if (Checkpoints[lastCheckpoint[(currentLevel - 2)]] != new Vector3(0, 0, 0))
+        if (Checkpoints[lastCheckpoint[0]] != new Vector3(0, 0, 0)) // this was "currentLevel - 2"?
         {
             //Debug.Log("changed Pos");
             gameObject.transform.position = new Vector3(0, -3, 0) + Checkpoints[PlayerPrefs.GetInt("lastCheckpoint" + (currentLevel - 2))];
@@ -77,10 +77,10 @@ public class HealthSystem : MonoBehaviour
             {
                 if(RespawnPoint == Checkpoints[i]) //test which checkpoint we have just gone through
                 {
-                    lastCheckpoint[(currentLevel - 2)] = i;
+                    lastCheckpoint[0] = i; // (_currentLevel - 2)
                 }
             }
-            PlayerPrefs.SetInt("lastCheckpoint" + (currentLevel - 2), lastCheckpoint[(currentLevel - 2)]);
+            PlayerPrefs.SetInt("lastCheckpoint" + 0, lastCheckpoint[0]); // (_currentLevel - 2) & (_currentLevel - 2) at end
             //Debug.Log(PlayerPrefs.GetInt("lastCheckpoint" + (currentLevel - 2)));
 
             other.gameObject.transform.GetChild(0).gameObject.SetActive(true);
