@@ -80,7 +80,7 @@ public class StateController : MonoBehaviour
             availableCrane = true;
             PickUp_Sound2.enabled = true;
             Destroy(other.gameObject, .3f);
-            PlayerPrefs.SetInt("State" + (currentLevel - 2), 1);
+            PlayerPrefs.SetInt("State" + 0, 1);
         }
         if (other.gameObject.CompareTag("Frog"))
         {
@@ -88,7 +88,7 @@ public class StateController : MonoBehaviour
             availableFrog = true;
             PickUp_Sound2.enabled = true;
             Destroy(other.gameObject, .3f);
-            PlayerPrefs.SetInt("State" + (currentLevel - 2), 5);
+            PlayerPrefs.SetInt("State" + 0, 5);
         }
 
         if (other.gameObject.CompareTag("Capricorn"))
@@ -97,7 +97,7 @@ public class StateController : MonoBehaviour
             availableCapricorn = true;
             PickUp_Sound2.enabled = true;
             Destroy(other.gameObject, .3f);
-            PlayerPrefs.SetInt("State" + (currentLevel - 2), 2);
+            PlayerPrefs.SetInt("State" + 0, 2);
         }
         if (other.gameObject.CompareTag("Lama"))
         {
@@ -105,7 +105,7 @@ public class StateController : MonoBehaviour
             availableLama = true;
             PickUp_Sound2.enabled = true;
             Destroy(other.gameObject, .3f);
-            PlayerPrefs.SetInt("State" + (currentLevel - 2), 3);
+            PlayerPrefs.SetInt("State" + 0, 3);
         }
         if (other.gameObject.CompareTag("Jesus"))
         {
@@ -113,7 +113,7 @@ public class StateController : MonoBehaviour
             availableJesus = true;
             PickUp_Sound2.enabled = true;
             Destroy(other.gameObject, .3f);
-            PlayerPrefs.SetInt("State" + (currentLevel - 2), 4);
+            PlayerPrefs.SetInt("State" + 0, 4);
         }
         if (other.gameObject.CompareTag("Crown"))
         {
@@ -121,8 +121,8 @@ public class StateController : MonoBehaviour
 
             // for Level Stats
             currentLevel = SceneManager.GetActiveScene().buildIndex;
-            crowns[(currentLevel - 2)] = PlayerPrefs.GetInt("crowns" + (currentLevel-2));
-            PlayerPrefs.SetInt("crowns"+ (currentLevel - 2), crowns[(currentLevel - 2)] + 1);
+            crowns[0] = PlayerPrefs.GetInt("crowns" + 0);
+            PlayerPrefs.SetInt("crowns"+ 0, crowns[0] + 1);
             Debug.Log(PlayerPrefs.GetInt("crowns"));
 
             PickUp_Sound.Play(0);
@@ -153,7 +153,7 @@ public class StateController : MonoBehaviour
         //PlayerPrefs.SetInt("State" + currentLevel, 0);
         // activate the available States
         bool[] availableStates = new bool[] { availableCrane, availableCapricorn, availableLama, availableJesus, availableFrog };
-        StateNumber = PlayerPrefs.GetInt("State" + (currentLevel - 2));
+        StateNumber = PlayerPrefs.GetInt("State" + 0);
         for (int i = 0; i < StateNumber; i++)
         {
             switch (i+1)

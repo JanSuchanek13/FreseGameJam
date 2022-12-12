@@ -124,6 +124,8 @@ public class Level_Manager : MonoBehaviour
     {
         SceneManager.LoadScene(levelIndex);
         PlayerPrefs.SetInt("crowns" + (levelIndex - 2), 0);
+
+        PlayerPrefs.SetInt("_reachedEndOfTravel", 0);
     }
 
     public void ResetLevel()
@@ -175,7 +177,7 @@ public class Level_Manager : MonoBehaviour
 
     public void ContinueLevel()
     {
-        SceneManager.LoadScene(levelIsUnlocked + 1);
+        SceneManager.LoadScene(levelIsUnlocked);
 
         //Felix added for juice:
         //GetComponent<PlayWasPressed>().ImmersePlayer(1);

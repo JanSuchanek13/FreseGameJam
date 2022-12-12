@@ -104,7 +104,7 @@ public class PlayWasPressed : MonoBehaviour
     }
     void StartNewRound()
     {
-        GetComponent<Level_Manager>().LoadLevel(2);
+        GetComponent<Level_Manager>().LoadLevel(1);
     }
     void ContinueOldRound()
     {
