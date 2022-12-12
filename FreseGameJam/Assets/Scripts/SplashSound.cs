@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class SplashSound : MonoBehaviour
 {
+    /*
     #region variables:
     [SerializeField] AudioSource[] arrayOfSplashSounds;
     #endregion
@@ -21,5 +22,5 @@ public class SplashSound : MonoBehaviour
     private void Reset()
     {
         GetComponent<Collider>().enabled = true;
-    }
+    }*/
 }

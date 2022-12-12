@@ -69,7 +69,10 @@ public class BreakingObj : MonoBehaviour
         {
             foreach(Transform child in transform)
             {
-                child.GetComponent<Rigidbody>().isKinematic = false;
+                if (child.GetComponent<Rigidbody>()) // this allows to search through children who may NOT have a Rigidbody component
+                {
+                    child.GetComponent<Rigidbody>().isKinematic = false;
+                }
             }
         }else
         {
