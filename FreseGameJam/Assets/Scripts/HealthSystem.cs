@@ -57,7 +57,7 @@ public class HealthSystem : MonoBehaviour
         if (Checkpoints[lastCheckpoint[0]] != new Vector3(0, 0, 0)) // this was "currentLevel - 2"?
         {
             //Debug.Log("changed Pos");
-            gameObject.transform.position = new Vector3(0, -3, 0) + Checkpoints[PlayerPrefs.GetInt("lastCheckpoint" + (currentLevel - 2))];
+            gameObject.transform.position = new Vector3(0, -3, 0) + Checkpoints[PlayerPrefs.GetInt("lastCheckpoint" + 0)];// (currentLevel - 2)
         }
     }
 
@@ -104,8 +104,8 @@ public class HealthSystem : MonoBehaviour
         {
             inUse = true;
             //count deaths and save them
-            deaths[(currentLevel - 2)] = PlayerPrefs.GetInt("deaths" + (currentLevel - 2));
-            PlayerPrefs.SetInt("deaths" + (currentLevel - 2), deaths[(currentLevel - 2)] + 1);
+            deaths[0] = PlayerPrefs.GetInt("deaths" + 0); // (currentLevel - 2) & (currentLevel - 2) in end
+            PlayerPrefs.SetInt("deaths" + 0, deaths[0] + 1);// (currentLevel - 2) & (currentLevel - 2) in end
             //Debug.Log(PlayerPrefs.GetInt("deaths" + (currentLevel - 2)));
 
             //stop Riverboat
