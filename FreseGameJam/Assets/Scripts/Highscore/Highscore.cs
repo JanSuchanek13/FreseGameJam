@@ -93,23 +93,23 @@ public class Highscore : MonoBehaviour
     public void CompareHighscore()
     {
         // for Highscore Time
-        if (PlayerPrefs.GetFloat("timer" + (currentLevel - 2)) < PlayerPrefs.GetFloat("HTtimer" + (currentLevel - 2)) || PlayerPrefs.GetFloat("HTtimer" + (currentLevel - 2)) == 0)
+        if (PlayerPrefs.GetFloat("timer" + 0) < PlayerPrefs.GetFloat("HTtimer" + 0) || PlayerPrefs.GetFloat("HTtimer" + 0) == 0)
         {
             
 
-            PlayerPrefs.SetFloat("HTtimer" + (currentLevel - 2), PlayerPrefs.GetFloat("timer" + (currentLevel - 2)));
-            PlayerPrefs.SetInt("HTcrowns" + (currentLevel - 2), PlayerPrefs.GetInt("crowns" + (currentLevel - 2)));
-            PlayerPrefs.SetInt("HTdeaths" + (currentLevel - 2), PlayerPrefs.GetInt("deaths" + (currentLevel - 2)));
+            PlayerPrefs.SetFloat("HTtimer" + 0, PlayerPrefs.GetFloat("timer" + 0));
+            PlayerPrefs.SetInt("HTcrowns" + 0, PlayerPrefs.GetInt("crowns" + 0));
+            PlayerPrefs.SetInt("HTdeaths" + 0, PlayerPrefs.GetInt("deaths" + 0));
         }
 
         //for Highscore Crowns
-        if (PlayerPrefs.GetInt("crowns" + (currentLevel - 2)) > PlayerPrefs.GetInt("HCcrowns" + (currentLevel - 2)))
+        if (PlayerPrefs.GetInt("crowns" + 0) > PlayerPrefs.GetInt("HCcrowns" + 0))
         {
 
 
-            PlayerPrefs.SetFloat("HCtimer" + (currentLevel - 2), PlayerPrefs.GetFloat("timer" + (currentLevel - 2)));
-            PlayerPrefs.SetInt("HCcrowns" + (currentLevel - 2), PlayerPrefs.GetInt("crowns" + (currentLevel - 2)));
-            PlayerPrefs.SetInt("HCdeaths" + (currentLevel - 2), PlayerPrefs.GetInt("deaths" + (currentLevel - 2)));
+            PlayerPrefs.SetFloat("HCtimer" + 0, PlayerPrefs.GetFloat("timer" + 0));
+            PlayerPrefs.SetInt("HCcrowns" + 0, PlayerPrefs.GetInt("crowns" + 0));
+            PlayerPrefs.SetInt("HCdeaths" + 0, PlayerPrefs.GetInt("deaths" + 0));
         }
     }
 }

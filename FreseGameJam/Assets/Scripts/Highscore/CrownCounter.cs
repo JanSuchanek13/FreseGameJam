@@ -9,7 +9,7 @@ public class CrownCounter : MonoBehaviour
     [SerializeField] TextMeshProUGUI CrownCounters;
     [SerializeField] TextMeshProUGUI TimeCounter;
     [SerializeField] TextMeshProUGUI DeathCounters;
-    [SerializeField] int level;
+    [SerializeField] int level = 0;
     int crowns = 0;
     
 
