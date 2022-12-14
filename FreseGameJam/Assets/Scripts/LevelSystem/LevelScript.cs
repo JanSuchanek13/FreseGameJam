@@ -8,17 +8,19 @@ using TMPro;
 
 public class LevelScript : MonoBehaviour
 {
-    /// <summary>
-    /// This Script handles the transition between Levels.
-    /// </summary>
+    // This Script handles the transition between Levels.
 
-    // public variables:
+    // accessible variables:
     [Header("Level Transition Settings:")]
     [SerializeField] Highscore _highscore;
     [SerializeField] float _timeBeforeLoadingNewLevel = 5.0f;
+    [SerializeField] AudioSource _choirSound;
+    [SerializeField] AudioSource _victorySound;
 
+    // public variables:
     public Animator transition;
     public int nextLevel = 3;
+
     [SerializeField] Image _fadeToBlackBlende;
     [SerializeField] GameObject _thankYouForPlayingOverlay;
 
@@ -26,23 +28,17 @@ public class LevelScript : MonoBehaviour
     [SerializeField] TextMeshProUGUI _statDisplay_Deaths;
     [SerializeField] TextMeshProUGUI _statDisplay_Crowns;
     [SerializeField] int level;
-    bool _endZoneReached = false;
-
 
     // local variables:
     float[] timer = new float[3];
     float[] lastTimer = new float[3];
     int currentLevel;
+    bool _endZoneReached = false;
     GameObject _gameManager;
-
 
     // variables for fading screen:
     float _fadeIntervalls;
     private float _increaceColorAlphaIncrement = 255.0f / 100.0f; // maximum color value devided into 100 increments.
-    //private float _color_R_component;
-    //private float _color_G_component;
-    //private float _color_B_component;
-    //private float _color_A_component;
 
 
     private void Start()
@@ -82,8 +78,13 @@ public class LevelScript : MonoBehaviour
                 }
                 // stop music & play success-music:
                 _gameManager.GetComponent<BackgroundSoundPlayer>().PauseMusic(); // turn off background music
-                GameObject.Find("AudioSource_Victory_1").GetComponent<AudioSource>().Play();
-                GameObject.Find("AudioSource_ChoireHymn_1").GetComponent<AudioSource>().Play();
+
+                // changed these "finds" to serialized fields to manually controll end-sounds:
+                //GameObject.Find("AudioSource_Victory_1").GetComponent<AudioSource>().Play();
+                //GameObject.Find("AudioSource_ChoireHymn_1").GetComponent<AudioSource>().Play();
+                _choirSound.Play();
+                _victorySound.Play();
+
                 GameObject.Find("UI_Crown_Counter").SetActive(false); // turn off the regular, ingame crown-counter and icon
 
                 //Debug.Log("Level endzone reached!");
