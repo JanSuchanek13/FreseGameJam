@@ -50,8 +50,14 @@ Crash Sound Effect from pixabay.com
 Crash02 Sound Effect from pixabay.com
 Crash03 Sound Effect from pixabay.com
 Origamies Sound Effect from pixabay.com
-
-
+WindChime1 - perrydolia from pixabay.com
+Bells 1 - gevaroy from pixabay.com
+Chime sound - jgreer from pixabay.com
+Chinese Fanfare - Nick-Nac from pixabay.com
+Gong sabi 1- Veiler from pixabay.com
+yappynese harp 120bpm- yapppy from pixabay.com
+Koto Hit - Mondschein90 from pixabay.com
+Small Gong Soft Hit RAW- cabled mess from pixabay.com
 
 
 
