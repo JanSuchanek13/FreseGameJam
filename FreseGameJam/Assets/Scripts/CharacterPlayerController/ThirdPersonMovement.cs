@@ -60,6 +60,9 @@ public class ThirdPersonMovement : MonoBehaviour
     public float coyoteTimeDelay = 0.8f;
     public bool isCoyoteGrounded;
 
+    //hold for gliding
+    [Header("hold for Gliding:")]
+    public bool holdForGliding;
 
 
     //for capricorn Dash
@@ -198,7 +201,6 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             //if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && !isGrounded && !(Physics.CheckSphere(groundCheck.position, groundDistance * 7, groundMask, QueryTriggerInteraction.Ignore)) && !GetComponent<StateController>().isChanging) // double jump change you into crane
             if ((playerInput.CharacterControls.Jump.triggered) && !isGrounded && !isCoyoteGrounded && !CheckForGroundContact() && !GetComponent<StateController>().isChanging) // double jump change you into crane
-
             {
 
                 if (stateController.availableCrane)
@@ -213,6 +215,17 @@ public class ThirdPersonMovement : MonoBehaviour
                     StartCoroutine(GetComponent<StateController>().changeModell(2));
                 }
 
+            }
+            if (holdForGliding && playerInput.CharacterControls.Jump.ReadValue<float>() == 0 && stateController.crane)
+            {
+                GetComponent<StateController>().isChanging = true;
+                stateController.ball = false;
+                stateController.human = true;
+                stateController.frog = false;
+                stateController.crane = false;
+                stateController.capricorn = false;
+                stateController.lama = false;
+                StartCoroutine(GetComponent<StateController>().changeModell(1));
             }
         }
     }
@@ -384,11 +397,24 @@ public class ThirdPersonMovement : MonoBehaviour
                 controller.slopeLimit = 0f; //low climp
                 velocity.y = Mathf.Sqrt(jumpHeight / 150 * -2f * gravity);  //low jump
             }
-            else if(playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && !isGrounded && !GetComponent<StateController>().isChanging)
+            else if(playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && !isGrounded && !GetComponent<StateController>().isChanging && !holdForGliding)
             {
-                //change back to human
+                //change back to human by pressing jump mid air
                 GetComponent<StateController>().isChanging = true;
                 
+                stateController.ball = false;
+                stateController.human = true;
+                stateController.frog = false;
+                stateController.crane = false;
+                stateController.capricorn = false;
+                stateController.lama = false;
+                StartCoroutine(GetComponent<StateController>().changeModell(1));
+            }
+            if (holdForGliding && playerInput.CharacterControls.Jump.ReadValue<float>() == 0)
+            {
+                //only if hold For gliding is true
+                //change back to human by releasing jump button mid air
+                GetComponent<StateController>().isChanging = true;
                 stateController.ball = false;
                 stateController.human = true;
                 stateController.frog = false;
