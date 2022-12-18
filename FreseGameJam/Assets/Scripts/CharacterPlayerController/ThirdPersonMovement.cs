@@ -70,6 +70,8 @@ public class ThirdPersonMovement : MonoBehaviour
     public float chargeTime = 0.8f;
     public float dashWidth = 4;
     public float dashSpeed = 25;
+    public AudioSource buildingUp_Sound;
+    public AudioSource dash_Sound;
 
     //for Lama Shoot
     [Header("Lama Shoot Stats:")]
@@ -609,8 +611,10 @@ public class ThirdPersonMovement : MonoBehaviour
     /// <returns></returns>
     IEnumerator CapricornDash()
     {
-        
+        buildingUp_Sound.Play();
+        dash_Sound.Play();
         yield return new WaitForSeconds(chargeTime);
+        
         //speed = capricornSpeed;
         GetComponent<Rigidbody>();
         for (int i = 0; i < dashWidth *5; i++)
