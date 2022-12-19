@@ -50,6 +50,12 @@ public class ThirdPersonMovement : MonoBehaviour
     public bool jumping;
     public bool action;
 
+    //for VFX
+    public ParticleSystem dash;
+    public ParticleSystem dash02;
+    public ParticleSystem buildingup;
+    
+
     //cooldown
     bool isInCooldown;
     public float cooldownTime = 0.5f;
@@ -612,8 +618,13 @@ public class ThirdPersonMovement : MonoBehaviour
     IEnumerator CapricornDash()
     {
         buildingUp_Sound.Play();
+        buildingup.Play();
+
         dash_Sound.Play();
+
         yield return new WaitForSeconds(chargeTime);
+        dash.Play();
+        dash02.Play();
         
         //speed = capricornSpeed;
         GetComponent<Rigidbody>();
