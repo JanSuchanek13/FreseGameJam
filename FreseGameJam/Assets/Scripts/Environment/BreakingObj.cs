@@ -43,7 +43,7 @@ public class BreakingObj : MonoBehaviour
         {
             if (collision.gameObject.tag == "Player")
             {  
-                if (collision.gameObject.GetComponent<StateController>().capricorn)
+                if (collision.gameObject.GetComponent<StateController>().capricorn && collision.gameObject.GetComponent<ThirdPersonMovement>().inDash)
                 { 
                     Invoke("Break", timeTillBreak);
                 }

@@ -76,8 +76,10 @@ public class ThirdPersonMovement : MonoBehaviour
     public float chargeTime = 0.8f;
     public float dashWidth = 4;
     public float dashSpeed = 25;
+    public bool inDash;
     public AudioSource buildingUp_Sound;
     public AudioSource dash_Sound;
+    public AudioSource dashCrash_Sound;
 
     //for Lama Shoot
     [Header("Lama Shoot Stats:")]
@@ -464,7 +466,7 @@ public class ThirdPersonMovement : MonoBehaviour
             {
                 action = true;
                 Invoke("EndOfAction", 1.2f);
-                Debug.Log("fire");
+                //Debug.Log("fire");
                 StartCoroutine("CapricornDash");
                 isInCooldown = true;
                 StartCoroutine("Cooldown");
@@ -623,6 +625,7 @@ public class ThirdPersonMovement : MonoBehaviour
         dash_Sound.Play();
 
         yield return new WaitForSeconds(chargeTime);
+        inDash = true;
         dash.Play();
         dash02.Play();
         
@@ -645,14 +648,17 @@ public class ThirdPersonMovement : MonoBehaviour
             foreach (Collider j in allObjects)
             {
                 Rigidbody rig = j.GetComponent<Rigidbody>();
-                if (rig != null)
+                if (rig != null && rig.gameObject != this.gameObject)
                 {
+                    Debug.Log(rig.gameObject.name);
                     rig.AddExplosionForce(1, transform.position, 1, 1f, ForceMode.Impulse);
+                    dashCrash_Sound.Play();
                 }
             }
         }
         
         speed = 2;
+        inDash = false;
     }
 
     void LamaShoot()
