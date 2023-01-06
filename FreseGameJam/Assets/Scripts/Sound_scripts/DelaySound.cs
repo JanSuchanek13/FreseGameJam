@@ -84,6 +84,8 @@ public class DelaySound : MonoBehaviour
         _thisCutscene_Nr++; // when using multiple focus points make sure that the next stop has a +2 increase of "_thisCutscene_Nr"
         _playerCharacter.GetComponent<FocusPlayerViewOnObject>().waitLonger = false; // enables players to move after chained cutscenes
         PlaySound();
+
+
         //_lookAtThisObjectAfterwards.GetComponent<DelaySound>().PlaySound();
         //_playerCharacter.GetComponent<FocusPlayerViewOnObject>().FocusTarget(_lookAtThisObjectAfterwards, _lookAtThisForThisLong, _thisCutscene_Nr);
     }

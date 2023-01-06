@@ -167,6 +167,75 @@ public class FocusPlayerViewOnObject : MonoBehaviour
                 }
                 break;
 
+            case 4:
+                if (PlayerPrefs.GetInt("_cutScene_4_HasAlreadyPlayed") == 0)
+                {
+                    _focusTargetObject = _focusObject;
+                    if (!waitLonger)
+                    {
+                        StartCoroutine(TurnOffFocus(_lookAtThisForThisLong));
+                    }
+                    _playerCharacter.transform.LookAt(_focusTargetObject.transform.position); // turn player towards target GO:
+                    _playerCharacter.GetComponent<ThirdPersonMovement>().enabled = false;
+                    _turnPlayerTowardsObject = true;
+
+                    focusCameraRig.GetComponent<CinemachineFreeLook>().Follow = _focusTargetObject.transform; // turn camera:
+                    focusCameraRig.GetComponent<CinemachineFreeLook>().LookAt = _focusTargetObject.transform; // turn camera:
+                    focusCameraRig.SetActive(true);
+
+                    _humanAnimator.enabled = false;
+
+                    // save if cutscene has played:
+                    PlayerPrefs.SetInt("_cutScene_4_HasAlreadyPlayed", 1);
+                }
+                break;
+            
+            case 5:
+                if (PlayerPrefs.GetInt("_cutScene_5_HasAlreadyPlayed") == 0)
+                {
+                    _focusTargetObject = _focusObject;
+                    if (!waitLonger)
+                    {
+                        StartCoroutine(TurnOffFocus(_lookAtThisForThisLong));
+                    }
+                    _playerCharacter.transform.LookAt(_focusTargetObject.transform.position); // turn player towards target GO:
+                    _playerCharacter.GetComponent<ThirdPersonMovement>().enabled = false;
+                    _turnPlayerTowardsObject = true;
+
+                    focusCameraRig.GetComponent<CinemachineFreeLook>().Follow = _focusTargetObject.transform; // turn camera:
+                    focusCameraRig.GetComponent<CinemachineFreeLook>().LookAt = _focusTargetObject.transform; // turn camera:
+                    focusCameraRig.SetActive(true);
+
+                    _humanAnimator.enabled = false;
+
+                    // save if cutscene has played:
+                    PlayerPrefs.SetInt("_cutScene_5_HasAlreadyPlayed", 1);
+                }
+                break;
+
+            case 6:
+                if (PlayerPrefs.GetInt("_cutScene_6_HasAlreadyPlayed") == 0)
+                {
+                    _focusTargetObject = _focusObject;
+                    if (!waitLonger)
+                    {
+                        StartCoroutine(TurnOffFocus(_lookAtThisForThisLong));
+                    }
+                    _playerCharacter.transform.LookAt(_focusTargetObject.transform.position); // turn player towards target GO:
+                    _playerCharacter.GetComponent<ThirdPersonMovement>().enabled = false;
+                    _turnPlayerTowardsObject = true;
+
+                    focusCameraRig.GetComponent<CinemachineFreeLook>().Follow = _focusTargetObject.transform; // turn camera:
+                    focusCameraRig.GetComponent<CinemachineFreeLook>().LookAt = _focusTargetObject.transform; // turn camera:
+                    focusCameraRig.SetActive(true);
+
+                    _humanAnimator.enabled = false;
+
+                    // save if cutscene has played:
+                    PlayerPrefs.SetInt("_cutScene_6_HasAlreadyPlayed", 1);
+                }
+                break;
+
         }
         /*
         if(PlayerPrefs.GetInt("_cutSceneHasAlreadyPlayed") == 0)
