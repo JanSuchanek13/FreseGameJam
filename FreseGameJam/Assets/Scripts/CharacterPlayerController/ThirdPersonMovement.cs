@@ -76,6 +76,8 @@ public class ThirdPersonMovement : MonoBehaviour
     public float chargeTime = 0.8f;
     public float dashWidth = 4;
     public float dashSpeed = 25;
+    public Transform dashCheck;
+    public LayerMask dashMask;
     public bool inDash;
     public AudioSource buildingUp_Sound;
     public AudioSource dash_Sound;
@@ -633,6 +635,12 @@ public class ThirdPersonMovement : MonoBehaviour
         GetComponent<Rigidbody>();
         for (int i = 0; i < dashWidth *5; i++)
         {
+            if(Physics.CheckSphere(dashCheck.position, 0.3f, dashMask)) //if we hit a Ground obj we stop the dash
+            {
+                dashCrash_Sound.Play();
+                //Debug.Log("stopped");
+                yield break;
+            }
             speed = dashSpeed;
             float horizontal = playerInput.CharacterControls.Move.ReadValue<Vector2>().x;
             float vertical = playerInput.CharacterControls.Move.ReadValue<Vector2>().y;
@@ -650,7 +658,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 Rigidbody rig = j.GetComponent<Rigidbody>();
                 if (rig != null && rig.gameObject != this.gameObject)
                 {
-                    Debug.Log(rig.gameObject.name);
+                    //Debug.Log(rig.gameObject.name);
                     rig.AddExplosionForce(1, transform.position, 1, 1f, ForceMode.Impulse);
                     dashCrash_Sound.Play();
                 }
