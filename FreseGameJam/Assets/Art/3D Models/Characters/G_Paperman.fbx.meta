@@ -1,15 +1,35 @@
 fileFormatVersion: 2
-guid: bbc7036b923bcef43bbb9e02113a9bf5
+guid: 07e0c22dabc0c8648bc3e3694c2940c9
 ModelImporter:
-  serializedVersion: 20200
+  serializedVersion: 21300
   internalIDToNameTable:
   - first:
-      74: -342727157206587208
-    second: Paperpam-RIG|Run
+      74: -5810315094330931245
+    second: Paperman|Falling
   - first:
-      74: 1481148587017107817
-    second: Paperpam-RIG|T_Pose
-  externalObjects: {}
+      74: -6436646766585792753
+    second: Paperman|Idle
+  - first:
+      74: -3649882375688410380
+    second: Paperman|Idle02
+  - first:
+      74: 763256397190031017
+    second: Paperman|Jump
+  - first:
+      74: -6666214045666322385
+    second: Paperman|Run
+  - first:
+      74: -3075033309946321726
+    second: Paperman|T_Pose
+  - first:
+      74: 5424197992387532997
+    second: Paperman|Winken
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.005
+    second: {fileID: 2100000, guid: ff8c1e11753947d4c8267f1bfdcc2ee7, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -20,6 +40,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 1
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -49,6 +70,7 @@ ModelImporter:
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    nodeNameCollisionStrategy: 1
     fileIdsGeneration: 2
     swapUVChannels: 0
     generateSecondaryUV: 0
@@ -60,6 +82,7 @@ ModelImporter:
     skinWeightsMode: 0
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
+    optimizeBones: 1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
@@ -102,6 +125,7 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0
   userData: 
   assetBundleName: 
