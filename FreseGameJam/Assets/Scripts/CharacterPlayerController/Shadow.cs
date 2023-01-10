@@ -22,7 +22,7 @@ public class Shadow : MonoBehaviour
         RaycastHit hit;
 
         // Führe den Raycast aus und speichere das Ergebnis in der hit-Variable
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask, QueryTriggerInteraction.Ignore))
         {
             // Wenn der Raycast einen Treffer hat, setze die Y-Position der Schattenplane auf den Y-Wert des Treffers
             shadowPlane.transform.position = new Vector3(player.transform.position.x, hit.point.y + 0.01f, player.transform.position.z);
@@ -34,6 +34,9 @@ public class Shadow : MonoBehaviour
             Vector3 normal = hit.normal;
 
             shadowPlane.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
+
+
+
 
             /*
 
