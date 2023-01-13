@@ -75,7 +75,7 @@ public class ThirdPersonMovement : MonoBehaviour
     [Header("Capricorn Dash Stats:")]
     public float chargeTime = 0.8f;
     public float dashWidth = 4;
-    public float dashSpeed = 25;
+    public float dashSpeed = 20;
     public Transform dashCheck;
     public LayerMask dashMask;
     public bool inDash;
@@ -648,7 +648,7 @@ public class ThirdPersonMovement : MonoBehaviour
             float targetAngle = cam.eulerAngles.y;
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDir.normalized * (speed * 3) * Time.deltaTime);
-            yield return new WaitForSeconds(.005f);
+            yield return new WaitForSeconds(.001f);
             //Debug.Log("lauf");
 
             //extra push power
