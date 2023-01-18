@@ -11,7 +11,8 @@ public class Level_Manager : MonoBehaviour
     public int numberOfLevels = 1; //delete this if we have 3 Level
     [SerializeField] Highscore highscore;
 
-    int levelIsUnlocked;
+    public int levelIsUnlocked;
+    public Button continueButton;
     public float[] timer = new float[3];
     
     public int[] crowns = new int[3];
@@ -51,7 +52,10 @@ public class Level_Manager : MonoBehaviour
             buttons[i].interactable = true;
         }
 
-
+        if (levelIsUnlocked > 1)
+        {
+            continueButton.interactable = false;
+        }
 
         //crown Counter
         int currentLevel = SceneManager.GetActiveScene().buildIndex;

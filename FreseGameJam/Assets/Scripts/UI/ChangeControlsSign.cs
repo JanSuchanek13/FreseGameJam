@@ -13,6 +13,8 @@ public class ChangeControlsSign : MonoBehaviour
     public int controlSettings = 0;
     void Awake()
     {
+        controlSettings = PlayerPrefs.GetInt("controlsSettings");
+
         switch (controlSettings)
         {
             case 0:
