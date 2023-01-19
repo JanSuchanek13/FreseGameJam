@@ -81,7 +81,7 @@ public class FocusPlayerViewOnObject : MonoBehaviour
                 }
                 break;
 
-            case 1: // cutscene at bird
+            case 1: // cutscene for instructions (double)
                 if (PlayerPrefs.GetInt("_cutScene_1_HasAlreadyPlayed") == 0)
                 {
                     //_gameManager.GetComponent<BackgroundSoundPlayer>().PauseMusic();
@@ -210,6 +210,9 @@ public class FocusPlayerViewOnObject : MonoBehaviour
 
                     // save if cutscene has played:
                     PlayerPrefs.SetInt("_cutScene_5_HasAlreadyPlayed", 1);
+
+                    Debug.Log("most recently looked at cutscene is nr: " + 5);
+
                 }
                 break;
 
@@ -233,8 +236,13 @@ public class FocusPlayerViewOnObject : MonoBehaviour
 
                     // save if cutscene has played:
                     PlayerPrefs.SetInt("_cutScene_6_HasAlreadyPlayed", 1);
+                    Debug.Log("most recently looked at cutscene is nr: " + 6);
+
                 }
                 break;
+
+                default:
+                return;
 
         }
         /*
@@ -290,6 +298,8 @@ public class FocusPlayerViewOnObject : MonoBehaviour
         
         // unpause background track:
         _gameManager.GetComponent<BackgroundSoundPlayer>().UnpauseMusic();
+
+        Debug.Log("TurnOffFocus was called");
     }
 
 
@@ -305,6 +315,8 @@ public class FocusPlayerViewOnObject : MonoBehaviour
         //_playerCharacter.GetComponent<Movement(?)>().StopWaving();
         //wavingAnimation.Stop();
         //jansAnimationControlls.SetActive(true);
+        
+        Debug.Log("ReactivatePlayer");
     }
 
     // shouldn't this be a simple function calling it once + disabling any input in the meanwhile?! -F

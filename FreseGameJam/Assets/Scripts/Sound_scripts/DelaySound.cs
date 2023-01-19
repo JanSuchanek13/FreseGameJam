@@ -23,6 +23,11 @@ public class DelaySound : MonoBehaviour
     [SerializeField] int _thisCutscene_Nr;
     [SerializeField] GameObject _pointToLookAt;
 
+    [Header("Do you want anything turnt on/off?")]
+    [SerializeField] GameObject _turnThisOffAfterCutscene;
+    [SerializeField] GameObject _turnThisOnAfterCutscene;
+
+
     // local variables:
     GameObject _playerCharacter;
 
@@ -75,6 +80,26 @@ public class DelaySound : MonoBehaviour
         {
             _targetAudioSource.Play();
         }
+
+        // if anything is entered in these variables they will be turnt on/off after the time it takes to look at the cutscene:
+        // these are seperated, as you may only wish to hide something, or turn something on, but you can do both by filling both!
+        if(_turnThisOffAfterCutscene != null)
+        {
+            Invoke("TurnSomethingOff", _lookAtThisForThisLong);
+        }
+        if (_turnThisOnAfterCutscene != null)
+        {
+            Invoke("TurnSomethingOn", _lookAtThisForThisLong);
+        }
+    }
+
+    void TurnSomethingOff()
+    {
+        _turnThisOffAfterCutscene.SetActive(false);
+    }
+    void TurnSomethingOn()
+    {
+        _turnThisOnAfterCutscene.SetActive(true);
     }
 
     void LookAtThisNext() // dont think this works:
