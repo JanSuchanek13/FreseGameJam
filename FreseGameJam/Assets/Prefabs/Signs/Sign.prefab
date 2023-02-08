@@ -627,6 +627,8 @@ MonoBehaviour:
   _lookAtThisObjectAfterwards: {fileID: 0}
   _thisCutscene_Nr: 0
   _pointToLookAt: {fileID: 743541093018329569}
+  _turnThisOffAfterCutscene: {fileID: 0}
+  _turnThisOnAfterCutscene: {fileID: 0}
 --- !u!114 &1542350192134833354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -940,7 +942,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3846018093981099296, guid: 9a38bfb6e3e3748428743987ebe7669b, type: 3}
+  - {fileID: -3846018093981099296, guid: d32dede095812af42ac2c5e47c6f142c, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
