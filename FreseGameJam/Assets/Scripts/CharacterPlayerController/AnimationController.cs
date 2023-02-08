@@ -35,6 +35,7 @@ public class AnimationController : MonoBehaviour
 
         animator.SetBool("isWalking", Movement.walking);
         walking_Sound.enabled = Movement.walking;
+        animator.SetFloat("animationSpeed", Movement.animationSpeed);
 
         animator.SetBool("isFalling", Movement.falling);
         falling_Sound.enabled = Movement.falling;

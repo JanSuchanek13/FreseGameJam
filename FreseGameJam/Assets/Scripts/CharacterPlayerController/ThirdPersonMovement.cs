@@ -49,6 +49,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public bool falling;
     public bool jumping;
     public bool action;
+    public float animationSpeed;
 
     //for VFX
     public ParticleSystem dash;
@@ -339,7 +340,9 @@ public class ThirdPersonMovement : MonoBehaviour
         if (GetComponent<StateController>().human)
         {
             //Move 
-            speed = 6f;
+            float speedInput = Math.Abs(horizontal) + Math.Abs(vertical); //add up Move Input
+            speed = speedInput * 6;
+            animationSpeed = speedInput;
 
             //Jump
             if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && isCoyoteGrounded)
