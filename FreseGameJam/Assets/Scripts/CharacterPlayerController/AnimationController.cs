@@ -33,7 +33,7 @@ public class AnimationController : MonoBehaviour
         //Debug.Log(gameObject);
         //transform.rotation = Quaternion.EulerAngles(Vector3.zero);
 
-        animator.SetBool("isWalking", Movement.walking);
+        animator.SetBool("isRunning", Movement.walking);
         walking_Sound.enabled = Movement.walking;
         animator.SetFloat("animationSpeed", Movement.animationSpeed);
 
