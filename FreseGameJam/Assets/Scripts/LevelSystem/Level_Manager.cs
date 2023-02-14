@@ -144,6 +144,10 @@ public class Level_Manager : MonoBehaviour
         PlayerPrefs.SetInt("_cutScene_4_HasAlreadyPlayed", 0);
         PlayerPrefs.SetInt("_cutScene_5_HasAlreadyPlayed", 0);
         PlayerPrefs.SetInt("_cutScene_6_HasAlreadyPlayed", 0);
+        PlayerPrefs.SetInt("_cutScene_7_HasAlreadyPlayed", 0);
+        PlayerPrefs.SetInt("_cutScene_8_HasAlreadyPlayed", 0); // not used
+        PlayerPrefs.SetInt("_cutScene_9_HasAlreadyPlayed", 0); // not used
+        PlayerPrefs.SetInt("_cutScene_10_HasAlreadyPlayed", 0); // not used
 
         PlayerPrefs.SetInt("_boatPosition", 0);
         

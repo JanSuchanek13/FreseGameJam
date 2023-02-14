@@ -210,9 +210,6 @@ public class FocusPlayerViewOnObject : MonoBehaviour
 
                     // save if cutscene has played:
                     PlayerPrefs.SetInt("_cutScene_5_HasAlreadyPlayed", 1);
-
-                    Debug.Log("most recently looked at cutscene is nr: " + 5);
-
                 }
                 break;
 
@@ -236,8 +233,29 @@ public class FocusPlayerViewOnObject : MonoBehaviour
 
                     // save if cutscene has played:
                     PlayerPrefs.SetInt("_cutScene_6_HasAlreadyPlayed", 1);
-                    Debug.Log("most recently looked at cutscene is nr: " + 6);
+                }
+                break;
 
+            case 7:
+                if (PlayerPrefs.GetInt("_cutScene_7_HasAlreadyPlayed") == 0)
+                {
+                    _focusTargetObject = _focusObject;
+                    if (!waitLonger)
+                    {
+                        StartCoroutine(TurnOffFocus(_lookAtThisForThisLong));
+                    }
+                    _playerCharacter.transform.LookAt(_focusTargetObject.transform.position); // turn player towards target GO:
+                    _playerCharacter.GetComponent<ThirdPersonMovement>().enabled = false;
+                    _turnPlayerTowardsObject = true;
+
+                    focusCameraRig.GetComponent<CinemachineFreeLook>().Follow = _focusTargetObject.transform; // turn camera:
+                    focusCameraRig.GetComponent<CinemachineFreeLook>().LookAt = _focusTargetObject.transform; // turn camera:
+                    focusCameraRig.SetActive(true);
+
+                    _humanAnimator.enabled = false;
+
+                    // save if cutscene has played:
+                    PlayerPrefs.SetInt("_cutScene_7_HasAlreadyPlayed", 1);
                 }
                 break;
 
