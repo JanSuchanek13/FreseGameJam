@@ -2585,6 +2585,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walking_Sound: {fileID: 8064724596715190502}
   falling_Sound: {fileID: 5952216566012465614}
+  runningDust: {fileID: 0}
 --- !u!1 &1508079295202485295
 GameObject:
   m_ObjectHideFlags: 0
@@ -2885,6 +2886,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walking_Sound: {fileID: 8064724596715190502}
   falling_Sound: {fileID: 5952216566012465614}
+  runningDust: {fileID: 814490569418076320}
 --- !u!1 &1711481807848461352
 GameObject:
   m_ObjectHideFlags: 0
@@ -10017,7 +10019,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3335943800848497969}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0000025522263, y: -0.0000004792016, z: -0.0000015334451}
+  m_LocalPosition: {x: -0.0000051044526, y: -0.0000009584032, z: -0.0000030668903}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -15600,6 +15602,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walking_Sound: {fileID: 2931951389817448171}
   falling_Sound: {fileID: 3076737802568531286}
+  runningDust: {fileID: 0}
 --- !u!1 &3828835330233632278
 GameObject:
   m_ObjectHideFlags: 0
@@ -26575,6 +26578,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walking_Sound: {fileID: 2053474477874450059}
   falling_Sound: {fileID: 3021699568314993931}
+  runningDust: {fileID: 0}
 --- !u!1 &4859501501588307862
 GameObject:
   m_ObjectHideFlags: 0
@@ -32893,6 +32897,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walking_Sound: {fileID: 8064724596715190502}
   falling_Sound: {fileID: 5952216566012465614}
+  runningDust: {fileID: 0}
 --- !u!1 &6502319091857967052
 GameObject:
   m_ObjectHideFlags: 0
@@ -33334,7 +33339,7 @@ GameObject:
   - component: {fileID: 814490569418076320}
   - component: {fileID: 7062927305200014644}
   m_Layer: 0
-  m_Name: Walking Dust
+  m_Name: Running Dust
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33372,7 +33377,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -39385,6 +39390,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walking_Sound: {fileID: 8804121386682987809}
   falling_Sound: {fileID: 7962284491242554326}
+  runningDust: {fileID: 0}
 --- !u!1 &7933105793173465610
 GameObject:
   m_ObjectHideFlags: 0
@@ -39712,6 +39718,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walking_Sound: {fileID: 8203319283576078600}
   falling_Sound: {fileID: 7947881869932951604}
+  runningDust: {fileID: 0}
 --- !u!1 &8001073232759811056
 GameObject:
   m_ObjectHideFlags: 0
