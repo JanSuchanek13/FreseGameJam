@@ -9,7 +9,6 @@ public class AnimationController : MonoBehaviour
 
     [SerializeField] AudioSource walking_Sound;
     [SerializeField] AudioSource falling_Sound;
-    public ParticleSystem runningDust;
 
     // Start is called before the first frame update
     void Start()

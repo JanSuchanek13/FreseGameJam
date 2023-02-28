@@ -55,7 +55,8 @@ public class ThirdPersonMovement : MonoBehaviour
     public ParticleSystem dash;
     public ParticleSystem dash02;
     public ParticleSystem buildingup;
-    
+    public ParticleSystem runningDust;
+
 
     //cooldown
     bool isInCooldown;
@@ -255,10 +256,12 @@ public class ThirdPersonMovement : MonoBehaviour
         if (playerInput.CharacterControls.Move.ReadValue<Vector2>().x != 0 || playerInput.CharacterControls.Move.ReadValue<Vector2>().y != 0)
         {
             walking = true;
+            runningDust.gameObject.SetActive(true);
         }
         else
         {
             walking = false;
+            runningDust.gameObject.SetActive(false);
             idle = true;
         }
 
