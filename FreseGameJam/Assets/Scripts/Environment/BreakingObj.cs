@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BreakingObj : MonoBehaviour
 {
+    [Header("Breaking Objects Settings:")]
     public GameObject origamiFriend;
     public bool levelEnd;
     public bool onlyCapricorn;
@@ -11,6 +12,8 @@ public class BreakingObj : MonoBehaviour
     public float timeTillBreak;
     [SerializeField] float _timeTillReset = 5.0f; // F. added this to determine resetTime
     public bool reset;
+
+    [SerializeField] bool _turnOffCollidersAfterBreak = false; // making this optional allows to have breaking objects which become part of the traversable environment
 
     // local variables:
     Vector3 resetPos;
@@ -53,6 +56,7 @@ public class BreakingObj : MonoBehaviour
             if (collision.gameObject.tag == "Player")
             {
                 Invoke("Break", timeTillBreak);
+                
                 if (levelEnd)
                 {
                     collision.gameObject.GetComponent<ThirdPersonMovement>().forcedFalling = true;
@@ -72,6 +76,25 @@ public class BreakingObj : MonoBehaviour
                 if (child.GetComponent<Rigidbody>()) // this allows to search through children who may NOT have a Rigidbody component
                 {
                     child.GetComponent<Rigidbody>().isKinematic = false;
+
+                    if (_turnOffCollidersAfterBreak)
+                    {
+                        child.gameObject.AddComponent<MakeTraversable>(); // this will take care of making fragments traversable
+                    }
+                }
+
+                // this will also loop through all children of children: Needed to break walls of new composite-breakable walls
+                foreach(Transform _grandChild in child)
+                {
+                    if (_grandChild.GetComponent<Rigidbody>())
+                    {
+                        _grandChild.GetComponent<Rigidbody>().isKinematic = false;
+                        
+                        if (_turnOffCollidersAfterBreak)
+                        {
+                            _grandChild.gameObject.AddComponent<MakeTraversable>(); // this will take care of making fragments traversable
+                        }
+                    }
                 }
             }
         }else
@@ -84,6 +107,13 @@ public class BreakingObj : MonoBehaviour
             Invoke("Reset", _timeTillReset);
         }
     }
+    /* // this is an inferior alternative path to make debris traversable
+    IEnumerator MakeTraversable(Transform _objectToMakeTraversable)
+    {
+        yield return new WaitForSeconds(5);
+
+        _objectToMakeTraversable.GetComponent<Rigidbody>().isKinematic = true;
+    }*/
 
     private void Reset()
     {
