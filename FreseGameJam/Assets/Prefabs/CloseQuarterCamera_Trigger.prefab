@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3677432875861267219}
   - component: {fileID: 3677432875861267218}
   - component: {fileID: 3677432875861267217}
-  - component: {fileID: 3677432875861267216}
   m_Layer: 0
   m_Name: CloseQuarterCamera_Trigger
   m_TagString: CloseQuarterCameraTrigger
@@ -109,16 +108,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 624e0aa68b3a6554585d7495c387cea1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3677432875861267216
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3677432875861267215}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b16460054541b04e9b996637731717f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  closeQuarterCameraIsActive: 0

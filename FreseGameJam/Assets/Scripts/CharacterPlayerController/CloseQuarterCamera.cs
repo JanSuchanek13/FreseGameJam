@@ -5,6 +5,7 @@ public class CloseQuarterCamera : MonoBehaviour
     #region variables
     // public variables:
     public bool closeQuarterCameraIsActive = false;
+    public bool inCustscene = false;
 
     // local variables:
     private GameObject _lastTriggerHit;
@@ -27,28 +28,37 @@ public class CloseQuarterCamera : MonoBehaviour
             Invoke("ReactivateTrigger", 5f);
             _currentlyInsideTrigger = true; // redundant here, as turning on/off the collider solves the same issue.
 
-            if (!closeQuarterCameraIsActive)
-            {
-                ZoomIn();
-            }else
-            {
-                ZoomOut();
-            }
+            Zoom();
+        }
+    }
+    public void Zoom()
+    {
+        if (!closeQuarterCameraIsActive)
+        {
+            ZoomIn();
+        }
+        else
+        {
+            ZoomOut();
         }
     }
     public void ZoomIn()
     {
-        _cameraRigFar.SetActive(false);
-        _cameraRigClose.SetActive(true);
-        closeQuarterCameraIsActive = true;
-        //Debug.Log("zoom in");
+        if (!inCustscene)
+        {
+            _cameraRigFar.SetActive(false);
+            _cameraRigClose.SetActive(true);
+            closeQuarterCameraIsActive = true;
+        }
     }
     public void ZoomOut()
     {
-        _cameraRigFar.SetActive(true);
-        _cameraRigClose.SetActive(false);
-        closeQuarterCameraIsActive = false;
-        //Debug.Log("zoom out");
+        if (!inCustscene)
+        {
+            _cameraRigFar.SetActive(true);
+            _cameraRigClose.SetActive(false);
+            closeQuarterCameraIsActive = false;
+        }
     }
 
     void ReactivateTrigger()

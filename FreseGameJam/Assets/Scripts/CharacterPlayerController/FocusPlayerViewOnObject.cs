@@ -48,10 +48,13 @@ public class FocusPlayerViewOnObject : MonoBehaviour
     {
         if (_inFocusMode)
         {
-            waitLonger = false; // prevents chained cutscenes to be played after oneanother
-            _skippingCutscene = true; // prevents calling this multiple times
+            _inFocusMode = false; // prevents delayed turning off of the focus camera
             StartCoroutine(TurnOffFocus(0.0f)); 
             ReactivatePlayer();
+            waitLonger = false; // prevents chained cutscenes to be played after oneanother
+
+            // zooming only possible if player is NOT in cutscene:
+            FindObjectOfType<CloseQuarterCamera>().inCustscene = false;
         }
     }
 
@@ -108,6 +111,7 @@ public class FocusPlayerViewOnObject : MonoBehaviour
     public void FocusTarget(GameObject _focusObject, float _lookAtThisForThisLong, int _cutsceneNr) // focus camera:
     {
         _inFocusMode = true;
+        FindObjectOfType<CloseQuarterCamera>().inCustscene = true;
 
         switch (_cutsceneNr)
         {
@@ -139,7 +143,7 @@ public class FocusPlayerViewOnObject : MonoBehaviour
                     focusCameraRig.GetComponent<CinemachineCollider>().enabled = true;
                     */
 
-    PlayerPrefs.SetInt("_cutScene_2_HasAlreadyPlayed", 1);
+                    PlayerPrefs.SetInt("_cutScene_2_HasAlreadyPlayed", 1);
                 }
                 break;
 
@@ -199,16 +203,19 @@ public class FocusPlayerViewOnObject : MonoBehaviour
     IEnumerator TurnOffFocus(float _lookAtThisForThisLong)
     {
         yield return new WaitForSeconds(_lookAtThisForThisLong);
-        _backgroundSoundPlayer.UnpauseMusic(); // this is currently suboptimal, as time paused is not accounted for and tracks will play next to eachother.
-        focusCameraRig.SetActive(false);
-
-        if (!_skippingCutscene) // when skipping a cutscene, enable the controls right away!
+        
+        // if a cutscene called TurnOffFocus with its wait-time, then skipping will not be able to reach that
+        // so this if statement checks if the wait time was longer than 0, thus being a regular wait time, and then cancels that instance
+        // of this execution when SkipCutscene is called (which turns _skippingCutscene true)
+        if(_lookAtThisForThisLong > 0.0f && !_inFocusMode) // checks if this was called normally but cancelled later
         {
-            Invoke("ReactivatePlayer", juicyDelayBeforePlayerResumesControll);
+            yield break;
         }
 
-        // in case this cutscene was skipped:
-        _skippingCutscene = false;
+        _backgroundSoundPlayer.UnpauseMusic(); // this is currently suboptimal, as time paused is not accounted for and tracks will play next to eachother.
+        focusCameraRig.SetActive(false);
+        
+        Invoke("ReactivatePlayer", juicyDelayBeforePlayerResumesControll);
     }
 
 
@@ -219,7 +226,7 @@ public class FocusPlayerViewOnObject : MonoBehaviour
         _playerCharacter.GetComponent<ThirdPersonMovement>().enabled = true;
         _humanAnimator.enabled = true;
 
-        _inFocusMode = false;
+        //_inFocusMode = false;
     }
 
     private void Update() // keep turning player to face a moving target GO:
@@ -229,12 +236,10 @@ public class FocusPlayerViewOnObject : MonoBehaviour
             _playerCharacter.transform.LookAt(_focusTargetObject.transform.position); // turn player towards focus object:
         }
 
+        // delete this when jan implemented this in player input!
         if (Input.GetKeyDown(KeyCode.Tab) && _inFocusMode)
         {
-            waitLonger = false; // prevents chained cutscenes to be played after oneanother
-            _skippingCutscene = true; // prevents calling this multiple times
-            StartCoroutine(TurnOffFocus(0.0f)); 
-            ReactivatePlayer();
+            SkipCutscene();
         }
     }
 }

@@ -31,6 +31,9 @@ public class DelaySound : MonoBehaviour
     // local variables:
     GameObject _playerCharacter;
 
+    bool _calledTheNextFocusPointOnce = false;
+
+
     #endregion
 
     void Start()
@@ -55,21 +58,18 @@ public class DelaySound : MonoBehaviour
             _pointToLookAt = this.gameObject;
         }
     }
+
     public void PlaySound()
     {
-        //_currentCutscene = GameObject.Find("GameManager").GetComponent<GameManager>()._currentCutscene;
-
-        // this is where the looking-part happens by calling "<FocusPlayerViewOnObject>().FocusTarget":
-        // main camera will look at AudioSource:
         if (_activateFocusPlayerViewOnObjectWhenSoundPlays)
         {
-            //_playerCharacter.GetComponent<FocusPlayerViewOnObject>().FocusTarget(_pointToLookAt, _lookAtThisForThisLong, _thisCutscene_Nr);
-            //Debug.Log("called ForcusTarget with cutscene nr. " + _thisCutscene_Nr);
-
-            if(_lookAtThisObjectAfterwards != null)
+            if(_lookAtThisObjectAfterwards != null && !_calledTheNextFocusPointOnce)
             {
+                _calledTheNextFocusPointOnce = true; // without this, play sound keeps triggering and calling this!
+
                 Invoke("LookAtThisNext", _lookAtThisForThisLong);
                 _playerCharacter.GetComponent<FocusPlayerViewOnObject>().waitLonger = true; // prevents player from starting to move between chained cutscenes
+                Debug.Log("wait longer = true!");
             }
 
             _playerCharacter.GetComponent<FocusPlayerViewOnObject>().FocusTarget(_pointToLookAt, _lookAtThisForThisLong, _thisCutscene_Nr);
@@ -102,7 +102,7 @@ public class DelaySound : MonoBehaviour
         _turnThisOnAfterCutscene.SetActive(true);
     }
 
-    void LookAtThisNext() // dont think this works:
+    void LookAtThisNext()
     {
         _pointToLookAt = _lookAtThisObjectAfterwards;
         _lookAtThisObjectAfterwards = null; // prevents this from running a loop!
@@ -111,26 +111,10 @@ public class DelaySound : MonoBehaviour
         // check if the cutscene was skipped before proceeding (skipping will turn the bool "waitLonger" false):
         if (_playerCharacter.GetComponent<FocusPlayerViewOnObject>().waitLonger)
         {
+            Debug.Log("this was called 3");
+
             _playerCharacter.GetComponent<FocusPlayerViewOnObject>().waitLonger = false; // enables players to move after chained cutscenes
             PlaySound();
         }
-
-
-        //_lookAtThisObjectAfterwards.GetComponent<DelaySound>().PlaySound();
-        //_playerCharacter.GetComponent<FocusPlayerViewOnObject>().FocusTarget(_lookAtThisObjectAfterwards, _lookAtThisForThisLong, _thisCutscene_Nr);
     }
-
-
-    /* // this should be directly called by the trigger! Now on TriggerSound!
-    void Update() // when using a trigger:
-    {
-        if (_playOnTrigger)
-        {
-            if (_targetTrigger.GetComponent<TriggerSound>().gotActivated)
-            {
-                _targetTrigger.GetComponent<TriggerSound>().enabled = false;
-                PlaySound();
-            }
-        }
-    }*/
 }
