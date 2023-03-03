@@ -65,12 +65,12 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""MouseLook"",
-                    ""type"": ""PassThrough"",
+                    ""type"": ""Value"",
                     ""id"": ""22442492-10c6-44f4-9121-156829223d3c"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Cheating"",
@@ -441,6 +441,782 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""Option"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""43515cb0-aaad-476c-8400-e8ce67cb8d85"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Option"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""CharacterControlsController"",
+            ""id"": ""58a0047d-2ff3-43f8-b2cc-ab935e027494"",
+            ""actions"": [
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""fbd47258-393f-40e8-83e8-1b494a378d77"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Run"",
+                    ""type"": ""Button"",
+                    ""id"": ""e8dcb2a0-1a9f-4181-bb45-46ac955813df"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""f8902ec4-a314-47ac-8d9d-3f91635c52e8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchState"",
+                    ""type"": ""Button"",
+                    ""id"": ""438a8880-b70d-40b5-84e0-0adafdbac146"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MouseLook"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""58e8621e-9195-4ed3-a77f-4ee7f3b6c7b7"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Cheating"",
+                    ""type"": ""Button"",
+                    ""id"": ""8bd1ec37-9d67-462b-bc0c-6e44dd5ce6e7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CamToggle"",
+                    ""type"": ""Button"",
+                    ""id"": ""7d652968-bacc-42d7-9255-e09364e27a8d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Option"",
+                    ""type"": ""Button"",
+                    ""id"": ""1f584b5e-46ab-4b53-ae2e-d6ce63e7d507"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""3cb3d76a-87dc-444a-a4b8-6b0b649c2136"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""31732f53-b163-461e-89c4-34e7aa923781"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""eae2d6cc-04ab-4297-92e7-c9be95a82986"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""f70a505c-fd55-4a79-934b-2ab80c1527c5"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""596b9de3-91a7-40b1-9f5d-f71404c3d328"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""aa4d735f-0bb3-48ae-aa4a-c8feb40bd8f7"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ae114c89-14f5-4a18-86fb-e23f1688ce9d"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dd5a6c5b-7196-4bb3-8930-32977c54a800"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5c0ecf88-77e3-4e0b-8495-7c1d20e52701"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""27687c3f-b153-4bdf-88bc-67543cd0dfc9"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2e37ce0f-d94c-4fee-9c13-c64bba83c4b7"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchState"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""23a215ec-18d4-4130-9bdb-9e7de6e7a311"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=2)"",
+                    ""groups"": """",
+                    ""action"": ""SwitchState"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8bdc7dc4-8d13-45ca-910e-dcfae66d6442"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=3)"",
+                    ""groups"": """",
+                    ""action"": ""SwitchState"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c845d69f-866e-44b9-8317-65c1e6d18c0a"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=4)"",
+                    ""groups"": """",
+                    ""action"": ""SwitchState"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5e282f6a-1602-47c4-a3b0-d32f51623450"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=5)"",
+                    ""groups"": """",
+                    ""action"": ""SwitchState"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ae1d62c6-83dc-4c6c-8b90-d9706eb16d54"",
+                    ""path"": ""<Keyboard>/6"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=6)"",
+                    ""groups"": """",
+                    ""action"": ""SwitchState"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f43ebe7b-0096-4426-b1f1-ee964dc7383f"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale"",
+                    ""groups"": """",
+                    ""action"": ""SwitchState"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e07bd9f3-68bc-415f-934b-37d03f767c14"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=2)"",
+                    ""groups"": """",
+                    ""action"": ""SwitchState"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a6c32cf3-e726-484c-ba18-f07ff856a457"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=3)"",
+                    ""groups"": """",
+                    ""action"": ""SwitchState"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fd039579-4d03-4cba-a273-2803b894e34b"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=4)"",
+                    ""groups"": """",
+                    ""action"": ""SwitchState"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""93e440bb-8031-482b-be15-6ae87f9d47dc"",
+                    ""path"": ""<DualShockGamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=6)"",
+                    ""groups"": """",
+                    ""action"": ""SwitchState"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a4ee1f0a-b1a0-49f3-bd0c-0ed47d7ab9e5"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseLook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cba172cb-3253-4276-b00b-2cb07f1fbce4"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseLook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2fb92d82-3f4f-4e79-ab8c-0396bda27a3c"",
+                    ""path"": ""<Keyboard>/numpadMinus"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale"",
+                    ""groups"": """",
+                    ""action"": ""Cheating"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b7916554-3f09-4502-bd52-ff8caa33ba91"",
+                    ""path"": ""<Keyboard>/numpadMultiply"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=2)"",
+                    ""groups"": """",
+                    ""action"": ""Cheating"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a86b5430-51a7-4ec1-aea7-88908e9f937b"",
+                    ""path"": ""<Keyboard>/numpadDivide"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=3)"",
+                    ""groups"": """",
+                    ""action"": ""Cheating"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""18574a13-1ce9-461a-a80b-2b1be5c7ed08"",
+                    ""path"": ""<Keyboard>/numpadPeriod"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=4)"",
+                    ""groups"": """",
+                    ""action"": ""Cheating"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7515102e-cd51-4529-a369-efcf70a47d80"",
+                    ""path"": ""<Keyboard>/numpadPlus"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=5)"",
+                    ""groups"": """",
+                    ""action"": ""Cheating"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""41334c1d-9144-4ddf-afd9-af1ca8296998"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CamToggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""50bc0ed9-097c-491f-a2a0-f3063e27b988"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CamToggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""867ed0cc-82a9-44a8-8740-170b63f3ec60"",
+                    ""path"": ""<DualShockGamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Option"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""CharacterControlsKeyboard"",
+            ""id"": ""e65ecae3-0308-417d-a6eb-41800e2ee2a1"",
+            ""actions"": [
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""8367d420-5c97-4428-824d-23950a8320fc"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Run"",
+                    ""type"": ""Button"",
+                    ""id"": ""0caea005-d668-4ed5-9a53-4a657d94f4f4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""6bacce62-f3a7-4f4a-812b-e32660d9c5e0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchState"",
+                    ""type"": ""Button"",
+                    ""id"": ""013c5511-6559-4311-9416-b58eafb7f287"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MouseLook"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""b99ee66b-1821-4535-acdc-8c00d6c96553"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Cheating"",
+                    ""type"": ""Button"",
+                    ""id"": ""d59134d7-d308-4d53-ad08-0a8f4ed5189d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CamToggle"",
+                    ""type"": ""Button"",
+                    ""id"": ""8a437030-f16b-4de7-9ec6-6359fa385181"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Option"",
+                    ""type"": ""Button"",
+                    ""id"": ""b6d793f0-d3da-4d2e-8725-d9290bca58f9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""869aafd5-47cf-448f-9de8-84c610a31669"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""851ac325-28d4-4b64-afbc-133985b116bd"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""d3209825-49df-4f55-8edc-64e628e9ff68"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""3f3ffa26-92a9-4967-a2c9-a70f5d316c2d"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""90bdd730-6083-4dff-a20b-953a9edf1b31"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""944b8115-ecb9-45ab-9fec-6b387df47bbc"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6bf4245b-1de0-46f8-838e-e40e7000c8f7"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""94a6333a-453e-44bd-935b-965cdfa581d4"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9295603a-baaf-4377-8015-69e7d7728693"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchState"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c079b8fc-e532-4cfd-9166-d84bf5dca68a"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=2)"",
+                    ""groups"": """",
+                    ""action"": ""SwitchState"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""484cc48f-d209-4aa4-a6b8-47a00256640c"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=3)"",
+                    ""groups"": """",
+                    ""action"": ""SwitchState"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ee8470c9-e9c3-4839-80af-b63839eecedc"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=4)"",
+                    ""groups"": """",
+                    ""action"": ""SwitchState"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""68c16f8c-390f-4f78-8275-ff6e15794194"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=5)"",
+                    ""groups"": """",
+                    ""action"": ""SwitchState"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4f6d0c05-5626-432d-923a-e40fe40671cc"",
+                    ""path"": ""<Keyboard>/6"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=6)"",
+                    ""groups"": """",
+                    ""action"": ""SwitchState"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""beea87ed-655d-42b6-8640-b7e853ee5a60"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseLook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c0755de3-a44b-42a0-8cd0-05fdc98bec54"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseLook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fb57b541-c9ba-4941-a0ad-4ec699aca261"",
+                    ""path"": ""<Keyboard>/numpadMinus"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale"",
+                    ""groups"": """",
+                    ""action"": ""Cheating"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c614f84f-4394-4e38-a530-8c121559c12d"",
+                    ""path"": ""<Keyboard>/numpadMultiply"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=2)"",
+                    ""groups"": """",
+                    ""action"": ""Cheating"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""44807846-2e29-4fef-bcd8-0231dc250b9f"",
+                    ""path"": ""<Keyboard>/numpadDivide"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=3)"",
+                    ""groups"": """",
+                    ""action"": ""Cheating"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d71b8b33-1358-4ea4-a59f-f19ff4e5c4bd"",
+                    ""path"": ""<Keyboard>/numpadPeriod"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=4)"",
+                    ""groups"": """",
+                    ""action"": ""Cheating"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""81ab6324-a202-4cfd-8075-24bda96250b9"",
+                    ""path"": ""<Keyboard>/numpadPlus"",
+                    ""interactions"": """",
+                    ""processors"": ""Scale(factor=5)"",
+                    ""groups"": """",
+                    ""action"": ""Cheating"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cd6e5c88-a0dc-4600-832a-5a50d5135f7c"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CamToggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e29547fb-c532-470e-afa8-da11f82f6b8b"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CamToggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b18e86b3-07a6-47df-b70e-001b8da37f79"",
+                    ""path"": ""<DualShockGamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Option"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -457,6 +1233,26 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_CharacterControls_Cheating = m_CharacterControls.FindAction("Cheating", throwIfNotFound: true);
         m_CharacterControls_CamToggle = m_CharacterControls.FindAction("CamToggle", throwIfNotFound: true);
         m_CharacterControls_Option = m_CharacterControls.FindAction("Option", throwIfNotFound: true);
+        // CharacterControlsController
+        m_CharacterControlsController = asset.FindActionMap("CharacterControlsController", throwIfNotFound: true);
+        m_CharacterControlsController_Move = m_CharacterControlsController.FindAction("Move", throwIfNotFound: true);
+        m_CharacterControlsController_Run = m_CharacterControlsController.FindAction("Run", throwIfNotFound: true);
+        m_CharacterControlsController_Jump = m_CharacterControlsController.FindAction("Jump", throwIfNotFound: true);
+        m_CharacterControlsController_SwitchState = m_CharacterControlsController.FindAction("SwitchState", throwIfNotFound: true);
+        m_CharacterControlsController_MouseLook = m_CharacterControlsController.FindAction("MouseLook", throwIfNotFound: true);
+        m_CharacterControlsController_Cheating = m_CharacterControlsController.FindAction("Cheating", throwIfNotFound: true);
+        m_CharacterControlsController_CamToggle = m_CharacterControlsController.FindAction("CamToggle", throwIfNotFound: true);
+        m_CharacterControlsController_Option = m_CharacterControlsController.FindAction("Option", throwIfNotFound: true);
+        // CharacterControlsKeyboard
+        m_CharacterControlsKeyboard = asset.FindActionMap("CharacterControlsKeyboard", throwIfNotFound: true);
+        m_CharacterControlsKeyboard_Move = m_CharacterControlsKeyboard.FindAction("Move", throwIfNotFound: true);
+        m_CharacterControlsKeyboard_Run = m_CharacterControlsKeyboard.FindAction("Run", throwIfNotFound: true);
+        m_CharacterControlsKeyboard_Jump = m_CharacterControlsKeyboard.FindAction("Jump", throwIfNotFound: true);
+        m_CharacterControlsKeyboard_SwitchState = m_CharacterControlsKeyboard.FindAction("SwitchState", throwIfNotFound: true);
+        m_CharacterControlsKeyboard_MouseLook = m_CharacterControlsKeyboard.FindAction("MouseLook", throwIfNotFound: true);
+        m_CharacterControlsKeyboard_Cheating = m_CharacterControlsKeyboard.FindAction("Cheating", throwIfNotFound: true);
+        m_CharacterControlsKeyboard_CamToggle = m_CharacterControlsKeyboard.FindAction("CamToggle", throwIfNotFound: true);
+        m_CharacterControlsKeyboard_Option = m_CharacterControlsKeyboard.FindAction("Option", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -601,7 +1397,207 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         }
     }
     public CharacterControlsActions @CharacterControls => new CharacterControlsActions(this);
+
+    // CharacterControlsController
+    private readonly InputActionMap m_CharacterControlsController;
+    private ICharacterControlsControllerActions m_CharacterControlsControllerActionsCallbackInterface;
+    private readonly InputAction m_CharacterControlsController_Move;
+    private readonly InputAction m_CharacterControlsController_Run;
+    private readonly InputAction m_CharacterControlsController_Jump;
+    private readonly InputAction m_CharacterControlsController_SwitchState;
+    private readonly InputAction m_CharacterControlsController_MouseLook;
+    private readonly InputAction m_CharacterControlsController_Cheating;
+    private readonly InputAction m_CharacterControlsController_CamToggle;
+    private readonly InputAction m_CharacterControlsController_Option;
+    public struct CharacterControlsControllerActions
+    {
+        private @PlayerInput m_Wrapper;
+        public CharacterControlsControllerActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Move => m_Wrapper.m_CharacterControlsController_Move;
+        public InputAction @Run => m_Wrapper.m_CharacterControlsController_Run;
+        public InputAction @Jump => m_Wrapper.m_CharacterControlsController_Jump;
+        public InputAction @SwitchState => m_Wrapper.m_CharacterControlsController_SwitchState;
+        public InputAction @MouseLook => m_Wrapper.m_CharacterControlsController_MouseLook;
+        public InputAction @Cheating => m_Wrapper.m_CharacterControlsController_Cheating;
+        public InputAction @CamToggle => m_Wrapper.m_CharacterControlsController_CamToggle;
+        public InputAction @Option => m_Wrapper.m_CharacterControlsController_Option;
+        public InputActionMap Get() { return m_Wrapper.m_CharacterControlsController; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(CharacterControlsControllerActions set) { return set.Get(); }
+        public void SetCallbacks(ICharacterControlsControllerActions instance)
+        {
+            if (m_Wrapper.m_CharacterControlsControllerActionsCallbackInterface != null)
+            {
+                @Move.started -= m_Wrapper.m_CharacterControlsControllerActionsCallbackInterface.OnMove;
+                @Move.performed -= m_Wrapper.m_CharacterControlsControllerActionsCallbackInterface.OnMove;
+                @Move.canceled -= m_Wrapper.m_CharacterControlsControllerActionsCallbackInterface.OnMove;
+                @Run.started -= m_Wrapper.m_CharacterControlsControllerActionsCallbackInterface.OnRun;
+                @Run.performed -= m_Wrapper.m_CharacterControlsControllerActionsCallbackInterface.OnRun;
+                @Run.canceled -= m_Wrapper.m_CharacterControlsControllerActionsCallbackInterface.OnRun;
+                @Jump.started -= m_Wrapper.m_CharacterControlsControllerActionsCallbackInterface.OnJump;
+                @Jump.performed -= m_Wrapper.m_CharacterControlsControllerActionsCallbackInterface.OnJump;
+                @Jump.canceled -= m_Wrapper.m_CharacterControlsControllerActionsCallbackInterface.OnJump;
+                @SwitchState.started -= m_Wrapper.m_CharacterControlsControllerActionsCallbackInterface.OnSwitchState;
+                @SwitchState.performed -= m_Wrapper.m_CharacterControlsControllerActionsCallbackInterface.OnSwitchState;
+                @SwitchState.canceled -= m_Wrapper.m_CharacterControlsControllerActionsCallbackInterface.OnSwitchState;
+                @MouseLook.started -= m_Wrapper.m_CharacterControlsControllerActionsCallbackInterface.OnMouseLook;
+                @MouseLook.performed -= m_Wrapper.m_CharacterControlsControllerActionsCallbackInterface.OnMouseLook;
+                @MouseLook.canceled -= m_Wrapper.m_CharacterControlsControllerActionsCallbackInterface.OnMouseLook;
+                @Cheating.started -= m_Wrapper.m_CharacterControlsControllerActionsCallbackInterface.OnCheating;
+                @Cheating.performed -= m_Wrapper.m_CharacterControlsControllerActionsCallbackInterface.OnCheating;
+                @Cheating.canceled -= m_Wrapper.m_CharacterControlsControllerActionsCallbackInterface.OnCheating;
+                @CamToggle.started -= m_Wrapper.m_CharacterControlsControllerActionsCallbackInterface.OnCamToggle;
+                @CamToggle.performed -= m_Wrapper.m_CharacterControlsControllerActionsCallbackInterface.OnCamToggle;
+                @CamToggle.canceled -= m_Wrapper.m_CharacterControlsControllerActionsCallbackInterface.OnCamToggle;
+                @Option.started -= m_Wrapper.m_CharacterControlsControllerActionsCallbackInterface.OnOption;
+                @Option.performed -= m_Wrapper.m_CharacterControlsControllerActionsCallbackInterface.OnOption;
+                @Option.canceled -= m_Wrapper.m_CharacterControlsControllerActionsCallbackInterface.OnOption;
+            }
+            m_Wrapper.m_CharacterControlsControllerActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Move.started += instance.OnMove;
+                @Move.performed += instance.OnMove;
+                @Move.canceled += instance.OnMove;
+                @Run.started += instance.OnRun;
+                @Run.performed += instance.OnRun;
+                @Run.canceled += instance.OnRun;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
+                @SwitchState.started += instance.OnSwitchState;
+                @SwitchState.performed += instance.OnSwitchState;
+                @SwitchState.canceled += instance.OnSwitchState;
+                @MouseLook.started += instance.OnMouseLook;
+                @MouseLook.performed += instance.OnMouseLook;
+                @MouseLook.canceled += instance.OnMouseLook;
+                @Cheating.started += instance.OnCheating;
+                @Cheating.performed += instance.OnCheating;
+                @Cheating.canceled += instance.OnCheating;
+                @CamToggle.started += instance.OnCamToggle;
+                @CamToggle.performed += instance.OnCamToggle;
+                @CamToggle.canceled += instance.OnCamToggle;
+                @Option.started += instance.OnOption;
+                @Option.performed += instance.OnOption;
+                @Option.canceled += instance.OnOption;
+            }
+        }
+    }
+    public CharacterControlsControllerActions @CharacterControlsController => new CharacterControlsControllerActions(this);
+
+    // CharacterControlsKeyboard
+    private readonly InputActionMap m_CharacterControlsKeyboard;
+    private ICharacterControlsKeyboardActions m_CharacterControlsKeyboardActionsCallbackInterface;
+    private readonly InputAction m_CharacterControlsKeyboard_Move;
+    private readonly InputAction m_CharacterControlsKeyboard_Run;
+    private readonly InputAction m_CharacterControlsKeyboard_Jump;
+    private readonly InputAction m_CharacterControlsKeyboard_SwitchState;
+    private readonly InputAction m_CharacterControlsKeyboard_MouseLook;
+    private readonly InputAction m_CharacterControlsKeyboard_Cheating;
+    private readonly InputAction m_CharacterControlsKeyboard_CamToggle;
+    private readonly InputAction m_CharacterControlsKeyboard_Option;
+    public struct CharacterControlsKeyboardActions
+    {
+        private @PlayerInput m_Wrapper;
+        public CharacterControlsKeyboardActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Move => m_Wrapper.m_CharacterControlsKeyboard_Move;
+        public InputAction @Run => m_Wrapper.m_CharacterControlsKeyboard_Run;
+        public InputAction @Jump => m_Wrapper.m_CharacterControlsKeyboard_Jump;
+        public InputAction @SwitchState => m_Wrapper.m_CharacterControlsKeyboard_SwitchState;
+        public InputAction @MouseLook => m_Wrapper.m_CharacterControlsKeyboard_MouseLook;
+        public InputAction @Cheating => m_Wrapper.m_CharacterControlsKeyboard_Cheating;
+        public InputAction @CamToggle => m_Wrapper.m_CharacterControlsKeyboard_CamToggle;
+        public InputAction @Option => m_Wrapper.m_CharacterControlsKeyboard_Option;
+        public InputActionMap Get() { return m_Wrapper.m_CharacterControlsKeyboard; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(CharacterControlsKeyboardActions set) { return set.Get(); }
+        public void SetCallbacks(ICharacterControlsKeyboardActions instance)
+        {
+            if (m_Wrapper.m_CharacterControlsKeyboardActionsCallbackInterface != null)
+            {
+                @Move.started -= m_Wrapper.m_CharacterControlsKeyboardActionsCallbackInterface.OnMove;
+                @Move.performed -= m_Wrapper.m_CharacterControlsKeyboardActionsCallbackInterface.OnMove;
+                @Move.canceled -= m_Wrapper.m_CharacterControlsKeyboardActionsCallbackInterface.OnMove;
+                @Run.started -= m_Wrapper.m_CharacterControlsKeyboardActionsCallbackInterface.OnRun;
+                @Run.performed -= m_Wrapper.m_CharacterControlsKeyboardActionsCallbackInterface.OnRun;
+                @Run.canceled -= m_Wrapper.m_CharacterControlsKeyboardActionsCallbackInterface.OnRun;
+                @Jump.started -= m_Wrapper.m_CharacterControlsKeyboardActionsCallbackInterface.OnJump;
+                @Jump.performed -= m_Wrapper.m_CharacterControlsKeyboardActionsCallbackInterface.OnJump;
+                @Jump.canceled -= m_Wrapper.m_CharacterControlsKeyboardActionsCallbackInterface.OnJump;
+                @SwitchState.started -= m_Wrapper.m_CharacterControlsKeyboardActionsCallbackInterface.OnSwitchState;
+                @SwitchState.performed -= m_Wrapper.m_CharacterControlsKeyboardActionsCallbackInterface.OnSwitchState;
+                @SwitchState.canceled -= m_Wrapper.m_CharacterControlsKeyboardActionsCallbackInterface.OnSwitchState;
+                @MouseLook.started -= m_Wrapper.m_CharacterControlsKeyboardActionsCallbackInterface.OnMouseLook;
+                @MouseLook.performed -= m_Wrapper.m_CharacterControlsKeyboardActionsCallbackInterface.OnMouseLook;
+                @MouseLook.canceled -= m_Wrapper.m_CharacterControlsKeyboardActionsCallbackInterface.OnMouseLook;
+                @Cheating.started -= m_Wrapper.m_CharacterControlsKeyboardActionsCallbackInterface.OnCheating;
+                @Cheating.performed -= m_Wrapper.m_CharacterControlsKeyboardActionsCallbackInterface.OnCheating;
+                @Cheating.canceled -= m_Wrapper.m_CharacterControlsKeyboardActionsCallbackInterface.OnCheating;
+                @CamToggle.started -= m_Wrapper.m_CharacterControlsKeyboardActionsCallbackInterface.OnCamToggle;
+                @CamToggle.performed -= m_Wrapper.m_CharacterControlsKeyboardActionsCallbackInterface.OnCamToggle;
+                @CamToggle.canceled -= m_Wrapper.m_CharacterControlsKeyboardActionsCallbackInterface.OnCamToggle;
+                @Option.started -= m_Wrapper.m_CharacterControlsKeyboardActionsCallbackInterface.OnOption;
+                @Option.performed -= m_Wrapper.m_CharacterControlsKeyboardActionsCallbackInterface.OnOption;
+                @Option.canceled -= m_Wrapper.m_CharacterControlsKeyboardActionsCallbackInterface.OnOption;
+            }
+            m_Wrapper.m_CharacterControlsKeyboardActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Move.started += instance.OnMove;
+                @Move.performed += instance.OnMove;
+                @Move.canceled += instance.OnMove;
+                @Run.started += instance.OnRun;
+                @Run.performed += instance.OnRun;
+                @Run.canceled += instance.OnRun;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
+                @SwitchState.started += instance.OnSwitchState;
+                @SwitchState.performed += instance.OnSwitchState;
+                @SwitchState.canceled += instance.OnSwitchState;
+                @MouseLook.started += instance.OnMouseLook;
+                @MouseLook.performed += instance.OnMouseLook;
+                @MouseLook.canceled += instance.OnMouseLook;
+                @Cheating.started += instance.OnCheating;
+                @Cheating.performed += instance.OnCheating;
+                @Cheating.canceled += instance.OnCheating;
+                @CamToggle.started += instance.OnCamToggle;
+                @CamToggle.performed += instance.OnCamToggle;
+                @CamToggle.canceled += instance.OnCamToggle;
+                @Option.started += instance.OnOption;
+                @Option.performed += instance.OnOption;
+                @Option.canceled += instance.OnOption;
+            }
+        }
+    }
+    public CharacterControlsKeyboardActions @CharacterControlsKeyboard => new CharacterControlsKeyboardActions(this);
     public interface ICharacterControlsActions
+    {
+        void OnMove(InputAction.CallbackContext context);
+        void OnRun(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
+        void OnSwitchState(InputAction.CallbackContext context);
+        void OnMouseLook(InputAction.CallbackContext context);
+        void OnCheating(InputAction.CallbackContext context);
+        void OnCamToggle(InputAction.CallbackContext context);
+        void OnOption(InputAction.CallbackContext context);
+    }
+    public interface ICharacterControlsControllerActions
+    {
+        void OnMove(InputAction.CallbackContext context);
+        void OnRun(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
+        void OnSwitchState(InputAction.CallbackContext context);
+        void OnMouseLook(InputAction.CallbackContext context);
+        void OnCheating(InputAction.CallbackContext context);
+        void OnCamToggle(InputAction.CallbackContext context);
+        void OnOption(InputAction.CallbackContext context);
+    }
+    public interface ICharacterControlsKeyboardActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
