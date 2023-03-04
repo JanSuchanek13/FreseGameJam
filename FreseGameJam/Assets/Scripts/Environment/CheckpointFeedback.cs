@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CheckpointFeedback : MonoBehaviour
 {
+    [SerializeField] bool _useFeedback = true;
+
     AudioSource _choireHymnn;
     AudioSource _fireSwoosh;
     bool _variablesAreUpdated = false;
@@ -17,17 +19,22 @@ public class CheckpointFeedback : MonoBehaviour
         _choireHymnn = GameObject.Find("GameManager").GetComponent<GameManager>().choireHymnSound;
         _fireSwoosh = GameObject.Find("GameManager").GetComponent<GameManager>().fireSwooshSound;
         _variablesAreUpdated = true;
-        //Debug.Log("choire = " + _choireHymnn);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") & _variablesAreUpdated)
         {
-            // play Sounds when reaching checkpoint:
-            _choireHymnn.Play();
-            _fireSwoosh.Play();
-            Destroy(this);
+            if (_useFeedback)
+            {
+                transform.GetChild(0).gameObject.SetActive(true); // turn on this checkpoints fire:
+                _choireHymnn.Play();
+                _fireSwoosh.Play();
+            }
+            
+            // prevent resetting the spawn location to this point:
+            GetComponent<Collider>().enabled = false;
+            Destroy(this); 
         }
     }
 }

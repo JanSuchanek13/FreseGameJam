@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 public class HealthSystem : MonoBehaviour
 {
     private IEnumerator coroutine;
-    public Vector3 RespawnPoint; // felix made this public for portable respawn position
+    public Vector3 respawnPoint; // felix made this public for portable respawn position
     public bool inUse;
 
     [SerializeField] GameObject Cam;
@@ -35,11 +35,8 @@ public class HealthSystem : MonoBehaviour
 
     private void Start()
     {
-        //Cam = GetComponentInChildren<CinemachineFreeLook>().gameObject; //old
-        //Debug.Log(Cam);
         CamScript = GetComponentInChildren<CloseQuarterCamera>();
         Character = GetComponentInChildren<CharacterController>();
-
         gravity = GetComponent<ThirdPersonMovement>().gravity;
 
         //if continue the Game start at last Checkpoint
@@ -56,7 +53,7 @@ public class HealthSystem : MonoBehaviour
         
         if (Checkpoints[lastCheckpoint[0]] != new Vector3(0, 0, 0)) // this was "currentLevel - 2"?
         {
-            //Debug.Log("changed Pos");
+            Debug.Log("I spawned");
             gameObject.transform.position = new Vector3(0, -3, 0) + Checkpoints[PlayerPrefs.GetInt("lastCheckpoint" + 0)];// (currentLevel - 2)
         }
     }
@@ -70,12 +67,12 @@ public class HealthSystem : MonoBehaviour
             //choireHymnn.Play();
             //fireSwoosh.Play();
 
-            RespawnPoint = other.transform.position;
+            respawnPoint = other.transform.position;
 
             //safe last checkpoint
             for (int i = 0; i < Checkpoints.Count ; i++)
             {
-                if(RespawnPoint == Checkpoints[i]) //test which checkpoint we have just gone through
+                if(respawnPoint == Checkpoints[i]) //test which checkpoint we have just gone through
                 {
                     lastCheckpoint[0] = i; // (_currentLevel - 2)
                 }
@@ -83,7 +80,7 @@ public class HealthSystem : MonoBehaviour
             PlayerPrefs.SetInt("lastCheckpoint" + 0, lastCheckpoint[0]); // (_currentLevel - 2) & (_currentLevel - 2) at end
             //Debug.Log(PlayerPrefs.GetInt("lastCheckpoint" + (currentLevel - 2)));
 
-            other.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+            //other.gameObject.transform.GetChild(0).gameObject.SetActive(true);
             //Debug.Log("updated checkpouin"); //felix add
         }
         if (other.gameObject.CompareTag("Damage"))
@@ -150,7 +147,7 @@ public class HealthSystem : MonoBehaviour
                 yield return new WaitForSeconds(1f);
             }
 
-            gameObject.transform.position = new Vector3(0, -3, 0) + RespawnPoint;
+            gameObject.transform.position = new Vector3(0, -3, 0) + respawnPoint;
 
             GetComponent<Rigidbody>().isKinematic = true;
             GetComponent<ThirdPersonMovement>().enabled = true; // no movement hopefully stops me from being able to survive death zones
@@ -165,6 +162,5 @@ public class HealthSystem : MonoBehaviour
             GetComponent<ThirdPersonMovement>().gravity = gravity;
             inUse = false;
         }
-        
     }
 }
