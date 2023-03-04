@@ -87,9 +87,12 @@ public class PlayWasPressed : MonoBehaviour
         }
 
         firesInBoat_1.SetActive(true);
-        friendInBoat.GetComponent<LookAtTarget>().enabled = false; // stop looking at friend.
-        friendInBoat.transform.LookAt(firesInBoat_1.transform);
-        float _randomPitch = Random.Range(1f, 3f);
+
+        // makes friend turn to look at flames: But this doesnt look good ingame:
+        //friendInBoat.GetComponent<LookAtTarget>().enabled = false; // stop looking at friend.
+        //friendInBoat.transform.LookAt(firesInBoat_1.transform);
+
+        float _randomPitch = Random.Range(0.9f, 1.2f);
         panickedScream.pitch = _randomPitch;
         panickedScream.Play();
         helpScream.PlayDelayed(delayBeforeStarting/2f);
