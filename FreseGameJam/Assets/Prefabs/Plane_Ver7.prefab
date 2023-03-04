@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4060923023468634540}
   - component: {fileID: 1149702599021342217}
   - component: {fileID: 2886920773213248195}
+  - component: {fileID: 7417954126700145965}
   m_Layer: 6
   m_Name: Plane_Ver7
   m_TagString: Ground
@@ -82,6 +83,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &7417954126700145965
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3679611689109420822}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -4655613040032916602, guid: 99d65c7466558814aa0d0c4dd3227310, type: 3}
 --- !u!1 &7769337239406171787
 GameObject:
   m_ObjectHideFlags: 0
@@ -106,13 +121,13 @@ GameObject:
   - component: {fileID: 109329484211834860}
   - component: {fileID: 5166776797165100908}
   - component: {fileID: 7976891681799617965}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: 'Collider:'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9157463396220233207
 Transform:
   m_ObjectHideFlags: 0
