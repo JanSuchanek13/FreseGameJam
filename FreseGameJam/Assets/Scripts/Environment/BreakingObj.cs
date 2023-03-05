@@ -25,6 +25,9 @@ public class BreakingObj : MonoBehaviour
     {
         if (reset)
         {
+            // prevent resettable objects from being destructed:
+            transform.gameObject.tag = "Indestructable";
+
             if (breakingChildren)
             {
                 foreach (Transform child in transform)

@@ -141,6 +141,7 @@ GameObject:
   - component: {fileID: 5613734457065087458}
   - component: {fileID: 4321376482077803813}
   - component: {fileID: 7106951620522029829}
+  - component: {fileID: 53091909502334290}
   m_Layer: 6
   m_Name: cakeboxhandle
   m_TagString: Untagged
@@ -220,10 +221,24 @@ BoxCollider:
   m_GameObject: {fileID: 6416428961856210966}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.012905395, y: 0.0017927496, z: 0.049146745}
   m_Center: {x: 0.01977089, y: 0.000000015294269, z: 0.024427908}
+--- !u!64 &53091909502334290
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6416428961856210966}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -4938761298939997526, guid: a2f2173b9d4f28240b9d40ba89162c28, type: 3}
 --- !u!1 &7375697204550284936
 GameObject:
   m_ObjectHideFlags: 0
