@@ -72,6 +72,7 @@ public class ButtonFunction : MonoBehaviour
         if (playerInput.CharacterControls.CamToggle.triggered)
         {
             ToggleCloseQuaterCamera();
+            SkipCutscene();
         }
     }
     public void Pause()
@@ -134,5 +135,8 @@ public class ButtonFunction : MonoBehaviour
         }
     }
 
-    
+    public void SkipCutscene()
+    {
+        _closeQuarterCamera.gameObject.GetComponent<FocusPlayerViewOnObject>().SkipCutscene();
+    }
 }
