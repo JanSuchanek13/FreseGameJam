@@ -7,6 +7,7 @@ public class ThirdPersonMovement : MonoBehaviour
 {
     [Tooltip("Reference to the PlayerInput Action Mapping")]
     private PlayerInput playerInput;
+    public InputHandler input;
 
 
 
@@ -218,7 +219,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if (GetComponent<StateController>().human)
         {
             //if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && !isGrounded && !(Physics.CheckSphere(groundCheck.position, groundDistance * 7, groundMask, QueryTriggerInteraction.Ignore)) && !GetComponent<StateController>().isChanging) // double jump change you into crane
-            if ((playerInput.CharacterControls.Jump.triggered) && !isGrounded && !isCoyoteGrounded && !CheckForGroundContact() && !GetComponent<StateController>().isChanging) // double jump change you into crane
+            if ((input.jumpTriggerd) && !isGrounded && !isCoyoteGrounded && !CheckForGroundContact() && !GetComponent<StateController>().isChanging) // double jump change you into crane
             {
 
                 if (stateController.availableCrane)
@@ -234,7 +235,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 }
 
             }
-            if (holdForGliding && playerInput.CharacterControls.Jump.ReadValue<float>() == 0 && stateController.crane)
+            if (holdForGliding && input.jumpValue == 0 && stateController.crane)
             {
                 GetComponent<StateController>().isChanging = true;
                 stateController.ball = false;
@@ -253,7 +254,7 @@ public class ThirdPersonMovement : MonoBehaviour
     {
 
         // animation
-        if (playerInput.CharacterControls.Move.ReadValue<Vector2>().x != 0 || playerInput.CharacterControls.Move.ReadValue<Vector2>().y != 0)
+        if (input.moveValue.x != 0 || input.moveValue.y != 0)
         {
             walking = true;
             runningDust.gameObject.SetActive(true);
@@ -266,8 +267,8 @@ public class ThirdPersonMovement : MonoBehaviour
         }
 
         //Camera and Movement
-        float horizontal = playerInput.CharacterControls.Move.ReadValue<Vector2>().x;
-        float vertical = playerInput.CharacterControls.Move.ReadValue<Vector2>().y;
+        float horizontal = input.moveValue.x;
+        float vertical = input.moveValue.y;
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
         if (direction.magnitude >= .1f || isSliding)
@@ -348,7 +349,7 @@ public class ThirdPersonMovement : MonoBehaviour
             animationSpeed = speedInput;
 
             //Jump
-            if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && isCoyoteGrounded)
+            if (input.jumpValue !=0 && isCoyoteGrounded)
             {
                 controller.stepOffset = 0;
                 jumping = true; //animation
@@ -370,7 +371,7 @@ public class ThirdPersonMovement : MonoBehaviour
             speed = 50f;
 
             //Jump
-            if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && isGrounded)
+            if (input.jumpValue != 0 && isGrounded)
             {
                 jumping = true; //animation
                 controller.slopeLimit = 100f;
@@ -404,7 +405,7 @@ public class ThirdPersonMovement : MonoBehaviour
             }
 
             //No Player Input -> fly forward
-            if (playerInput.CharacterControls.Move.ReadValue<Vector2>().x == 0 && playerInput.CharacterControls.Move.ReadValue<Vector2>().y == 0)
+            if (input.moveValue.x == 0 && input.moveValue.y == 0)
             {
                 float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
                 float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
@@ -414,12 +415,12 @@ public class ThirdPersonMovement : MonoBehaviour
             }
 
             //Jump
-            if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && isGrounded)
+            if (input.jumpValue != 0 && isGrounded)
             {
                 controller.slopeLimit = 0f; //low climp
                 velocity.y = Mathf.Sqrt(jumpHeight / 150 * -2f * gravity);  //low jump
             }
-            else if(playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && !isGrounded && !GetComponent<StateController>().isChanging && !holdForGliding)
+            else if(input.jumpValue != 0 && !isGrounded && !GetComponent<StateController>().isChanging && !holdForGliding)
             {
                 //change back to human by pressing jump mid air
                 GetComponent<StateController>().isChanging = true;
@@ -432,7 +433,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 stateController.lama = false;
                 StartCoroutine(GetComponent<StateController>().changeModell(1));
             }
-            if (holdForGliding && playerInput.CharacterControls.Jump.ReadValue<float>() == 0)
+            if (holdForGliding && input.jumpValue == 0)
             {
                 //only if hold For gliding is true
                 //change back to human by releasing jump button mid air
@@ -474,7 +475,7 @@ public class ThirdPersonMovement : MonoBehaviour
             }
             */
 
-            if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 & !isInCooldown)
+            if (input.jumpValue != 0 & !isInCooldown)
             {
                 action = true;
                 Invoke("EndOfAction", 1.2f);
@@ -503,13 +504,13 @@ public class ThirdPersonMovement : MonoBehaviour
             speed = 4f;
 
             //Jump
-            if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && isGrounded)
+            if (input.jumpValue != 0 && isGrounded)
             {
                 controller.slopeLimit = 45f;
                 velocity.y = Mathf.Sqrt(jumpHeight / 150 * -2f * gravity);
             }
 
-            if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 & !isInCooldown)
+            if (input.jumpValue != 0 & !isInCooldown)
             {
                 action = true;
                 //action = false;
@@ -536,14 +537,14 @@ public class ThirdPersonMovement : MonoBehaviour
             */
 
             //Jump
-            if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && isGrounded)
+            if (input.jumpValue != 0 && isGrounded)
             {
                 controller.slopeLimit = 100f;
                 velocity.y = Mathf.Sqrt(jumpHeight / 150 * -2f * gravity);
             }
             
 
-            if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 & !isInCooldown)
+            if (input.jumpValue != 0 & !isInCooldown)
             {
                 action = true;
                 Invoke("EndOfAction", 1.2f);
@@ -652,8 +653,8 @@ public class ThirdPersonMovement : MonoBehaviour
                 yield break;
             }
             speed = dashSpeed;
-            float horizontal = playerInput.CharacterControls.Move.ReadValue<Vector2>().x;
-            float vertical = playerInput.CharacterControls.Move.ReadValue<Vector2>().y;
+            float horizontal = input.moveValue.x;
+            float vertical = input.moveValue.y;
             Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
             float targetAngle = cam.eulerAngles.y;
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
