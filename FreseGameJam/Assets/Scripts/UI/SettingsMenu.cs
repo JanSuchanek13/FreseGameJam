@@ -41,11 +41,11 @@ public class SettingsMenu : MonoBehaviour
             //Debug.Log("Loaded a Sound Value of:" + SoundSlider.value);
             audioMixer.SetFloat("volume", SoundSlider.value);
         }
-        if (PlayerPrefs.HasKey("controlsSettings"))
+        if (PlayerPrefs.HasKey("controlsSettings") && controlsDropdown!=null)
         {
             controlsDropdown.value = PlayerPrefs.GetInt("controlsSettings");
         }
-        if (PlayerPrefs.HasKey("glidingSettings"))
+        if (PlayerPrefs.HasKey("glidingSettings") && glidingToggle!=null)
         {
             if (PlayerPrefs.GetInt("glidingSettings") > 0)
             {
