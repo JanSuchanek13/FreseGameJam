@@ -413,7 +413,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""da5e53bf-e1af-4dac-9b88-0a81e52279c2"",
                     ""path"": ""<Gamepad>/rightStickPress"",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""CamToggle"",
