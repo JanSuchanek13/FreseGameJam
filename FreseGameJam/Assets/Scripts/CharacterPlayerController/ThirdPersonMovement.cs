@@ -345,7 +345,7 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             //Move 
             float speedInput = Math.Abs(horizontal) + Math.Abs(vertical); //add up Move Input
-            speed = speedInput * 6;
+            speed = speedInput * (6*.65f); // jan you had *6 hier, so input 1 == 6 all the time
             animationSpeed = speedInput;
 
             //Jump
