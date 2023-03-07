@@ -91,7 +91,7 @@ public class InputHandler : MonoBehaviour
     private void SetJump(InputAction.CallbackContext ctx)
     {
         jumpValue = ctx.ReadValue<float>();
-        Debug.Log(jumpValue);
+        //Debug.Log(jumpValue);
     }
 
 

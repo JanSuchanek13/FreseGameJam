@@ -16,6 +16,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public Transform cam;
 
     public float speed = 6f;
+    public float humanSpeed = 6f;
 
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
@@ -44,6 +45,8 @@ public class ThirdPersonMovement : MonoBehaviour
     public LayerMask SlideMasks;
     private float rayDistance = 0.31f;
 
+    
+
     //for Animation
     public bool idle;
     public bool walking;
@@ -57,11 +60,16 @@ public class ThirdPersonMovement : MonoBehaviour
     public ParticleSystem dash02;
     public ParticleSystem buildingup;
     public ParticleSystem runningDust;
+    public ParticleSystem jumpingDust;
 
 
     //cooldown
     bool isInCooldown;
     public float cooldownTime = 0.5f;
+
+    //Sound
+    [Header("Sounds:")]
+    public AudioSource jumpSound;
 
     //coyote time
     [Header("CoyoteTime:")]
@@ -254,7 +262,7 @@ public class ThirdPersonMovement : MonoBehaviour
     {
 
         // animation
-        if (input.moveValue.x != 0 || input.moveValue.y != 0)
+        if ((input.moveValue.x != 0 || input.moveValue.y != 0) && isCoyoteGrounded)
         {
             walking = true;
             runningDust.gameObject.SetActive(true);
@@ -345,19 +353,25 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             //Move 
             float speedInput = Math.Abs(horizontal) + Math.Abs(vertical); //add up Move Input
-            speed = speedInput * (6*.65f); // jan you had *6 hier, so input 1 == 6 all the time
+            speed = speedInput * (humanSpeed*.65f); // jan you had *6 hier, so input 1 == 6 all the time
             animationSpeed = speedInput;
 
             //Jump
+            if (isCoyoteGrounded)
+            {
+                jumpingDust.gameObject.SetActive(false);
+                jumping = false;
+            }
             if (input.jumpValue !=0 && isCoyoteGrounded)
             {
                 controller.stepOffset = 0;
                 jumping = true; //animation
                 //controller.slopeLimit = 100f;
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-
-                
+                jumpingDust.gameObject.SetActive(true);
+                jumpSound.Play();
             }
+            
             
 
             //Gravity

@@ -10,6 +10,11 @@ public class AnimationController : MonoBehaviour
     [SerializeField] AudioSource walking_Sound;
     [SerializeField] AudioSource falling_Sound;
 
+    [Header("Walking Sound Array:")]
+    [SerializeField] AudioSource[] arrayOfWalkingSounds;
+    private AudioSource currentSound;
+    bool isPlaying = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,7 +39,15 @@ public class AnimationController : MonoBehaviour
         //transform.rotation = Quaternion.EulerAngles(Vector3.zero);
 
         animator.SetBool("isRunning", Movement.walking);
-        walking_Sound.enabled = Movement.walking;
+        //walking_Sound.enabled = Movement.walking;
+        if (Movement.walking)
+        {
+            PlayArray();
+        }
+        else if(currentSound!=null)
+        {
+            currentSound.Stop();
+        }
         animator.SetFloat("animationSpeed", Movement.animationSpeed);
 
         animator.SetBool("isFalling", Movement.falling);
@@ -44,12 +57,22 @@ public class AnimationController : MonoBehaviour
 
         animator.SetBool("isJumping", Movement.jumping);
 
-        if (GetComponentInParent<StateController>().frog)
+        if (GetComponentInParent<StateController>().human && Movement.jumping)
         {
-            animator.SetBool("isJumping", Movement.jumping);
+            ;
         }
 
         
         
+    }
+
+    private void PlayArray()
+    {
+        if (!isPlaying || !currentSound.isPlaying)
+        {
+            currentSound = arrayOfWalkingSounds[Random.Range(0, arrayOfWalkingSounds.Length)];
+            currentSound.Play();
+            isPlaying = true;
+        }
     }
 }
