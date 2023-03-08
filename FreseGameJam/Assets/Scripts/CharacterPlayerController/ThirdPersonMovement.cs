@@ -304,7 +304,7 @@ public class ThirdPersonMovement : MonoBehaviour
         //Check Ground
         //controller = GetComponent<CharacterController>();
 
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance * 2, groundMask);
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance * 2, groundMask, QueryTriggerInteraction.Ignore);
         if (!isGrounded && velocity.y < -15 && movingDownwards || forcedFalling)
         {
             falling = true; //animation
@@ -316,7 +316,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
         if (coyoteTime)
         {
-            if(Physics.CheckSphere(groundCheck.position, groundDistance, groundMask))
+            if(Physics.CheckSphere(groundCheck.position, groundDistance, groundMask, QueryTriggerInteraction.Ignore))
             {
                 isCoyoteGrounded = true;
             }
@@ -331,7 +331,7 @@ public class ThirdPersonMovement : MonoBehaviour
             }
         }
         
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask, QueryTriggerInteraction.Ignore);
         if (isGrounded && velocity.y < 0.5) //is falling
         {
             controller.stepOffset = 0.5f;
@@ -636,7 +636,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     private void CoyoteTime()
     {
-        isCoyoteGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        isCoyoteGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask, QueryTriggerInteraction.Ignore);
         
     }
 
