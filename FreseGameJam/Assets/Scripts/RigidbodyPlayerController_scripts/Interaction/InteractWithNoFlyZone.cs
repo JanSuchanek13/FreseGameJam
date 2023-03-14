@@ -43,7 +43,7 @@ public class InteractWithNoFlyZone : MonoBehaviour
         AudioSource _randomTrack = arrayOfWindSounds[Random.Range(0, arrayOfWindSounds.Length)];
         
         // Random pitch:
-        float _randomPitch = Random.Range(.75f, 1.25f);
+        float _randomPitch = Random.Range(.85f, 1.15f);
         _randomTrack.pitch = _randomPitch;
         
         // Get sound length for the reset:

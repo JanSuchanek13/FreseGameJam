@@ -6,6 +6,7 @@ public class CloseQuarterCamera : MonoBehaviour
     // public variables:
     public bool closeQuarterCameraIsActive = false;
     public bool inCustscene = false;
+    public GameObject firstPersonCamera;
 
     // local variables:
     private GameObject _lastTriggerHit;
@@ -17,6 +18,11 @@ public class CloseQuarterCamera : MonoBehaviour
     {
         _cameraRigFar = this.transform.GetChild(0).gameObject;
         _cameraRigClose = this.transform.GetChild(1).gameObject;
+
+        if(firstPersonCamera != null)
+        {
+            _cameraRigClose = firstPersonCamera;
+        }
     }
 
     private void OnTriggerEnter(Collider other)

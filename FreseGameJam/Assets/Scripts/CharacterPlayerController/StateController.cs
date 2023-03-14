@@ -42,9 +42,9 @@ public class StateController : MonoBehaviour
     [SerializeField] GameObject jesusVisuell;
 
 
-    [SerializeField] AudioSource PickUp_Sound;
-    [SerializeField] AudioSource PickUp_Sound2;
-    [SerializeField] AudioSource Friend_Sound;
+    [SerializeField] AudioSource PickUpCrown_Sound;
+    [SerializeField] AudioSource PickUpNewForm_Sound;
+    [SerializeField] AudioSource Friend_Sound; // currently not used
 
     CollectedCrowns CollectedCrowns;
 
@@ -78,7 +78,7 @@ public class StateController : MonoBehaviour
         {
             //Debug.Log("hit:Crane");
             availableCrane = true;
-            PickUp_Sound2.enabled = true;
+            PickUpNewForm_Sound.enabled = true;
             Destroy(other.gameObject, .3f);
             PlayerPrefs.SetInt("State" + 0, 1);
         }
@@ -86,7 +86,7 @@ public class StateController : MonoBehaviour
         {
             //Debug.Log("hit:Frog");
             availableFrog = true;
-            PickUp_Sound2.enabled = true;
+            PickUpNewForm_Sound.enabled = true;
             Destroy(other.gameObject, .3f);
             PlayerPrefs.SetInt("State" + 0, 5);
         }
@@ -95,7 +95,7 @@ public class StateController : MonoBehaviour
         {
             //Debug.Log("hit:Capricorn");
             availableCapricorn = true;
-            PickUp_Sound2.enabled = true;
+            PickUpNewForm_Sound.enabled = true;
             Destroy(other.gameObject, .3f);
             PlayerPrefs.SetInt("State" + 0, 2);
         }
@@ -103,7 +103,7 @@ public class StateController : MonoBehaviour
         {
             //Debug.Log("hit:Lama");
             availableLama = true;
-            PickUp_Sound2.enabled = true;
+            PickUpNewForm_Sound.enabled = true;
             Destroy(other.gameObject, .3f);
             PlayerPrefs.SetInt("State" + 0, 3);
         }
@@ -111,7 +111,7 @@ public class StateController : MonoBehaviour
         {
             Debug.Log("hit:Jesus");
             availableJesus = true;
-            PickUp_Sound2.enabled = true;
+            PickUpNewForm_Sound.enabled = true;
             Destroy(other.gameObject, .3f);
             PlayerPrefs.SetInt("State" + 0, 4);
         }
@@ -125,7 +125,7 @@ public class StateController : MonoBehaviour
             PlayerPrefs.SetInt("crowns"+ 0, crowns[0] + 1);
             Debug.Log(PlayerPrefs.GetInt("crowns"));
 
-            PickUp_Sound.Play(0);
+            PickUpCrown_Sound.Play(0);
             //PickUp_Sound.enabled = true;
             // PickUp_Sound.enabled = false;
             //Destroy(other.gameObject);
@@ -411,6 +411,7 @@ public class StateController : MonoBehaviour
         lamaVisuell.SetActive(false);
         jesusVisuell.SetActive(false);
 
+        // play sound for transformation here!
 
 
         //change to new form
