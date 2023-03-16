@@ -18,6 +18,8 @@ public class InputHandler : MonoBehaviour
     public bool jumpTriggerd;
     [Tooltip("Current Move Input")]
     public Vector2 moveValue;
+    [Tooltip("Current Mouse Input")]
+    public Vector2 mouseValue;
 
     [Header("REFERENCE")]
     private PlayerInput input;
@@ -46,6 +48,9 @@ public class InputHandler : MonoBehaviour
                 input.CharacterControlsKeyboard.Move.performed += SetMove;
                 input.CharacterControlsKeyboard.Move.canceled += SetMove;
 
+                input.CharacterControlsKeyboard.MouseLook.performed += SetMouse;
+                input.CharacterControlsKeyboard.MouseLook.canceled += SetMouse;
+
                 input.CharacterControlsKeyboard.Jump.performed += SetJump;
                 input.CharacterControlsKeyboard.Jump.canceled += SetJump;
                 break;
@@ -55,6 +60,9 @@ public class InputHandler : MonoBehaviour
 
                 input.CharacterControlsController.Move.performed += SetMove;
                 input.CharacterControlsController.Move.canceled += SetMove;
+
+                input.CharacterControlsKeyboard.MouseLook.performed += SetMouse;
+                input.CharacterControlsKeyboard.MouseLook.canceled += SetMouse;
 
                 input.CharacterControlsController.Jump.performed += SetJump;
                 input.CharacterControlsController.Jump.canceled += SetJump;
@@ -70,6 +78,9 @@ public class InputHandler : MonoBehaviour
                 input.CharacterControlsKeyboard.Move.performed -= SetMove;
                 input.CharacterControlsKeyboard.Move.canceled -= SetMove;
 
+                input.CharacterControlsKeyboard.MouseLook.performed -= SetMouse;
+                input.CharacterControlsKeyboard.MouseLook.canceled -= SetMouse;
+
                 input.CharacterControlsKeyboard.Jump.performed -= SetJump;
                 input.CharacterControlsKeyboard.Jump.canceled -= SetJump;
 
@@ -79,6 +90,9 @@ public class InputHandler : MonoBehaviour
             case ControlType.Controller:
                 input.CharacterControlsController.Move.performed -= SetMove;
                 input.CharacterControlsController.Move.canceled -= SetMove;
+
+                input.CharacterControlsKeyboard.MouseLook.performed -= SetMouse;
+                input.CharacterControlsKeyboard.MouseLook.canceled -= SetMouse;
 
                 input.CharacterControlsController.Jump.performed -= SetJump;
                 input.CharacterControlsController.Jump.canceled -= SetJump;
@@ -99,6 +113,11 @@ public class InputHandler : MonoBehaviour
     private void SetMove(InputAction.CallbackContext ctx)
     {
         moveValue = ctx.ReadValue<Vector2>();
+    }
+
+    private void SetMouse(InputAction.CallbackContext ctx)
+    {
+        mouseValue = ctx.ReadValue<Vector2>();
     }
 
     private void Update()
