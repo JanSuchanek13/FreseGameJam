@@ -61,7 +61,10 @@ Small Gong Soft Hit RAW- cabled mess from pixabay.com
 plastic crinkling - ultraaxvii from pixabay.com
 20131120 Booksounds ZoomH1xy - Soundscape Leuphana from pixabay.com
 https://pixabay.com/de/sound-effects/rustling-fabric-and-paper-96012/
-
+cloth-rustle from pixabay.com
+human_clothpass_walking from pixabay.com
+flapping-cloth from pixabay.com
+cloth-rustling from pixabay.com
 
 
 not public domain, needs attribution:
