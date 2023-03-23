@@ -4,78 +4,133 @@ using UnityEngine;
 
 public class BackgroundSoundPlayer : MonoBehaviour
 {
-    #region variables
+    #region variables:
     [Header("Insert all Background-Music AudioSources here:")]
     [SerializeField] AudioSource[] arrayOfBackgroundMusic; // put all backgroundtracks in here.
-    [Header("Optionall Settings(!):")]
-    [SerializeField] AudioSource playThisSongFirst; // if a song is put in here, that will be the first song played on load
-    [SerializeField] bool playOnlyTheSameSongTheWholeTime = false; // kind of redundant, why would we want/need this?
+    [Space(10)]
+
+    [Header("Background Sound Settings:")]
+    [SerializeField] bool _turnMusicOffDuringCutscenes = true;
+    [SerializeField] bool _lowerMusicVolumeDuringCutscenes = false;
+    [SerializeField] AudioSource _playThisSongFirst; // if a song is put in here, that will be the first song played on load
 
     private AudioSource _randomTrack;
     private AudioSource _nextRandomTrack;
-    private AudioSource _activeTracK; // this is for "FocusPlayerViewOnObject"-Script to pause the background music on demand;
-#endregion
+    private AudioSource _activeTrack; // this is for "FocusPlayerViewOnObject"-Script to pause the background music on demand;
+
+    [SerializeField] float _lowerVolumeTo = 0.5f;
+    float _timePausedAmt = 0.0f;
+    bool _timePaused;
+    #endregion
 
     private void Start()
     {
-        Invoke("PlayTrack", .1f); // for some reason, if the "PlayTrack()" Logic was here, all would be called, except the .Play(); part = no sound played!
+        Invoke("PlayTrack", .1f); 
     }
+
     void PlayTrack()
     {
-        if (playThisSongFirst == null) // play random background track:
+        if (_playThisSongFirst == null) // play random background track:
         {
             _randomTrack = arrayOfBackgroundMusic[Random.Range(0, arrayOfBackgroundMusic.Length)];
             float _lengthOfTrack = _randomTrack.clip.length;
-            //Debug.Log("this song is " + _lengthOfTrack + " seconds long!");
-            Invoke("PlayNextTrack", _lengthOfTrack);
-            //Debug.Log("this songs name is " + _randomTrack.clip.name);
             _randomTrack.Play();
-            _activeTracK = _randomTrack;
+            _activeTrack = _randomTrack;
+
+            StartCoroutine(PlayNextTrack(_lengthOfTrack));
         }else // play a specific track first:
         {
-            //Debug.Log("this track: \"" + playThisSongFirst + "\" was explicetly chosen to be the first track");
-            playThisSongFirst.Play();
-            _activeTracK = playThisSongFirst;
-            if (playOnlyTheSameSongTheWholeTime)
+            _playThisSongFirst.Play();
+            _activeTrack = _playThisSongFirst;
+            float _lengthOfTrack = _activeTrack.clip.length;
+
+            StartCoroutine(PlayNextTrack(_lengthOfTrack));
+        }
+    }
+
+    IEnumerator PlayNextTrack(float _lengthOfCurrentTrack)
+    {
+        yield return new WaitForSeconds(_lengthOfCurrentTrack);
+
+        if (_timePausedAmt == 0.0)
+        {
+            _nextRandomTrack = arrayOfBackgroundMusic[Random.Range(0, arrayOfBackgroundMusic.Length)];
+            if (_nextRandomTrack == _randomTrack) // prevent the same song playing twice in a row:
             {
-                //Debug.Log("this track: " + playThisSongFirst + " is on going to loop the whole time");
-                Invoke("PlayTrack", playThisSongFirst.clip.length); // loop this song indefinitely:
+                StartCoroutine(PlayNextTrack(0.0f));
+                yield break;
             }else
             {
-                Invoke("PlayNextTrack", playThisSongFirst.clip.length); // play next, random song after this:
-
+                _randomTrack = _nextRandomTrack;
             }
-        }
-    }
-    public void PlayNextTrack()
-    {
-        Debug.Log("playing next background track");
-        _nextRandomTrack = arrayOfBackgroundMusic[Random.Range(0, arrayOfBackgroundMusic.Length)];
-        if (_nextRandomTrack == _randomTrack)
-        {
-            // this gets executed if the new track is the same as the last one:
-            PlayNextTrack();
-            Debug.Log("The next song would be the same as the one that just played - searching new song now!");
-            return;
+
+            _randomTrack.Play();
+            _activeTrack = _randomTrack;
+            float _lengthOfTrack = _randomTrack.clip.length;
+            StartCoroutine(PlayNextTrack(_lengthOfTrack));
         }else
         {
-            // if new track was found, replace the old one with the new one:
-            _randomTrack = _nextRandomTrack;
-            Debug.Log("this songs name is \"" + _randomTrack.clip.name + "\"");
-        }
+            Debug.Log("2");
 
-        _randomTrack.Play();
-        _activeTracK = _randomTrack;
-        float _lengthOfTrack = _randomTrack.clip.length;
-        Debug.Log("this song is " + _lengthOfTrack + " seconds long!");
-        Invoke("PlayNextTrack", _lengthOfTrack);
+            Debug.Log("game was paused, now adding: " + _timePausedAmt + " to current track to allow to catch up!");
+            StartCoroutine(PlayNextTrack(_timePausedAmt));
+
+            _timePausedAmt = 0.0f; // has to be reset here, otherwise after pausing, all future tracks will be delayed by this amount:
+            
+            yield break;
+        }
     }
+
+    public void LowerVolume()
+    {
+        _activeTrack.volume *= _lowerVolumeTo;
+    }
+    public void IncreaseVolume()
+    {
+        _activeTrack.volume /= _lowerVolumeTo;
+    }
+
     public void PauseMusic()
     {
-        _activeTracK.Pause();
+        if (_turnMusicOffDuringCutscenes)
+        {
+            _activeTrack.Pause();
+            StartPauseTimer();
+        }
+        if (_lowerMusicVolumeDuringCutscenes)
+        {
+            LowerVolume();
+        }
     }
+
     public void UnpauseMusic()
     {
-        _activeTracK.UnPause();
+        if (_turnMusicOffDuringCutscenes)
+        {
+            _activeTrack.UnPause();
+            EndPauseTimer();
+        }
+        if (_lowerMusicVolumeDuringCutscenes)
+        {
+            IncreaseVolume();
+        }
+    }
+
+    void StartPauseTimer()
+    {
+        _timePaused = true;
+    }
+
+    void EndPauseTimer()
+    {
+        _timePaused = false;
+    }
+
+    private void Update()
+    {
+        if (_timePaused)
+        {
+            _timePausedAmt += Time.deltaTime;
+        }
     }
 }
