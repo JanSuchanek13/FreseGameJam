@@ -86,7 +86,9 @@ public class PlayWasPressed : MonoBehaviour
             Invoke("StartNewRound", delayBeforeStarting);
         }
 
-        firesInBoat_1.SetActive(true);
+        StartCoroutine(LightningStrike());
+
+        //firesInBoat_1.SetActive(true); now in lighting strike
 
         // makes friend turn to look at flames: But this doesnt look good ingame:
         //friendInBoat.GetComponent<LookAtTarget>().enabled = false; // stop looking at friend.
@@ -118,5 +120,16 @@ public class PlayWasPressed : MonoBehaviour
     {
         _startFading = true;
         firesInBoat_2.SetActive(true);
+    }
+
+    IEnumerator LightningStrike()
+    {
+        //Susi blitzes here
+        // licht
+
+        yield return new WaitForSeconds(5); // 5 == replace by time the animation takes
+
+        // sound //it be optional, dont kill me
+        firesInBoat_1.SetActive(true);
     }
 }
