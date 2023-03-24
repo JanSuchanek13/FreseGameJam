@@ -65,6 +65,8 @@ cloth-rustle from pixabay.com
 human_clothpass_walking from pixabay.com
 flapping-cloth from pixabay.com
 cloth-rustling from pixabay.com
+Thunderstorm lightning strike from pixabay.com
+
 
 
 not public domain, needs attribution:
