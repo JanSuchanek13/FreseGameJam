@@ -14,6 +14,8 @@ public class ThirdPersonMovement : MonoBehaviour
     public CharacterController controller;
     private StateController stateController;
     public Transform cam;
+    public GameObject thirdPersonCam;
+    public GameObject craneCam;
 
     public float speed = 6f;
     public float humanSpeed = 6f;
@@ -356,6 +358,10 @@ public class ThirdPersonMovement : MonoBehaviour
             speed = speedInput * humanSpeed; // jan you had *6 hier, so input 1 == 6 all the time
             animationSpeed = speedInput;
 
+            //Cam
+            thirdPersonCam.SetActive(true);
+            craneCam.SetActive(false);
+
             //Jump
             if (isCoyoteGrounded)
             {
@@ -417,6 +423,10 @@ public class ThirdPersonMovement : MonoBehaviour
             {
                 speed = 6f; //fly speed
             }
+
+            //Cam
+            thirdPersonCam.SetActive(false);
+            craneCam.SetActive(true);
 
             //No Player Input -> fly forward
             if (input.moveValue.x == 0 && input.moveValue.y == 0)

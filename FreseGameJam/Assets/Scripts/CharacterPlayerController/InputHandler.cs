@@ -61,8 +61,8 @@ public class InputHandler : MonoBehaviour
                 input.CharacterControlsController.Move.performed += SetMove;
                 input.CharacterControlsController.Move.canceled += SetMove;
 
-                input.CharacterControlsKeyboard.MouseLook.performed += SetMouse;
-                input.CharacterControlsKeyboard.MouseLook.canceled += SetMouse;
+                input.CharacterControlsController.MouseLook.performed += SetMouse;
+                input.CharacterControlsController.MouseLook.canceled += SetMouse;
 
                 input.CharacterControlsController.Jump.performed += SetJump;
                 input.CharacterControlsController.Jump.canceled += SetJump;
@@ -91,8 +91,8 @@ public class InputHandler : MonoBehaviour
                 input.CharacterControlsController.Move.performed -= SetMove;
                 input.CharacterControlsController.Move.canceled -= SetMove;
 
-                input.CharacterControlsKeyboard.MouseLook.performed -= SetMouse;
-                input.CharacterControlsKeyboard.MouseLook.canceled -= SetMouse;
+                input.CharacterControlsController.MouseLook.performed -= SetMouse;
+                input.CharacterControlsController.MouseLook.canceled -= SetMouse;
 
                 input.CharacterControlsController.Jump.performed -= SetJump;
                 input.CharacterControlsController.Jump.canceled -= SetJump;

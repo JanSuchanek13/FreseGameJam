@@ -8,6 +8,7 @@ public class CinemachinePOVExtention : CinemachineExtension
     public float horizontalSpeed = 10f;
     public float verticalSpeed = 10f;
     public float clampAngle = 80f;
+    public float controllerMultiplier = 5;
 
     private Vector3 startingRotation;
     private InputHandler playerInput;
@@ -26,6 +27,10 @@ public class CinemachinePOVExtention : CinemachineExtension
             {
                 if (startingRotation == null) startingRotation = transform.localRotation.eulerAngles;
                 Vector2 deltaInput = playerInput.mouseValue;
+                if (playerInput.controlType == InputHandler.ControlType.Controller)
+                {
+                    deltaInput *= controllerMultiplier;
+                }
                 startingRotation.x += deltaInput.x * verticalSpeed * Time.deltaTime;
                 startingRotation.y += deltaInput.y * horizontalSpeed * Time.deltaTime;
                 startingRotation.y = Mathf.Clamp(startingRotation.y, -clampAngle, clampAngle);
