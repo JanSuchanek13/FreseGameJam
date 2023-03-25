@@ -10,6 +10,7 @@ public class StateController : MonoBehaviour
 
 
 
+
     int currentLevel;
 
     int[] crowns = new int[3];
@@ -45,6 +46,7 @@ public class StateController : MonoBehaviour
     [SerializeField] AudioSource PickUpCrown_Sound;
     [SerializeField] AudioSource PickUpNewForm_Sound;
     [SerializeField] AudioSource Friend_Sound; // currently not used
+    [SerializeField] AudioSource transformationSound;
 
     CollectedCrowns CollectedCrowns;
 
@@ -78,7 +80,7 @@ public class StateController : MonoBehaviour
         {
             //Debug.Log("hit:Crane");
             availableCrane = true;
-            PickUpNewForm_Sound.enabled = true;
+            PickUpNewForm_Sound.Play();
             Destroy(other.gameObject, .3f);
             PlayerPrefs.SetInt("State" + 0, 1);
         }
@@ -86,7 +88,7 @@ public class StateController : MonoBehaviour
         {
             //Debug.Log("hit:Frog");
             availableFrog = true;
-            PickUpNewForm_Sound.enabled = true;
+            PickUpNewForm_Sound.Play();
             Destroy(other.gameObject, .3f);
             PlayerPrefs.SetInt("State" + 0, 5);
         }
@@ -95,7 +97,7 @@ public class StateController : MonoBehaviour
         {
             //Debug.Log("hit:Capricorn");
             availableCapricorn = true;
-            PickUpNewForm_Sound.enabled = true;
+            PickUpNewForm_Sound.Play();
             Destroy(other.gameObject, .3f);
             PlayerPrefs.SetInt("State" + 0, 2);
         }
@@ -103,7 +105,7 @@ public class StateController : MonoBehaviour
         {
             //Debug.Log("hit:Lama");
             availableLama = true;
-            PickUpNewForm_Sound.enabled = true;
+            PickUpNewForm_Sound.Play();
             Destroy(other.gameObject, .3f);
             PlayerPrefs.SetInt("State" + 0, 3);
         }
@@ -111,7 +113,7 @@ public class StateController : MonoBehaviour
         {
             Debug.Log("hit:Jesus");
             availableJesus = true;
-            PickUpNewForm_Sound.enabled = true;
+            PickUpNewForm_Sound.Play();
             Destroy(other.gameObject, .3f);
             PlayerPrefs.SetInt("State" + 0, 4);
         }
@@ -403,6 +405,7 @@ public class StateController : MonoBehaviour
     public IEnumerator changeModell(float state)
     {
         //change to ball
+        transformationSound.Play();
         ballVisuell.SetActive(true);
         humanVisuell.SetActive(false);
         frogVisuell.SetActive(false);

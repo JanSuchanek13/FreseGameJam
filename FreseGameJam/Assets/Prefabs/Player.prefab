@@ -1518,8 +1518,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 400942238798f1b45aa36bd8faaf7205, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walking_Sound: {fileID: 8074070739945969367}
-  falling_Sound: {fileID: 1342604685332504302}
+  walking_Sound: {fileID: 1342604685332504302}
+  falling_Sound: {fileID: 8074070739945969367}
   arrayOfWalkingSounds:
   - {fileID: 1342604685332504302}
 --- !u!1 &1711481807848461352
@@ -6861,6 +6861,8 @@ MonoBehaviour:
   coyoteTimeDelay: 0.8
   isCoyoteGrounded: 0
   holdForGliding: 0
+  craneSound: {fileID: 4052343734629796387}
+  craneVFX: {fileID: 5552182655005128248}
   chargeTime: 0.8
   dashWidth: 2
   dashSpeed: 25
@@ -6911,6 +6913,7 @@ MonoBehaviour:
   PickUpCrown_Sound: {fileID: 1127897167326219004}
   PickUpNewForm_Sound: {fileID: 6588470928053153126}
   Friend_Sound: {fileID: 0}
+  transformationSound: {fileID: 6431076698138999427}
 --- !u!114 &8643269239055419899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7196,8 +7199,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2345589368707147652}
-  m_LocalRotation: {x: 0.028298937, y: -0.40986693, z: 0.0127233155, w: 0.91161746}
-  m_LocalPosition: {x: 6.6562943, y: 3.053361, z: -5.9674864}
+  m_LocalRotation: {x: 0.030975532, y: -0.057885718, z: 0.0017969206, w: 0.99784094}
+  m_LocalPosition: {x: 4.406951, y: 3.203818, z: -7.5663376}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7765262410060499429}
@@ -7254,7 +7257,7 @@ MonoBehaviour:
           m_CallState: 2
   m_LegacyBlendHint: 0
   m_YAxis:
-    Value: 0.73078746
+    Value: 0.7476804
     m_SpeedMode: 0
     m_MaxSpeed: 8
     m_AccelTime: 0.4
@@ -7278,7 +7281,7 @@ MonoBehaviour:
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_XAxis:
-    Value: -48.1232
+    Value: -30.218307
     m_SpeedMode: 0
     m_MaxSpeed: 1000
     m_AccelTime: 0.4
@@ -7420,7 +7423,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2410274485203556345}
-  m_LocalRotation: {x: 0.13313548, y: 0.0025214255, z: -0.00049957726, w: 0.9910945}
+  m_LocalRotation: {x: 0.14081337, y: -0.19997266, z: 0.04187347, w: 0.96872556}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -13658,9 +13661,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 400942238798f1b45aa36bd8faaf7205, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walking_Sound: {fileID: 2102815631861728770}
-  falling_Sound: {fileID: 6887086769049672186}
-  arrayOfWalkingSounds: []
+  walking_Sound: {fileID: 6887086769049672186}
+  falling_Sound: {fileID: 2102815631861728770}
+  arrayOfWalkingSounds:
+  - {fileID: 6887086769049672186}
 --- !u!1 &3785836512719736293
 GameObject:
   m_ObjectHideFlags: 0
@@ -23958,7 +23962,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4048439529830788691}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.00686592, y: -0.94795954, z: 0.0571828}
+  m_LocalPosition: {x: -0.00686592, y: -0.577, z: 0.057}
   m_LocalScale: {x: 0.44, y: 0.44, z: 0.55}
   m_Children: []
   m_Father: {fileID: 3427320715156046064}
@@ -28791,7 +28795,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2157486414338931409
 Transform:
   m_ObjectHideFlags: 0
@@ -40148,7 +40152,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3427320715156046064
 Transform:
   m_ObjectHideFlags: 0
@@ -40978,7 +40982,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: 3.053361, z: -8.939639}
+  m_FollowOffset: {x: 0, y: 3.203818, z: -8.75618}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -40998,7 +41002,7 @@ MonoBehaviour:
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_XAxis:
-    Value: -48.1232
+    Value: -30.218307
     m_SpeedMode: 0
     m_MaxSpeed: 300
     m_AccelTime: 0.1
@@ -41310,7 +41314,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: 3.053361, z: -8.939639}
+  m_FollowOffset: {x: 0, y: 3.203818, z: -8.75618}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -41330,7 +41334,7 @@ MonoBehaviour:
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_XAxis:
-    Value: -48.1232
+    Value: -30.218307
     m_SpeedMode: 0
     m_MaxSpeed: 300
     m_AccelTime: 0.1
@@ -46938,8 +46942,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7196021783925721269}
-  m_LocalRotation: {x: 0.09704612, y: 0.002537936, z: -0.00040765014, w: 0.9952766}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.10780557, y: 0.000000014901161, z: -0.0000000023283064, w: 0.99417204}
+  m_LocalPosition: {x: -3.5024722, y: -0.045341037, z: -0.72960085}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1550487569319834843}
@@ -47072,7 +47076,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7386192848422423785}
-  m_LocalRotation: {x: 0.11508594, y: 0.0025300682, z: -0.00045361184, w: 0.99335223}
+  m_LocalRotation: {x: 0.12316943, y: -0.20070127, z: 0.038229138, w: 0.9711266}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -47788,7 +47792,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &85133736512097592
 Transform:
   m_ObjectHideFlags: 0
@@ -48084,7 +48088,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: 3.053361, z: -8.939639}
+  m_FollowOffset: {x: 0, y: 3.203818, z: -8.75618}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -48104,7 +48108,7 @@ MonoBehaviour:
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_XAxis:
-    Value: -48.1232
+    Value: -30.218307
     m_SpeedMode: 0
     m_MaxSpeed: 300
     m_AccelTime: 0.1
@@ -48343,9 +48347,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 400942238798f1b45aa36bd8faaf7205, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walking_Sound: {fileID: 3471337243204708509}
-  falling_Sound: {fileID: 4205835069410707825}
-  arrayOfWalkingSounds: []
+  walking_Sound: {fileID: 4205835069410707825}
+  falling_Sound: {fileID: 3471337243204708509}
+  arrayOfWalkingSounds:
+  - {fileID: 4205835069410707825}
 --- !u!1 &7913955334200578633
 GameObject:
   m_ObjectHideFlags: 0

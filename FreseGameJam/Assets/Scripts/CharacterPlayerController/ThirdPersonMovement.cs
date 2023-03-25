@@ -83,6 +83,9 @@ public class ThirdPersonMovement : MonoBehaviour
     [Header("hold for Gliding:")]
     public bool holdForGliding;
 
+    [Header("Crane Juice:")]
+    public GameObject craneSound;
+    public GameObject craneVFX;
 
     //for capricorn Dash
     [Header("Capricorn Dash Stats:")]
@@ -226,6 +229,10 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void Update()
     {
+        //crane juice
+        craneSound.SetActive(stateController.crane);
+        craneVFX.SetActive(stateController.crane);
+
         if (GetComponent<StateController>().human)
         {
             //if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && !isGrounded && !(Physics.CheckSphere(groundCheck.position, groundDistance * 7, groundMask, QueryTriggerInteraction.Ignore)) && !GetComponent<StateController>().isChanging) // double jump change you into crane
