@@ -11,10 +11,14 @@ public class PlayWasPressed : MonoBehaviour
     [SerializeField] GameObject leftBoat;
     [SerializeField] GameObject rightBoat;
     [SerializeField] GameObject fadeToBlackBlende;
+    [SerializeField] GameObject lightningEffect;
     private Image fadeToBlackBlende_Image;
     [SerializeField] AudioSource panickedScream;
     [SerializeField] AudioSource helpScream;
+    [SerializeField] AudioSource lightningSound;
+    [SerializeField] GameObject LightningLight;
     [SerializeField] float delayBeforeStarting = 5;
+    ParticleSystem LightningParticles;
     private bool _moveTowardIsland = false;
     private float _shuffleIncreaseIncrement;
     private float _speedIncreaseIncrement;
@@ -125,11 +129,43 @@ public class PlayWasPressed : MonoBehaviour
     IEnumerator LightningStrike()
     {
         //Susi blitzes here
-        // licht
 
+        // Enable the lightning effect (a game object with a flashing light or particle system)
+        GameObject lightningEffect = GameObject.Find("LightningEffect");
+        lightningEffect.SetActive(true);
+
+
+        LightningParticles = GetComponentInChildren<ParticleSystem>();
+        LightningParticles.Play();
+
+        // licht
+        /* Create a bright white light source
+        LightningLight = new LightObject();
+        LightningLight.color = Color.white;
+        LightningLight.Intensity = 10;
+        LightningLight.Range = 20;
+        LightningLight.Enabled = false;
+
+      
+
+        // Turn on the light for a short period of time to create a lightning flash effect
+        LightningLight.Enabled = true;
+        yield WaitForSeconds(0.1); // Adjust the duration to your liking
+        LightningLight.Enabled = false;   */
+
+
+
+        // Wait for a short time for the lightning effect to finish
         yield return new WaitForSeconds(5); // 5 == replace by time the animation takes
 
+        // Disable the lightning effect
+        lightningEffect.SetActive(false);
+
         // sound //it be optional, dont kill me
+        // Play the lightning sound effect
+        AudioSource lightningSound = GetComponent<AudioSource>();
+        lightningSound.Play();
+
         firesInBoat_1.SetActive(true);
     }
 }
