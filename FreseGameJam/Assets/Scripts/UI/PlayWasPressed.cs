@@ -5,20 +5,38 @@ using UnityEngine.UI;
 
 public class PlayWasPressed : MonoBehaviour
 {
+    [Header("Juice Elements when hitting Play:")]
     [SerializeField] GameObject friendInBoat;
     [SerializeField] GameObject firesInBoat_1;
     [SerializeField] GameObject firesInBoat_2;
     [SerializeField] GameObject leftBoat;
+    [Space(10)]
+
     [SerializeField] GameObject rightBoat;
+    [Space(10)]
+
     [SerializeField] GameObject fadeToBlackBlende;
-    [SerializeField] GameObject lightningEffect;
-    private Image fadeToBlackBlende_Image;
+    [Space(10)]
+
     [SerializeField] AudioSource panickedScream;
     [SerializeField] AudioSource helpScream;
-    [SerializeField] AudioSource lightningSound;
-    [SerializeField] GameObject LightningLight;
     [SerializeField] float delayBeforeStarting = 5;
-    ParticleSystem LightningParticles;
+
+    [Header("Lightning Strike:")]
+    [SerializeField] GameObject _lightningGO;
+    [SerializeField] GameObject _lightningLight;
+    [Space(5)]
+    [SerializeField] float _lightFlashDuration = 0.1f;
+    [Space(5)]
+    [SerializeField] float _timeWhenLowestPointReached = 0.5f;
+    [Space(5)]
+    [SerializeField] AudioSource _lightningSound;
+    [Space(5)]
+    [SerializeField] ParticleSystem _lightningParticles;
+
+
+    // private variables:
+    private Image _fadeToBlackBlende_Image;
     private bool _moveTowardIsland = false;
     private float _shuffleIncreaseIncrement;
     private float _speedIncreaseIncrement;
@@ -29,6 +47,7 @@ public class PlayWasPressed : MonoBehaviour
     private float _color_B_component;
     private float _color_A_component;
 
+
     void Start()
     {
         //Debug.Log("start was called");
@@ -37,17 +56,14 @@ public class PlayWasPressed : MonoBehaviour
         _speedIncreaseIncrement = 2.5f / ((delayBeforeStarting+1) * 50f);
         //Debug.Log(_speedIncreaseIncrement); // TST:
         _increaceColorAlphaIncrement = 255 / ((delayBeforeStarting * .6f) * 50f);
+        //_increaceColorAlphaIncrement = 255 / (((delayBeforeStarting - 1.0f) * .6f) * 50f); // -1 should help completly blacken the screen a second before delay runs up
         //Debug.Log(_increaceColorAlphaIncrement); // TST:
 
-        fadeToBlackBlende_Image = fadeToBlackBlende.GetComponent<Image>();
-        _color_R_component = fadeToBlackBlende_Image.color.r;
-        _color_G_component = fadeToBlackBlende_Image.color.g;
-        _color_B_component = fadeToBlackBlende_Image.color.b;
-        _color_A_component = fadeToBlackBlende_Image.color.a;
-        //image = GetComponent<Image>();
-
-
-        //colorOfMixture = new Color32((byte)color_R_component, (byte)color_G_component, (byte)color_B_component, (byte)color_A_component);
+        _fadeToBlackBlende_Image = fadeToBlackBlende.GetComponent<Image>();
+        _color_R_component = _fadeToBlackBlende_Image.color.r;
+        _color_G_component = _fadeToBlackBlende_Image.color.g;
+        _color_B_component = _fadeToBlackBlende_Image.color.b;
+        _color_A_component = _fadeToBlackBlende_Image.color.a;
     }
     void FixedUpdate()
     {
@@ -63,19 +79,20 @@ public class PlayWasPressed : MonoBehaviour
         }
         if (_startFading)
         {
-            if (_color_A_component != 255) // change color of splash to fully opaque
+            if (_color_A_component < 250) // change color of overlay to fully opaque
             {
-                //opaqueSpill = false;
-                //color_A_component = 255;
                 _color_A_component += _increaceColorAlphaIncrement;
                 var _increasedOpaqueness = new Color32((byte)_color_R_component, (byte)_color_G_component, (byte)_color_B_component, (byte)_color_A_component);
-                fadeToBlackBlende_Image.color = _increasedOpaqueness;
+                _fadeToBlackBlende_Image.color = _increasedOpaqueness;
+            }else
+            {
+                _color_A_component = 255; // set to max
+                var _increasedOpaqueness = new Color32((byte)_color_R_component, (byte)_color_G_component, (byte)_color_B_component, (byte)_color_A_component);
+                _fadeToBlackBlende_Image.color = _increasedOpaqueness;
+                
+                // done with fading:
+                _startFading = false;
             }
-
-            //var tempColor = fadeToBlackBlende_Image.color;
-           // tempColor.a += _increaceColorAlphaIncrement;
-           // fadeToBlackBlende_Image.color = tempColor;
-            //fadeToBlackBlende.GetComponent<Image>().GetComponent<Color32>().a += _increaceColorAlphaIncrement;
         }
     }
     public void ImmersePlayer(int ContinueOrNewRound)
@@ -90,26 +107,17 @@ public class PlayWasPressed : MonoBehaviour
             Invoke("StartNewRound", delayBeforeStarting);
         }
 
+        // call lightning:
         StartCoroutine(LightningStrike());
 
-        //firesInBoat_1.SetActive(true); now in lighting strike
-
-        // makes friend turn to look at flames: But this doesnt look good ingame:
-        //friendInBoat.GetComponent<LookAtTarget>().enabled = false; // stop looking at friend.
-        //friendInBoat.transform.LookAt(firesInBoat_1.transform);
-
-        float _randomPitch = Random.Range(0.9f, 1.2f);
-        panickedScream.pitch = _randomPitch;
-        panickedScream.Play();
-        helpScream.PlayDelayed(delayBeforeStarting/2f);
-
-        //_moveTowardIsland = true; // testing new "MoveTowardPoint" script:
+        // make boats move towards island:
         leftBoat.GetComponent<Shuffle>().enabled = false;
         rightBoat.GetComponent<Shuffle>().enabled = false;
         leftBoat.GetComponent<MoveTowardPoint>().MoveIt();
         rightBoat.GetComponent<MoveTowardPoint>().MoveIt();
 
-        Invoke("StartDelayedFade", delayBeforeStarting * .4f);
+        //Invoke("StartDelayedFade", delayBeforeStarting * .4f);
+        StartDelayedFade();
     }
     void StartNewRound()
     {
@@ -123,49 +131,58 @@ public class PlayWasPressed : MonoBehaviour
     void StartDelayedFade()
     {
         _startFading = true;
-        firesInBoat_2.SetActive(true);
     }
 
     IEnumerator LightningStrike()
     {
-        //Susi blitzes here
+        // little bit of a juicy delay before the lighting
+        yield return new WaitForSeconds(2.0f); // Adjust the duration to your liking
 
-        // Enable the lightning effect (a game object with a flashing light or particle system)
-        GameObject lightningEffect = GameObject.Find("LightningEffect");
-        lightningEffect.SetActive(true);
+        float _animationSpeedAdjustment = 0.5f; // tweak the speed here!
 
+        // lightning will animate automatically once awake:
+        _lightningGO.SetActive(true);
 
-        LightningParticles = GetComponentInChildren<ParticleSystem>();
-        LightningParticles.Play();
+        Animation _anim = _lightningGO.GetComponent<Animation>();
+        _anim["LightningStrike"].speed = _animationSpeedAdjustment;
 
-        // licht
-        /* Create a bright white light source
-        LightningLight = new LightObject();
-        LightningLight.color = Color.white;
-        LightningLight.Intensity = 10;
-        LightningLight.Range = 20;
-        LightningLight.Enabled = false;
+        // we need duration of the lightning animation to know when to turn it off:
+        float _durationOfLightningStrike = _lightningGO.GetComponent<Animation>().clip.length / _animationSpeedAdjustment; // pretend the animation is longer if its played slower!
+        _lightningSound.Play();
 
-      
+        // turn on the light for a short period of time to create a lightning-flash-effect:
+        _lightningLight.SetActive(true);
+        yield return new WaitForSeconds(_lightFlashDuration); // Adjust the duration to your liking
+        _lightningLight.SetActive(false);
 
-        // Turn on the light for a short period of time to create a lightning flash effect
-        LightningLight.Enabled = true;
-        yield WaitForSeconds(0.1); // Adjust the duration to your liking
-        LightningLight.Enabled = false;   */
+        // wait until the lowest point of the animation is reached (impact achieved):
+        yield return new WaitForSeconds((_timeWhenLowestPointReached / _animationSpeedAdjustment) - _lightFlashDuration); 
 
+        _lightningParticles.Play();
 
+        // get remainder of animation time and speed up the rest of animation:
+        _durationOfLightningStrike -= Time.deltaTime;
+        _animationSpeedAdjustment = 2.0f;
+        _anim["LightningStrike"].speed = _animationSpeedAdjustment;
+        _durationOfLightningStrike /= _animationSpeedAdjustment;
 
-        // Wait for a short time for the lightning effect to finish
-        yield return new WaitForSeconds(5); // 5 == replace by time the animation takes
+        // Wait for lightning animation to finish:
+        yield return new WaitForSeconds(_durationOfLightningStrike - 0.4f); // there is an odd delay where the GO just hangs there but is still in animation
 
         // Disable the lightning effect
-        lightningEffect.SetActive(false);
-
-        // sound //it be optional, dont kill me
-        // Play the lightning sound effect
-        AudioSource lightningSound = GetComponent<AudioSource>();
-        lightningSound.Play();
-
+        _lightningGO.SetActive(false);
         firesInBoat_1.SetActive(true);
+        
+        // play relevant sounds of people in boats:
+        float _randomPitch = Random.Range(1.2f, 1.5f);
+        // currently not used:
+        //panickedScream.pitch = _randomPitch;
+        //panickedScream.Play();
+
+        helpScream.pitch = _randomPitch;
+        helpScream.Play();
+
+        yield return new WaitForSeconds(1.5f);
+        firesInBoat_2.SetActive(true);
     }
 }
