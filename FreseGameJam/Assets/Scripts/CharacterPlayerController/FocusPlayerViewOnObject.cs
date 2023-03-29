@@ -29,6 +29,8 @@ public class FocusPlayerViewOnObject : MonoBehaviour
     bool _skippingCutscene = false;
     bool _inFocusMode = false;
 
+    [SerializeField] GameObject _skipUI;
+
     // public variables:
     public bool waitLonger = false;
     #endregion
@@ -68,19 +70,16 @@ public class FocusPlayerViewOnObject : MonoBehaviour
             StartCoroutine(TurnOffFocus(_lookAtThisForThisLong));
         }
 
-        _playerCharacter.GetComponent<ThirdPersonMovement>().enabled = false;
+        // stop all player input, this will cause avatar to stop, look at X and idle:
+        FindObjectOfType<InputHandler>().enabled = false;
         _turnPlayerTowardsObject = true;
 
-        focusCameraRig.GetComponent<CinemachineFreeLook>().LookAt = _focusTargetObject.transform; // turn camera:
+        // turn player-camera to focus X:
+        focusCameraRig.GetComponent<CinemachineFreeLook>().LookAt = _focusTargetObject.transform;
         focusCameraRig.SetActive(true);
 
-        // test JAN: // -F: is this working now?!
-        _humanAnimator.enabled = false;
-
-        // MISSING: Activate waving-animation at target GO here!
-        //_playerCharacter.GetComponent<Movement(?)>().StartWaving();
-        //jansAnimationControlls.SetActive(false);
-        //wavingAnimation.Play();
+        // turn on the SKIP-instructions:
+        _skipUI.SetActive(true);
     }
     void FollowThisObject(GameObject _focusObject, float _lookAtThisForThisLong)
     {
@@ -92,21 +91,17 @@ public class FocusPlayerViewOnObject : MonoBehaviour
             StartCoroutine(TurnOffFocus(_lookAtThisForThisLong));
         }
 
-        _playerCharacter.GetComponent<ThirdPersonMovement>().enabled = false;
+        // stop all player input, this will cause avatar to stop, look at X and idle:
+        FindObjectOfType<InputHandler>().enabled = false;
         _turnPlayerTowardsObject = true;
 
+        // turn player-camera to focus X AND FOLLOW:
         focusCameraRig.GetComponent<CinemachineFreeLook>().Follow = _focusTargetObject.transform; // turn camera:
         focusCameraRig.GetComponent<CinemachineFreeLook>().LookAt = _focusTargetObject.transform; // turn camera:
-
         focusCameraRig.SetActive(true);
 
-        // test JAN: // -F: is this working now?!
-        _humanAnimator.enabled = false;
-
-        // MISSING: Activate waving-animation at target GO here!
-        //_playerCharacter.GetComponent<Movement(?)>().StartWaving();
-        //jansAnimationControlls.SetActive(false);
-        //wavingAnimation.Play();
+        // turn on the SKIP-instructions:
+        _skipUI.SetActive(true);
     }
     public void FocusTarget(GameObject _focusObject, float _lookAtThisForThisLong, int _cutsceneNr) // focus camera:
     {
@@ -223,10 +218,12 @@ public class FocusPlayerViewOnObject : MonoBehaviour
     {
         _focusTargetObject = null;
         _turnPlayerTowardsObject = false;
-        _playerCharacter.GetComponent<ThirdPersonMovement>().enabled = true;
-        _humanAnimator.enabled = true;
 
-        //_inFocusMode = false;
+        // turn OFF the SKIP-instructions:
+        _skipUI.SetActive(false);
+
+        // give controls back to player:
+        FindObjectOfType<InputHandler>().enabled = true;
     }
 
     private void Update() // keep turning player to face a moving target GO:

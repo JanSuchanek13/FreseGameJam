@@ -72,6 +72,8 @@ public class InputHandler : MonoBehaviour
     }
     private void OnDisable()
     {
+        ResetInput();   
+
         switch (controlType)
         {
             case ControlType.Keyboard:
@@ -132,6 +134,16 @@ public class InputHandler : MonoBehaviour
                 jumpTriggerd = input.CharacterControlsController.Jump.triggered;
                 break;
         }
+    }
+
+
+    void ResetInput()
+    {
+        moveValue = Vector2.zero;
+        mouseValue = Vector2.zero;
+        jumpValue = 0.0f;
+
+        Debug.Log("All input was reset to zero");
     }
 }
 
