@@ -40,7 +40,8 @@ public class ButtonFunction : MonoBehaviour
     private void Awake()
     {
         playerInput = new PlayerInput();
-
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
 
     }
 
@@ -79,10 +80,14 @@ public class ButtonFunction : MonoBehaviour
     {
         if (pauseMenu.activeInHierarchy != true)
         {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             pauseMenu.SetActive(true);
             Time.timeScale = 0;
         }else
         {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             pauseMenu.SetActive(false);
             Time.timeScale = 1;
 
