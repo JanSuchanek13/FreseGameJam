@@ -64,6 +64,15 @@ public class SettingsMenu : MonoBehaviour
         initialized = true;
     }
 
+
+    public void SetToDefault()
+    {
+        mouseSensitivitySlider.value = mouseSensitivitySlider.maxValue / 2;     //Sensitivity half of Max
+        SoundSlider.value = SoundSlider.minValue / 2;                           //Sound half of Min --> negative Values
+        MusicSlider.value = MusicSlider.minValue / 2;                           //Music half of Min
+        controlsDropdown.value = 0;                                             //Controls to Keyboard
+        glidingToggle.isOn = true;                                              //Hold for gliding
+    }
     
 
     public void SetMouseSensitivity(float val)
