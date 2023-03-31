@@ -14,9 +14,11 @@ public class SettingsMenu : MonoBehaviour
     public CinemachineFreeLook CloseUpCam;
     public Slider mouseSensitivitySlider;
     public Slider SoundSlider;
+    public Slider MusicSlider;
     public TMPro.TMP_Dropdown controlsDropdown;
     public Toggle glidingToggle;
     public AudioMixer audioMixer;
+    public AudioMixer musicMixer;
 
     private void Start()
     {
@@ -40,6 +42,12 @@ public class SettingsMenu : MonoBehaviour
             SoundSlider.value = PlayerPrefs.GetFloat("volumeSettings");
             //Debug.Log("Loaded a Sound Value of:" + SoundSlider.value);
             audioMixer.SetFloat("volume", SoundSlider.value);
+        }
+        if (PlayerPrefs.HasKey("musicSettings"))
+        {
+            MusicSlider.value = PlayerPrefs.GetFloat("musicSettings");
+            //Debug.Log("Loaded a Sound Value of:" + SoundSlider.value);
+            musicMixer.SetFloat("volume", MusicSlider.value);
         }
         if (PlayerPrefs.HasKey("controlsSettings") && controlsDropdown!=null)
         {
@@ -86,6 +94,18 @@ public class SettingsMenu : MonoBehaviour
 
 
         audioMixer.SetFloat("volume", volume);
+    }
+
+    public void SetMusic(float volume)
+    {
+        if (!initialized) return;
+        if (!Application.isPlaying) return;
+
+        PlayerPrefs.SetFloat("musicSettings", volume);
+        Debug.Log("Set music to:" + volume);
+
+
+        musicMixer.SetFloat("volume", volume);
     }
 
     public void SetControls (Int32 controler)
