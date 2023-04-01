@@ -24,7 +24,13 @@ public class InputHandler : MonoBehaviour
     [Header("REFERENCE")]
     private PlayerInput input;
 
-    private void Awake()
+
+    void Awake()
+    {
+        SwitchControls();
+    }
+
+    private void SwitchControls()
     {
         if(PlayerPrefs.GetInt("controlsSettings") == 0)
         {
@@ -124,6 +130,8 @@ public class InputHandler : MonoBehaviour
 
     private void Update()
     {
+        SwitchControls();
+
         switch (controlType)
         {
             case ControlType.Keyboard:

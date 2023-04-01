@@ -12,8 +12,26 @@ public class ChangeControlsSign : MonoBehaviour
     [Header("REFERENCE")]
     [Tooltip("0=Keyboard, 1=Ps4, 2=XBox")]
     public int controlSettings = 0;
+
     void Awake()
     {
+        ChangeSign();
+    }
+
+    void Update()
+    {
+        if (controlSettings != PlayerPrefs.GetInt("controlsSettings"))
+        {
+            ChangeSign();
+        }
+    }
+
+
+    private void ChangeSign()
+    {
+        keyboardControls.SetActive(false);
+        ps4Controls.SetActive(false);
+        xboxControls.SetActive(false);
         controlSettings = PlayerPrefs.GetInt("controlsSettings");
 
         switch (controlSettings)
@@ -34,5 +52,4 @@ public class ChangeControlsSign : MonoBehaviour
                 break;
         }
     }
-
 }

@@ -319,7 +319,7 @@ public class ThirdPersonMovement : MonoBehaviour
         //controller = GetComponent<CharacterController>();
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance * 2, groundMask, QueryTriggerInteraction.Ignore);
-        if (!isGrounded && velocity.y < -15 && movingDownwards || forcedFalling)
+        if (!isGrounded && velocity.y < -10 && movingDownwards || forcedFalling)
         {
             falling = true; //animation
         }
@@ -453,7 +453,7 @@ public class ThirdPersonMovement : MonoBehaviour
             //Jump
             if (input.jumpValue != 0 && isGrounded)
             {
-                controller.slopeLimit = 0f; //low climp
+                //controller.slopeLimit = 0f; //low climp
                 velocity.y = Mathf.Sqrt(jumpHeight / 150 * -2f * gravity);  //low jump
             }
             else if(input.jumpValue != 0 && !isGrounded && !GetComponent<StateController>().isChanging && !holdForGliding)
