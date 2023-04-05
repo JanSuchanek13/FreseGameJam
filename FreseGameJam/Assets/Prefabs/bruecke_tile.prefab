@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 1445799142873701282}
   - component: {fileID: 852414659120346191}
   - component: {fileID: 5131385124879019574}
+  - component: {fileID: 350408307879008695}
+  - component: {fileID: 225446812959781240}
   m_Layer: 2
   m_Name: bruecke_tile
   m_TagString: Ground
@@ -125,7 +127,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1271048c45cdd04ca7a056a01913763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelEnd: 0
   onlyCapricorn: 0
   breakingChildren: 0
   timeTillBreak: 0.5
   reset: 1
+  _turnOffCollidersAfterBreak: 0
+  _timeTillReset: 5
+--- !u!65 &350408307879008695
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5171054512808924673}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 6.0028796, y: 2.5920086, z: 2.5012}
+  m_Center: {x: 0, y: 0.09956974, z: 0}
+--- !u!114 &225446812959781240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5171054512808924673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f65950fc77b35c6439cf73ff0c432e7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arrayOfBreakingSounds: []
+  Wood: {fileID: 0}
+  _canBreak: 1
