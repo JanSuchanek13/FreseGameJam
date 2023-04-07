@@ -19,6 +19,7 @@ public class SettingsMenu : MonoBehaviour
     public Toggle glidingToggle;
     public AudioMixer audioMixer;
     public AudioMixer musicMixer;
+    public Toggle lightningToggle;
 
     private void Start()
     {
@@ -72,6 +73,7 @@ public class SettingsMenu : MonoBehaviour
         MusicSlider.value = MusicSlider.minValue / 2;                           //Music half of Min
         controlsDropdown.value = 0;                                             //Controls to Keyboard
         glidingToggle.isOn = true;                                              //Hold for gliding
+        lightningToggle.isOn = true;                                            //Enable Lightning Flash
     }
     
 
@@ -135,5 +137,15 @@ public class SettingsMenu : MonoBehaviour
 
         int holdGlidingInt = holdGliding ? 1 : 0;
         PlayerPrefs.SetInt("glidingSettings", holdGlidingInt);
+    }
+
+
+    public void SetLightning(bool enableLightning)
+    {
+        if (!initialized) return;
+        if (!Application.isPlaying) return;
+
+        int enableLightningInt = enableLightning ? 1 : 0;
+        PlayerPrefs.SetInt("lightningSettings", enableLightningInt);
     }
 }
