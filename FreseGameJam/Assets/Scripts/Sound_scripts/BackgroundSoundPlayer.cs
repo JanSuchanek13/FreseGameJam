@@ -21,11 +21,16 @@ public class BackgroundSoundPlayer : MonoBehaviour
     [SerializeField] float _lowerVolumeTo = 0.5f;
     float _timePausedAmt = 0.0f;
     bool _timePaused;
+
+    float _musicVolumeAtStart;
     #endregion
 
     private void Start()
     {
-        Invoke("PlayTrack", .1f); 
+        Invoke("PlayTrack", .1f);
+
+        // save volume at game start (this allows for player preferences to be relevant)
+        //_musicVolumeAtStart = _activeTrack.volume;
     }
 
     void PlayTrack()
@@ -46,6 +51,9 @@ public class BackgroundSoundPlayer : MonoBehaviour
 
             StartCoroutine(PlayNextTrack(_lengthOfTrack));
         }
+
+        // save volume at game start (this allows for player preferences to be relevant)
+        _musicVolumeAtStart = _activeTrack.volume;
     }
 
     IEnumerator PlayNextTrack(float _lengthOfCurrentTrack)
@@ -83,11 +91,14 @@ public class BackgroundSoundPlayer : MonoBehaviour
 
     public void LowerVolume()
     {
-        _activeTrack.volume *= _lowerVolumeTo;
+        if(_activeTrack.volume == _musicVolumeAtStart) // prevent multiple volume reductions in chained cutscenes:
+        {
+            _activeTrack.volume *= _lowerVolumeTo;
+        }
     }
-    public void IncreaseVolume()
+    public void IncreaseVolume() // always reset to max sound of the players preference:
     {
-        _activeTrack.volume /= _lowerVolumeTo;
+        _activeTrack.volume = _musicVolumeAtStart;
     }
 
     public void PauseMusic()
