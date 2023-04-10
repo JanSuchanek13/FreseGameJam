@@ -608,7 +608,7 @@ public class ThirdPersonMovement : MonoBehaviour
         RaycastHit hit;
         if(Physics.SphereCast(groundCheck.position, 0.22f, -groundCheck.up, out hit, 2f, groundMask))
         {
-            Debug.Log("true");
+            //Debug.Log("true");
             return true;
         }
         return false;

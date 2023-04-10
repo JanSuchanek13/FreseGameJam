@@ -21,6 +21,6 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("GameManger Temp Msg was called"); // just until we have a real function
+        //Debug.Log("GameManger Temp Msg was called"); // just until we have a real function
     }
 }

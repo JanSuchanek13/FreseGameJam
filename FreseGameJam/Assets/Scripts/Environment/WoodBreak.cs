@@ -15,9 +15,9 @@ public class WoodBreak : MonoBehaviour
 
         if (other.gameObject.tag == "Player" && _canBreak )
         {
-            AudioSource randomBreakingSound = arrayOfBreakingSounds[Random.Range(0, arrayOfBreakingSounds.Length)];
-            randomBreakingSound.Play();
-
+            //AudioSource randomBreakingSound = arrayOfBreakingSounds[Random.Range(0, arrayOfBreakingSounds.Length)];
+            //randomBreakingSound.Play();
+            other.GetComponent<InteractWithBreakingWood>().PlaySound();
            
             Wood.Play();
         }
