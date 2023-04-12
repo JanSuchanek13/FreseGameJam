@@ -26,6 +26,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public Vector3 velocity;
     public float gravity = -9.81f;
+    public int gravityClamp = -15;
     public float jumpHeight = 3f;
     public int flyCurve = 3000;
     public float capricornSpeed = 25;
@@ -345,7 +346,7 @@ public class ThirdPersonMovement : MonoBehaviour
             }
         }
         
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask, QueryTriggerInteraction.Ignore);
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance *3, groundMask, QueryTriggerInteraction.Ignore);
         if (isGrounded && velocity.y < 0.5) //is falling
         {
             controller.stepOffset = 0.5f;
@@ -393,7 +394,10 @@ public class ThirdPersonMovement : MonoBehaviour
             
 
             //Gravity
-            velocity.y += gravity * Time.deltaTime;
+            if (velocity.y >= gravityClamp)
+            {
+                velocity.y += gravity * Time.deltaTime;
+            }
             controller.Move(velocity * Time.deltaTime);
             //controller.slopeLimit = 45f;
         }
