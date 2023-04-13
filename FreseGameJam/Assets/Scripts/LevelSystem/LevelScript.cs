@@ -122,16 +122,11 @@ public class LevelScript : MonoBehaviour
 
     IEnumerator LoadLevel(int levelIndex)
     {
-        Debug.Log("1");
         transition.SetTrigger("Start");
-        Debug.Log("2");
 
         yield return new WaitForSeconds(_timeBeforeLoadingNewLevel);
-        Debug.Log("3");
 
         SceneManager.LoadScene(nextLevel);
-        Debug.Log("4");
-
     }
 
 
