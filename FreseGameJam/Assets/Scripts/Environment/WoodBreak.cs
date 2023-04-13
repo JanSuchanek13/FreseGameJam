@@ -5,7 +5,7 @@ using UnityEngine;
 public class WoodBreak : MonoBehaviour
 {
 
-    [SerializeField] AudioSource[] arrayOfBreakingSounds;
+    //[SerializeField] AudioSource[] arrayOfBreakingSounds;
     [SerializeField] ParticleSystem Wood;
 
     [SerializeField] bool _canBreak = true;
