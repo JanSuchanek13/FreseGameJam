@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class FallIntoLiquidSoundSystem : MonoBehaviour
 {
-    // this script only exists because "SplashSound"-Script on the water and Lava-prefabs does not work in the game world. I cant figure out why.
     #region variables:
     [SerializeField] AudioSource[] arrayOfWaterSplashSounds;
     [SerializeField] ParticleSystem waterSplashEffect;
@@ -14,13 +13,13 @@ public class FallIntoLiquidSoundSystem : MonoBehaviour
     {
         if (other.CompareTag("Damage"))
         {
-            if (other.name == "WATER_prefab")
+            if (other.name == "Water_deathZone")
             {
                 AudioSource _randomTrack = arrayOfWaterSplashSounds[Random.Range(0, arrayOfWaterSplashSounds.Length)];
                 _randomTrack.Play();
                 waterSplashEffect.Play();
             }
-            else if (other.name == "Lava")
+            if (other.name == "Lava_deathZone")
             {
                 AudioSource _randomTrack = arrayOfLavaSplashSounds[Random.Range(0, arrayOfLavaSplashSounds.Length)];
                 _randomTrack.Play();

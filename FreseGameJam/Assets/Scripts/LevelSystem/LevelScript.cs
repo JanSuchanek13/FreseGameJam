@@ -30,9 +30,9 @@ public class LevelScript : MonoBehaviour
     [SerializeField] int level;
 
     // local variables:
-    float[] timer = new float[3];
+    float[] _timer = new float[3];
     float[] lastTimer = new float[3];
-    int currentLevel;
+    int _currentLevel;
     bool _endZoneReached = false;
     GameObject _gameManager;
 
@@ -44,13 +44,12 @@ public class LevelScript : MonoBehaviour
     private void Start()
     {
         // save current level:
-        currentLevel = SceneManager.GetActiveScene().buildIndex;
+        _currentLevel = SceneManager.GetActiveScene().buildIndex;
          
         // add time of last run:
-        timer[0] = PlayerPrefs.GetFloat("timer" + 0); // (currentLevel - 2) & (currentLevel - 2) at end
+        _timer[0] = PlayerPrefs.GetFloat("timer" + 0); // (currentLevel - 2) & (currentLevel - 2) at end
 
         // determine time for fading:
-        //_fadeIntervalls = (_timeBeforeLoadingNewLevel * 0.3f) / 100.0f; // this works too, but does it need to depend on the total time?! I think not!
         _fadeIntervalls = 1.5f / 100.0f; // tried and tested, this feeld pretty good.
 
         _gameManager = GameObject.Find("GameManager");
@@ -61,12 +60,13 @@ public class LevelScript : MonoBehaviour
         // save time per frame
         if (!_endZoneReached)
         {
-            PlayerPrefs.SetFloat("timer" + 0, Time.timeSinceLevelLoad + timer[0]); //(currentLevel - 2)
+            PlayerPrefs.SetFloat("timer" + 0, Time.timeSinceLevelLoad + _timer[0]); //(currentLevel - 2)
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        // prevent triggering multiple times
         if (!_endZoneReached)
         {
             if (other.tag == "Player")
@@ -77,7 +77,9 @@ public class LevelScript : MonoBehaviour
                     Invoke("DisplayText", 3.5f);
                 }
                 // stop music & play success-music:
-                _gameManager.GetComponent<BackgroundSoundPlayer>().PauseMusic(); // turn off background music
+                _gameManager.GetComponent<BackgroundSoundPlayer>().PauseMusic(); // lower volume or pause music
+                //_gameManager.GetComponent<BackgroundSoundPlayer>().TurnOffMusic(); // stop music
+
 
                 // changed these "finds" to serialized fields to manually controll end-sounds:
                 //GameObject.Find("AudioSource_Victory_1").GetComponent<AudioSource>().Play();
@@ -85,10 +87,11 @@ public class LevelScript : MonoBehaviour
                 _choirSound.Play();
                 _victorySound.Play();
 
-                GameObject.Find("UI_Crown_Counter").SetActive(false); // turn off the regular, ingame crown-counter and icon
+                //GameObject.Find("UI_Crown_Counter").SetActive(false); // turn off the regular, ingame crown-counter and icon
+                GameObject.Find("Ingame_UI").SetActive(false); // turn off the regular, ingame crown-counter and icon
 
                 //Debug.Log("Level endzone reached!");
-                Pass();
+                LevelFinished();
                 
                 // this bool ensures that the end of a level is triggered only once and immediatly!
                 _endZoneReached = true;
@@ -96,11 +99,12 @@ public class LevelScript : MonoBehaviour
         }
     }
 
-    public void Pass()
+    public void LevelFinished()
     {
         // save level:
-        int currentLevel = SceneManager.GetActiveScene().buildIndex;
+        int currentLevel = SceneManager.GetActiveScene().buildIndex; // this is already done in start o0...
 
+        // determine next level:
         if (currentLevel >= PlayerPrefs.GetInt("levelIsUnlocked"))
         {
             PlayerPrefs.SetInt("levelIsUnlocked", currentLevel + 1);
@@ -118,11 +122,16 @@ public class LevelScript : MonoBehaviour
 
     IEnumerator LoadLevel(int levelIndex)
     {
+        Debug.Log("1");
         transition.SetTrigger("Start");
+        Debug.Log("2");
 
         yield return new WaitForSeconds(_timeBeforeLoadingNewLevel);
+        Debug.Log("3");
 
         SceneManager.LoadScene(nextLevel);
+        Debug.Log("4");
+
     }
 
 
@@ -140,6 +149,13 @@ public class LevelScript : MonoBehaviour
     {
         if (_thankYouForPlayingOverlay != null) // only try to display overlay-text, if there is overlay-text in place.
         {
+            // turn off all player input in the background:
+            if(FindObjectOfType<InputHandler>() != null)
+            {
+                FindObjectOfType<InputHandler>().enabled = false;
+            }
+
+
             _thankYouForPlayingOverlay.SetActive(true);
 
             // display current levels total runtime:

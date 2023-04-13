@@ -113,6 +113,10 @@ public class BackgroundSoundPlayer : MonoBehaviour
             LowerVolume();
         }
     }
+    public void TurnOffMusic()
+    {
+        _activeTrack.Stop();
+    }
 
     public void UnpauseMusic()
     {
