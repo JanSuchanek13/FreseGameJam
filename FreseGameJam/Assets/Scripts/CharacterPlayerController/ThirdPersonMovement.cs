@@ -381,7 +381,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 jumpingDust.gameObject.SetActive(false);
                 jumping = false;
             }
-            if (input.jumpValue !=0 && isCoyoteGrounded)
+            if (input.jumpTriggerd && isCoyoteGrounded)
             {
                 controller.stepOffset = 0;
                 jumping = true; //animation
@@ -444,6 +444,7 @@ public class ThirdPersonMovement : MonoBehaviour
             thirdPersonCam.SetActive(false);
             craneCam.SetActive(true);
 
+            /*
             //No Player Input -> fly forward
             if (input.moveValue.x == 0 && input.moveValue.y == 0)
             {
@@ -453,6 +454,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
                 controller.Move(moveDir.normalized * speed * Time.deltaTime);
             }
+            */
 
             //Jump
             if (input.jumpValue != 0 && isGrounded)
@@ -695,8 +697,9 @@ public class ThirdPersonMovement : MonoBehaviour
             speed = dashSpeed;
             float horizontal = input.moveValue.x;
             float vertical = input.moveValue.y;
-            Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
-            float targetAngle = cam.eulerAngles.y;
+            Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized; // this is unused, or not?! what does this do?
+            //float targetAngle = cam.eulerAngles.y; // dash forward from CAMERA:
+            float targetAngle = transform.eulerAngles.y; // dash forward from AVATARS looking direction:
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDir.normalized * (speed * 3) * Time.deltaTime);
             yield return new WaitForSeconds(.001f);

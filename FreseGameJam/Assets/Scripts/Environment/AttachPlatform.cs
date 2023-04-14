@@ -18,6 +18,8 @@ public class AttachPlatform : MonoBehaviour
 	private Rigidbody rb;
 	private Vector3 currentPos;
 	CharacterController cc;
+	Vector2 offset;
+	bool firstContact = true;
 
 	public Transform[] points;
 	private int destPoint = 0;
@@ -37,6 +39,8 @@ public class AttachPlatform : MonoBehaviour
 	Collider m_Collider;
 	RaycastHit m_Hit;
 	Vector3 oldPos;
+	
+
 
 	private void Start()
 	{
@@ -152,21 +156,63 @@ public class AttachPlatform : MonoBehaviour
 			m_Hit.transform.gameObject.GetComponent<CharacterController>().Move(direction.normalized / 50);
 			oldPos = transform.position;
 			if (!isStanding)
-            {
+			{
 				//Output the name of the Collider your Box hit
-				Debug.Log("Hit : " + m_Hit.collider.name);
+				//Debug.Log("Hit : " + m_Hit.collider.name);
 
 
 
 				if (m_Hit.transform.tag == "Player")
 				{
 					isStanding = true;
-					
-					
+
+
 					//m_Hit.transform.gameObject.transform.SetParent(gameObject.transform, true);
 					StartCoroutine(moveCountDown());
 				}
 			}
+			/* 
+			//New System doesnt work after you die
+			if (m_Hit.transform.gameObject.GetComponent<InputHandler>().moveValue.magnitude == 0)
+            {
+				Debug.Log("Hit : " + m_Hit.collider.name);
+                if (firstContact)
+                {
+					offset.x = m_Hit.transform.position.x - this.transform.position.x;
+					offset.y = m_Hit.transform.position.z - this.transform.position.z;
+					firstContact = false;
+				}
+				m_Hit.transform.position = new Vector3(this.transform.position.x + offset.x, m_Hit.transform.position.y, this.transform.position.z + offset.y);
+				
+				
+
+			}
+            else
+            {
+				offset.x = m_Hit.transform.position.x - this.transform.position.x;
+				offset.y = m_Hit.transform.position.z - this.transform.position.z;
+				//Debug.Log("Hit : " + m_Hit.collider.name);
+				Vector3 direction = transform.position - oldPos;
+				m_Hit.transform.gameObject.GetComponent<CharacterController>().Move(direction.normalized / 50);
+				oldPos = transform.position;
+				if (!isStanding)
+				{
+					//Output the name of the Collider your Box hit
+					//Debug.Log("Hit : " + m_Hit.collider.name);
+
+
+
+					if (m_Hit.transform.tag == "Player")
+					{
+						isStanding = true;
+
+
+						//m_Hit.transform.gameObject.transform.SetParent(gameObject.transform, true);
+						StartCoroutine(moveCountDown());
+					}
+				}
+			}
+			*/
 			
 		}
         else
