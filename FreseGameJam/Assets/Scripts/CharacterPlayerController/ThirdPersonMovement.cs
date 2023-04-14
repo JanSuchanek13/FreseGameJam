@@ -609,43 +609,16 @@ public class ThirdPersonMovement : MonoBehaviour
     // Felix:
     bool CheckForGroundContact()
     {
-        //Debug.Log(" ground contact called");
+        float _groundCheckRadius = GetComponent<CharacterController>().radius;
+
         // cast a tiny sphere downwards to check for groundcontact the size of the footprint: 
         RaycastHit hit;
-        if(Physics.SphereCast(groundCheck.position, 0.22f, -groundCheck.up, out hit, 2f, groundMask))
+        if (Physics.SphereCast(groundCheck.position, _groundCheckRadius, -groundCheck.up, out hit, 2f, groundMask))
         {
-            //Debug.Log("true");
+            Gizmos.DrawWireSphere(groundCheck.position, _groundCheckRadius);
             return true;
         }
         return false;
-        
-        // returns either TRUE if a ground was detected or FALSE if no ground was detected.
-        /*if (hit.collider == null)
-        {
-            Debug.DrawRay(groundCheck.position, -groundCheck.up, Color.green);
-            return true;
-        }else
-        {
-            return false;
-        }*//*
-        Gizmos.DrawWireSphere(transform.position, range);
-
-        RaycastHit hit;
-        if (Physics.SphereCast(transform.position, sphereCastRadius, transform.forward * range, out hit, range, layerMask))
-        {
-            Gizmos.color = Color.green;
-            Vector3 sphereCastMidpoint = transform.position + (transform.forward * hit.distance);
-            Gizmos.DrawWireSphere(sphereCastMidpoint, sphereCastRadius);
-            Gizmos.DrawSphere(hit.point, 0.1f);
-            Debug.DrawLine(transform.position, sphereCastMidpoint, Color.green);
-        }
-        else
-        {
-            Gizmos.color = Color.red;
-            Vector3 sphereCastMidpoint = transform.position + (transform.forward * (range - sphereCastRadius));
-            Gizmos.DrawWireSphere(sphereCastMidpoint, sphereCastRadius);
-            Debug.DrawLine(transform.position, sphereCastMidpoint, Color.red);
-        }*/
     }
 
     private void EndOfAction()
