@@ -197,7 +197,7 @@ public class StateController : MonoBehaviour
 
             if (isChanging == false)
             {
-
+                //FindObjectOfType<HealthSystem>().UpdateLastUsedCamera(); // this should save currently used main camera setting!
                     
                 //Debug.Log(i * 3);
                 isChanging = true;

@@ -407,8 +407,10 @@ public class ThirdPersonMovement : MonoBehaviour
             animationSpeed = speedInput;
 
             //Cam
-            thirdPersonCam.SetActive(true);
+            //thirdPersonCam.SetActive(true);
             craneCam.SetActive(false);
+            FindObjectOfType<HealthSystem>().EnableCameras();
+
 
             //Jump
             if (isCoyoteGrounded)
@@ -479,17 +481,18 @@ public class ThirdPersonMovement : MonoBehaviour
             thirdPersonCam.SetActive(false);
             craneCam.SetActive(true);
 
-            /*
+            
             //No Player Input -> fly forward
             if (input.moveValue.x == 0 && input.moveValue.y == 0)
             {
-                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+                //float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y; // fly towards camera
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + transform.eulerAngles.y; // fly towards avatar forward
                 float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
                 Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
                 controller.Move(moveDir.normalized * speed * Time.deltaTime);
             }
-            */
+            
 
             //Jump
             if (input.jumpValue != 0 && isGrounded)

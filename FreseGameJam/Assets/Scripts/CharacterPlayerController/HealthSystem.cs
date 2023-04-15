@@ -14,6 +14,9 @@ public class HealthSystem : MonoBehaviour
 
     [SerializeField] GameObject Cam;
     [SerializeField] GameObject Cam2;
+    [SerializeField] GameObject _craneCam;
+    GameObject _lastUsedMainCam;
+
     CloseQuarterCamera CamScript;
     CharacterController Character;
     public GameObject RiverBoat_Friend;
@@ -53,7 +56,7 @@ public class HealthSystem : MonoBehaviour
         
         if (Checkpoints[lastCheckpoint[0]] != new Vector3(0, 0, 0)) // this was "currentLevel - 2"?
         {
-            Debug.Log("I spawned");
+            //Debug.Log("I spawned");
             gameObject.transform.position = new Vector3(0, -3, 0) + Checkpoints[PlayerPrefs.GetInt("lastCheckpoint" + 0)];// (currentLevel - 2)
         }
     }
@@ -110,14 +113,17 @@ public class HealthSystem : MonoBehaviour
             {
                 RiverBoat_Friend.GetComponent<SpeedUpNavMeshAgent>().StopForDead();
             }
-            
-            
-            //Debug.Log(RespawnPoint);
+
+            //UpdateLastUsedCamera();
+
+            DisableCameras();
 
             //Respawn Player
+            /*
             CamScript.enabled = false;
             Cam2.SetActive(false);
             Cam.SetActive(false);
+            _craneCam.SetActive(false);*/
             GetComponent<ThirdPersonMovement>().gravity = 0;
             //yield return new WaitForSeconds(1f);
             
@@ -153,14 +159,56 @@ public class HealthSystem : MonoBehaviour
             GetComponent<ThirdPersonMovement>().enabled = true; // no movement hopefully stops me from being able to survive death zones
             GetComponent<CharacterController>().enabled = true;
 
+
+            EnableCameras();/*
             Cam2.SetActive(false);
-            Cam.SetActive(true);
+            Cam.SetActive(true);*/
+            //CamScript.enabled = true;
+
             #endregion
 
 
-            CamScript.enabled = true;
+            //CamScript.enabled = true;
             GetComponent<ThirdPersonMovement>().gravity = gravity;
             inUse = false;
+        }
+    }
+
+    /// <summary>
+    /// get and save last used main camera.
+    /// </summary>
+    public void UpdateLastUsedCamera()
+    {
+        if (Cam.activeInHierarchy) // regular cam was last active!
+        {
+            _lastUsedMainCam = Cam;
+        }else if(Cam2.activeInHierarchy) // close up cam was last active!
+        {
+            _lastUsedMainCam = Cam2;
+        }
+
+        Debug.Log("last saved camerea = " + _lastUsedMainCam);
+    }
+
+    public void DisableCameras()
+    {
+        CamScript.enabled = false;
+        Cam2.SetActive(false);
+        Cam.SetActive(false);
+        _craneCam.SetActive(false); // beware, when calling this function in pause while in crane, then the crane cam would be turnt off after, though being in crane-form! 
+    }
+    public void EnableCameras()
+    {
+        //Cam2.SetActive(false);
+        //Cam.SetActive(true);
+        CamScript.enabled = true;
+        //_lastUsedMainCam.SetActive(true);
+        if(_lastUsedMainCam == null)
+        {
+            Cam.SetActive(true);
+        }else
+        {
+            _lastUsedMainCam.SetActive(true);
         }
     }
 }
