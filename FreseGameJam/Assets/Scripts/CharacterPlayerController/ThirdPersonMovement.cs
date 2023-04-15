@@ -227,7 +227,7 @@ public class ThirdPersonMovement : MonoBehaviour
         }
     }
 
-
+    /*
     void Update()
     {
         //crane juice
@@ -265,11 +265,46 @@ public class ThirdPersonMovement : MonoBehaviour
                 StartCoroutine(GetComponent<StateController>().changeModell(1));
             }
         }
-    }
+    }*/
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
+        //crane juice
+        craneSound.SetActive(stateController.crane);
+        craneVFX.SetActive(stateController.crane);
+
+        if (GetComponent<StateController>().human)
+        {
+            //if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && !isGrounded && !(Physics.CheckSphere(groundCheck.position, groundDistance * 7, groundMask, QueryTriggerInteraction.Ignore)) && !GetComponent<StateController>().isChanging) // double jump change you into crane
+            if ((input.jumpTriggerd) && !isGrounded && !isCoyoteGrounded && !CheckForGroundContact() && !GetComponent<StateController>().isChanging) // double jump change you into crane
+            {
+
+                if (stateController.availableCrane)
+                {
+                    GetComponent<StateController>().isChanging = true;
+                    stateController.ball = false;
+                    stateController.human = false;
+                    stateController.frog = false;
+                    stateController.crane = true;
+                    stateController.capricorn = false;
+                    stateController.lama = false;
+                    StartCoroutine(GetComponent<StateController>().changeModell(2));
+                }
+
+            }
+            if (holdForGliding && input.jumpValue == 0 && stateController.crane)
+            {
+                GetComponent<StateController>().isChanging = true;
+                stateController.ball = false;
+                stateController.human = true;
+                stateController.frog = false;
+                stateController.crane = false;
+                stateController.capricorn = false;
+                stateController.lama = false;
+                StartCoroutine(GetComponent<StateController>().changeModell(1));
+            }
+        }
 
         // animation
         if ((input.moveValue.x != 0 || input.moveValue.y != 0) && isCoyoteGrounded)
@@ -615,7 +650,7 @@ public class ThirdPersonMovement : MonoBehaviour
         RaycastHit hit;
         if (Physics.SphereCast(groundCheck.position, _groundCheckRadius, -groundCheck.up, out hit, 2f, groundMask))
         {
-            Gizmos.DrawWireSphere(groundCheck.position, _groundCheckRadius);
+            //Gizmos.DrawWireSphere(groundCheck.position, _groundCheckRadius);
             return true;
         }
         return false;
