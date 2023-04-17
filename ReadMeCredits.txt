@@ -66,6 +66,9 @@ human_clothpass_walking from pixabay.com
 flapping-cloth from pixabay.com
 cloth-rustling from pixabay.com
 Thunderstorm lightning strike from pixabay.com
+Blue Island by matthewmikecolemusic from Pixabay
+Luau by matthewmikecolemusic from Pixabay
+Caribbean Dream by OYStudio from Pixabay
 
 
 
