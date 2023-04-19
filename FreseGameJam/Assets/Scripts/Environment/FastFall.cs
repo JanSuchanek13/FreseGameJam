@@ -25,7 +25,7 @@ public class FastFall : MonoBehaviour
             _player.GetComponent<ThirdPersonMovement>().gravity *= _gravityMultiplier;
             //Debug.Log("current gravity: " + _player.GetComponent<ThirdPersonMovement>().gravity);
             
-            if (_player.GetComponent<HealthSystem>().inUse || _player.GetComponent<ThirdPersonMovement>().isGrounded) //eg.: when dead or no longer falling.
+            if (_player.GetComponent<HealthSystem>().inUse || _player.GetComponent<ThirdPersonMovement>().CheckForGroundContact()) //eg.: when dead or no longer falling.
             {
                 _makeHimCrash = false;
                 _player.GetComponent<ThirdPersonMovement>().gravity = _gravity; // reset gravity

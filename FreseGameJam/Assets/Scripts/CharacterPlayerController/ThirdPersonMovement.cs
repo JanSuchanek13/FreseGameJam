@@ -34,7 +34,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public Transform groundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
-    public bool isGrounded;
+    //public bool CheckForGroundContact;
     public bool onBridge;
     public bool movingDownwards;
     public bool forcedFalling;
@@ -277,7 +277,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if (GetComponent<StateController>().human)
         {
             //if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && !isGrounded && !(Physics.CheckSphere(groundCheck.position, groundDistance * 7, groundMask, QueryTriggerInteraction.Ignore)) && !GetComponent<StateController>().isChanging) // double jump change you into crane
-            if ((input.jumpTriggerd) && !isGrounded && !isCoyoteGrounded && !CheckForGroundContact() && !GetComponent<StateController>().isChanging) // double jump change you into crane
+            if ((input.jumpTriggerd) && !CheckForGroundContact() && !isCoyoteGrounded && !CheckForGroundContact() && !GetComponent<StateController>().isChanging) // double jump change you into crane
             {
 
                 if (stateController.availableCrane)
@@ -354,8 +354,8 @@ public class ThirdPersonMovement : MonoBehaviour
         //Check Ground
         //controller = GetComponent<CharacterController>();
 
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance * 2, groundMask, QueryTriggerInteraction.Ignore);
-        if (!isGrounded && velocity.y < -10 && movingDownwards || forcedFalling)
+        //isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance * 2, groundMask, QueryTriggerInteraction.Ignore);
+        if (!CheckForGroundContact() && velocity.y < -10 && movingDownwards || forcedFalling)
         {
             falling = true; //animation
         }
@@ -381,8 +381,8 @@ public class ThirdPersonMovement : MonoBehaviour
             }
         }
         
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance *3, groundMask, QueryTriggerInteraction.Ignore);
-        if (isGrounded && velocity.y < 0.5) //is falling
+        //isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance *3, groundMask, QueryTriggerInteraction.Ignore);
+        if (CheckForGroundContact() && velocity.y < 0.5) //is falling
         {
             controller.stepOffset = 0.5f;
             //falling = false; //animation
@@ -444,7 +444,7 @@ public class ThirdPersonMovement : MonoBehaviour
             speed = 50f;
 
             //Jump
-            if (input.jumpValue != 0 && isGrounded)
+            if (input.jumpValue != 0 && CheckForGroundContact())
             {
                 jumping = true; //animation
                 controller.slopeLimit = 100f;
@@ -458,7 +458,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if (GetComponent<StateController>().crane)
         {
             //Move
-            if (isGrounded && velocity.y < 0 && !GetComponent<StateController>().isChanging)
+            if (CheckForGroundContact() && velocity.y < 0 && !GetComponent<StateController>().isChanging)
             {
                 speed = 0f; //walk speed
 
@@ -495,12 +495,12 @@ public class ThirdPersonMovement : MonoBehaviour
             
 
             //Jump
-            if (input.jumpValue != 0 && isGrounded)
+            if (input.jumpValue != 0 && CheckForGroundContact())
             {
                 //controller.slopeLimit = 0f; //low climp
                 velocity.y = Mathf.Sqrt(jumpHeight / 150 * -2f * gravity);  //low jump
             }
-            else if(input.jumpValue != 0 && !isGrounded && !GetComponent<StateController>().isChanging && !holdForGliding)
+            else if(input.jumpValue != 0 && !CheckForGroundContact() && !GetComponent<StateController>().isChanging && !holdForGliding)
             {
                 //change back to human by pressing jump mid air
                 GetComponent<StateController>().isChanging = true;
@@ -584,7 +584,7 @@ public class ThirdPersonMovement : MonoBehaviour
             speed = 4f;
 
             //Jump
-            if (input.jumpValue != 0 && isGrounded)
+            if (input.jumpValue != 0 && CheckForGroundContact())
             {
                 controller.slopeLimit = 45f;
                 velocity.y = Mathf.Sqrt(jumpHeight / 150 * -2f * gravity);
@@ -617,7 +617,7 @@ public class ThirdPersonMovement : MonoBehaviour
             */
 
             //Jump
-            if (input.jumpValue != 0 && isGrounded)
+            if (input.jumpValue != 0 && CheckForGroundContact())
             {
                 controller.slopeLimit = 100f;
                 velocity.y = Mathf.Sqrt(jumpHeight / 150 * -2f * gravity);
@@ -645,13 +645,13 @@ public class ThirdPersonMovement : MonoBehaviour
 
 
     // Felix:
-    bool CheckForGroundContact()
+    public bool CheckForGroundContact()
     {
         float _groundCheckRadius = GetComponent<CharacterController>().radius;
 
         // cast a tiny sphere downwards to check for groundcontact the size of the footprint: 
         RaycastHit hit;
-        if (Physics.SphereCast(groundCheck.position, _groundCheckRadius, -groundCheck.up, out hit, 2f, groundMask))
+        if (Physics.SphereCast(groundCheck.position, _groundCheckRadius * 0.9f, -groundCheck.up, out hit, 2f, groundMask))
         {
             //Gizmos.DrawWireSphere(groundCheck.position, _groundCheckRadius);
             return true;
@@ -755,3 +755,7 @@ public class ThirdPersonMovement : MonoBehaviour
         //transform.rotation = restingPosition; // reset gun
     }
 }
+
+// replaced all isGrounded with the CheckForGroundContact() function and now everything seems to work much better on my end
+// previously you were checking for isGrounded two seperate times in the same update(?) unsure if this was on purpose, so
+// i just commented the old stuff and replaced all isGroundeds as said...
