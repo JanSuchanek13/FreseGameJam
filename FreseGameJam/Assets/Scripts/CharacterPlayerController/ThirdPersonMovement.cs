@@ -685,6 +685,15 @@ public class ThirdPersonMovement : MonoBehaviour
     /// <returns></returns>
     IEnumerator CapricornDash()
     {
+        //change capricorn Rotation towards cam
+        for (int i = 0; i < 15; i++)
+        {
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, cam.eulerAngles.y, ref turnSmoothVelocity, turnSmoothTime);
+            transform.rotation = Quaternion.Euler(0, angle, 0);
+            yield return new WaitForSeconds(0.01f);
+        }
+        
+
         buildingUp_Sound.Play();
         buildingup.Play();
 
@@ -694,7 +703,7 @@ public class ThirdPersonMovement : MonoBehaviour
         inDash = true;
         dash.Play();
         dash02.Play();
-        
+
         //speed = capricornSpeed;
         GetComponent<Rigidbody>();
         for (int i = 0; i < dashWidth *5; i++)
