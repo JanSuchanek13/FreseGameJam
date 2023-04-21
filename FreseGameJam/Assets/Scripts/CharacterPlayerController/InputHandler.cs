@@ -130,7 +130,13 @@ public class InputHandler : MonoBehaviour
 
     private void Update()
     {
-        SwitchControls();
+        if((PlayerPrefs.GetInt("controlsSettings") == 0 && controlType != ControlType.Keyboard) || (PlayerPrefs.GetInt("controlsSettings") >= 1 && controlType != ControlType.Controller))
+        {
+            OnDisable();
+            SwitchControls();
+            OnEnable();
+        }
+        
 
         switch (controlType)
         {
