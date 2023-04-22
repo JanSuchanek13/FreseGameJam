@@ -11,6 +11,7 @@ public class AttachPlatform : MonoBehaviour
 	public int countdown = 3;
 	public float resetSpeed = 8;
 	bool isStanding;
+	bool isSubmerged = true;
 
 	public Transform startPoint;
 	public Transform endPoint;
@@ -94,6 +95,7 @@ public class AttachPlatform : MonoBehaviour
         {
 			if (destPoint == 1)
 			{
+				isSubmerged = true;
 				gameObject.transform.GetChild(0).position += new Vector3(0, -0.6f, 0);
 				//gameObject.GetComponent<MeshRenderer>().enabled = false;
 				//gameObject.GetComponent<BoxCollider>().enabled = false;
@@ -112,6 +114,7 @@ public class AttachPlatform : MonoBehaviour
 			}
 			else if (destPoint == 2)
 			{
+				isSubmerged = false;
 				gameObject.transform.GetChild(0).position += new Vector3(0, +0.6f, 0);
 				agent.radius = obstacleAvoidance;
 				agent.obstacleAvoidanceType = type;
@@ -149,8 +152,9 @@ public class AttachPlatform : MonoBehaviour
 		//boxCast
 		DrawBoxCastBox(m_Collider.bounds.center + new Vector3(0, -1f, 0), transform.localScale * m_Scale, transform.rotation, transform.up, m_MaxDistance, Color.red);
 		m_HitDetect = Physics.BoxCast(m_Collider.bounds.center + new Vector3(0,-1f,0), transform.localScale * m_Scale, transform.up, out m_Hit, transform.rotation, m_MaxDistance);
-		if (m_HitDetect && m_Hit.transform.gameObject.GetComponent<CharacterController>() != null)
+		if (m_HitDetect && m_Hit.transform.gameObject.GetComponent<CharacterController>() != null && !isSubmerged)
 		{
+			/*
 			//Debug.Log("Hit : " + m_Hit.collider.name);
 			Vector3 direction = transform.position - oldPos;
 			m_Hit.transform.gameObject.GetComponent<CharacterController>().Move(direction.normalized / 50);
@@ -171,7 +175,7 @@ public class AttachPlatform : MonoBehaviour
 					StartCoroutine(moveCountDown());
 				}
 			}
-			/* 
+			*/ 
 			//New System doesnt work after you die
 			if (m_Hit.transform.gameObject.GetComponent<InputHandler>().moveValue.magnitude == 0)
             {
@@ -212,7 +216,7 @@ public class AttachPlatform : MonoBehaviour
 					}
 				}
 			}
-			*/
+			
 			
 		}
         else
