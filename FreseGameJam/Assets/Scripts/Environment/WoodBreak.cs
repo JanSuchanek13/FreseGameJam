@@ -19,7 +19,10 @@ public class WoodBreak : MonoBehaviour
             //randomBreakingSound.Play();
             other.GetComponent<InteractWithBreakingWood>().PlaySound();
            
-            Wood.Play();
+            if(Wood != null)
+            {
+                Wood.Play();
+            }
         }
     }
 

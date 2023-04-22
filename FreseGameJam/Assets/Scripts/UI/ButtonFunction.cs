@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using Cinemachine;
+
 
 public class ButtonFunction : MonoBehaviour
 {
@@ -84,6 +86,9 @@ public class ButtonFunction : MonoBehaviour
             Cursor.visible = true;
             pauseMenu.SetActive(true);
             Time.timeScale = 0;
+
+            // disable camera movement in pause UI
+            Camera.main.GetComponent<CinemachineBrain>().enabled = false;
         }else
         {
             Cursor.lockState = CursorLockMode.Locked;
@@ -91,8 +96,11 @@ public class ButtonFunction : MonoBehaviour
             pauseMenu.SetActive(false);
             Time.timeScale = 1;
 
+            // enable camera movement in pause UI
+            Camera.main.GetComponent<CinemachineBrain>().enabled = true;
+
             // make sure all other UI elements get turnt off when pressing escape.
-            foreach(GameObject _uiElement in arrayOfAllOtherMenus)
+            foreach (GameObject _uiElement in arrayOfAllOtherMenus)
             {
                 _uiElement.SetActive(false);
             }

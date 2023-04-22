@@ -6117,7 +6117,7 @@ CharacterController:
   m_Height: 1.3
   m_Radius: 0.2
   m_SlopeLimit: 45
-  m_StepOffset: 0.5
+  m_StepOffset: 0.25
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0, z: 0}
@@ -6169,7 +6169,6 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 196
-  isGrounded: 0
   onBridge: 0
   movingDownwards: 0
   forcedFalling: 0
@@ -6262,6 +6261,7 @@ MonoBehaviour:
   inUse: 0
   Cam: {fileID: 0}
   Cam2: {fileID: 0}
+  _craneCam: {fileID: 0}
   RiverBoat_Friend: {fileID: 0}
   CheckpointsGO:
   - {fileID: 0}
@@ -6294,6 +6294,8 @@ MonoBehaviour:
   closeQuarterCameraIsActive: 0
   inCustscene: 0
   firstPersonCamera: {fileID: 0}
+  _cameraRigFar: {fileID: 0}
+  _cameraRigClose: {fileID: 0}
 --- !u!114 &2247870435793987715
 MonoBehaviour:
   m_ObjectHideFlags: 0
