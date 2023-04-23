@@ -682,6 +682,79 @@ public class ThirdPersonMovement : MonoBehaviour
         
     }
 
+    // Felix Test:
+
+    /// <summary>
+    /// execute Dash of Capricorn
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator CapricornDash()
+    {
+        // Turn off player input while dashing:
+        GetComponent<InputHandler>().enabled = false;
+
+        // change capricorn Rotation towards cam:
+        for (int i = 0; i < 15; i++)
+        {
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, cam.eulerAngles.y, ref turnSmoothVelocity, turnSmoothTime);
+            transform.rotation = Quaternion.Euler(0, angle, 0);
+            yield return new WaitForSeconds(0.01f);
+        }
+
+        buildingUp_Sound.Play();
+        buildingup.Play();
+        //dash_Sound.Play();
+
+        yield return new WaitForSeconds(buildingUp_Sound.clip.length);
+
+        inDash = true;
+        dash.Play();
+        dash02.Play();
+        GetComponent<Rigidbody>(); // why?
+        
+        for (int i = 0; i < 15; i++)
+        {
+            speed = dashSpeed;
+            
+            float targetAngle = cam.eulerAngles.y; // dash forward from CAMERA:
+            //float targetAngle = transform.eulerAngles.y; // dash forward from AVATARS looking direction:
+            
+            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            controller.Move(moveDir.normalized * (speed) * Time.deltaTime);
+
+            // wait a splitsecond so this loop actually covers a certain distance:
+            yield return new WaitForSeconds(.001f);
+
+            // create a small bubble-explosion at impact point:
+            Collider[] allObjects = Physics.OverlapSphere(transform.position, 3);
+            foreach (Collider j in allObjects)
+            {
+                Rigidbody rig = j.GetComponent<Rigidbody>();
+                if (rig != null && rig.gameObject != this.gameObject)
+                {
+                    rig.AddExplosionForce(1.0f, transform.position, 1, 1f, ForceMode.Impulse);
+                    dashCrash_Sound.Play();
+                }
+            }
+
+            /* // unsure why this is currently not working:
+            // Stop when you hit anything:
+            if (Physics.CheckSphere(dashCheck.position, 0.15f, dashMask))
+            {
+                //dash_Sound.Stop();
+                dashCrash_Sound.Play();
+                yield break;
+            }*/
+        }
+
+        speed = 2;
+        inDash = false;
+
+        // Turn on player input while dashing:
+        GetComponent<InputHandler>().enabled = true;
+    }
+
+    /*
     /// <summary>
     /// execute Dash of Capricorn
     /// </summary>
@@ -700,7 +773,7 @@ public class ThirdPersonMovement : MonoBehaviour
         buildingUp_Sound.Play();
         buildingup.Play();
 
-        dash_Sound.Play();
+        dash_Sound.Play(); // warum spielt der dash shound hier wo der aufbau stattfindet?! beide sounds spielen dann parallel!
 
         yield return new WaitForSeconds(chargeTime);
         inDash = true;
@@ -709,7 +782,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
         //speed = capricornSpeed;
         GetComponent<Rigidbody>();
-        for (int i = 0; i < dashWidth *5; i++)
+        for (int i = 0; i < dashWidth *5; i++) //was passiert hier? dashWitdth * 5 in einer for loop?! benutzt du hier die vermeindliche breite des dashcorridors * 5 um die distanz zu ermitteln?
         {
             if(Physics.CheckSphere(dashCheck.position, 0.3f, dashMask)) //if we hit a Ground obj we stop the dash
             {
@@ -717,14 +790,14 @@ public class ThirdPersonMovement : MonoBehaviour
                 //Debug.Log("stopped");
                 yield break;
             }
-            speed = dashSpeed;
+            speed = dashSpeed; // wofür ist dann die CapricornSpeed variables?!
             float horizontal = input.moveValue.x;
             float vertical = input.moveValue.y;
             Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized; // this is unused, or not?! what does this do?
             //float targetAngle = cam.eulerAngles.y; // dash forward from CAMERA:
             float targetAngle = transform.eulerAngles.y; // dash forward from AVATARS looking direction:
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            controller.Move(moveDir.normalized * (speed * 3) * Time.deltaTime);
+            controller.Move(moveDir.normalized * (speed * 3) * Time.deltaTime); // warum wird hier speed multipliziert? warum nicht einfach den speed benutzen der eingestellt ist?!
             yield return new WaitForSeconds(.001f);
             //Debug.Log("lauf");
 
@@ -736,7 +809,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 if (rig != null && rig.gameObject != this.gameObject)
                 {
                     //Debug.Log(rig.gameObject.name);
-                    rig.AddExplosionForce(1, transform.position, 1, 1f, ForceMode.Impulse);
+                    rig.AddExplosionForce(1f, transform.position, 1, 1f, ForceMode.Impulse); // force was 1
                     dashCrash_Sound.Play();
                 }
             }
@@ -745,7 +818,7 @@ public class ThirdPersonMovement : MonoBehaviour
         speed = 2;
         inDash = false;
     }
-
+    */
     void LamaShoot()
     {
         /*

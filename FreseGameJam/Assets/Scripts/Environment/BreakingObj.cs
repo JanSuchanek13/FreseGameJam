@@ -55,6 +55,7 @@ public class BreakingObj : MonoBehaviour
                 if (_player.GetComponent<StateController>().capricorn && _player.GetComponent<ThirdPersonMovement>().inDash)
                 {
                     Invoke("Break", timeTillBreak);
+                    Debug.Log("rammed");
                 }
             }
             else

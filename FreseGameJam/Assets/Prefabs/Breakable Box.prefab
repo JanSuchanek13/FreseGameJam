@@ -615,13 +615,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1271048c45cdd04ca7a056a01913763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  origamiFriend: {fileID: 0}
   levelEnd: 0
   onlyCapricorn: 1
   breakingChildren: 1
   timeTillBreak: 0
-  _timeTillReset: 0
   reset: 0
+  _turnOffCollidersAfterBreak: 0
+  _timeTillReset: 0
 --- !u!65 &1036350398406233772
 BoxCollider:
   m_ObjectHideFlags: 0
