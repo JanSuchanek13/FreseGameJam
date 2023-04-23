@@ -12,7 +12,7 @@ public class SmoothCloseUpCameraAdjuster : MonoBehaviour
     void Update()
     {
         // Get the target position:
-        Vector3 targetPosition = _target.TransformPoint(new Vector3(0, .65f, 0));
+        Vector3 targetPosition = _target.TransformPoint(new Vector3(0, 0.5f, 0));
 
         // Smoothly dampen the adjustment of the y position:
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, _smoothTime);
