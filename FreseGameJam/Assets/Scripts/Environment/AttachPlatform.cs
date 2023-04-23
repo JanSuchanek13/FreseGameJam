@@ -96,7 +96,12 @@ public class AttachPlatform : MonoBehaviour
 			if (destPoint == 1)
 			{
 				isSubmerged = true;
-				gameObject.transform.GetChild(0).position += new Vector3(0, -0.6f, 0);
+				
+				//gameObject.transform.GetChild(0).position += new Vector3(0, -0.6f, 0);
+				
+				GetComponent<NavMeshAgent>().baseOffset = -1.0f;
+				//GetComponent<NavMeshAgent>().areaMask = NavMesh.GetAreaFromName("Walkable");
+
 				//gameObject.GetComponent<MeshRenderer>().enabled = false;
 				//gameObject.GetComponent<BoxCollider>().enabled = false;
 				//Debug.Log("ende");
@@ -106,6 +111,7 @@ public class AttachPlatform : MonoBehaviour
 				}
 				StartCoroutine(submerge());
 				agent.radius = .01f;
+				//agent.radius = .25f;
 				agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
 				agent.height = 0;
 				agent.speed = resetSpeed;
@@ -114,8 +120,12 @@ public class AttachPlatform : MonoBehaviour
 			}
 			else if (destPoint == 2)
 			{
+				GetComponent<NavMeshAgent>().baseOffset = .25f;
+				//GetComponent<NavMeshAgent>().areaMask = NavMesh.GetAreaFromName("Everything");
+
+
 				isSubmerged = false;
-				gameObject.transform.GetChild(0).position += new Vector3(0, +0.6f, 0);
+				//gameObject.transform.GetChild(0).position += new Vector3(0, +0.6f, 0);
 				agent.radius = obstacleAvoidance;
 				agent.obstacleAvoidanceType = type;
 				agent.height = height;
@@ -144,7 +154,7 @@ public class AttachPlatform : MonoBehaviour
 		// close to the current one.
 		if (MagmaJump)
         {
-			if (!agent.pathPending && agent.remainingDistance < 2f)
+			if (!agent.pathPending && agent.remainingDistance < 4.0f) // was 2!
 				GotoNextPoint();
 		}
 
