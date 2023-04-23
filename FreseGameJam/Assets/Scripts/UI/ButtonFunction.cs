@@ -75,8 +75,15 @@ public class ButtonFunction : MonoBehaviour
         if (playerInput.CharacterControls.CamToggle.triggered)
         {
             ToggleCloseQuaterCamera();
-            SkipCutscene();
+            SkipCutscene(); // JAN: comment, then delete this if the function down below works! 
         }
+
+        // JAN: uncomment this after allocating and mapping the SkipCutscene command in the playerInput!
+        /* 
+        if (playerInput.CharacterControls.SkipCutscene.triggered)
+        {
+            SkipCutscene();
+        }*/
     }
     public void Pause()
     {
