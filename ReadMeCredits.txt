@@ -98,3 +98,4 @@ Got heroin?: https://www.dafont.com/de/got-heroin.font
 Paintbrush: https://www.dafont.com/de/paintbrush-2.font
 Paper Cuts 2: https://www.dafont.com/de/paper-cuts.font
 Quikhand: https://www.dafont.com/de/quikhand.font
+TTMasters Demo Black: https://dafontfree.net
