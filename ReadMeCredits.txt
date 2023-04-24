@@ -22,6 +22,9 @@ Music promoted by https://www.free-stock-music.com
 Creative Commons Attribution-ShareAlike 3.0 Unported
 https://creativecommons.org/licenses/by-sa/3.0/deed.en_US
 Positive Cartoon Loop Music by Sergei Chetvertnykh https://pixabay.com/de/music/optimistisch-positive-cartoon-loop-109009/
+Blue Island by matthewmikecolemusic from Pixabay
+Luau by matthewmikecolemusic from Pixabay
+Caribbean Dream by OYStudio from Pixabay
 
 
 Sounds:
@@ -68,9 +71,9 @@ human_clothpass_walking from pixabay.com
 flapping-cloth from pixabay.com
 cloth-rustling from pixabay.com
 Thunderstorm lightning strike from pixabay.com
-Blue Island by matthewmikecolemusic from Pixabay
-Luau by matthewmikecolemusic from Pixabay
-Caribbean Dream by OYStudio from Pixabay
+Knuckles Cracking Sounds from pixabay.com
+Falling Bones from pixabay.com
+Rolling Dice from pixabay.com
 
 
 
