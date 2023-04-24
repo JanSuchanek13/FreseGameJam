@@ -74,6 +74,8 @@ Thunderstorm lightning strike from pixabay.com
 Knuckles Cracking Sounds from pixabay.com
 Falling Bones from pixabay.com
 Rolling Dice from pixabay.com
+Rock Smash from pixabay.com
+Goat Sound from pixabay.com
 
 
 
