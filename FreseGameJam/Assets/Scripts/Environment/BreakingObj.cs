@@ -62,7 +62,6 @@ public class BreakingObj : MonoBehaviour
             }else
             {
                 Invoke("Break", timeTillBreak);
-                Debug.Log("1");
                 if (levelEnd)
                 {
                     _player.GetComponent<ThirdPersonMovement>().forcedFalling = true;

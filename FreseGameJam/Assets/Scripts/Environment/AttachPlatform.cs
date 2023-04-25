@@ -339,7 +339,10 @@ public class AttachPlatform : MonoBehaviour
 			gameObject.transform.GetChild(0).position += new Vector3(0, -0.6f, 0);
 			StartCoroutine(clearFire());
 			GetComponent<Collider>().enabled = false;
+			PlaySubmergeSound();
+
 			yield return new WaitForSeconds(countdown);
+
 			gameObject.transform.GetChild(0).position += new Vector3(0, +0.6f, 0);
 			GetComponent<Collider>().enabled = true;
 		}
@@ -347,8 +350,6 @@ public class AttachPlatform : MonoBehaviour
 
 	private IEnumerator submerge()
     {
-		PlaySubmergeSound();
-
 		yield return new WaitForSeconds(1f);
 		foreach (GameObject i in Fire)
 		{

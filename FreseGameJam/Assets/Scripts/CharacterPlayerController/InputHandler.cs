@@ -157,7 +157,7 @@ public class InputHandler : MonoBehaviour
         mouseValue = Vector2.zero;
         jumpValue = 0.0f;
 
-        Debug.Log("All input was reset to zero");
+        //Debug.Log("All input was reset to zero");
     }
 }
 

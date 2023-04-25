@@ -6,10 +6,10 @@ public class DestroyOnContact : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("killzone triggered");
+        //Debug.Log("killzone triggered");
         if (!other.CompareTag("Indestructable"))
         {
-            Debug.Log("killzone destroyed: " + other.name);
+            //Debug.Log("killzone destroyed: " + other.name);
 
             Destroy(other.gameObject);
         }

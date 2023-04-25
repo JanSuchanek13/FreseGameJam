@@ -69,7 +69,7 @@ public class DelaySound : MonoBehaviour
 
                 Invoke("LookAtThisNext", _lookAtThisForThisLong);
                 _playerCharacter.GetComponent<FocusPlayerViewOnObject>().waitLonger = true; // prevents player from starting to move between chained cutscenes
-                Debug.Log("wait longer = true!");
+                //Debug.Log("wait longer = true!");
             }
 
             _playerCharacter.GetComponent<FocusPlayerViewOnObject>().FocusTarget(_pointToLookAt, _lookAtThisForThisLong, _thisCutscene_Nr);
@@ -111,8 +111,6 @@ public class DelaySound : MonoBehaviour
         // check if the cutscene was skipped before proceeding (skipping will turn the bool "waitLonger" false):
         if (_playerCharacter.GetComponent<FocusPlayerViewOnObject>().waitLonger)
         {
-            Debug.Log("this was called 3");
-
             _playerCharacter.GetComponent<FocusPlayerViewOnObject>().waitLonger = false; // enables players to move after chained cutscenes
             PlaySound();
         }
