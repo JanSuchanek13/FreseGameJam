@@ -79,11 +79,11 @@ public class ButtonFunction : MonoBehaviour
         }
 
         // JAN: uncomment this after allocating and mapping the SkipCutscene command in the playerInput!
-        /* 
-        if (playerInput.CharacterControls.SkipCutscene.triggered)
+         
+        if (playerInput.CharacterControlsController.SkipCutscene.triggered || playerInput.CharacterControlsKeyboard.SkipCutscene.triggered)
         {
             SkipCutscene();
-        }*/
+        }
     }
     public void Pause()
     {
