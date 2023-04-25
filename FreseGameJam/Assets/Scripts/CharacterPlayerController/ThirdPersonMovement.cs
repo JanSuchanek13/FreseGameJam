@@ -422,7 +422,7 @@ public class ThirdPersonMovement : MonoBehaviour
             //Jump
             if (isCoyoteGrounded)
             {
-                jumpingDust.gameObject.SetActive(false);
+                //jumpingDust.gameObject.SetActive(false);
                 jumping = false;
             }
             if (input.jumpTriggerd && isCoyoteGrounded)
@@ -431,7 +431,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 jumping = true; //animation
                 //controller.slopeLimit = 100f;
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-                jumpingDust.gameObject.SetActive(true);
+                jumpingDust.Play();
                 jumpSound.Play();
             }
             
