@@ -32,6 +32,8 @@ public class StateController : MonoBehaviour
     public int StateNumber = 0;
     private KeyCode[] keyCodes = new KeyCode[] { KeyCode.Alpha0, KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5, KeyCode.Alpha6, KeyCode.Alpha7, KeyCode.Alpha8, KeyCode.Alpha9 };
 
+    [Tooltip("This is used to tell the HealhtSystem what form/shape the player was in when dying. Do not touch!")]
+    public int currentFormId = 1;
 
     private IEnumerator coroutine;
     public GameObject ballVisuell;
@@ -205,6 +207,8 @@ public class StateController : MonoBehaviour
                 switch (i)//change Movement state
                 {
                     case 1:
+                        currentFormId = 1;
+
                         ball = false;
                         human = true;
                         frog = false;
@@ -218,6 +222,8 @@ public class StateController : MonoBehaviour
                     case 5:
                         if (availableJesus)
                         {
+                            currentFormId = 5;
+
                             ball = false;
                             human = false;
                             frog = false;
@@ -234,6 +240,8 @@ public class StateController : MonoBehaviour
                     case 2:
                         if (availableCrane)
                         {
+                            currentFormId = 2;
+
                             ball = false;
                             human = false;
                             frog = false;
@@ -250,6 +258,8 @@ public class StateController : MonoBehaviour
                     case 3:
                         if (availableCapricorn)
                         {
+                            currentFormId = 3;
+
                             ball = false;
                             human = false;
                             frog = false;
@@ -266,6 +276,8 @@ public class StateController : MonoBehaviour
                     case 4:
                         if (availableLama)
                         {
+                            currentFormId = 4;
+
                             ball = false;
                             human = false;
                             frog = false;
@@ -282,6 +294,8 @@ public class StateController : MonoBehaviour
                     case 6:
                         if (availableFrog)
                         {
+                            currentFormId = 6;
+
                             ball = false;
                             human = false;
                             frog = true;

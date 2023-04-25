@@ -77,7 +77,7 @@ public class CloseQuarterCamera : MonoBehaviour
 
     private void Update() // failsafe to enable zones after dying!
     {
-        if (GetComponent<HealthSystem>().inUse)
+        if (GetComponent<HealthSystem>().inCoroutine)
         {
             Debug.Log("I died and am resetting camera");
 

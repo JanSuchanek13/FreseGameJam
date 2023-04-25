@@ -59,9 +59,13 @@ public class ThirdPersonMovement : MonoBehaviour
     public float animationSpeed;
 
     //for VFX
+    [Header("Goat Effects:")]
     public ParticleSystem dash;
     public ParticleSystem dash02;
     public ParticleSystem buildingup;
+    [SerializeField] ParticleSystem _impactEffect;
+    [Space(10)]
+    [Header("Walking Effects:")]
     public ParticleSystem runningDust;
     public ParticleSystem jumpingDust;
 
@@ -705,7 +709,8 @@ public class ThirdPersonMovement : MonoBehaviour
         buildingup.Play();
         //dash_Sound.Play();
 
-        yield return new WaitForSeconds(buildingUp_Sound.clip.length);
+        //yield return new WaitForSeconds(buildingUp_Sound.clip.length);
+        yield return new WaitForSeconds(chargeTime);
 
         inDash = true;
         dash.Play();
@@ -734,6 +739,11 @@ public class ThirdPersonMovement : MonoBehaviour
                 {
                     rig.AddExplosionForce(1.0f, transform.position, 1, 1f, ForceMode.Impulse);
                     dashCrash_Sound.Play();
+                    
+                    if(_impactEffect != null) // this can be thrown out when susi has imported the impact effect!
+                    {
+                        _impactEffect.Play();
+                    }
                 }
             }
 

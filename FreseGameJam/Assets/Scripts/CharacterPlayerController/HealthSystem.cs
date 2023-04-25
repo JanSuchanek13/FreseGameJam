@@ -10,7 +10,7 @@ public class HealthSystem : MonoBehaviour
 {
     private IEnumerator coroutine;
     public Vector3 respawnPoint; // felix made this public for portable respawn position
-    public bool inUse;
+    public bool inCoroutine;
 
     [SerializeField] GameObject Cam;
     [SerializeField] GameObject Cam2;
@@ -29,11 +29,16 @@ public class HealthSystem : MonoBehaviour
     List<Vector3> Checkpoints = new List<Vector3>(); // list of all Checkpoints in this Level
     public int[] lastCheckpoint = new int[3];// int of the last Checkpoint in each Level, for Continue the Game
 
-    // Felix:
-    [SerializeField] AudioSource[] arrayOfScreams;
-    [SerializeField] bool superDramaticDeath = true;
-    //[SerializeField] AudioSource choireHymnn;
-    //[SerializeField] AudioSource fireSwoosh;
+    [Header("Death-Screams:")]
+    [SerializeField] AudioSource[] _humanScreams;
+    [SerializeField] AudioSource[] _craneScreams;
+    [SerializeField] AudioSource[] _goatScreams;
+    [SerializeField] AudioSource[] _llamaScreams;
+    [SerializeField] AudioSource[] _jesusScreams;
+    [SerializeField] AudioSource[] _frogScreams;
+
+    AudioSource[] _arrayOfScreams;
+    [SerializeField] bool useFullLengthDeathScreams = true;
 
 
     private void Start()
@@ -88,25 +93,25 @@ public class HealthSystem : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Damage"))
         {
-            StartCoroutine(deadAndRespawn());
-            //count deaths and save them
-            
+            if (!inCoroutine)
+            {
+                StartCoroutine(DieAndRespawn());
+            }
         }
     }
 
-    
-
-    private IEnumerator deadAndRespawn()
+    IEnumerator DieAndRespawn()
     {
+        /*if (!inCoroutine)
+        {*/
+            inCoroutine = true;
         
+            // hauler your scream:
+            StartCoroutine(DeathScream());
 
-        if (!inUse)
-        {
-            inUse = true;
             //count deaths and save them
             deaths[0] = PlayerPrefs.GetInt("deaths" + 0); // (currentLevel - 2) & (currentLevel - 2) in end
             PlayerPrefs.SetInt("deaths" + 0, deaths[0] + 1);// (currentLevel - 2) & (currentLevel - 2) in end
-            //Debug.Log(PlayerPrefs.GetInt("deaths" + (currentLevel - 2)));
 
             //stop Riverboat
             if (RiverBoat_Friend.activeInHierarchy)
@@ -132,45 +137,96 @@ public class HealthSystem : MonoBehaviour
             GetComponent<CharacterController>().enabled = false; // no colission = sink into even shallow deathzones
             GetComponent<Rigidbody>().isKinematic = false;
 
-            #region Audio:
-            // Get random sound:
-            AudioSource _randomDeathScream = arrayOfScreams[UnityEngine.Random.Range(0, arrayOfScreams.Length)];
-            float _lengthOfScream = _randomDeathScream.clip.length;
+        yield return new WaitForSeconds(1f);
 
-            // Random pitch:
-            float _randomPitch = UnityEngine.Random.Range(1.5f, 2.5f);
-            _randomDeathScream.pitch = _randomPitch;
 
-            // Play the sound:
-            _randomDeathScream.Play();
-            #endregion
 
-            if (superDramaticDeath)
-            {
-                yield return new WaitForSeconds(_lengthOfScream);
-            }else
-            {
-                yield return new WaitForSeconds(1f);
-            }
-
-            gameObject.transform.position = new Vector3(0, -3, 0) + respawnPoint;
+        gameObject.transform.position = new Vector3(0, -3, 0) + respawnPoint;
 
             GetComponent<Rigidbody>().isKinematic = true;
             GetComponent<ThirdPersonMovement>().enabled = true; // no movement hopefully stops me from being able to survive death zones
             GetComponent<CharacterController>().enabled = true;
 
 
-            EnableCameras();/*
-            Cam2.SetActive(false);
-            Cam.SetActive(true);*/
-            //CamScript.enabled = true;
-
+            EnableCameras();
             #endregion
 
-
-            //CamScript.enabled = true;
             GetComponent<ThirdPersonMovement>().gravity = gravity;
-            inUse = false;
+            inCoroutine = false;
+        /*}
+        else
+        {
+            return;
+        }*/
+    }
+
+    /// <summary>
+    /// Gets current form to allow various deathscreams depending on current state while dying.
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator DeathScream()
+    {
+        // get current form-ID:
+        int _stateID = FindObjectOfType<StateController>().currentFormId;
+
+        switch (_stateID)
+        {
+            case 1: // human:
+                _arrayOfScreams = _humanScreams;
+                break;
+
+            case 2: // crane:
+                _arrayOfScreams = _craneScreams;
+                break;
+
+            case 3: // goat:
+                _arrayOfScreams = _goatScreams;
+                break;
+
+            case 4: // llama:
+                _arrayOfScreams = _llamaScreams;
+                break;
+
+            case 5: // jesus:
+                _arrayOfScreams = _jesusScreams;
+                break;
+
+            case 6: // frog:
+                _arrayOfScreams = _frogScreams;
+                break;
+
+            case 7: // the next big thing in Holliwood!
+                //_arrayOfScreams = _alienRobotDragonQueensScreams;
+                break;
+        }
+
+        float _lengthOfScream = 0.0f;
+
+        if (_arrayOfScreams != null)
+        {
+            AudioSource _randomDeathScream = _arrayOfScreams[UnityEngine.Random.Range(0, _arrayOfScreams.Length)];
+            _lengthOfScream = _randomDeathScream.clip.length;
+            float _randomPitch = UnityEngine.Random.Range(0.9f, 1.1f);
+            _randomDeathScream.pitch = _randomPitch;
+
+            _randomDeathScream.Play();
+        }
+        
+        /*
+        _randomDeathScream = _arrayOfScreams[UnityEngine.Random.Range(0, _arrayOfScreams.Length)];
+        _lengthOfScream = _randomDeathScream.clip.length;
+        _randomPitch = UnityEngine.Random.Range(0.9f, 1.1f);
+        _randomDeathScream.pitch = _randomPitch;
+
+        _randomDeathScream.Play();*/
+
+        if (useFullLengthDeathScreams)
+        {
+            yield return new WaitForSeconds(_lengthOfScream);
+        }else
+        {
+            // clamp death scream to last a max. of 1 seconds (which is the time of respawn)
+            yield return new WaitForSeconds(Mathf.Clamp(_lengthOfScream, 0.0f, 1.0f));
         }
     }
 
