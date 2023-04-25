@@ -16,6 +16,9 @@ public class BreakingObj : MonoBehaviour
     [SerializeField] bool _turnOffCollidersAfterBreak = false; // making this optional allows to have breaking objects which become part of the traversable environment
     [SerializeField] float _timeTillReset = 5.0f;
 
+    [Tooltip("Add AudioSources here to be played upon collapsing the structure. Do not put anything in otherwise!")]
+    [SerializeField] AudioSource[] _arrayOfCollapsingSounds;
+
     Vector3 _resetPos;
     Vector3 _resetRot;
 
@@ -55,13 +58,11 @@ public class BreakingObj : MonoBehaviour
                 if (_player.GetComponent<StateController>().capricorn && _player.GetComponent<ThirdPersonMovement>().inDash)
                 {
                     Invoke("Break", timeTillBreak);
-                    Debug.Log("rammed");
                 }
-            }
-            else
+            }else
             {
                 Invoke("Break", timeTillBreak);
-                
+                Debug.Log("1");
                 if (levelEnd)
                 {
                     _player.GetComponent<ThirdPersonMovement>().forcedFalling = true;
@@ -69,41 +70,17 @@ public class BreakingObj : MonoBehaviour
                 }
             }
         }
-
-
-        // old:
-        /*
-        if (onlyCapricorn)
-        {
-            if (collision.gameObject.tag == "Player")
-            {  
-                if (collision.gameObject.GetComponent<StateController>().capricorn && collision.gameObject.GetComponent<ThirdPersonMovement>().inDash)
-                { 
-                    Invoke("Break", timeTillBreak);
-                }
-            }
-        } else
-        {
-            if (collision.gameObject.tag == "Player")
-            {
-                Invoke("Break", timeTillBreak);
-                
-                if (levelEnd)
-                {
-                    collision.gameObject.GetComponent<ThirdPersonMovement>().forcedFalling = true;
-                    //origamiFriend.GetComponent<Animator>().SetBool("Falling", true);
-                    collision.gameObject.GetComponent<Animator>().SetBool("Falling", true);
-                }
-                    
-            }
-        }*/
     }
 
     void Break()
     {
-        if (!reset)
+        if (_arrayOfCollapsingSounds.Length != 0)
         {
-            GetComponent<Collider>().enabled = false; // turn off trigger so it no longer triggers sound or particles
+            AudioSource _randomCollapsingSound = _arrayOfCollapsingSounds[Random.Range(0, _arrayOfCollapsingSounds.Length)];
+            float _randomPitch = Random.Range(0.9f, 1.1f);
+            _randomCollapsingSound.pitch = _randomPitch;
+
+            _randomCollapsingSound.Play();
         }
 
         if (breakingChildren)
@@ -142,6 +119,9 @@ public class BreakingObj : MonoBehaviour
         if (reset)
         {
             Invoke("Reset", _timeTillReset);
+        }else
+        {
+            GetComponent<Collider>().enabled = false; // turn off trigger so it no longer triggers sound or particles
         }
     }
 

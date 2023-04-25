@@ -12,25 +12,37 @@ public class Rotator : MonoBehaviour
     [SerializeField] float maxRotationLeft = 100;
     [SerializeField] float maxRotationRight = -100;
 
+    bool _turnLeft = true;
+    bool _turnRight = false;
     void Update()
     {
         if (!partialRotation)
         {
             transform.Rotate(rotationVector, speed * Time.deltaTime, Space.World);
-        }
-        else
+        }else
         {
-            transform.Rotate(rotationVector, speed * Time.deltaTime, Space.World);
-            if(transform.rotation.y == maxRotationLeft)
+            /*
+            
+            //transform.Rotate(rotationVector, speed * Time.deltaTime, Space.World);
+            if(transform.rotation.y < maxRotationLeft)
             {
-                Debug.Log("Rotation threshold reached");
+                _turnLeft = true;
+                _turnRight = false;
+                //Debug.Log("Rotation threshold reached");
+                transform.Rotate(rotationVector, speed * Time.deltaTime, Space.World);
+
+            }else
+            {
+                _turnLeft = false;
+                _turnRight = true;
+                transform.Rotate(rotationVector*-1, speed * Time.deltaTime, Space.World);
 
             }
             if (transform.rotation.y >= maxRotationLeft || transform.rotation.y <= maxRotationRight)
             {
-                Debug.Log("Rotation threshold reached");
+                //Debug.Log("Rotation threshold reached");
                 rotationVector *= -1; // invert direction 
-            }
+            }*/
         }
     }
 

@@ -40,7 +40,12 @@ public class AttachPlatform : MonoBehaviour
 	Collider m_Collider;
 	RaycastHit m_Hit;
 	Vector3 oldPos;
-	
+
+	[Tooltip("One of these sounds will be played at random on every interval of the countdown of this tile. This will " +
+		"coincide with the lighting of each flame.")]
+	[SerializeField] AudioSource[] _arrayOfBurningSounds;
+	[Tooltip("One of these sounds will be played at random when this platform gets submerged.")]
+	[SerializeField] AudioSource[] _arrayOfSubmergeSounds;
 
 
 	private void Start()
@@ -324,6 +329,7 @@ public class AttachPlatform : MonoBehaviour
 				break;
             }
 			i.SetActive(true);
+			PlayBurnSound();
 		}
 		
 		//yield return new WaitForSeconds(countdown);
@@ -341,13 +347,37 @@ public class AttachPlatform : MonoBehaviour
 
 	private IEnumerator submerge()
     {
+		PlaySubmergeSound();
+
 		yield return new WaitForSeconds(1f);
 		foreach (GameObject i in Fire)
 		{
 			i.SetActive(false);
 		}
 	}
+	void PlayBurnSound()
+	{
+		if (_arrayOfBurningSounds != null)
+		{
+			AudioSource _randomBurningSound = _arrayOfBurningSounds[Random.Range(0, _arrayOfBurningSounds.Length)];
+			float _randomPitch = Random.Range(0.9f, 1.1f);
+			_randomBurningSound.pitch = _randomPitch;
 
+			_randomBurningSound.Play();
+		}
+	}
+
+	void PlaySubmergeSound()
+	{
+		if (_arrayOfSubmergeSounds != null)
+		{
+			AudioSource _randomSubmergeSound = _arrayOfSubmergeSounds[Random.Range(0, _arrayOfSubmergeSounds.Length)];
+			float _randomPitch = Random.Range(0.9f, 1.1f);
+			_randomSubmergeSound.pitch = _randomPitch;
+
+			_randomSubmergeSound.Play();
+		}
+	}
 	/*
 	void OnDrawGizmos()
 	{

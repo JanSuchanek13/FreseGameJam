@@ -28,7 +28,7 @@ namespace Loneflower
         /// </summary>
         private void SetVelocity()
         {
-            Debug.Log(myController.velocity);
+            //Debug.Log(myController.velocity);
             animator.SetFloat("xVelocity", thirdPersonMovement.speed);
             animator.SetFloat("yVelocity", myController.velocity.y);
         }
