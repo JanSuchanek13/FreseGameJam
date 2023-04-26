@@ -217,7 +217,7 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Bridge"))
         {
-            GetComponent<CharacterController>().stepOffset = 2f;
+            GetComponent<CharacterController>().stepOffset = 1f;
             onBridge = true;
         }
     }
@@ -386,7 +386,7 @@ public class ThirdPersonMovement : MonoBehaviour
         }
         
         bool isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance *3, groundMask, QueryTriggerInteraction.Ignore);
-        if (isGrounded && velocity.y < 0.5) //is falling
+        if (isGrounded && velocity.y < 0.5 && !onBridge) //is falling
         {
             controller.stepOffset = 0.5f;
             //falling = false; //animation
