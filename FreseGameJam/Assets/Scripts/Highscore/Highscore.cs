@@ -51,11 +51,22 @@ public class Highscore : MonoBehaviour
         if (overwriteUI)
         {
             //for Level 1
-            //for Highscore Time
-            timer = PlayerPrefs.GetFloat("HTtimer" + (0));
+
+            //for HARDCORE Highscore
+            timer = PlayerPrefs.GetFloat("HighscoreHardcoreTime" + (0));
             int minutes = (int)timer / 60;
             int seconds = (int)timer - 60 * minutes;
             int milliseconds = (int)(1000 * (timer - minutes * 60 - seconds));
+
+            _hardcoreTimer.text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
+            _hardcoreCrowns.text = PlayerPrefs.GetInt("HighscoreHardcoreCrowns" + (0)).ToString();
+            _hardcoreDeaths.text = PlayerPrefs.GetInt("HighscoreHardcoreDeaths" + (0)).ToString();
+
+            //for Highscore Time
+            timer = PlayerPrefs.GetFloat("HTtimer" + (0));
+            minutes = (int)timer / 60;
+            seconds = (int)timer - 60 * minutes;
+            milliseconds = (int)(1000 * (timer - minutes * 60 - seconds));
 
             HTtimer.text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
             HTcrowns.text = PlayerPrefs.GetInt("HTcrowns" + (0)).ToString();
@@ -114,6 +125,14 @@ public class Highscore : MonoBehaviour
             PlayerPrefs.SetFloat("HCtimer" + 0, PlayerPrefs.GetFloat("timer" + 0));
             PlayerPrefs.SetInt("HCcrowns" + 0, PlayerPrefs.GetInt("crowns" + 0));
             PlayerPrefs.SetInt("HCdeaths" + 0, PlayerPrefs.GetInt("deaths" + 0));
+        }
+
+        // for hardcore: (time is key)
+        if (PlayerPrefs.GetFloat("HardcoreTime" + 0) < PlayerPrefs.GetFloat("HighscoreHardcoreTime" + 0) || PlayerPrefs.GetFloat("HighscoreHardcoreTime" + 0) == 0)
+        {
+            PlayerPrefs.SetFloat("HighscoreHardcoreTime" + 0, PlayerPrefs.GetFloat("HardcoreTime" + 0));
+            PlayerPrefs.SetInt("HighscoreHardcoreCrowns" + 0, PlayerPrefs.GetInt("HardcoreCrowns" + 0));
+            PlayerPrefs.SetInt("HighscoreHardcoreDeaths" + 0, PlayerPrefs.GetInt("HardcoreDeaths" + 0));
         }
     }
 }

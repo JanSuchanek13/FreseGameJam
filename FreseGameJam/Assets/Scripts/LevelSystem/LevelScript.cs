@@ -120,7 +120,7 @@ public class LevelScript : MonoBehaviour
 
                     GameObject.Find("Hardcore_UI").SetActive(false); // turn off the regular, ingame crown-counter and icon
 
-                    LevelFinished();
+                    HardcoreFinished();
                 }
             }
         }
@@ -145,7 +145,25 @@ public class LevelScript : MonoBehaviour
         // change level:
         StartCoroutine(LoadLevel(nextLevel)); // may need a _inCoroutine bool to avoid starting loading the next level multiple times -F
     }
+    public void HardcoreFinished()
+    {
+        // save level:
+        int currentLevel = SceneManager.GetActiveScene().buildIndex; // this is already done in start o0...
 
+        // determine next level:
+        if (currentLevel >= PlayerPrefs.GetInt("levelIsUnlocked"))
+        {
+            PlayerPrefs.SetInt("levelIsUnlocked", currentLevel + 1);
+            Debug.Log("Level " + PlayerPrefs.GetInt("levelIsUnlocked") + " is now unlocked!");
+        }
+
+        // save highscore:
+        //_highscore.CompareHighscore();
+        _gameManager.GetComponent<Highscore>().CompareHighscore();
+
+        // change level:
+        StartCoroutine(LoadLevel(nextLevel)); // may need a _inCoroutine bool to avoid starting loading the next level multiple times -F
+    }
 
     IEnumerator LoadLevel(int levelIndex)
     {

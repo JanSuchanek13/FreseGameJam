@@ -90,10 +90,12 @@ public class HardcoreMode : MonoBehaviour
         if (_runStarted && !runFinished)
         {
             int _crowns = PlayerPrefs.GetInt("crowns" + 0, 1);
+            //transform crowns counted into Hardcore crowns:
+            PlayerPrefs.SetInt("HardcoreCrowns" + 0, _crowns);
             _crowns_txt.text = _crowns.ToString();
 
             _timeElapsed += Time.deltaTime;
-            PlayerPrefs.SetFloat("timer" + 0, _timeElapsed);
+            PlayerPrefs.SetFloat("HardcoreTime" + 0, _timeElapsed);
 
             //_timer_txt.text += Time.deltaTime.ToString();
             //float _totalLevelTime = PlayerPrefs.GetFloat("timer" + 0, 0) + PlayerPrefs.GetFloat("lastTimer" + 0, 0);
