@@ -6527,6 +6527,7 @@ GameObject:
   - component: {fileID: 3842555884447801119}
   - component: {fileID: 7246926132315479420}
   - component: {fileID: 2823138454060854248}
+  - component: {fileID: 3498487958436319137}
   m_Layer: 0
   m_Name: PaperMan_Form
   m_TagString: Player
@@ -6603,6 +6604,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myController: {fileID: 510890566596334925}
   thirdPersonMovement: {fileID: 8476848767638494030}
+--- !u!114 &3498487958436319137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1049295396752707567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f8d08a9b608cfb4cbbf997e7b4aeea5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arrayOfWalkingSounds:
+  - {fileID: 7544961096159663542}
+  - {fileID: 6524686054397204954}
+  - {fileID: 4482616373038189658}
+  - {fileID: 4785235577508151001}
+  - {fileID: 727376909866048911}
+  falling_Sound: {fileID: 727376909866048911}
 --- !u!1 &1112080271548026024
 GameObject:
   m_ObjectHideFlags: 0
