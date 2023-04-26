@@ -109,6 +109,10 @@ public class HealthSystem : MonoBehaviour
             // hauler your scream:
             StartCoroutine(DeathScream());
 
+        // turn off artificial shadow:
+        Shadow _shadowGO = FindObjectOfType<Shadow>();
+        _shadowGO.DisableShadow();
+
             //count deaths and save them
             deaths[0] = PlayerPrefs.GetInt("deaths" + 0); // (currentLevel - 2) & (currentLevel - 2) in end
             PlayerPrefs.SetInt("deaths" + 0, deaths[0] + 1);// (currentLevel - 2) & (currentLevel - 2) in end
@@ -132,14 +136,11 @@ public class HealthSystem : MonoBehaviour
             GetComponent<ThirdPersonMovement>().gravity = 0;
             //yield return new WaitForSeconds(1f);
             
-            #region Felix stuff:
             GetComponent<ThirdPersonMovement>().enabled = false; // no movement hopefully stops me from being able to survive death zones
             GetComponent<CharacterController>().enabled = false; // no colission = sink into even shallow deathzones
             GetComponent<Rigidbody>().isKinematic = false;
 
         yield return new WaitForSeconds(1f);
-
-
 
         gameObject.transform.position = new Vector3(0, -3, 0) + respawnPoint;
 
@@ -147,12 +148,13 @@ public class HealthSystem : MonoBehaviour
             GetComponent<ThirdPersonMovement>().enabled = true; // no movement hopefully stops me from being able to survive death zones
             GetComponent<CharacterController>().enabled = true;
 
-
-            EnableCameras();
-            #endregion
+        EnableCameras();
 
             GetComponent<ThirdPersonMovement>().gravity = gravity;
             inCoroutine = false;
+
+        // turn on artificial shadow:
+        _shadowGO.EnableShadow();
         /*}
         else
         {

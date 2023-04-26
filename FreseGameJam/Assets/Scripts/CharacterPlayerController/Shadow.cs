@@ -27,30 +27,35 @@ public class Shadow : MonoBehaviour
             // Wenn der Raycast einen Treffer hat, setze die Y-Position der Schattenplane auf den Y-Wert des Treffers
             shadowPlane.transform.position = new Vector3(player.transform.position.x, hit.point.y + 0.01f, player.transform.position.z);
 
-
-               
-
             // Hole den Normalenvektor des Treffers (der zeigt nach oben vom Boden)
             Vector3 normal = hit.normal;
 
             shadowPlane.transform.rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
 
-
-
-
             /*
-
             // Berechne den Winkel des Bodens in Grad
            float angle = Vector3.Angle(normal, Vector3.up);
 
             // Setze die Rotation der Schattenplane auf eine neue Quaternion-Rotation, die auf den Winkel des Bodens abgestimmt ist
             shadowPlane.transform.rotation = Quaternion.Euler(0, 0, angle);
-
             */
-
-            
-
         }
+    }
+
+    /// <summary>
+    /// Turns off artificial shadow-object when dying.
+    /// </summary>
+    public void DisableShadow()
+    {
+        gameObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// Turns on artificial shadow-object when respawning.
+    /// </summary>
+    public void EnableShadow()
+    {
+        gameObject.SetActive(true);
     }
 }
 
