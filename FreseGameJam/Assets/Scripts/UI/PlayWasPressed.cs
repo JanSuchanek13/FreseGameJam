@@ -99,12 +99,16 @@ public class PlayWasPressed : MonoBehaviour
     {
         // "0" means new round
         // "1" means continue
+        // "2" means hardcore round
         if (ContinueOrNewRound == 1)
         {
             Invoke("ContinueOldRound", delayBeforeStarting);
-        }else
+        }else if(ContinueOrNewRound == 0)
         {
             Invoke("StartNewRound", delayBeforeStarting);
+        }else
+        {
+            Invoke("StartHardcoreRound", delayBeforeStarting);
         }
 
         // call lightning:
@@ -121,13 +125,19 @@ public class PlayWasPressed : MonoBehaviour
     }
     void StartNewRound()
     {
+        PlayerPrefs.SetInt("HardcoreMode", 0);
         GetComponent<Level_Manager>().LoadLevel(1);
     }
     void ContinueOldRound()
     {
+        PlayerPrefs.SetInt("HardcoreMode", 0);
         GetComponent<Level_Manager>().ContinueLevel();
     }
-
+    void StartHardcoreRound()
+    {
+        PlayerPrefs.SetInt("HardcoreMode", 1);
+        GetComponent<Level_Manager>().LoadLevel(1);
+    }
     void StartDelayedFade()
     {
         _startFading = true;

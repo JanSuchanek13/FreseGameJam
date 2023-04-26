@@ -9,6 +9,10 @@ public class Highscore : MonoBehaviour
     int currentLevel;
 
     public bool overwriteUI;
+    [SerializeField] TextMeshProUGUI _hardcoreTimer;
+    [SerializeField] TextMeshProUGUI _hardcoreCrowns;
+    [SerializeField] TextMeshProUGUI _hardcoreDeaths;
+
     [SerializeField] TextMeshProUGUI HTtimer;
     [SerializeField] TextMeshProUGUI HTcrowns;
     [SerializeField] TextMeshProUGUI HTdeaths;

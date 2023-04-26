@@ -35,6 +35,7 @@ public class LevelScript : MonoBehaviour
     int _currentLevel;
     bool _endZoneReached = false;
     GameObject _gameManager;
+    bool _usingHardcoreMode = false;
 
     // variables for fading screen:
     float _fadeIntervalls;
@@ -53,12 +54,14 @@ public class LevelScript : MonoBehaviour
         _fadeIntervalls = 1.5f / 100.0f; // tried and tested, this feeld pretty good.
 
         _gameManager = GameObject.Find("GameManager");
+
+        _usingHardcoreMode = FindObjectOfType<HardcoreMode>().useHardcoreMode;
     }
 
     private void Update()
     {
         // save time per frame
-        if (!_endZoneReached)
+        if (!_endZoneReached && !_usingHardcoreMode)
         {
             PlayerPrefs.SetFloat("timer" + 0, Time.timeSinceLevelLoad + _timer[0]); //(currentLevel - 2)
         }
@@ -69,32 +72,56 @@ public class LevelScript : MonoBehaviour
         // prevent triggering multiple times
         if (!_endZoneReached)
         {
-            if (other.tag == "Player")
+            if (other.tag == "Player" && !_usingHardcoreMode)
             {
-                if (_fadeToBlackBlende != null) // only fade if there is a fadeBlende in place.
+                if (!_usingHardcoreMode)
                 {
-                    StartCoroutine(FadeToBlack());
-                    Invoke("DisplayText", 3.5f);
+                    // this bool ensures that the end of a level is triggered only once and immediatly!
+                    _endZoneReached = true;
+
+                    if (_fadeToBlackBlende != null) // only fade if there is a fadeBlende in place.
+                    {
+                        StartCoroutine(FadeToBlack());
+                        Invoke("DisplayText", 3.5f);
+                    }
+                    // stop music & play success-music:
+                    _gameManager.GetComponent<BackgroundSoundPlayer>().PauseMusic(); // lower volume or pause music
+                                                                                     //_gameManager.GetComponent<BackgroundSoundPlayer>().TurnOffMusic(); // stop music
+
+
+                    // changed these "finds" to serialized fields to manually controll end-sounds:
+                    //GameObject.Find("AudioSource_Victory_1").GetComponent<AudioSource>().Play();
+                    //GameObject.Find("AudioSource_ChoireHymn_1").GetComponent<AudioSource>().Play();
+                    _choirSound.Play();
+                    _victorySound.Play();
+
+                    //GameObject.Find("UI_Crown_Counter").SetActive(false); // turn off the regular, ingame crown-counter and icon
+                    GameObject.Find("Ingame_UI").SetActive(false); // turn off the regular, ingame crown-counter and icon
+
+                    //Debug.Log("Level endzone reached!");
+                    LevelFinished();
+
+                    // this bool ensures that the end of a level is triggered only once and immediatly!
+                    //_endZoneReached = true;
+                }else
+                {
+                    FindObjectOfType<HardcoreMode>().runFinished = true;
+
+                    if (_fadeToBlackBlende != null) // only fade if there is a fadeBlende in place.
+                    {
+                        StartCoroutine(FadeToBlack());
+                        Invoke("DisplayText", 3.5f);
+                    }
+
+                    // stop music & play success-music:
+                    _gameManager.GetComponent<BackgroundSoundPlayer>().PauseMusic();
+                    _choirSound.Play();
+                    _victorySound.Play();
+
+                    GameObject.Find("Hardcore_UI").SetActive(false); // turn off the regular, ingame crown-counter and icon
+
+                    LevelFinished();
                 }
-                // stop music & play success-music:
-                _gameManager.GetComponent<BackgroundSoundPlayer>().PauseMusic(); // lower volume or pause music
-                //_gameManager.GetComponent<BackgroundSoundPlayer>().TurnOffMusic(); // stop music
-
-
-                // changed these "finds" to serialized fields to manually controll end-sounds:
-                //GameObject.Find("AudioSource_Victory_1").GetComponent<AudioSource>().Play();
-                //GameObject.Find("AudioSource_ChoireHymn_1").GetComponent<AudioSource>().Play();
-                _choirSound.Play();
-                _victorySound.Play();
-
-                //GameObject.Find("UI_Crown_Counter").SetActive(false); // turn off the regular, ingame crown-counter and icon
-                GameObject.Find("Ingame_UI").SetActive(false); // turn off the regular, ingame crown-counter and icon
-
-                //Debug.Log("Level endzone reached!");
-                LevelFinished();
-                
-                // this bool ensures that the end of a level is triggered only once and immediatly!
-                _endZoneReached = true;
             }
         }
     }
