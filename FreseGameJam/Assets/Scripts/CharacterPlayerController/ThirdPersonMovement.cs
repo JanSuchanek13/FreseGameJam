@@ -184,6 +184,11 @@ public class ThirdPersonMovement : MonoBehaviour
     private void Awake()
     {
         playerInput = new PlayerInput();
+        SetGliding();
+    }
+
+    public void SetGliding()
+    {
         if (PlayerPrefs.GetInt("glidingSettings") > 0)
         {
             holdForGliding = true;

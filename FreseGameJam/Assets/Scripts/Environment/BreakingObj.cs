@@ -10,7 +10,8 @@ public class BreakingObj : MonoBehaviour
     public bool onlyCapricorn;
     public bool breakingChildren;
     public float timeTillBreak;
-    public bool reset; 
+    public bool reset;
+    public GameObject origamiFriend;
 
     // local variables:
     [SerializeField] bool _turnOffCollidersAfterBreak = false; // making this optional allows to have breaking objects which become part of the traversable environment
@@ -69,7 +70,8 @@ public class BreakingObj : MonoBehaviour
                 if (levelEnd)
                 {
                     _player.GetComponent<ThirdPersonMovement>().forcedFalling = true;
-                    _player.GetComponent<Animator>().SetBool("Falling", true);
+                    //_player.GetComponent<Animator>().SetBool("Falling", true);
+                    origamiFriend.GetComponent<Rigidbody>().isKinematic = false;
                 }
             }
         }
