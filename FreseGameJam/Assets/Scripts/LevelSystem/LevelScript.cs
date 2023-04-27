@@ -16,10 +16,15 @@ public class LevelScript : MonoBehaviour
     [SerializeField] float _timeBeforeLoadingNewLevel = 5.0f;
     [SerializeField] AudioSource _choirSound;
     [SerializeField] AudioSource _victorySound;
+    //[SerializeField] GameObject _regularUI;
+    //[SerializeField] GameObject _hardcoreUI;
+
 
     // public variables:
     public Animator transition;
     public int nextLevel = 3;
+    public bool _usingHardcoreMode = false;
+
 
     [SerializeField] Image _fadeToBlackBlende;
     [SerializeField] GameObject _thankYouForPlayingOverlay;
@@ -35,7 +40,6 @@ public class LevelScript : MonoBehaviour
     int _currentLevel;
     bool _endZoneReached = false;
     GameObject _gameManager;
-    bool _usingHardcoreMode = false;
 
     // variables for fading screen:
     float _fadeIntervalls;
@@ -55,7 +59,11 @@ public class LevelScript : MonoBehaviour
 
         _gameManager = GameObject.Find("GameManager");
 
-        _usingHardcoreMode = FindObjectOfType<HardcoreMode>().useHardcoreMode;
+        if(FindObjectOfType<HardcoreMode>().useHardcoreMode == true)
+        {
+        _usingHardcoreMode = true;
+        }
+        //_usingHardcoreMode = FindObjectOfType<HardcoreMode>().useHardcoreMode; to late
     }
 
     private void Update()
@@ -72,12 +80,15 @@ public class LevelScript : MonoBehaviour
         // prevent triggering multiple times
         if (!_endZoneReached)
         {
-            if (other.tag == "Player" && !_usingHardcoreMode)
+            if (other.tag == "Player")
             {
+                // this bool ensures that the end of a level is triggered only once and immediatly!
+                _endZoneReached = true;
+
                 if (!_usingHardcoreMode)
                 {
-                    // this bool ensures that the end of a level is triggered only once and immediatly!
-                    _endZoneReached = true;
+                    Debug.Log("normal finished");
+
 
                     if (_fadeToBlackBlende != null) // only fade if there is a fadeBlende in place.
                     {
@@ -97,6 +108,7 @@ public class LevelScript : MonoBehaviour
 
                     //GameObject.Find("UI_Crown_Counter").SetActive(false); // turn off the regular, ingame crown-counter and icon
                     GameObject.Find("Ingame_UI").SetActive(false); // turn off the regular, ingame crown-counter and icon
+                    //_regularUI.SetActive(false);
 
                     //Debug.Log("Level endzone reached!");
                     LevelFinished();
@@ -105,7 +117,11 @@ public class LevelScript : MonoBehaviour
                     //_endZoneReached = true;
                 }else
                 {
+                    // this bool ensures that the end of a level is triggered only once and immediatly!
+                    _endZoneReached = true;
+
                     FindObjectOfType<HardcoreMode>().runFinished = true;
+                    Debug.Log("hardcore finished");
 
                     if (_fadeToBlackBlende != null) // only fade if there is a fadeBlende in place.
                     {
@@ -118,7 +134,8 @@ public class LevelScript : MonoBehaviour
                     _choirSound.Play();
                     _victorySound.Play();
 
-                    GameObject.Find("Hardcore_UI").SetActive(false); // turn off the regular, ingame crown-counter and icon
+                    //GameObject.Find("Hardcore_UI").SetActive(false); // turn off the Hardcore_UI
+                    //_hardcoreUI.SetActive(false);
 
                     HardcoreFinished();
                 }
@@ -199,9 +216,17 @@ public class LevelScript : MonoBehaviour
             _thankYouForPlayingOverlay.SetActive(true);
 
             // display current levels total runtime:
-            if (_statDisplay_Time != null)
+            if (_statDisplay_Time != null && !_usingHardcoreMode)
             {
                 float _totalLevelTime = PlayerPrefs.GetFloat("timer" + level, 0) + PlayerPrefs.GetFloat("lastTimer" + level, 0);
+                int _minutes = (int)_totalLevelTime / 60;
+                int _seconds = (int)_totalLevelTime - 60 * _minutes;
+                int _milliseconds = (int)(1000 * (_totalLevelTime - _minutes * 60 - _seconds));
+
+                _statDisplay_Time.text = string.Format("{0:00}:{1:00}:{2:000}", _minutes, _seconds, _milliseconds);
+            }else if(_usingHardcoreMode)
+            {
+                float _totalLevelTime = PlayerPrefs.GetFloat("HardcoreTime" + level, 0);
                 int _minutes = (int)_totalLevelTime / 60;
                 int _seconds = (int)_totalLevelTime - 60 * _minutes;
                 int _milliseconds = (int)(1000 * (_totalLevelTime - _minutes * 60 - _seconds));

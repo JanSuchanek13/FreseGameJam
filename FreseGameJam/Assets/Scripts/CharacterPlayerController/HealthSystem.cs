@@ -208,7 +208,7 @@ public class HealthSystem : MonoBehaviour
 
         float _lengthOfScream = 0.0f;
 
-        if (_arrayOfScreams != null)
+        if (_arrayOfScreams.Length != 0)
         {
             AudioSource _randomDeathScream = _arrayOfScreams[UnityEngine.Random.Range(0, _arrayOfScreams.Length)];
             _lengthOfScream = _randomDeathScream.clip.length;
