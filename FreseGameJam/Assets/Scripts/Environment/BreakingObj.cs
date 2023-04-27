@@ -47,17 +47,21 @@ public class BreakingObj : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider collision)
+    void OnTriggerStay(Collider collision) // was on triggerenter
     {
         if (collision.gameObject.tag == "Player")
         {
+            Debug.Log("1");
             GameObject _player = collision.gameObject;
-
+            Debug.Log("2");
             if (onlyCapricorn)
             {
+                
                 if (_player.GetComponent<StateController>().capricorn && _player.GetComponent<ThirdPersonMovement>().inDash)
                 {
+                    Debug.Log("3");
                     Invoke("Break", timeTillBreak);
+                    Debug.Log("4");
                 }
             }else
             {
@@ -73,6 +77,7 @@ public class BreakingObj : MonoBehaviour
 
     void Break()
     {
+        Debug.Log("5");
         if (_arrayOfCollapsingSounds.Length != 0)
         {
             AudioSource _randomCollapsingSound = _arrayOfCollapsingSounds[Random.Range(0, _arrayOfCollapsingSounds.Length)];

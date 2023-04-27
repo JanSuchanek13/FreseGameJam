@@ -49,6 +49,10 @@ public class HealthSystem : MonoBehaviour
 
         //if continue the Game start at last Checkpoint
         currentLevel = SceneManager.GetActiveScene().buildIndex;
+
+        // save respawn for HARDCORE!:
+        respawnPoint = transform.position;
+
         //Debug.Log(CheckpointsGO.Count);
         for (int i = 0; i < CheckpointsGO.Count; i++)
         {

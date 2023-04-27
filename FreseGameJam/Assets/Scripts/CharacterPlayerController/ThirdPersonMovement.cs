@@ -103,6 +103,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public AudioSource buildingUp_Sound;
     public AudioSource dash_Sound;
     public AudioSource dashCrash_Sound;
+    [SerializeField] GameObject dashWallBreakCheck;
 
     //for Lama Shoot
     [Header("Lama Shoot Stats:")]
@@ -711,8 +712,10 @@ public class ThirdPersonMovement : MonoBehaviour
 
         //yield return new WaitForSeconds(buildingUp_Sound.clip.length);
         yield return new WaitForSeconds(chargeTime);
-
+        
         inDash = true;
+        dashWallBreakCheck.SetActive(true);
+        
         dash.Play();
         dash02.Play();
         GetComponent<Rigidbody>(); // why?
@@ -759,7 +762,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
         speed = 2;
         inDash = false;
-
+        dashWallBreakCheck.SetActive(false);
         // Turn on player input while dashing:
         GetComponent<InputHandler>().enabled = true;
     }

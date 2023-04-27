@@ -22,7 +22,7 @@ public class HardcoreMode : MonoBehaviour
 
     [Header("Things to turn off:")]
     [SerializeField] GameObject _checkpointParent;
-    //[SerializeField] GameObject _signs;
+    [SerializeField] GameObject _signs;
     [SerializeField] GameObject _normalUI;
 
     float _timeElapsed;
@@ -47,8 +47,24 @@ public class HardcoreMode : MonoBehaviour
         _checkpointParent.SetActive(false);
         _normalUI.SetActive(false);
         DisableScriptOfType<DelaySound>();
+        //DisableScriptOfType<DelaySound>().parent.;
+        //GameObject  FindObjectsOfType<DelaySound>()
         DisableScriptOfType<TriggerSound>();
         FindObjectOfType<FocusPlayerViewOnObject>().enabled = false;
+
+        foreach(Transform child in _signs.transform)
+        {
+            foreach(Transform childOfChild in child)
+            {
+            Collider collider = childOfChild.GetComponent<Collider>();
+            if(collider != null && collider.isTrigger)
+            {
+            //child.gameObject.SetActive(false);
+            childOfChild.gameObject.SetActive(false);
+            break; // exit the inner loop if a trigger collider is found
+            }
+        }
+}
 
         // Start countdown to run:
         StartCoroutine(CountDownToGo());
