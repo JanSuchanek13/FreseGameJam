@@ -47,10 +47,9 @@ public class HardcoreMode : MonoBehaviour
         _checkpointParent.SetActive(false);
         _normalUI.SetActive(false);
         DisableScriptOfType<DelaySound>();
-        //DisableScriptOfType<DelaySound>().parent.;
-        //GameObject  FindObjectsOfType<DelaySound>()
         DisableScriptOfType<TriggerSound>();
         FindObjectOfType<FocusPlayerViewOnObject>().enabled = false;
+        FindObjectOfType<BackgroundSoundPlayer>().PlayHardcoreMusic();
 
         foreach(Transform child in _signs.transform)
         {

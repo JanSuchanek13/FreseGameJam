@@ -59,15 +59,19 @@ public class LevelScript : MonoBehaviour
 
         _gameManager = GameObject.Find("GameManager");
 
-        if(FindObjectOfType<HardcoreMode>().useHardcoreMode == true)
+        /*if(FindObjectOfType<HardcoreMode>().useHardcoreMode == true)
         {
         _usingHardcoreMode = true;
-        }
+        }*/
         //_usingHardcoreMode = FindObjectOfType<HardcoreMode>().useHardcoreMode; to late
     }
 
     private void Update()
     {
+        if(FindObjectOfType<HardcoreMode>().useHardcoreMode == true)
+        {
+        _usingHardcoreMode = true;
+        }
         // save time per frame
         if (!_endZoneReached && !_usingHardcoreMode)
         {

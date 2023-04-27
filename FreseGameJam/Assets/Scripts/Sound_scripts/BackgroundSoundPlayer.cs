@@ -13,6 +13,7 @@ public class BackgroundSoundPlayer : MonoBehaviour
     [SerializeField] bool _turnMusicOffDuringCutscenes = true;
     [SerializeField] bool _lowerMusicVolumeDuringCutscenes = false;
     [SerializeField] AudioSource _playThisSongFirst; // if a song is put in here, that will be the first song played on load
+    [SerializeField] AudioSource _hardcoreMusic; // if a song is put in here, that will be the first song played on load
 
     private AudioSource _randomTrack;
     private AudioSource _nextRandomTrack;
@@ -42,7 +43,10 @@ public class BackgroundSoundPlayer : MonoBehaviour
             _randomTrack.Play();
             _activeTrack = _randomTrack;
 
-            StartCoroutine(PlayNextTrack(_lengthOfTrack));
+            if(!_playThisSongFirst.loop)
+            {
+                StartCoroutine(PlayNextTrack(_lengthOfTrack));
+            }
         }else // play a specific track first:
         {
             _playThisSongFirst.Play();
@@ -147,5 +151,11 @@ public class BackgroundSoundPlayer : MonoBehaviour
         {
             _timePausedAmt += Time.deltaTime;
         }
+    }
+
+    public void PlayHardcoreMusic()
+    {
+        _playThisSongFirst = _hardcoreMusic;
+        PlayTrack();
     }
 }
