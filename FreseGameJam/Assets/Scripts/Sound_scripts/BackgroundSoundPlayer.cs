@@ -43,17 +43,18 @@ public class BackgroundSoundPlayer : MonoBehaviour
             _randomTrack.Play();
             _activeTrack = _randomTrack;
 
-            if(!_playThisSongFirst.loop)
-            {
-                StartCoroutine(PlayNextTrack(_lengthOfTrack));
-            }
+            StartCoroutine(PlayNextTrack(_lengthOfTrack));
         }else // play a specific track first:
         {
             _playThisSongFirst.Play();
             _activeTrack = _playThisSongFirst;
             float _lengthOfTrack = _activeTrack.clip.length;
 
-            StartCoroutine(PlayNextTrack(_lengthOfTrack));
+            if (!_playThisSongFirst.loop)
+            {
+                StartCoroutine(PlayNextTrack(_lengthOfTrack));
+            }
+            //StartCoroutine(PlayNextTrack(_lengthOfTrack));
         }
 
         // save volume at game start (this allows for player preferences to be relevant)

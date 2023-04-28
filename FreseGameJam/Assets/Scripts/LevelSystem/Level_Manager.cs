@@ -180,7 +180,8 @@ public class Level_Manager : MonoBehaviour
         {
             PlayerPrefs.SetInt("State" + i, 0);
         }
-        
+
+        PlayerPrefs.SetFloat("HardcoreTime", 0.0f);
 
         Start();
     }
