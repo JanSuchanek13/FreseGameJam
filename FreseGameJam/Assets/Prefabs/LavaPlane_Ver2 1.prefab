@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7950497021505127316}
   - component: {fileID: 5310062419753416542}
   - component: {fileID: -4594868489541190996}
+  - component: {fileID: 4399752134448265991}
   m_Layer: 0
   m_Name: LavaPlane_Ver2 1
   m_TagString: Damage
@@ -29,6 +30,7 @@ Transform:
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: 15.536186, y: -2.3229003, z: -3.3172226}
   m_LocalScale: {x: 500, y: 500, z: 302.6454}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -52,6 +54,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -96,3 +99,19 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -4655613040032916602, guid: 49d4f07d745f7024e9c379ce05fffe4f, type: 3}
+--- !u!111 &4399752134448265991
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5958787681338136203}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 8386b3e38a343634e8325656a68c124e, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 8386b3e38a343634e8325656a68c124e, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
