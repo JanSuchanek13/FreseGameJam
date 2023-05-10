@@ -134,7 +134,11 @@ public class Level_Manager : MonoBehaviour
 
     public void ResetLevel()
     {
-        highscore.SafeLastStats();
+        if(levelIsUnlocked == 2)
+        {
+            highscore.SafeLastStats();
+        }
+        
         
         PlayerPrefs.SetInt("levelIsUnlocked", 1);
         PlayerPrefs.SetInt("_cutScene_0_HasAlreadyPlayed", 0);

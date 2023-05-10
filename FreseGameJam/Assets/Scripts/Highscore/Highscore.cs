@@ -98,7 +98,7 @@ public class Highscore : MonoBehaviour
     public void SafeLastStats()
     {
         //safe stats of last Run / will be called on ResetLevel from LevelManager
-        Debug.Log(PlayerPrefs.GetFloat("timer" + (0)));
+        Debug.Log("Last Run was safed");
         PlayerPrefs.SetFloat("Lasttimer" + (0), PlayerPrefs.GetFloat("timer" + (0)));
         PlayerPrefs.SetInt("Lastcrowns" + (0), PlayerPrefs.GetInt("crowns" + (0)));
         PlayerPrefs.SetInt("Lastdeaths" + (0), PlayerPrefs.GetInt("deaths" + (0)));
