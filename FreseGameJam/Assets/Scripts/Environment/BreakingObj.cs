@@ -70,6 +70,8 @@ public class BreakingObj : MonoBehaviour
                 if (levelEnd)
                 {
                     _player.GetComponent<ThirdPersonMovement>().forcedFalling = true;
+                    _player.GetComponent<InputHandler>().enabled = false;
+                    _player.GetComponent<StateController>().enabled = false;
                     //_player.GetComponent<Animator>().SetBool("Falling", true);
                     origamiFriend.GetComponent<Rigidbody>().isKinematic = false;
                 }

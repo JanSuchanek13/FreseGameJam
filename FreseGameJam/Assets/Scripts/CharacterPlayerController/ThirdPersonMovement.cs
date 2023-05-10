@@ -471,7 +471,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if (GetComponent<StateController>().crane)
         {
             //Move
-            if (CheckForGroundContact() && velocity.y < 0 && !GetComponent<StateController>().isChanging)
+            if (CheckForGroundContact()  && !GetComponent<StateController>().isChanging)
             {
                 speed = 0f; //walk speed
 

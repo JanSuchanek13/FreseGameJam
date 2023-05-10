@@ -7,7 +7,8 @@ public class CollectedCrowns : MonoBehaviour
 {
 
 	[Header("safe active Crowns")]
-
+	[Tooltip("Parent Obejct off all Crowns")]
+	public GameObject crownParent;
 	[Tooltip("List of Crowns in this Level")]
 	public List<GameObject> Crowns;
 	[Tooltip("List of bools represent active Crowns in this Level")]
@@ -23,11 +24,21 @@ public class CollectedCrowns : MonoBehaviour
 	private void Start()
     {
 		currentLevel = SceneManager.GetActiveScene().buildIndex;
-		
+		GetAllCrowns();
 		MakeBoolArray(true);
 		
 
 	}
+
+	private void GetAllCrowns()
+    {
+		Crowns.Clear();
+        foreach (Transform child in crownParent.transform)
+        {
+			Crowns.Add(child.gameObject);
+		}
+		
+    }
 
 	/// <summary>
 	/// We make a Bool Array out of enabled/disabled Crowns in this scene
