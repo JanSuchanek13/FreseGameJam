@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System;
 using Cinemachine;
 using UnityEngine.Serialization;
+using UnityEngine.EventSystems;
 
 public class SettingsMenu : MonoBehaviour
 {
@@ -128,6 +129,10 @@ public class SettingsMenu : MonoBehaviour
         int controlerInt = (int)controler;
         PlayerPrefs.SetInt("controlsSettings", controlerInt);
         
+        if (controlerInt > 0)
+        {
+            EventSystem.current.SetSelectedGameObject(controlsDropdown.gameObject);
+        }
     }
 
     public void SetGliding (bool holdGliding)

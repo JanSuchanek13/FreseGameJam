@@ -54,6 +54,7 @@ public class BreakingObj : MonoBehaviour
         {
             Debug.Log("1");
             GameObject _player = collision.gameObject;
+            StateController stateController = _player.GetComponent<StateController>();
             Debug.Log("2");
             if (onlyCapricorn)
             {
@@ -71,7 +72,14 @@ public class BreakingObj : MonoBehaviour
                 {
                     _player.GetComponent<ThirdPersonMovement>().forcedFalling = true;
                     _player.GetComponent<InputHandler>().enabled = false;
-                    _player.GetComponent<StateController>().enabled = false;
+                    stateController.enabled = false;
+                    StartCoroutine(stateController.changeModell(1));
+                    stateController.ball = false;
+                    stateController.human = true;
+                    stateController.frog = false;
+                    stateController.crane = false;
+                    stateController.capricorn = false;
+                    stateController.lama = false;
                     //_player.GetComponent<Animator>().SetBool("Falling", true);
                     origamiFriend.GetComponent<Rigidbody>().isKinematic = false;
                 }

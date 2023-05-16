@@ -188,6 +188,8 @@ public class LevelScript : MonoBehaviour
 
     IEnumerator LoadLevel(int levelIndex)
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         transition.SetTrigger("Start");
 
         yield return new WaitForSeconds(_timeBeforeLoadingNewLevel);

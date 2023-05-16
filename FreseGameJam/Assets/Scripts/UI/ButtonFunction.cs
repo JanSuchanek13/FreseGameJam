@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using Cinemachine;
+using UnityEngine.InputSystem.LowLevel;
 
 
 public class ButtonFunction : MonoBehaviour
@@ -90,6 +91,10 @@ public class ButtonFunction : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+            // Force the mouse to be in the max corner of the screen
+            Vector2 warpPosition = Screen.safeArea.max; 
+            Mouse.current.WarpCursorPosition(warpPosition);
+            InputState.Change(Mouse.current.position, warpPosition);
             pauseMenu.SetActive(true);
             Time.timeScale = 0;
 
