@@ -13,6 +13,7 @@ public class SettingsMenu : MonoBehaviour
     public bool initialized = false;
     public CinemachineFreeLook cinemachineFreeLook;
     public CinemachineFreeLook CloseUpCam;
+    public CinemachineFreeLook CraneCam;
     public Slider mouseSensitivitySlider;
     public Slider SoundSlider;
     public Slider MusicSlider;
@@ -36,6 +37,8 @@ public class SettingsMenu : MonoBehaviour
                 cinemachineFreeLook.GetComponent<CinemachineFreeLook>().m_YAxis.m_MaxSpeed = mouseSensitivitySlider.value / 10000;
                 CloseUpCam.GetComponent<CinemachineFreeLook>().m_XAxis.m_MaxSpeed = mouseSensitivitySlider.value / 100;               //for closeUp Cam
                 CloseUpCam.GetComponent<CinemachineFreeLook>().m_YAxis.m_MaxSpeed = mouseSensitivitySlider.value / 10000;
+                CraneCam.GetComponent<CinemachineFreeLook>().m_XAxis.m_MaxSpeed = mouseSensitivitySlider.value / 100;               //for Crane Cam
+                CraneCam.GetComponent<CinemachineFreeLook>().m_YAxis.m_MaxSpeed = mouseSensitivitySlider.value / 10000;
             }
             
         }
@@ -92,6 +95,8 @@ public class SettingsMenu : MonoBehaviour
             cinemachineFreeLook.GetComponent<CinemachineFreeLook>().m_YAxis.m_MaxSpeed = val / 10000;
             CloseUpCam.GetComponent<CinemachineFreeLook>().m_XAxis.m_MaxSpeed = val / 100;
             CloseUpCam.GetComponent<CinemachineFreeLook>().m_YAxis.m_MaxSpeed = val / 10000;
+            CraneCam.GetComponent<CinemachineFreeLook>().m_XAxis.m_MaxSpeed = val / 100;
+            CraneCam.GetComponent<CinemachineFreeLook>().m_YAxis.m_MaxSpeed = val / 10000;
         }
         
     }

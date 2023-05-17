@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using Cinemachine;
 using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.EventSystems;
 
 
 public class ButtonFunction : MonoBehaviour
@@ -15,6 +16,7 @@ public class ButtonFunction : MonoBehaviour
     [Header("Button & Key Settings:")]
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject[] arrayOfAllOtherMenus;
+    [SerializeField] GameObject settingsButton;
 
     // local variables:
     float[] _lastTimer = new float[3];
@@ -97,6 +99,9 @@ public class ButtonFunction : MonoBehaviour
             InputState.Change(Mouse.current.position, warpPosition);
             pauseMenu.SetActive(true);
             Time.timeScale = 0;
+
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(settingsButton);
 
             // disable camera movement in pause UI
             Camera.main.GetComponent<CinemachineBrain>().enabled = false;
