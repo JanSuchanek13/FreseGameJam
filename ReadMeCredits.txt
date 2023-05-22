@@ -78,6 +78,8 @@ Rock Smash from pixabay.com
 Goat Sound from pixabay.com
 Rammstein style metal from pixabay.com
 Plop from pixabay.com
+DJ Sound Effect by beetpro from Pixabay.com
+DJ Stop Sound Effect - No Copyright from YouTube Sound Effects
 
 
 not public domain, needs attribution:
