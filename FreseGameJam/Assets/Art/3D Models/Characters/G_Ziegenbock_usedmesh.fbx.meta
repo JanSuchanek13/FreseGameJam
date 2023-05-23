@@ -1,26 +1,17 @@
 fileFormatVersion: 2
-guid: 028c39b44c250f4448399ce85a9e82fe
+guid: 03b0509aceaad294d983c2eee4fddea6
 ModelImporter:
-  serializedVersion: 20200
+  serializedVersion: 21300
   internalIDToNameTable:
   - first:
-      74: 7249075243196145002
-    second: ZiegenbockRig|Ziegenbock_dash02
-  - first:
-      74: -7198740932400232088
-    second: ZiegenbockRig|Ziegenbock_dash03
-  - first:
-      74: 4078788378089197077
-    second: "ZiegenbockRig|Ziegenbock_aufb\xE4umen"
+      74: 1293023224980549605
+    second: ZiegenbockRig|Paperfrog_RIGAction
   - first:
       74: 7505583751015617911
     second: ZiegenbockRig|Ziegenbock_falling
   - first:
       74: -6636074899647048415
     second: ZiegenbockRig|Ziegenbock_Idle
-  - first:
-      74: 624183498264670735
-    second: ZiegenbockRig|Ziegenbock_sprint
   - first:
       74: 4656315054309105271
     second: ZiegenbockRig|Ziegenbock_Walk
@@ -38,6 +29,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -56,8 +48,37 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: "ZiegenbockRig|Ziegenbock_aufb\xE4umen"
-      takeName: ZiegenbockRig|Ziegenbock_dashALONE
+      name: ZiegenbockRig|Paperfrog_RIGAction
+      takeName: ZiegenbockRig|Paperfrog_RIGAction
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 1
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: ZiegenbockRig|Ziegenbock_falling
+      takeName: ZiegenbockRig|Ziegenbock_falling
       internalID: 0
       firstFrame: 0
       lastFrame: 120
@@ -85,8 +106,37 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: ZiegenbockRig|Ziegenbock_sprint
-      takeName: ZiegenbockRig|Ziegenbock_sprint
+      name: ZiegenbockRig|Ziegenbock_Idle
+      takeName: ZiegenbockRig|Ziegenbock_Idle
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 120
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: ZiegenbockRig|Ziegenbock_Walk
+      takeName: ZiegenbockRig|Ziegenbock_Walk
       internalID: 0
       firstFrame: 0
       lastFrame: 120
@@ -125,6 +175,7 @@ ModelImporter:
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    nodeNameCollisionStrategy: 0
     fileIdsGeneration: 2
     swapUVChannels: 0
     generateSecondaryUV: 0
@@ -136,6 +187,7 @@ ModelImporter:
     skinWeightsMode: 0
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
+    optimizeBones: 1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
@@ -178,6 +230,7 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
