@@ -47,6 +47,7 @@ public class ThirdPersonMovement : MonoBehaviour
     private Vector3 hitPointNormal;
     public LayerMask SlideMasks;
     private float rayDistance = 0.31f;
+    private float fallOnSlopes = 90;
 
     
 
@@ -129,36 +130,61 @@ public class ThirdPersonMovement : MonoBehaviour
             {
                 //Debug.Log("Treffer");
                 hitPointNormal = slopeHit.normal;
-                return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit;
+                return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit && Vector3.Angle(hitPointNormal, Vector3.up) < fallOnSlopes;
             }
             else if (Physics.Raycast(transform.position + new Vector3(rayDistance, 0, 0), Vector3.down, out slopeHit, 0.7f, SlideMasks, QueryTriggerInteraction.Ignore))
             {
                 //Debug.Log("Treffer1");
                 hitPointNormal = slopeHit.normal;
-                return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit;
+                return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit && Vector3.Angle(hitPointNormal, Vector3.up) < fallOnSlopes;
             }
             else if (Physics.Raycast(transform.position + new Vector3(0, 0, -rayDistance), Vector3.down, out slopeHit, 0.7f, SlideMasks, QueryTriggerInteraction.Ignore))
             {
                 //Debug.Log("Treffer2");
                 hitPointNormal = slopeHit.normal;
-                return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit;
+                return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit && Vector3.Angle(hitPointNormal, Vector3.up) < fallOnSlopes;
             }
             else if (Physics.Raycast(transform.position + new Vector3(0, 0, rayDistance), Vector3.down, out slopeHit, 0.7f, SlideMasks, QueryTriggerInteraction.Ignore))
             {
                 //Debug.Log("Treffer3");
                 hitPointNormal = slopeHit.normal;
-                return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit;
+                return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit && Vector3.Angle(hitPointNormal, Vector3.up) < fallOnSlopes;
             }
             else if (Physics.Raycast(transform.position + new Vector3(-rayDistance, 0, 0), Vector3.down, out slopeHit, 0.7f, SlideMasks, QueryTriggerInteraction.Ignore))
             {
                 //Debug.Log("Treffer4");
                 hitPointNormal = slopeHit.normal;
-                return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit;
+                return Vector3.Angle(hitPointNormal, Vector3.up) > controller.slopeLimit && Vector3.Angle(hitPointNormal, Vector3.up) < fallOnSlopes;
             }
             else
             {
                 return false;
             }
+        }
+    }
+
+    public bool isOnSteps
+    {
+        
+        get
+        {
+            Debug.DrawRay(transform.position + new Vector3(0, 0, rayDistance), gameObject.transform.forward * 0.7f, Color.blue);
+            bool test = false;
+            for (int i = 0; i < 10; i++)
+            {
+                Debug.Log(i);
+                Debug.DrawRay(transform.position + new Vector3(0, 0, rayDistance), (gameObject.transform.forward + Vector3.down/i) * 0.7f, Color.blue);
+                if ((Physics.Raycast(transform.position, (gameObject.transform.forward + Vector3.down / i )*0.7f, out RaycastHit slopeHit, 0f, SlideMasks, QueryTriggerInteraction.Ignore)/* || (Physics.Raycast(transform.position + new Vector3(0.4f,0,0), Vector3.down, out slopeHit, 1f)) || (Physics.Raycast(transform.position + new Vector3(0, 0, -0.4f), Vector3.down, out slopeHit, 1f)) || (Physics.Raycast(transform.position + new Vector3(0, 0, 0.4f), Vector3.down, out slopeHit, 1f)) || (Physics.Raycast(transform.position + new Vector3(-0.4f, 0, 0), Vector3.down, out slopeHit, 1f))*/))
+                {
+                    test = Vector3.Angle(hitPointNormal, Vector3.up) < controller.slopeLimit;
+                }
+                else
+                {
+                    test = false;
+                }
+                
+            }
+            return test;
         }
     }
 
@@ -280,6 +306,7 @@ public class ThirdPersonMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        bool test = isOnSteps;
         //crane juice
         craneSound.SetActive(stateController.crane);
         craneVFX.SetActive(stateController.crane);
@@ -344,7 +371,7 @@ public class ThirdPersonMovement : MonoBehaviour
             //Debug.Log(hitPointNormal);
             //Debug.Log(moveDir);
             //if sliding the move direction will be overwriten
-            if (willSlideOnSlopes && isSliding && !onBridge)
+            if (willSlideOnSlopes && isSliding && !isOnSteps && !onBridge)
             {
                 moveDir = new Vector3(hitPointNormal.x, -hitPointNormal.y, hitPointNormal.z) * slopeSpeed;
                 controller.Move(moveDir.normalized * humanSpeed*0.5f * Time.deltaTime);
