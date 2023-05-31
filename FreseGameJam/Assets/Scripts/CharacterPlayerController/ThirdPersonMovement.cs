@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.InputSystem;
 
 public class ThirdPersonMovement : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public Transform cam;
     public GameObject thirdPersonCam;
     public GameObject craneCam;
+    private Gamepad pad;
 
     public float speed = 6f;
     public float humanSpeed = 6f;
@@ -762,6 +764,12 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         // Turn off player input while dashing:
         GetComponent<InputHandler>().enabled = false;
+        //rumble
+        pad = Gamepad.current;
+        if (pad != null)
+        {
+            pad.SetMotorSpeeds(0f, 0.2f);
+        }
 
         buildingUp_Sound.Play();
         buildingup.Play();
@@ -801,7 +809,7 @@ public class ThirdPersonMovement : MonoBehaviour
             yield return new WaitForSeconds(.001f);
 
             // create a small bubble-explosion at impact point:
-            Collider[] allObjects = Physics.OverlapSphere(transform.position, 3);
+            Collider[] allObjects = Physics.OverlapSphere(transform.position, 1);
             foreach (Collider j in allObjects)
             {
                 Rigidbody rig = j.GetComponent<Rigidbody>();
@@ -810,12 +818,18 @@ public class ThirdPersonMovement : MonoBehaviour
                     rig.AddExplosionForce(1.0f, transform.position, 1, 1f, ForceMode.Impulse);
                     dashCrash_Sound.Play();
                     
-                    if(_impactEffect != null) // this can be thrown out when susi has imported the impact effect!
+                    if (pad != null)
+                    {
+                        pad.SetMotorSpeeds(0.7f, 0.7f);
+                    }
+
+                    if (_impactEffect != null) // this can be thrown out when susi has imported the impact effect!
                     {
                         _impactEffect.Play();
                     }
                 }
             }
+
 
             /* // unsure why this is currently not working:
             // Stop when you hit anything:
@@ -826,12 +840,16 @@ public class ThirdPersonMovement : MonoBehaviour
                 yield break;
             }*/
         }
-
+        
         speed = 2;
         inDash = false;
         dashWallBreakCheck.SetActive(false);
         // Turn on player input while dashing:
         GetComponent<InputHandler>().enabled = true;
+
+        //stop rumble
+        yield return new WaitForSeconds(0.5f);
+        pad.SetMotorSpeeds(0, 0);
     }
 
     /*
