@@ -407,7 +407,7 @@ public class ThirdPersonMovement : MonoBehaviour
             //if sliding the move direction will be overwriten
             if (willSlideOnSlopes && isSliding && !isOnSteps && !onBridge)
             {
-                //moveDir = new Vector3(hitPointNormal.x, -hitPointNormal.y, hitPointNormal.z) * slopeSpeed;
+                //moveDir = new Vector3(hitPointNormal.x, -hitPointNormal.y, hitPointNormal.z) * slopeSpeed; //wird ausgeführt in Fixedupdate
                 //controller.Move(moveDir.normalized * humanSpeed*0.5f * Time.deltaTime);
             }
             else
@@ -532,7 +532,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if (GetComponent<StateController>().crane)
         {
             //Move
-            if (CheckForGroundContact()  && !GetComponent<StateController>().isChanging)
+            if (CheckForGroundContact()  && !GetComponent<StateController>().isChanging || controller.isGrounded)
             {
                 speed = 0f; //walk speed
 
@@ -714,7 +714,6 @@ public class ThirdPersonMovement : MonoBehaviour
             controller.Move(velocity * Time.deltaTime);
         }
 
-
     }
 
 
@@ -764,6 +763,9 @@ public class ThirdPersonMovement : MonoBehaviour
         // Turn off player input while dashing:
         GetComponent<InputHandler>().enabled = false;
 
+        buildingUp_Sound.Play();
+        buildingup.Play();
+
         // change capricorn Rotation towards cam:
         for (int i = 0; i < 15; i++)
         {
@@ -772,8 +774,7 @@ public class ThirdPersonMovement : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
 
-        buildingUp_Sound.Play();
-        buildingup.Play();
+        
         //dash_Sound.Play();
 
         //yield return new WaitForSeconds(buildingUp_Sound.clip.length);

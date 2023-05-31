@@ -194,7 +194,7 @@ public class AttachPlatform : MonoBehaviour
 			//New System doesnt work after you die
 			if (m_Hit.transform.gameObject.GetComponent<InputHandler>().moveValue.magnitude == 0)
             {
-				Debug.Log("Hit : " + m_Hit.collider.name);
+				//Debug.Log("Hit : " + m_Hit.collider.name);
                 if (firstContact)
                 {
 					offset.x = m_Hit.transform.position.x - this.transform.position.x;
