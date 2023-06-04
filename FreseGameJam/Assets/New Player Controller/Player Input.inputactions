@@ -517,6 +517,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Retry",
+                    "type": "Button",
+                    "id": "9d102750-579b-44fd-8ff5-3a4a6a45b15d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -706,6 +715,17 @@
                     "action": "SkipCutscene",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "59a0fdad-8673-4e90-92f9-805eddc9aef5",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Retry",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -789,6 +809,15 @@
                     "name": "SkipCutscene",
                     "type": "Button",
                     "id": "f8ee6131-ea61-4490-a027-c69ed4b6ce40",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Retry",
+                    "type": "Button",
+                    "id": "8dc132ba-f031-41e8-9280-f51deac54ab1",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -1057,6 +1086,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "SkipCutscene",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ec4d8bb3-bd05-420e-b0bf-aedf0fe5370e",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Retry",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

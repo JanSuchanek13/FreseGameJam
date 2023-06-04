@@ -539,6 +539,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Retry"",
+                    ""type"": ""Button"",
+                    ""id"": ""9d102750-579b-44fd-8ff5-3a4a6a45b15d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -728,6 +737,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""SkipCutscene"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""59a0fdad-8673-4e90-92f9-805eddc9aef5"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Retry"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -811,6 +831,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""name"": ""SkipCutscene"",
                     ""type"": ""Button"",
                     ""id"": ""f8ee6131-ea61-4490-a027-c69ed4b6ce40"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Retry"",
+                    ""type"": ""Button"",
+                    ""id"": ""8dc132ba-f031-41e8-9280-f51deac54ab1"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -1079,6 +1108,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""SkipCutscene"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ec4d8bb3-bd05-420e-b0bf-aedf0fe5370e"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Retry"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1680,6 +1720,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_CharacterControlsController_CamToggle = m_CharacterControlsController.FindAction("CamToggle", throwIfNotFound: true);
         m_CharacterControlsController_Option = m_CharacterControlsController.FindAction("Option", throwIfNotFound: true);
         m_CharacterControlsController_SkipCutscene = m_CharacterControlsController.FindAction("SkipCutscene", throwIfNotFound: true);
+        m_CharacterControlsController_Retry = m_CharacterControlsController.FindAction("Retry", throwIfNotFound: true);
         // CharacterControlsKeyboard
         m_CharacterControlsKeyboard = asset.FindActionMap("CharacterControlsKeyboard", throwIfNotFound: true);
         m_CharacterControlsKeyboard_Move = m_CharacterControlsKeyboard.FindAction("Move", throwIfNotFound: true);
@@ -1691,6 +1732,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_CharacterControlsKeyboard_CamToggle = m_CharacterControlsKeyboard.FindAction("CamToggle", throwIfNotFound: true);
         m_CharacterControlsKeyboard_Option = m_CharacterControlsKeyboard.FindAction("Option", throwIfNotFound: true);
         m_CharacterControlsKeyboard_SkipCutscene = m_CharacterControlsKeyboard.FindAction("SkipCutscene", throwIfNotFound: true);
+        m_CharacterControlsKeyboard_Retry = m_CharacterControlsKeyboard.FindAction("Retry", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1860,6 +1902,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_CharacterControlsController_CamToggle;
     private readonly InputAction m_CharacterControlsController_Option;
     private readonly InputAction m_CharacterControlsController_SkipCutscene;
+    private readonly InputAction m_CharacterControlsController_Retry;
     public struct CharacterControlsControllerActions
     {
         private @PlayerInput m_Wrapper;
@@ -1873,6 +1916,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @CamToggle => m_Wrapper.m_CharacterControlsController_CamToggle;
         public InputAction @Option => m_Wrapper.m_CharacterControlsController_Option;
         public InputAction @SkipCutscene => m_Wrapper.m_CharacterControlsController_SkipCutscene;
+        public InputAction @Retry => m_Wrapper.m_CharacterControlsController_Retry;
         public InputActionMap Get() { return m_Wrapper.m_CharacterControlsController; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1909,6 +1953,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @SkipCutscene.started -= m_Wrapper.m_CharacterControlsControllerActionsCallbackInterface.OnSkipCutscene;
                 @SkipCutscene.performed -= m_Wrapper.m_CharacterControlsControllerActionsCallbackInterface.OnSkipCutscene;
                 @SkipCutscene.canceled -= m_Wrapper.m_CharacterControlsControllerActionsCallbackInterface.OnSkipCutscene;
+                @Retry.started -= m_Wrapper.m_CharacterControlsControllerActionsCallbackInterface.OnRetry;
+                @Retry.performed -= m_Wrapper.m_CharacterControlsControllerActionsCallbackInterface.OnRetry;
+                @Retry.canceled -= m_Wrapper.m_CharacterControlsControllerActionsCallbackInterface.OnRetry;
             }
             m_Wrapper.m_CharacterControlsControllerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1940,6 +1987,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @SkipCutscene.started += instance.OnSkipCutscene;
                 @SkipCutscene.performed += instance.OnSkipCutscene;
                 @SkipCutscene.canceled += instance.OnSkipCutscene;
+                @Retry.started += instance.OnRetry;
+                @Retry.performed += instance.OnRetry;
+                @Retry.canceled += instance.OnRetry;
             }
         }
     }
@@ -1957,6 +2007,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_CharacterControlsKeyboard_CamToggle;
     private readonly InputAction m_CharacterControlsKeyboard_Option;
     private readonly InputAction m_CharacterControlsKeyboard_SkipCutscene;
+    private readonly InputAction m_CharacterControlsKeyboard_Retry;
     public struct CharacterControlsKeyboardActions
     {
         private @PlayerInput m_Wrapper;
@@ -1970,6 +2021,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @CamToggle => m_Wrapper.m_CharacterControlsKeyboard_CamToggle;
         public InputAction @Option => m_Wrapper.m_CharacterControlsKeyboard_Option;
         public InputAction @SkipCutscene => m_Wrapper.m_CharacterControlsKeyboard_SkipCutscene;
+        public InputAction @Retry => m_Wrapper.m_CharacterControlsKeyboard_Retry;
         public InputActionMap Get() { return m_Wrapper.m_CharacterControlsKeyboard; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -2006,6 +2058,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @SkipCutscene.started -= m_Wrapper.m_CharacterControlsKeyboardActionsCallbackInterface.OnSkipCutscene;
                 @SkipCutscene.performed -= m_Wrapper.m_CharacterControlsKeyboardActionsCallbackInterface.OnSkipCutscene;
                 @SkipCutscene.canceled -= m_Wrapper.m_CharacterControlsKeyboardActionsCallbackInterface.OnSkipCutscene;
+                @Retry.started -= m_Wrapper.m_CharacterControlsKeyboardActionsCallbackInterface.OnRetry;
+                @Retry.performed -= m_Wrapper.m_CharacterControlsKeyboardActionsCallbackInterface.OnRetry;
+                @Retry.canceled -= m_Wrapper.m_CharacterControlsKeyboardActionsCallbackInterface.OnRetry;
             }
             m_Wrapper.m_CharacterControlsKeyboardActionsCallbackInterface = instance;
             if (instance != null)
@@ -2037,6 +2092,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @SkipCutscene.started += instance.OnSkipCutscene;
                 @SkipCutscene.performed += instance.OnSkipCutscene;
                 @SkipCutscene.canceled += instance.OnSkipCutscene;
+                @Retry.started += instance.OnRetry;
+                @Retry.performed += instance.OnRetry;
+                @Retry.canceled += instance.OnRetry;
             }
         }
     }
@@ -2177,6 +2235,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnCamToggle(InputAction.CallbackContext context);
         void OnOption(InputAction.CallbackContext context);
         void OnSkipCutscene(InputAction.CallbackContext context);
+        void OnRetry(InputAction.CallbackContext context);
     }
     public interface ICharacterControlsKeyboardActions
     {
@@ -2189,6 +2248,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnCamToggle(InputAction.CallbackContext context);
         void OnOption(InputAction.CallbackContext context);
         void OnSkipCutscene(InputAction.CallbackContext context);
+        void OnRetry(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
