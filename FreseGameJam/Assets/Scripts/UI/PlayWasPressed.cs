@@ -133,7 +133,11 @@ public class PlayWasPressed : MonoBehaviour
         PlayerPrefs.SetInt("HardcoreMode", 0);
         GetComponent<Level_Manager>().ContinueLevel();
     }
-    void StartHardcoreRound()
+
+    /// <summary>
+    /// This is public as this function is used in the Hardcore-Mode to restart ingame.
+    /// </summary>
+    public void StartHardcoreRound()
     {
         PlayerPrefs.SetInt("HardcoreMode", 1);
         GetComponent<Level_Manager>().LoadLevel(1);

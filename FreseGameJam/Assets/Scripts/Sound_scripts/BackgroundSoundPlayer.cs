@@ -14,6 +14,7 @@ public class BackgroundSoundPlayer : MonoBehaviour
     [SerializeField] bool _lowerMusicVolumeDuringCutscenes = false;
     [SerializeField] AudioSource _playThisSongFirst; // if a song is put in here, that will be the first song played on load
     [SerializeField] AudioSource _hardcoreMusic; // if a song is put in here, that will be the first song played on load
+    [SerializeField] AudioSource[] _interruptingMusicSounds;
 
     private AudioSource _randomTrack;
     private AudioSource _nextRandomTrack;
@@ -83,7 +84,7 @@ public class BackgroundSoundPlayer : MonoBehaviour
             StartCoroutine(PlayNextTrack(_lengthOfTrack));
         }else
         {
-            Debug.Log("2");
+            //Debug.Log("2");
 
             Debug.Log("game was paused, now adding: " + _timePausedAmt + " to current track to allow to catch up!");
             StartCoroutine(PlayNextTrack(_timePausedAmt));
@@ -156,7 +157,36 @@ public class BackgroundSoundPlayer : MonoBehaviour
 
     public void PlayHardcoreMusic()
     {
+        Debug.Log("1");
+        StartCoroutine(WindDownMusic());
+
+        //_playThisSongFirst = _hardcoreMusic;
+        //PlayTrack();
+    }
+    IEnumerator WindDownMusic()
+    {
+        Debug.Log("2");
+
+        AudioSource _randomScreetch = _interruptingMusicSounds[Random.Range(0, _interruptingMusicSounds.Length)];
+        Debug.Log("3");
+
+        _randomTrack.Stop();
+        Debug.Log("4");
+
+
+        _randomScreetch.Play();
+        Debug.Log("5");
+
+
+        yield return new WaitForSeconds(_randomScreetch.clip.length);
+        Debug.Log("6");
+
+
         _playThisSongFirst = _hardcoreMusic;
+        Debug.Log("7");
+
         PlayTrack();
+        Debug.Log("8");
+
     }
 }

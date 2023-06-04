@@ -198,12 +198,6 @@ public class Level_Manager : MonoBehaviour
         //GetComponent<PlayWasPressed>().ImmersePlayer(1);
            // immersePlayerIntoWorldKit.SetActive(true);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }
 
 

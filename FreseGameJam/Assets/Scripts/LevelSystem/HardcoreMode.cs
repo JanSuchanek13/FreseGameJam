@@ -16,6 +16,7 @@ public class HardcoreMode : MonoBehaviour
     [SerializeField] TextMeshProUGUI _secondTimer_txt;
     [SerializeField] TextMeshProUGUI _milisecondTimer_txt;
     [Space(10)]
+
     [SerializeField] TextMeshProUGUI _crowns_txt;
     [SerializeField] TextMeshProUGUI _countDown_txt;
     [Space(10)]
@@ -49,7 +50,7 @@ public class HardcoreMode : MonoBehaviour
         DisableScriptOfType<DelaySound>();
         DisableScriptOfType<TriggerSound>();
         FindObjectOfType<FocusPlayerViewOnObject>().enabled = false;
-        FindObjectOfType<BackgroundSoundPlayer>().PlayHardcoreMusic();
+        //FindObjectOfType<BackgroundSoundPlayer>().PlayHardcoreMusic(); // this worked with replacing the PlayThisTrackFirst
 
         foreach(Transform child in _signs.transform)
         {
@@ -83,6 +84,8 @@ public class HardcoreMode : MonoBehaviour
         yield return new WaitForSeconds(_countDownInterval);
 
         _countDown_txt.text = 1.ToString();
+        // interrupt music a tad early, so hardcore-music starts playing on "Go":
+        //FindObjectOfType<BackgroundSoundPlayer>().PlayHardcoreMusic();
 
         yield return new WaitForSeconds(_countDownInterval);
 
@@ -96,6 +99,7 @@ public class HardcoreMode : MonoBehaviour
 
     void BeginnRun()
     {
+        FindObjectOfType<BackgroundSoundPlayer>().PlayHardcoreMusic(); //here the interrupt starts at "Go" so hardcore music doesnt start until counter is at 1 or 2 secs.
         _runStarted = true;
         FindObjectOfType<InputHandler>().enabled = true;
     }
@@ -138,9 +142,9 @@ public class HardcoreMode : MonoBehaviour
         }
     }
 
-    /*
-    public void ResetRun()
+    
+    public void Retry()
     {
-
-    }*/
+        FindObjectOfType<PlayWasPressed>().StartHardcoreRound();
+    }
 }
