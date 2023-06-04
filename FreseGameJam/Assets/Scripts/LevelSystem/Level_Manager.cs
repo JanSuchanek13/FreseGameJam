@@ -198,6 +198,43 @@ public class Level_Manager : MonoBehaviour
         //GetComponent<PlayWasPressed>().ImmersePlayer(1);
            // immersePlayerIntoWorldKit.SetActive(true);
     }
+
+    public void FastRestartHardcore()
+    {
+        PlayerPrefs.SetInt("levelIsUnlocked", 1);
+        PlayerPrefs.SetInt("_boatPosition", 0);
+
+        foreach (int i in crowns)
+        {
+            PlayerPrefs.SetInt("crowns" + i, 0);
+
+            //reset for collected Crowns
+            char[] bits = PlayerPrefs.GetString("bitString" + (i)).ToCharArray();
+            for (int j = 0; j < bits.Length; j++)
+            {
+                bits[j] = '1';
+            }
+            PlayerPrefs.SetString("bitString" + (i), bits.ArrayToString());
+        }
+        foreach (float i in timer)
+        {
+            PlayerPrefs.SetFloat("timer" + i, 0);
+        }
+        foreach (int i in deaths)
+        {
+            PlayerPrefs.SetInt("deaths" + i, 0);
+        }
+        foreach (int i in checkpoints) // redundant here?
+        {
+            PlayerPrefs.SetInt("lastCheckpoint" + i, 0);
+        }
+        foreach (int i in states)
+        {
+            PlayerPrefs.SetInt("State" + i, 0);
+        }
+
+        PlayerPrefs.SetFloat("HardcoreTime", 0.0f);
+    }
 }
 
 

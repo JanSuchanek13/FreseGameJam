@@ -143,8 +143,20 @@ public class HardcoreMode : MonoBehaviour
     }
 
     
+    /*
     public void Retry()
     {
-        FindObjectOfType<PlayWasPressed>().StartHardcoreRound();
-    }
+        // reset level:
+        Debug.Log("this was called");
+        PlayerPrefs.SetInt("FastReset", 1);
+        SceneManager.LoadScene(0);
+
+
+
+        // restart level:
+        //PlayerPrefs.SetInt("HardcoreMode", 1);
+        //GetComponent<Level_Manager>().LoadLevel(1);
+    }*/
+
+
 }

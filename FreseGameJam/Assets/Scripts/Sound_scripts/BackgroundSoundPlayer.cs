@@ -157,36 +157,18 @@ public class BackgroundSoundPlayer : MonoBehaviour
 
     public void PlayHardcoreMusic()
     {
-        Debug.Log("1");
         StartCoroutine(WindDownMusic());
-
-        //_playThisSongFirst = _hardcoreMusic;
-        //PlayTrack();
     }
+
     IEnumerator WindDownMusic()
     {
-        Debug.Log("2");
-
         AudioSource _randomScreetch = _interruptingMusicSounds[Random.Range(0, _interruptingMusicSounds.Length)];
-        Debug.Log("3");
-
         _randomTrack.Stop();
-        Debug.Log("4");
-
-
         _randomScreetch.Play();
-        Debug.Log("5");
-
 
         yield return new WaitForSeconds(_randomScreetch.clip.length);
-        Debug.Log("6");
-
 
         _playThisSongFirst = _hardcoreMusic;
-        Debug.Log("7");
-
         PlayTrack();
-        Debug.Log("8");
-
     }
 }

@@ -135,7 +135,7 @@ public class PlayWasPressed : MonoBehaviour
     }
 
     /// <summary>
-    /// This is public as this function is used in the Hardcore-Mode to restart ingame.
+    /// This is public as this function is used in the HardcoreFastRestart-script to restart hardcore-mode from ingame (HardcoreMode).
     /// </summary>
     public void StartHardcoreRound()
     {

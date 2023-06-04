@@ -17,6 +17,8 @@ public class ButtonFunction : MonoBehaviour
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject[] arrayOfAllOtherMenus;
     [SerializeField] GameObject settingsButton;
+    [Space(10)]
+    [SerializeField] GameObject _retryHardcoreRun_UI;
 
     // local variables:
     float[] _lastTimer = new float[3];
@@ -75,6 +77,33 @@ public class ButtonFunction : MonoBehaviour
             Pause();
         }
 
+        if (Input.GetKeyDown(KeyCode.Return) /*|| playerInput.CharacterControls.Retry.triggered*/) // with function put into input handler this can be uncommented!
+        {
+            if (PlayerPrefs.GetInt("HardcoreMode", 0) != 0)
+            {
+                if (!_retryHardcoreRun_UI.activeInHierarchy)
+                {
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+                    // Force the mouse to be in the max corner of the screen
+                    Vector2 warpPosition = Screen.safeArea.max;
+                    Mouse.current.WarpCursorPosition(warpPosition);
+                    InputState.Change(Mouse.current.position, warpPosition);
+                    _retryHardcoreRun_UI.SetActive(true);
+                    //Time.timeScale = 0;
+
+                    EventSystem.current.SetSelectedGameObject(null);
+                    EventSystem.current.SetSelectedGameObject(settingsButton);
+
+                    // disable camera movement in pause UI
+                    Camera.main.GetComponent<CinemachineBrain>().enabled = false;
+                }else
+                {
+                    Retry();
+                }
+            }
+        }
+
         if (playerInput.CharacterControls.CamToggle.triggered)
         {
             ToggleCloseQuaterCamera();
@@ -89,28 +118,47 @@ public class ButtonFunction : MonoBehaviour
     }
     public void Pause()
     {
-        if (pauseMenu.activeInHierarchy != true)
+        if(_retryHardcoreRun_UI.activeInHierarchy != true) // this allows to close the retry-hardcore UI when applicable by pressing ESC
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            // Force the mouse to be in the max corner of the screen
-            Vector2 warpPosition = Screen.safeArea.max; 
-            Mouse.current.WarpCursorPosition(warpPosition);
-            InputState.Change(Mouse.current.position, warpPosition);
-            pauseMenu.SetActive(true);
-            Time.timeScale = 0;
+            if (pauseMenu.activeInHierarchy != true)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                // Force the mouse to be in the max corner of the screen
+                Vector2 warpPosition = Screen.safeArea.max;
+                Mouse.current.WarpCursorPosition(warpPosition);
+                InputState.Change(Mouse.current.position, warpPosition);
+                pauseMenu.SetActive(true);
+                Time.timeScale = 0;
 
-            EventSystem.current.SetSelectedGameObject(null);
-            EventSystem.current.SetSelectedGameObject(settingsButton);
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(settingsButton);
 
-            // disable camera movement in pause UI
-            Camera.main.GetComponent<CinemachineBrain>().enabled = false;
+                // disable camera movement in pause UI
+                Camera.main.GetComponent<CinemachineBrain>().enabled = false;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+                pauseMenu.SetActive(false);
+                Time.timeScale = 1;
+
+                // enable camera movement in pause UI
+                Camera.main.GetComponent<CinemachineBrain>().enabled = true;
+
+                // make sure all other UI elements get turnt off when pressing escape.
+                foreach (GameObject _uiElement in arrayOfAllOtherMenus)
+                {
+                    _uiElement.SetActive(false);
+                }
+            }
         }else
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-            pauseMenu.SetActive(false);
-            Time.timeScale = 1;
+            _retryHardcoreRun_UI.SetActive(false);
+            //Time.timeScale = 1;
 
             // enable camera movement in pause UI
             Camera.main.GetComponent<CinemachineBrain>().enabled = true;
@@ -121,6 +169,7 @@ public class ButtonFunction : MonoBehaviour
                 _uiElement.SetActive(false);
             }
         }
+        
     }
 
     public void BackToMain()
@@ -167,5 +216,25 @@ public class ButtonFunction : MonoBehaviour
     public void SkipCutscene()
     {
         _closeQuarterCamera.gameObject.GetComponent<FocusPlayerViewOnObject>().SkipCutscene();
+    }
+
+    public void RetryRoundTrigger()
+    {
+        //confirm intention
+
+    }
+
+    public void Retry()
+    {
+        // reset level:
+        Debug.Log("this was called");
+        PlayerPrefs.SetInt("FastReset", 1);
+        SceneManager.LoadScene(0);
+
+
+
+        // restart level:
+        //PlayerPrefs.SetInt("HardcoreMode", 1);
+        //GetComponent<Level_Manager>().LoadLevel(1);
     }
 }
