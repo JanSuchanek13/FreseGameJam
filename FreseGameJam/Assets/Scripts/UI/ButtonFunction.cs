@@ -77,7 +77,7 @@ public class ButtonFunction : MonoBehaviour
             Pause();
         }
 
-        if (playerInput.CharacterControlsController.Retry.triggered || playerInput.CharacterControlsKeyboard.Retry.triggered) // with function put into input handler this can be uncommented!
+        if (playerInput.CharacterControlsController.Retry.triggered || playerInput.CharacterControlsKeyboard.Retry.triggered)
         {
             if (PlayerPrefs.GetInt("HardcoreMode", 0) != 0)
             {
