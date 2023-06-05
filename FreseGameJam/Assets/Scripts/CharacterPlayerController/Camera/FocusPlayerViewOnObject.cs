@@ -81,6 +81,7 @@ public class FocusPlayerViewOnObject : MonoBehaviour
         // turn on the SKIP-instructions:
         _skipUI.SetActive(true);
     }
+
     void FollowThisObject(GameObject _focusObject, float _lookAtThisForThisLong)
     {
         _backgroundSoundPlayer.PauseMusic();
@@ -103,25 +104,40 @@ public class FocusPlayerViewOnObject : MonoBehaviour
         // turn on the SKIP-instructions:
         _skipUI.SetActive(true);
     }
+
     public void FocusTarget(GameObject _focusObject, float _lookAtThisForThisLong, int _cutsceneNr) // focus camera:
     {
+        Debug.Log("55");
         _inFocusMode = true;
-        FindObjectOfType<CloseQuarterCamera>().inCustscene = true;
+        Debug.Log("66");
+        //FindObjectOfType<CloseQuarterCamera>().inCustscene = true;
 
         switch (_cutsceneNr)
         {
             case 0: // cutscene at start
+                        Debug.Log("case " + _cutsceneNr);
+
                 if (PlayerPrefs.GetInt("_cutScene_0_HasAlreadyPlayed") == 0)
                 {
+                            FindObjectOfType<CloseQuarterCamera>().inCustscene = true;
+
                     LookAtThisObject(_focusObject, _lookAtThisForThisLong);
 
                     PlayerPrefs.SetInt("_cutScene_0_HasAlreadyPlayed", 1);
-                }
+                                            Debug.Log("77");
+
+                }/*else
+                {
+                    Debug.Log("88");
+                        _inFocusMode = false; // this is supposed to enable zooming at game start after the starting cutscene has played once
+                }*/
                 break;
 
             case 1: // cutscene for instructions (double)
                 if (PlayerPrefs.GetInt("_cutScene_1_HasAlreadyPlayed") == 0)
                 {
+                        FindObjectOfType<CloseQuarterCamera>().inCustscene = true;
+
                     FollowThisObject(_focusObject, _lookAtThisForThisLong);
 
                     PlayerPrefs.SetInt("_cutScene_1_HasAlreadyPlayed", 1);
@@ -131,6 +147,8 @@ public class FocusPlayerViewOnObject : MonoBehaviour
             case 2: // cutscene at goat #1
                 if (PlayerPrefs.GetInt("_cutScene_2_HasAlreadyPlayed") == 0)
                 {
+                        FindObjectOfType<CloseQuarterCamera>().inCustscene = true;
+
                     FollowThisObject(_focusObject, _lookAtThisForThisLong);
 
                     /* // Why is this here?! delete if game plays well without!
@@ -145,6 +163,8 @@ public class FocusPlayerViewOnObject : MonoBehaviour
             case 3:
                 if (PlayerPrefs.GetInt("_cutScene_3_HasAlreadyPlayed") == 0)
                 {
+                        FindObjectOfType<CloseQuarterCamera>().inCustscene = true;
+
                     FollowThisObject(_focusObject, _lookAtThisForThisLong);
 
                     PlayerPrefs.SetInt("_cutScene_3_HasAlreadyPlayed", 1);
@@ -154,6 +174,8 @@ public class FocusPlayerViewOnObject : MonoBehaviour
             case 4:
                 if (PlayerPrefs.GetInt("_cutScene_4_HasAlreadyPlayed") == 0)
                 {
+                        FindObjectOfType<CloseQuarterCamera>().inCustscene = true;
+
                     FollowThisObject(_focusObject, _lookAtThisForThisLong);
 
                     PlayerPrefs.SetInt("_cutScene_4_HasAlreadyPlayed", 1);
@@ -163,6 +185,8 @@ public class FocusPlayerViewOnObject : MonoBehaviour
             case 5:
                 if (PlayerPrefs.GetInt("_cutScene_5_HasAlreadyPlayed") == 0)
                 {
+                        FindObjectOfType<CloseQuarterCamera>().inCustscene = true;
+
                     FollowThisObject(_focusObject, _lookAtThisForThisLong);
 
                     PlayerPrefs.SetInt("_cutScene_5_HasAlreadyPlayed", 1);
@@ -172,6 +196,8 @@ public class FocusPlayerViewOnObject : MonoBehaviour
             case 6:
                 if (PlayerPrefs.GetInt("_cutScene_6_HasAlreadyPlayed") == 0)
                 {
+                        FindObjectOfType<CloseQuarterCamera>().inCustscene = true;
+
                     FollowThisObject(_focusObject, _lookAtThisForThisLong);
 
                     PlayerPrefs.SetInt("_cutScene_6_HasAlreadyPlayed", 1);
@@ -181,6 +207,8 @@ public class FocusPlayerViewOnObject : MonoBehaviour
             case 7:
                 if (PlayerPrefs.GetInt("_cutScene_7_HasAlreadyPlayed") == 0)
                 {
+                        FindObjectOfType<CloseQuarterCamera>().inCustscene = true;
+
                     FollowThisObject(_focusObject, _lookAtThisForThisLong);
 
                     PlayerPrefs.SetInt("_cutScene_7_HasAlreadyPlayed", 1);
@@ -189,7 +217,6 @@ public class FocusPlayerViewOnObject : MonoBehaviour
 
                 default:
                 return;
-
         }
     }
 
@@ -224,6 +251,9 @@ public class FocusPlayerViewOnObject : MonoBehaviour
 
         // give controls back to player:
         FindObjectOfType<InputHandler>().enabled = true;
+
+        FindObjectOfType<CloseQuarterCamera>().inCustscene = false;
+
     }
 
     private void Update() // keep turning player to face a moving target GO:
