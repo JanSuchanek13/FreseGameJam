@@ -467,9 +467,24 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             //falling = true; //animation
         }
+
+        //rumble
+        pad = Gamepad.current;
+        if(pad != null)
+        {
+            if (GetComponent<StateController>().crane)
+            {
+                pad.SetMotorSpeeds(0.2f, 0.2f);
+            }
+            else if (!inDash)
+            {
+                pad.SetMotorSpeeds(0f, 0f);
+            }
+        }
         
 
-        
+
+
 
         //States
         if (GetComponent<StateController>().human)
@@ -533,6 +548,8 @@ public class ThirdPersonMovement : MonoBehaviour
         }
         if (GetComponent<StateController>().crane)
         {
+            
+
             //Move
             if (CheckForGroundContact()  && !GetComponent<StateController>().isChanging || controller.isGrounded)
             {
@@ -762,6 +779,7 @@ public class ThirdPersonMovement : MonoBehaviour
     /// <returns></returns>
     IEnumerator CapricornDash()
     {
+        inDash = true;
         // Turn off player input while dashing:
         GetComponent<InputHandler>().enabled = false;
         //rumble
@@ -788,7 +806,7 @@ public class ThirdPersonMovement : MonoBehaviour
         //yield return new WaitForSeconds(buildingUp_Sound.clip.length);
         yield return new WaitForSeconds(chargeTime);
         
-        inDash = true;
+        
         dashWallBreakCheck.SetActive(true);
         
         dash.Play();

@@ -21,7 +21,7 @@ namespace Loneflower
         {
             GroundCheck();
             SetVelocity();
-            StartCoroutine("JumpCheck");
+            JumpCheck();
         }
 
         /// <summary>
@@ -42,15 +42,9 @@ namespace Loneflower
             animator.SetBool("isGrounded", myController.isGrounded);
         }
 
-        IEnumerator JumpCheck()
+        private void JumpCheck()
         {
-            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Paperman_Jump") && animator.GetBool("isJumping") == false)
-            {
-                animator.SetBool("isJumping", true);
-                yield return new WaitForSeconds(0.23f);
-                animator.SetBool("isJumping", false);
-            }
-            
+            animator.SetBool("isJumping", !thirdPersonMovement.isCoyoteGrounded);
         }
     }
 }
