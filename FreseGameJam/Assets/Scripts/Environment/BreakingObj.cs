@@ -52,18 +52,14 @@ public class BreakingObj : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("1");
             GameObject _player = collision.gameObject;
             StateController stateController = _player.GetComponent<StateController>();
-            Debug.Log("2");
             if (onlyCapricorn)
             {
                 
                 if (_player.GetComponent<StateController>().capricorn && _player.GetComponent<ThirdPersonMovement>().inDash)
                 {
-                    Debug.Log("3");
                     Invoke("Break", timeTillBreak);
-                    Debug.Log("4");
                 }
             }else
             {
@@ -89,7 +85,6 @@ public class BreakingObj : MonoBehaviour
 
     void Break()
     {
-        Debug.Log("5");
         if (_arrayOfCollapsingSounds.Length != 0)
         {
             AudioSource _randomCollapsingSound = _arrayOfCollapsingSounds[Random.Range(0, _arrayOfCollapsingSounds.Length)];

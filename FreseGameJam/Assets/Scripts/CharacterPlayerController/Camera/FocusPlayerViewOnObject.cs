@@ -107,30 +107,19 @@ public class FocusPlayerViewOnObject : MonoBehaviour
 
     public void FocusTarget(GameObject _focusObject, float _lookAtThisForThisLong, int _cutsceneNr) // focus camera:
     {
-        Debug.Log("55");
         _inFocusMode = true;
-        Debug.Log("66");
-        //FindObjectOfType<CloseQuarterCamera>().inCustscene = true;
 
         switch (_cutsceneNr)
         {
             case 0: // cutscene at start
-                        Debug.Log("case " + _cutsceneNr);
-
                 if (PlayerPrefs.GetInt("_cutScene_0_HasAlreadyPlayed") == 0)
                 {
-                            FindObjectOfType<CloseQuarterCamera>().inCustscene = true;
+                    FindObjectOfType<CloseQuarterCamera>().inCustscene = true;
 
                     LookAtThisObject(_focusObject, _lookAtThisForThisLong);
 
                     PlayerPrefs.SetInt("_cutScene_0_HasAlreadyPlayed", 1);
-                                            Debug.Log("77");
-
-                }/*else
-                {
-                    Debug.Log("88");
-                        _inFocusMode = false; // this is supposed to enable zooming at game start after the starting cutscene has played once
-                }*/
+                }
                 break;
 
             case 1: // cutscene for instructions (double)

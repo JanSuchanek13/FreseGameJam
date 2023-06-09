@@ -108,8 +108,6 @@ public class ButtonFunction : MonoBehaviour
         {
             ToggleCloseQuaterCamera();
         }
-
-        // JAN: uncomment this after allocating and mapping the SkipCutscene command in the playerInput!
          
         if (playerInput.CharacterControlsController.SkipCutscene.triggered || playerInput.CharacterControlsKeyboard.SkipCutscene.triggered)
         {
@@ -118,12 +116,16 @@ public class ButtonFunction : MonoBehaviour
     }
     public void Pause()
     {
-        if(_retryHardcoreRun_UI.activeInHierarchy != true) // this allows to close the retry-hardcore UI when applicable by pressing ESC
+        if (_retryHardcoreRun_UI.activeInHierarchy != true) // this allows to close the retry-hardcore UI when applicable by pressing ESC
         {
             if (pauseMenu.activeInHierarchy != true)
             {
+                // lower volume or pause music:
+                GameObject.Find("GameManager").GetComponent<BackgroundSoundPlayer>().PauseMusic();
+
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
+
                 // Force the mouse to be in the max corner of the screen
                 Vector2 warpPosition = Screen.safeArea.max;
                 Mouse.current.WarpCursorPosition(warpPosition);
@@ -136,9 +138,11 @@ public class ButtonFunction : MonoBehaviour
 
                 // disable camera movement in pause UI
                 Camera.main.GetComponent<CinemachineBrain>().enabled = false;
-            }
-            else
+            }else
             {
+                // increase volume or unpause music:
+                GameObject.Find("GameManager").GetComponent<BackgroundSoundPlayer>().UnpauseMusic();
+
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
                 pauseMenu.SetActive(false);

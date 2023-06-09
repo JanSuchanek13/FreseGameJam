@@ -30,9 +30,6 @@ public class BackgroundSoundPlayer : MonoBehaviour
     private void Start()
     {
         Invoke("PlayTrack", .1f);
-
-        // save volume at game start (this allows for player preferences to be relevant)
-        //_musicVolumeAtStart = _activeTrack.volume;
     }
 
     void PlayTrack()
@@ -40,12 +37,16 @@ public class BackgroundSoundPlayer : MonoBehaviour
         if (_playThisSongFirst == null) // play random background track:
         {
             _randomTrack = arrayOfBackgroundMusic[Random.Range(0, arrayOfBackgroundMusic.Length)];
-            float _lengthOfTrack = _randomTrack.clip.length;
-            _randomTrack.Play();
+            //float _lengthOfTrack = _randomTrack.clip.length;
+            //_randomTrack.Play();
             _activeTrack = _randomTrack;
+            float _lengthOfTrack = _activeTrack.clip.length;
+            _activeTrack.Play();
 
+            Debug.Log("1");
             StartCoroutine(PlayNextTrack(_lengthOfTrack));
-        }else // play a specific track first:
+        }
+        else // play a specific track first:
         {
             _playThisSongFirst.Play();
             _activeTrack = _playThisSongFirst;
@@ -55,7 +56,6 @@ public class BackgroundSoundPlayer : MonoBehaviour
             {
                 StartCoroutine(PlayNextTrack(_lengthOfTrack));
             }
-            //StartCoroutine(PlayNextTrack(_lengthOfTrack));
         }
 
         // save volume at game start (this allows for player preferences to be relevant)
@@ -64,29 +64,43 @@ public class BackgroundSoundPlayer : MonoBehaviour
 
     IEnumerator PlayNextTrack(float _lengthOfCurrentTrack)
     {
+        Debug.Log("2, current tracks length: " + _activeTrack.clip.length);
+
         yield return new WaitForSeconds(_lengthOfCurrentTrack);
+        
+        Debug.Log("3, this should be clips lenght later");
+
 
         if (_playThisSongFirst == null) // This is to stop the next random track from playing in hardcore, as this is changed after being called!
         {
             if (_timePausedAmt == 0.0)
             {
                 _nextRandomTrack = arrayOfBackgroundMusic[Random.Range(0, arrayOfBackgroundMusic.Length)];
+
                 if (_nextRandomTrack == _randomTrack) // prevent the same song playing twice in a row:
                 {
                     StartCoroutine(PlayNextTrack(0.0f));
+                    Debug.Log("--> the same song was picked, retrying!");
+
                     yield break;
-                }
-                else
+                }else
                 {
+                    Debug.Log("--> new track should start playing");
+
                     _randomTrack = _nextRandomTrack;
                 }
 
-                _randomTrack.Play();
+                //_randomTrack.Play();
+                //_activeTrack = _randomTrack;
+                //float _lengthOfTrack = _randomTrack.clip.length;
                 _activeTrack = _randomTrack;
-                float _lengthOfTrack = _randomTrack.clip.length;
+                float _lengthOfTrack = _activeTrack.clip.length;
+                _activeTrack.Play();
+                Debug.Log("new track started playing!");
+
                 StartCoroutine(PlayNextTrack(_lengthOfTrack));
             }
-            else if(_turnMusicOffDuringCutscenes && _timePausedAmt != 0.0)
+            else if(_turnMusicOffDuringCutscenes == true && _timePausedAmt != 0.0)
             {
                 //Debug.Log("game was paused, now adding: " + _timePausedAmt + " to current track to allow to catch up!");
                 float _savedPauseTime = _timePausedAmt;
@@ -94,6 +108,10 @@ public class BackgroundSoundPlayer : MonoBehaviour
                 StartCoroutine(PlayNextTrack(_savedPauseTime));
                 yield break;
             }
+            // the fix should be to count the time paused and then subtract that from the waittime,
+            // as the pausing will stop passing of time. a 100sec track would play after 100 sec, if 20 sec
+            // paused it will only commence counting after the 20 secs, so it would wait 120 sec...
+
 
             /*if (_timePausedAmt == 0.0)
             {
@@ -185,7 +203,9 @@ public class BackgroundSoundPlayer : MonoBehaviour
     {
         if (_timePaused)
         {
+            Debug.Log("this number should be zero: " + _timePausedAmt);
             _timePausedAmt += Time.deltaTime;
+            Debug.Log("this much time was paused: " + _timePausedAmt);
         }
     }
 
