@@ -37,14 +37,13 @@ public class BackgroundSoundPlayer : MonoBehaviour
         if (_playThisSongFirst == null) // play random background track:
         {
             _randomTrack = arrayOfBackgroundMusic[Random.Range(0, arrayOfBackgroundMusic.Length)];
-            //float _lengthOfTrack = _randomTrack.clip.length;
-            //_randomTrack.Play();
             _activeTrack = _randomTrack;
             float _lengthOfTrack = _activeTrack.clip.length;
             _activeTrack.Play();
 
             Debug.Log("1");
-            StartCoroutine(PlayNextTrack(_lengthOfTrack));
+            //StartCoroutine(PlayNextTrack(_lengthOfTrack));
+            StartCoroutine(PlayNextTrack());
         }
         else // play a specific track first:
         {
@@ -54,7 +53,8 @@ public class BackgroundSoundPlayer : MonoBehaviour
 
             if (!_playThisSongFirst.loop)
             {
-                StartCoroutine(PlayNextTrack(_lengthOfTrack));
+                //StartCoroutine(PlayNextTrack(_lengthOfTrack));
+                StartCoroutine(PlayNextTrack());
             }
         }
 
@@ -62,7 +62,35 @@ public class BackgroundSoundPlayer : MonoBehaviour
         _musicVolumeAtStart = _activeTrack.volume;
     }
 
-    IEnumerator PlayNextTrack(float _lengthOfCurrentTrack)
+    /// <summary>
+    /// The logic for pausing music is no longer part of this function, if we want that back, ill add it back in!
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator PlayNextTrack()
+    {
+        yield return new WaitWhile(() => _activeTrack.isPlaying);
+
+        if (_playThisSongFirst == null && !_turnMusicOffDuringCutscenes) // This is to stop the next random track from playing in hardcore, as this is changed after being called!
+        {
+            _nextRandomTrack = arrayOfBackgroundMusic[Random.Range(0, arrayOfBackgroundMusic.Length)];
+            if (_nextRandomTrack == _randomTrack) // prevent the same song playing twice in a row:
+            {
+                StartCoroutine(PlayNextTrack());
+                yield break;
+            }else
+            {
+                _randomTrack = _nextRandomTrack;
+                _activeTrack = _randomTrack;
+                _activeTrack.Play();
+                StartCoroutine(PlayNextTrack());
+            }
+        }else // ignore this function if a looping track was selected after this was calles (Hardcore mode does this!).
+        {
+            yield break;
+        }
+    }
+
+    /*IEnumerator PlayNextTrack(float _lengthOfCurrentTrack)
     {
         Debug.Log("2, current tracks length: " + _activeTrack.clip.length);
 
@@ -90,9 +118,6 @@ public class BackgroundSoundPlayer : MonoBehaviour
                     _randomTrack = _nextRandomTrack;
                 }
 
-                //_randomTrack.Play();
-                //_activeTrack = _randomTrack;
-                //float _lengthOfTrack = _randomTrack.clip.length;
                 _activeTrack = _randomTrack;
                 float _lengthOfTrack = _activeTrack.clip.length;
                 _activeTrack.Play();
@@ -102,7 +127,6 @@ public class BackgroundSoundPlayer : MonoBehaviour
             }
             else if(_turnMusicOffDuringCutscenes == true && _timePausedAmt != 0.0)
             {
-                //Debug.Log("game was paused, now adding: " + _timePausedAmt + " to current track to allow to catch up!");
                 float _savedPauseTime = _timePausedAmt;
                 _timePausedAmt = 0.0f; // has to be reset here, otherwise after pausing, all future tracks will be delayed by this amount:
                 StartCoroutine(PlayNextTrack(_savedPauseTime));
@@ -111,41 +135,12 @@ public class BackgroundSoundPlayer : MonoBehaviour
             // the fix should be to count the time paused and then subtract that from the waittime,
             // as the pausing will stop passing of time. a 100sec track would play after 100 sec, if 20 sec
             // paused it will only commence counting after the 20 secs, so it would wait 120 sec...
-
-
-            /*if (_timePausedAmt == 0.0)
-            {
-                _nextRandomTrack = arrayOfBackgroundMusic[Random.Range(0, arrayOfBackgroundMusic.Length)];
-                if (_nextRandomTrack == _randomTrack) // prevent the same song playing twice in a row:
-                {
-                    StartCoroutine(PlayNextTrack(0.0f));
-                    yield break;
-                }
-                else
-                {
-                    _randomTrack = _nextRandomTrack;
-                }
-
-                _randomTrack.Play();
-                _activeTrack = _randomTrack;
-                float _lengthOfTrack = _randomTrack.clip.length;
-                StartCoroutine(PlayNextTrack(_lengthOfTrack));
-            }
-            else
-            {
-                Debug.Log("game was paused, now adding: " + _timePausedAmt + " to current track to allow to catch up!");
-                StartCoroutine(PlayNextTrack(_timePausedAmt));
-
-                _timePausedAmt = 0.0f; // has to be reset here, otherwise after pausing, all future tracks will be delayed by this amount:
-
-                yield break;
-            }*/
         }
         else // ignore this function if a looping track was selected after this was calles (Hardcore mode does this).
         {
             yield break;
         }
-    }
+    }*/
 
     public void LowerVolume()
     {
