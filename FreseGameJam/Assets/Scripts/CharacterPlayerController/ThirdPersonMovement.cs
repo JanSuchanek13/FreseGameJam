@@ -468,19 +468,6 @@ public class ThirdPersonMovement : MonoBehaviour
             //falling = true; //animation
         }
 
-        //rumble
-        pad = Gamepad.current;
-        if(pad != null)
-        {
-            if (GetComponent<StateController>().crane)
-            {
-                pad.SetMotorSpeeds(0.2f, 0.2f);
-            }
-            else if (!inDash)
-            {
-                pad.SetMotorSpeeds(0f, 0f);
-            }
-        }
         
 
 
@@ -548,7 +535,6 @@ public class ThirdPersonMovement : MonoBehaviour
         }
         if (GetComponent<StateController>().crane)
         {
-            
 
             //Move
             if (CheckForGroundContact()  && !GetComponent<StateController>().isChanging || controller.isGrounded)
@@ -564,6 +550,8 @@ public class ThirdPersonMovement : MonoBehaviour
                 stateController.capricorn = false;
                 stateController.lama = false;
                 //StartCoroutine(GetComponent<StateController>().changeModell(1));
+
+                
             }
             else
             {
@@ -605,6 +593,8 @@ public class ThirdPersonMovement : MonoBehaviour
                 stateController.capricorn = false;
                 stateController.lama = false;
                 StartCoroutine(GetComponent<StateController>().changeModell(1));
+
+                
             }
             if (holdForGliding && input.jumpValue == 0)
             {
@@ -618,6 +608,8 @@ public class ThirdPersonMovement : MonoBehaviour
                 stateController.capricorn = false;
                 stateController.lama = false;
                 StartCoroutine(GetComponent<StateController>().changeModell(1));
+
+                
             }
 
             //Gravity
@@ -628,6 +620,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
             //velocity.y += gravity/10 * Time.deltaTime; //low gravity
             //controller.Move(velocity * Time.deltaTime);
+            
         }
         if (GetComponent<StateController>().capricorn)
         {
@@ -786,7 +779,7 @@ public class ThirdPersonMovement : MonoBehaviour
         pad = Gamepad.current;
         if (pad != null)
         {
-            pad.SetMotorSpeeds(0f, 0.2f);
+            pad.SetMotorSpeeds(0f, 0.3f);
         }
 
         buildingUp_Sound.Play();

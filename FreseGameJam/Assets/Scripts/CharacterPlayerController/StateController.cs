@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class StateController : MonoBehaviour
 {
     [Tooltip("Reference to the PlayerInput Action Mapping")]
     private PlayerInput playerInput;
+    private Gamepad pad;
 
 
 
@@ -36,6 +38,7 @@ public class StateController : MonoBehaviour
     public int currentFormId = 1;
 
     private IEnumerator coroutine;
+    private bool toggleBlock;
     public GameObject ballVisuell;
     [SerializeField] GameObject humanVisuell;
     [SerializeField] GameObject frogVisuell;
@@ -256,18 +259,37 @@ public class StateController : MonoBehaviour
                         break;
 
                     case 3:
-                        if (availableCapricorn)
+                        if (availableCapricorn && !toggleBlock)
                         {
-                            currentFormId = 3;
+                            toggleBlock = true;
+                            switch (human)
+                            {
+                                case true:
+                                    currentFormId = 3;
 
-                            ball = false;
-                            human = false;
-                            frog = false;
-                            crane = false;
-                            capricorn = true;
-                            lama = false;
-                            jesus = false;
-                            StartCoroutine(changeModell(i));
+                                    ball = false;
+                                    human = false;
+                                    frog = false;
+                                    crane = false;
+                                    capricorn = true;
+                                    lama = false;
+                                    jesus = false;
+                                    StartCoroutine(changeModell(i));
+                                    break;
+
+                                case false:
+                                    currentFormId = 1;
+
+                                    ball = false;
+                                    human = true;
+                                    frog = false;
+                                    crane = false;
+                                    capricorn = false;
+                                    lama = false;
+                                    jesus = false;
+                                    StartCoroutine(changeModell(1));
+                                    break;
+                            }
                         }
                         else
                             isChanging = false;
@@ -436,6 +458,11 @@ public class StateController : MonoBehaviour
         switch (state)
         {
             case 1:
+                pad = Gamepad.current;
+                if (pad != null)
+                {
+                    pad.SetMotorSpeeds(0f, 0f);
+                }
                 craneVisuell.SetActive(false);
                 humanVisuell.SetActive(true);
                 ballVisuell.SetActive(false);
@@ -447,11 +474,21 @@ public class StateController : MonoBehaviour
                 break;
 
             case 2:
+                pad = Gamepad.current;
+                if (pad != null)
+                {
+                    pad.SetMotorSpeeds(0.2f, 0.2f);
+                }
                 craneVisuell.SetActive(true);
                 ballVisuell.SetActive(false);
                 break;
 
             case 3:
+                pad = Gamepad.current;
+                if (pad != null)
+                {
+                    pad.SetMotorSpeeds(0f, 0f);
+                }
                 capricornVisuell.SetActive(true);
                 ballVisuell.SetActive(false);
                 break;
@@ -470,5 +507,6 @@ public class StateController : MonoBehaviour
                 break;
         }
         isChanging = false;
+        toggleBlock = false;
     }
 }

@@ -145,10 +145,10 @@ public class HealthSystem : MonoBehaviour
             GetComponent<Rigidbody>().isKinematic = false;
 
         yield return new WaitForSeconds(1f);
-
+        GetComponent<Rigidbody>().isKinematic = true;
         gameObject.transform.position = new Vector3(0, -3, 0) + respawnPoint;
 
-            GetComponent<Rigidbody>().isKinematic = true;
+            
             GetComponent<ThirdPersonMovement>().enabled = true; // no movement hopefully stops me from being able to survive death zones
             GetComponent<CharacterController>().enabled = true;
 
