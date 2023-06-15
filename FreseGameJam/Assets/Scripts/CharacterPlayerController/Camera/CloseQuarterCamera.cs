@@ -5,6 +5,7 @@ public class CloseQuarterCamera : MonoBehaviour
     #region variables
     // public variables:
     public bool closeQuarterCameraIsActive = false;
+    public bool isFalling = false;
     public bool inCustscene = false;
     public GameObject firstPersonCamera;
 
@@ -12,6 +13,7 @@ public class CloseQuarterCamera : MonoBehaviour
     private GameObject _lastTriggerHit;
     [SerializeField] GameObject _cameraRigFar;
     [SerializeField] GameObject _cameraRigClose;
+    [SerializeField] GameObject _cameraRigCloseFalling;
     private bool _currentlyInsideTrigger = false;
     #endregion
     void Start()
@@ -82,6 +84,21 @@ public class CloseQuarterCamera : MonoBehaviour
             Debug.Log("I died and am resetting camera");
 
             ReactivateTrigger();
+        }
+
+        // switch to new closeUp_Falling_cam when in close up cam AND falling
+        if (_cameraRigClose.activeInHierarchy)
+        {
+            if (isFalling)
+            {
+                _cameraRigClose.SetActive(false);
+                _cameraRigCloseFalling.SetActive(true);
+            }
+            else
+            {
+                _cameraRigClose.SetActive(true);
+                _cameraRigCloseFalling.SetActive(false);
+            }
         }
     }
 }

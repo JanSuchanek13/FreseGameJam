@@ -14,6 +14,7 @@ public class HealthSystem : MonoBehaviour
 
     [SerializeField] GameObject Cam;
     [SerializeField] GameObject Cam2;
+    [SerializeField] GameObject Cam2_Falling;
     [SerializeField] GameObject _craneCam;
     GameObject _lastUsedMainCam;
 
@@ -255,12 +256,15 @@ public class HealthSystem : MonoBehaviour
     public void DisableCameras()
     {
         CamScript.enabled = false;
+        Cam2_Falling.SetActive(false);
         Cam2.SetActive(false);
         Cam.SetActive(false);
         _craneCam.SetActive(false); // beware, when calling this function in pause while in crane, then the crane cam would be turnt off after, though being in crane-form! 
     }
     public void EnableCameras()
     {
+        FindObjectOfType<SmoothCloseUpCameraAdjuster>().ResetPosition(); // in case you died far from the last respawn in closeUpCam!
+
         //Cam2.SetActive(false);
         //Cam.SetActive(true);
         CamScript.enabled = true;

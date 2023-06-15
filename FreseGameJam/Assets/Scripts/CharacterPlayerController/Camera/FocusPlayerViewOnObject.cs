@@ -17,7 +17,7 @@ public class FocusPlayerViewOnObject : MonoBehaviour
     [SerializeField] GameObject focusCameraRig;
     [SerializeField] float juicyDelayBeforePlayerResumesControll = 2f;
     [SerializeField] GameObject jansAnimationControlls;
-    [SerializeField] Animation wavingAnimation;
+    //[SerializeField] Animation wavingAnimation;
     [SerializeField] Animator _humanAnimator;
 
     GameObject _focusTargetObject;
@@ -108,6 +108,7 @@ public class FocusPlayerViewOnObject : MonoBehaviour
     public void FocusTarget(GameObject _focusObject, float _lookAtThisForThisLong, int _cutsceneNr) // focus camera:
     {
         _inFocusMode = true;
+        _humanAnimator.SetBool("inCutscene", true); // implemented jancode to start reading animation here!
 
         switch (_cutsceneNr)
         {
@@ -232,6 +233,8 @@ public class FocusPlayerViewOnObject : MonoBehaviour
 
     void ReactivatePlayer() // this is seperate from TurnOffFocus, so the player sees the avatar still looking at target GO:
     {
+        _humanAnimator.SetBool("inCutscene", false); // implemented jancode to stop reading animation here!
+
         _focusTargetObject = null;
         _turnPlayerTowardsObject = false;
 

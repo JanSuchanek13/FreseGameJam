@@ -431,10 +431,13 @@ public class ThirdPersonMovement : MonoBehaviour
         if (!CheckForGroundContact() && velocity.y < -10 && movingDownwards || forcedFalling)
         {
             falling = true; //animation
+
+            FindObjectOfType<CloseQuarterCamera>().isFalling = falling; // be sure that any other paper avatar in the scene does not have this script attached!
         }
         else
         {
             falling = false;
+            FindObjectOfType<CloseQuarterCamera>().isFalling = falling; // be sure that any other paper avatar in the scene does not have this script attached!
         }
 
         if (coyoteTime)
