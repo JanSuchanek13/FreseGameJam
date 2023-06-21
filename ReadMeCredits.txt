@@ -6,6 +6,7 @@ Textures:
 Cardboard Texture: by qubodup, https://opengameart.org/content/tiling-cardboard-texture/n 
 Recycling Logo:https://pixabay.com/de/vectors/recycling-symbol-logo-grün-öko-304974/?download/n
 Barcode :https://pixabay.com/de/vectors/barcode-laser-code-schwarz-306926/ 
+Steam Logo: https://partner.steamgames.com/doc/marketing/branding?l=german
 
 Music:
 
