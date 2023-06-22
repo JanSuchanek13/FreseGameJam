@@ -79,6 +79,9 @@ public class ThirdPersonMovement : MonoBehaviour
     bool isInCooldown;
     public float cooldownTime = 0.5f;
 
+    //jumpChange
+    bool jumpChange;
+
     //Sound
     [Header("Sounds:")]
     public AudioSource jumpSound;
@@ -342,6 +345,7 @@ public class ThirdPersonMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        ReadyForJumpChange();
         bool test = isOnSteps;
         //crane juice
         craneSound.SetActive(stateController.crane);
@@ -350,7 +354,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if (GetComponent<StateController>().human)
         {
             //if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && !isGrounded && !(Physics.CheckSphere(groundCheck.position, groundDistance * 7, groundMask, QueryTriggerInteraction.Ignore)) && !GetComponent<StateController>().isChanging) // double jump change you into crane
-            if ((input.jumpTriggerd) && !CheckForGroundContact() && !isCoyoteGrounded && !CheckForGroundContact() && !GetComponent<StateController>().isChanging) // double jump change you into crane
+            if (input.jumpValue == 1 && jumpChange && !Physics.Raycast(transform.position, Vector3.down, 3f, groundMask, QueryTriggerInteraction.Ignore) && !isCoyoteGrounded && !GetComponent<StateController>().isChanging) // double jump change you into crane
             {
 
                 if (stateController.availableCrane)
@@ -584,7 +588,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 //controller.slopeLimit = 0f; //low climp
                 velocity.y = Mathf.Sqrt(jumpHeight / 150 * -2f * gravity);  //low jump
             }
-            else if(input.jumpValue != 0 && !CheckForGroundContact() && !GetComponent<StateController>().isChanging && !holdForGliding)
+            else if(input.jumpTriggerd && !CheckForGroundContact() && !GetComponent<StateController>().isChanging && !holdForGliding)
             {
                 //change back to human by pressing jump mid air
                 GetComponent<StateController>().isChanging = true;
@@ -760,6 +764,18 @@ public class ThirdPersonMovement : MonoBehaviour
 
     }
 
+    private void ReadyForJumpChange()
+    {
+        if (input.jumpTriggerd && !controller.isGrounded)
+        {
+            jumpChange = true;
+        }
+        else if (controller.isGrounded)
+        {
+            jumpChange = false;
+        }
+
+    }
 
     private void CoyoteTime()
     {
