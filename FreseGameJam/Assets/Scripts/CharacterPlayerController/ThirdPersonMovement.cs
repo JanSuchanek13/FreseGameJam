@@ -796,7 +796,7 @@ public class ThirdPersonMovement : MonoBehaviour
         GetComponent<InputHandler>().enabled = false;
         //rumble
         pad = Gamepad.current;
-        if (pad != null)
+        if (pad != null && input.controlType == InputHandler.ControlType.Controller)
         {
             pad.SetMotorSpeeds(0f, 0.3f);
         }
@@ -848,7 +848,7 @@ public class ThirdPersonMovement : MonoBehaviour
                     rig.AddExplosionForce(1.0f, transform.position, 1, 1f, ForceMode.Impulse);
                     dashCrash_Sound.Play();
                     
-                    if (pad != null)
+                    if (pad != null && input.controlType == InputHandler.ControlType.Controller)
                     {
                         pad.SetMotorSpeeds(0.7f, 0.7f);
                     }

@@ -9,6 +9,7 @@ public class StateController : MonoBehaviour
     [Tooltip("Reference to the PlayerInput Action Mapping")]
     private PlayerInput playerInput;
     private Gamepad pad;
+    private InputHandler input;
 
 
 
@@ -58,6 +59,7 @@ public class StateController : MonoBehaviour
     private void Awake()
     {
         playerInput = new PlayerInput();
+        input = GetComponent<InputHandler>();
     }
 
     /// <summary>
@@ -440,6 +442,12 @@ public class StateController : MonoBehaviour
 
     public IEnumerator changeModell(float state)
     {
+        pad = Gamepad.current;
+        if (pad != null)
+        {
+            pad.SetMotorSpeeds(0f, 0f);
+        }
+
         //change to ball
         transformationSound.Play();
         ballVisuell.SetActive(true);
@@ -458,11 +466,6 @@ public class StateController : MonoBehaviour
         switch (state)
         {
             case 1:
-                pad = Gamepad.current;
-                if (pad != null)
-                {
-                    pad.SetMotorSpeeds(0f, 0f);
-                }
                 craneVisuell.SetActive(false);
                 humanVisuell.SetActive(true);
                 ballVisuell.SetActive(false);
@@ -475,7 +478,7 @@ public class StateController : MonoBehaviour
 
             case 2:
                 pad = Gamepad.current;
-                if (pad != null)
+                if (pad != null && input.controlType == InputHandler.ControlType.Controller)
                 {
                     pad.SetMotorSpeeds(0.2f, 0.2f);
                 }
