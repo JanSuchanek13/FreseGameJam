@@ -44,7 +44,7 @@ namespace Loneflower
 
         private void JumpCheck()
         {
-            animator.SetBool("isJumping", !thirdPersonMovement.isCoyoteGrounded);
+            animator.SetBool("isJumping", !thirdPersonMovement.isGrounded);
         }
     }
 }

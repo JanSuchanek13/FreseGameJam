@@ -33,6 +33,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public int flyCurve = 3000;
     public float capricornSpeed = 25;
 
+    public bool isGrounded;
     public Transform groundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
@@ -461,8 +462,8 @@ public class ThirdPersonMovement : MonoBehaviour
             }
         }
         
-        bool isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance *3, groundMask, QueryTriggerInteraction.Ignore);
-        if (isGrounded && velocity.y < 0.5 && !onBridge) //is falling
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance *2, groundMask, QueryTriggerInteraction.Ignore);
+        if (Physics.CheckSphere(groundCheck.position, groundDistance * 3, groundMask, QueryTriggerInteraction.Ignore) && velocity.y < 0.5 && !onBridge) //is falling
         {
             controller.stepOffset = 0.5f;
             //falling = false; //animation
