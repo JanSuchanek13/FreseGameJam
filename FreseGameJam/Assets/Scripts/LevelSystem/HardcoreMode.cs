@@ -99,7 +99,7 @@ public class HardcoreMode : MonoBehaviour
 
     void BeginnRun()
     {
-        FindObjectOfType<BackgroundSoundPlayer>().PlayHardcoreMusic(); //here the interrupt starts at "Go" so hardcore music doesnt start until counter is at 1 or 2 secs.
+        FindObjectOfType<BackgroundSoundPlayer>().StartHardcoreMusic(); //here the interrupt starts at "Go" so hardcore music doesnt start until counter is at 1 or 2 secs.
         _runStarted = true;
         FindObjectOfType<InputHandler>().enabled = true;
     }

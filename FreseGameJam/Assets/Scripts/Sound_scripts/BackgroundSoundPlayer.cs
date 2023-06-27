@@ -13,7 +13,7 @@ public class BackgroundSoundPlayer : MonoBehaviour
     [SerializeField] bool _turnMusicOffDuringCutscenes = true;
     [SerializeField] bool _lowerMusicVolumeDuringCutscenes = false;
     [SerializeField] AudioSource _playThisSongFirst; // if a song is put in here, that will be the first song played on load
-    [SerializeField] AudioSource _hardcoreMusic; // if a song is put in here, that will be the first song played on load
+    [SerializeField] AudioSource[] _arrayOfHardcoreMusic; // if a song is put in here, that will be the first song played on load
     [SerializeField] AudioSource[] _interruptingMusicSounds;
 
     private AudioSource _randomTrack;
@@ -23,6 +23,7 @@ public class BackgroundSoundPlayer : MonoBehaviour
     [SerializeField] float _lowerVolumeTo = 0.5f;
     float _timePausedAmt = 0.0f;
     bool _timePaused;
+    bool _thisIsHardcore = false;
 
     float _musicVolumeAtStart;
     #endregion
@@ -38,10 +39,10 @@ public class BackgroundSoundPlayer : MonoBehaviour
         {
             _randomTrack = arrayOfBackgroundMusic[Random.Range(0, arrayOfBackgroundMusic.Length)];
             _activeTrack = _randomTrack;
-            float _lengthOfTrack = _activeTrack.clip.length;
+            //float _lengthOfTrack = _activeTrack.clip.length;
             _activeTrack.Play();
 
-            Debug.Log("1");
+            //Debug.Log("1");
             //StartCoroutine(PlayNextTrack(_lengthOfTrack));
             StartCoroutine(PlayNextTrack());
         }
@@ -49,7 +50,7 @@ public class BackgroundSoundPlayer : MonoBehaviour
         {
             _playThisSongFirst.Play();
             _activeTrack = _playThisSongFirst;
-            float _lengthOfTrack = _activeTrack.clip.length;
+            //float _lengthOfTrack = _activeTrack.clip.length;
 
             if (!_playThisSongFirst.loop)
             {
@@ -70,7 +71,8 @@ public class BackgroundSoundPlayer : MonoBehaviour
     {
         yield return new WaitWhile(() => _activeTrack.isPlaying);
 
-        if (_playThisSongFirst == null && !_turnMusicOffDuringCutscenes) // This is to stop the next random track from playing in hardcore, as this is changed after being called!
+        //if (_playThisSongFirst == null && !_turnMusicOffDuringCutscenes) // This is to stop the next random track from playing in hardcore, as this is changed after being called!
+        if (!_thisIsHardcore && !_turnMusicOffDuringCutscenes) 
         {
             _nextRandomTrack = arrayOfBackgroundMusic[Random.Range(0, arrayOfBackgroundMusic.Length)];
             if (_nextRandomTrack == _randomTrack) // prevent the same song playing twice in a row:
@@ -84,63 +86,37 @@ public class BackgroundSoundPlayer : MonoBehaviour
                 _activeTrack.Play();
                 StartCoroutine(PlayNextTrack());
             }
-        }else // ignore this function if a looping track was selected after this was calles (Hardcore mode does this!).
+        }else if (_thisIsHardcore)
+        {
+            _randomTrack = _arrayOfHardcoreMusic[Random.Range(0, _arrayOfHardcoreMusic.Length)];
+
+            // make sure there is more than one track in the array:
+            // --> otherwise the next track would always be the same as the previous one!!!
+            if (_arrayOfHardcoreMusic.Length > 0)
+            {
+                if (_nextRandomTrack == _randomTrack) // prevent the same song playing twice in a row:
+                {
+                    StartCoroutine(PlayNextTrack());
+                    yield break;
+                }else
+                {
+                    _nextRandomTrack = _randomTrack;
+                    _activeTrack = _randomTrack;
+                    _activeTrack.Play();
+                    StartCoroutine(PlayNextTrack());
+                }
+            }else // in case there is only one track, just play that on repeat:
+            {
+                _activeTrack = _randomTrack;
+                _activeTrack.Play();
+                StartCoroutine(PlayNextTrack());
+            }
+        }
+        else
         {
             yield break;
         }
     }
-
-    /*IEnumerator PlayNextTrack(float _lengthOfCurrentTrack)
-    {
-        Debug.Log("2, current tracks length: " + _activeTrack.clip.length);
-
-        yield return new WaitForSeconds(_lengthOfCurrentTrack);
-        
-        Debug.Log("3, this should be clips lenght later");
-
-
-        if (_playThisSongFirst == null) // This is to stop the next random track from playing in hardcore, as this is changed after being called!
-        {
-            if (_timePausedAmt == 0.0)
-            {
-                _nextRandomTrack = arrayOfBackgroundMusic[Random.Range(0, arrayOfBackgroundMusic.Length)];
-
-                if (_nextRandomTrack == _randomTrack) // prevent the same song playing twice in a row:
-                {
-                    StartCoroutine(PlayNextTrack(0.0f));
-                    Debug.Log("--> the same song was picked, retrying!");
-
-                    yield break;
-                }else
-                {
-                    Debug.Log("--> new track should start playing");
-
-                    _randomTrack = _nextRandomTrack;
-                }
-
-                _activeTrack = _randomTrack;
-                float _lengthOfTrack = _activeTrack.clip.length;
-                _activeTrack.Play();
-                Debug.Log("new track started playing!");
-
-                StartCoroutine(PlayNextTrack(_lengthOfTrack));
-            }
-            else if(_turnMusicOffDuringCutscenes == true && _timePausedAmt != 0.0)
-            {
-                float _savedPauseTime = _timePausedAmt;
-                _timePausedAmt = 0.0f; // has to be reset here, otherwise after pausing, all future tracks will be delayed by this amount:
-                StartCoroutine(PlayNextTrack(_savedPauseTime));
-                yield break;
-            }
-            // the fix should be to count the time paused and then subtract that from the waittime,
-            // as the pausing will stop passing of time. a 100sec track would play after 100 sec, if 20 sec
-            // paused it will only commence counting after the 20 secs, so it would wait 120 sec...
-        }
-        else // ignore this function if a looping track was selected after this was calles (Hardcore mode does this).
-        {
-            yield break;
-        }
-    }*/
 
     public void LowerVolume()
     {
@@ -204,20 +180,29 @@ public class BackgroundSoundPlayer : MonoBehaviour
         }
     }
 
-    public void PlayHardcoreMusic()
+    public void StartHardcoreMusic()
     {
-        StartCoroutine(WindDownMusic());
+        _thisIsHardcore = true;
+
+        AudioSource _randomScreetch = _interruptingMusicSounds[Random.Range(0, _interruptingMusicSounds.Length)];
+
+        _activeTrack.Stop();
+        _activeTrack = _randomScreetch;
+        _activeTrack.Play();
+
+        StartCoroutine(PlayNextTrack());
+        //WindDownMusic();
     }
 
-    IEnumerator WindDownMusic()
+    /*
+    void WindDownMusic()
     {
         AudioSource _randomScreetch = _interruptingMusicSounds[Random.Range(0, _interruptingMusicSounds.Length)];
-        _randomTrack.Stop();
-        _randomScreetch.Play();
 
-        yield return new WaitForSeconds(_randomScreetch.clip.length);
+        _activeTrack.Stop();
+        _activeTrack = _randomScreetch;
+        _activeTrack.Play();
 
-        _playThisSongFirst = _hardcoreMusic;
-        PlayTrack();
-    }
+        StartCoroutine(PlayNextTrack());
+    }*/
 }
