@@ -4,151 +4,47 @@ using UnityEngine;
 
 public class SmoothCloseUpCameraAdjuster : MonoBehaviour
 {
-    public bool isFalling = false; // when this is set true, this object snaps to the player and thus the camera will no longer lag!
-    //[SerializeField] GameObject _thirdPersonCam;
-    //[SerializeField] GameObject _closeUpCam;
+    #region variables:
+    // accessible variables:
+    [Header("Smooth-Follow Settings:")]
+    [Space(2)]
 
+    [Tooltip("Insert the object this object should follow")]
     [SerializeField] Transform _target;
-    [SerializeField] float _smoothTime = 0.05f;
+    [Space(2)]
 
-    //float _tempSmoothTime = 0.0f;
-    
-    //Vector3 velocity = Vector3.zero; // The velocity of the camera
+    [Tooltip("How long does it take this object to match the followed objects position")]
+    [SerializeField] float _smoothTime = 0.5f;
+    [Space(2)]
+
+    [Tooltip("Optionally declare an offset to the followed object. These values may be negative")]
+    [SerializeField] Vector3 _followOffset = new Vector3(0.0f, 0.0f, 0.0f);
+
+    // inaccessible variables:
     float _vel = 0.0f;
+    #endregion
 
-    
-    /*
-    void Update()
-    {
-        // Get the target position:
-        Vector3 _targetPosition = _target.TransformPoint(new Vector3(0, 0.5f, 0));
-
-        transform.position = Vector3.SmoothDamp(transform.position, _targetPosition, ref velocity, _smoothTime); // this dampends all axis
-
-        //float newPosition = Mathf.SmoothDamp(transform.position.y, target.position.y, ref yVelocity, smoothTime);
-        //float newPosition = Mathf.SmoothDamp(transform.position.y, _targetPosition.y, ref _vel, _smoothTime);
-        //transform.position = new Vector3(transform.position.x, newPosition, transform.position.z);
-
-        // Smoothly dampen the adjustment of the y position:
-        //Vector3 _gettingThere = Vector3.SmoothDamp(transform.position, _targetPosition, ref velocity, _smoothTime);
-        //transform.position = new Vector3(_targetPosition.x, _gettingThere.y, _targetPosition.z);
-
-        //transform.position = Vector3.SmoothDamp(transform.position, new Vector3(transform.position.x, targetPosition.y, transform.position.z), ref velocity, _smoothTime);
-    }*/
-    /*private void Start()
-    {
-        _tempSmoothTime = _smoothTime;
-    }*/
+    /// <summary>
+    /// This function is called by the "DieAndRespawn" function inside the "HealthSystem"-Script.
+    /// It's puroise is, to jump the camera back to the players respawn position, so there is no camera-flight
+    /// to that location after dying.
+    /// </summary>
     public void ResetPosition()
     {
-        transform.position = _target.position;
+        transform.position = new Vector3(_target.position.x + _followOffset.x, _target.position.y + _followOffset.y, _target.position.z + _followOffset.z);
     }
-    
+
     void Update()
     {
-        // Get the target position:
-        Vector3 targetPosition = _target.position;
+        // get target location including any offset:
+        Vector3 targetPosition = new Vector3(_target.position.x + _followOffset.x, _target.position.y + _followOffset.y, _target.position.z + _followOffset.z);
 
+        // smooth the transition on the y-axis only:
         float maxSpeed = Mathf.Infinity;
-        float deltaTime = Time.deltaTime;
-
-        // Apply smoothing to the y-axis position with a delay:
-        float smoothedY = Mathf.SmoothDamp(transform.position.y, targetPosition.y, ref _vel, _smoothTime, maxSpeed, deltaTime);
-
-        // Update the position with smoothed y-coordinate:
+        float smoothedY = Mathf.SmoothDamp(transform.position.y, targetPosition.y, ref _vel, _smoothTime, maxSpeed, Time.deltaTime);
         Vector3 newPosition = new Vector3(targetPosition.x, smoothedY, targetPosition.z);
 
-        // Update the camera's position to the new position:
+        // change the position to the next increment:
         transform.position = newPosition;
-
-        /*
-        if (isFalling)
-        {
-            _thirdPersonCam.SetActive(true);   
-            //_closeUpCam.SetActive(false);
-        }
-        else
-        {
-            _thirdPersonCam.SetActive(false);
-        }*/
-        /*
-        if (!isFalling)
-        {
-            
-        }else
-        {
-            transform.position = _target.position; // have camera look at the player
-
-            // alternative, and this may be better: turn off the close up cam when falling and switch to 
-            // third-person while falling for nice zoom out effect
-        }*/
-
-        /*
-        // Get the target position:
-        Vector3 targetPosition = _target.position;
-
-        float maxSpeed = Mathf.Infinity;
-        float deltaTime = Time.deltaTime;
-
-
-        // Apply smoothing to the y-axis position with a delay:
-        //float smoothedY = Mathf.SmoothDamp(transform.position.y, targetPosition.y, ref _vel, _smoothTime);
-        float smoothedY = Mathf.SmoothDamp(transform.position.y, targetPosition.y, ref _vel, _smoothTime, maxSpeed, deltaTime);
-
-        /* // this segment will stop the delay when falling:
-        // Check if the player has fallen below a certain threshold:
-        float fallThreshold = -2.0f; // Adjust this value as needed
-        
-        // Calculate the deviation between the dampened position and the tracked position
-        positionDeviation = Mathf.Abs(smoothedY - targetPosition.y);
-
-        //if (transform.position.y - targetPosition.y < fallThreshold)
-        if (positionDeviation > deviationThreshold)
-        {
-            Debug.Log("1");
-            // Limit the camera's vertical movement when player falls down:
-            //_tempSmoothTime = _smoothTime;
-            _smoothTime = 0.1f;
-        }else
-        {
-            Debug.Log("2");
-            _smoothTime = _tempSmoothTime;
-        }/
-
-        // Update the position with smoothed y-coordinate:
-        Vector3 newPosition = new Vector3(targetPosition.x, smoothedY, targetPosition.z);
-
-        // Update the camera's position to the new position:
-        transform.position = newPosition;
-
-        */
     }
-
-    float positionDeviation = 0f;
-    float deviationThreshold = 1.0f;
-
-    /*void Update()
-    {
-        // Get the target position
-        Vector3 targetPosition = _target.position;
-
-        // Apply smoothing to the y-axis position with a delay
-        float smoothedY = Mathf.SmoothDamp(transform.position.y, targetPosition.y, ref _vel, _smoothTime);
-
-        // Calculate the deviation between the dampened position and the tracked position
-        positionDeviation = Mathf.Abs(smoothedY - targetPosition.y);
-
-        // Check if the deviation exceeds the threshold
-        if (positionDeviation > deviationThreshold)
-        {
-            // Limit the camera's vertical movement when the deviation is large
-            smoothedY = Mathf.Lerp(transform.position.y, targetPosition.y, deviationThreshold / positionDeviation);
-        }
-
-        // Update the position with smoothed y-coordinate
-        Vector3 newPosition = new Vector3(targetPosition.x, smoothedY, targetPosition.z);
-
-        // Update the camera's position to the new position
-        transform.position = newPosition;
-    }*/
 }

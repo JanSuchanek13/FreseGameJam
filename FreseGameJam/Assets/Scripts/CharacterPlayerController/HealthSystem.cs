@@ -154,6 +154,7 @@ public class HealthSystem : MonoBehaviour
             GetComponent<CharacterController>().enabled = true;
 
         EnableCameras();
+        ResetCloseUpCam(); // this resets closeup-cam to the respawned pos of player
 
             GetComponent<ThirdPersonMovement>().gravity = gravity;
             inCoroutine = false;
@@ -263,12 +264,8 @@ public class HealthSystem : MonoBehaviour
     }
     public void EnableCameras()
     {
-        FindObjectOfType<SmoothCloseUpCameraAdjuster>().ResetPosition(); // in case you died far from the last respawn in closeUpCam!
-
-        //Cam2.SetActive(false);
-        //Cam.SetActive(true);
         CamScript.enabled = true;
-        //_lastUsedMainCam.SetActive(true);
+
         if(_lastUsedMainCam == null)
         {
             Cam.SetActive(true);
@@ -276,5 +273,9 @@ public class HealthSystem : MonoBehaviour
         {
             _lastUsedMainCam.SetActive(true);
         }
+    }
+    void ResetCloseUpCam()
+    {
+        FindObjectOfType<SmoothCloseUpCameraAdjuster>().ResetPosition(); // in case you died far from the last respawn in closeUpCam!
     }
 }
