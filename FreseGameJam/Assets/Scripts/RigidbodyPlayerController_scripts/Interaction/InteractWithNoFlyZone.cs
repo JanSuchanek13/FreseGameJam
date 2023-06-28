@@ -26,8 +26,7 @@ public class InteractWithNoFlyZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        string name = other.name;
-        if ("no_fly_zone".Equals(name) || "no_fly_zone multipleparticles".Equals(name) || "no_fly_zone Vulcano".Equals(name) && !_inCoroutine)
+        if (other.gameObject.CompareTag("NoFlyZone") && !_inCoroutine)
         {
             StartCoroutine(ReactToZone());
         }
