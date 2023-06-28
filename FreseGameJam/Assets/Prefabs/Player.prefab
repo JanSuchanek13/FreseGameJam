@@ -5361,6 +5361,7 @@ MonoBehaviour:
   jumpHeight: 1.1
   flyCurve: 925
   capricornSpeed: 11
+  isGrounded: 0
   groundCheck: {fileID: 8605511424826156253}
   groundDistance: 0.16
   groundMask:
@@ -5461,6 +5462,7 @@ MonoBehaviour:
   inCoroutine: 0
   Cam: {fileID: 0}
   Cam2: {fileID: 0}
+  Cam2_Falling: {fileID: 0}
   _craneCam: {fileID: 0}
   RiverBoat_Friend: {fileID: 0}
   CheckpointsGO:
@@ -5498,10 +5500,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   closeQuarterCameraIsActive: 0
+  isFalling: 0
   inCustscene: 0
   firstPersonCamera: {fileID: 0}
   _cameraRigFar: {fileID: 0}
   _cameraRigClose: {fileID: 0}
+  _cameraRigCloseFalling: {fileID: 0}
 --- !u!114 &1415434557115533443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5517,7 +5521,6 @@ MonoBehaviour:
   focusCameraRig: {fileID: 0}
   juicyDelayBeforePlayerResumesControll: 2
   jansAnimationControlls: {fileID: 3656293360236102952}
-  wavingAnimation: {fileID: 0}
   _humanAnimator: {fileID: 3842555884447801119}
   _skipUI: {fileID: 0}
   waitLonger: 0
@@ -6752,7 +6755,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1049295396752707567}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.68, z: 0}
+  m_LocalPosition: {x: 0, y: -0.72, z: 0}
   m_LocalScale: {x: 0.65, y: 0.65, z: 0.65}
   m_ConstrainProportionsScale: 0
   m_Children:
