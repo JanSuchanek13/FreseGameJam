@@ -355,7 +355,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if (GetComponent<StateController>().human)
         {
             //if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && !isGrounded && !(Physics.CheckSphere(groundCheck.position, groundDistance * 7, groundMask, QueryTriggerInteraction.Ignore)) && !GetComponent<StateController>().isChanging) // double jump change you into crane
-            if (input.jumpValue == 1 && jumpChange && !Physics.Raycast(transform.position, Vector3.down, 3f, groundMask, QueryTriggerInteraction.Ignore) && !isCoyoteGrounded && !GetComponent<StateController>().isChanging) // double jump change you into crane
+            if (/*input.jumpValue == 1 && jumpChange*/input.jumpTriggerd && !Physics.Raycast(transform.position, Vector3.down, 3f, groundMask, QueryTriggerInteraction.Ignore) && !isCoyoteGrounded && !GetComponent<StateController>().isChanging) // double jump change you into crane
             {
 
                 if (stateController.availableCrane)
