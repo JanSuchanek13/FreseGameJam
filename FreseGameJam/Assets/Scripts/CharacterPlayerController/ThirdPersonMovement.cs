@@ -462,7 +462,7 @@ public class ThirdPersonMovement : MonoBehaviour
             }
         }
         
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance *2, groundMask, QueryTriggerInteraction.Ignore);
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance *1.5f, groundMask, QueryTriggerInteraction.Ignore);
         if (Physics.CheckSphere(groundCheck.position, groundDistance * 3, groundMask, QueryTriggerInteraction.Ignore) && velocity.y < 0.5 && !onBridge) //is falling
         {
             controller.stepOffset = 0.5f;
