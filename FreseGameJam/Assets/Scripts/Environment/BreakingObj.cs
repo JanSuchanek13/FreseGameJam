@@ -67,15 +67,18 @@ public class BreakingObj : MonoBehaviour
                 if (levelEnd)
                 {
                     _player.GetComponent<ThirdPersonMovement>().forcedFalling = true;
-                    _player.GetComponent<InputHandler>().enabled = false;
+                    //_player.GetComponent<InputHandler>().enabled = false; if this is not active, the player can walk till the end
                     stateController.enabled = false;
-                    StartCoroutine(stateController.changeModell(1));
-                    stateController.ball = false;
-                    stateController.human = true;
-                    stateController.frog = false;
-                    stateController.crane = false;
-                    stateController.capricorn = false;
-                    stateController.lama = false;
+                    if (!stateController.human)
+                    {
+                        StartCoroutine(stateController.changeModell(1));
+                        stateController.ball = false;
+                        stateController.human = true;
+                        stateController.frog = false;
+                        stateController.crane = false;
+                        stateController.capricorn = false;
+                        stateController.lama = false;
+                    }
                     //_player.GetComponent<Animator>().SetBool("Falling", true);
                     origamiFriend.GetComponent<Rigidbody>().isKinematic = false;
                 }
