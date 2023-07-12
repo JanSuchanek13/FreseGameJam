@@ -484,6 +484,10 @@ public class ThirdPersonMovement : MonoBehaviour
         //States
         if (GetComponent<StateController>().human)
         {
+            if (pad != null)
+            {
+                pad.SetMotorSpeeds(0f, 0f);
+            }
             //Move 
             float speedInput = Math.Abs(horizontal) + Math.Abs(vertical); //add up Move Input
             speed = speedInput * humanSpeed; // jan you had *6 hier, so input 1 == 6 all the time
@@ -543,7 +547,6 @@ public class ThirdPersonMovement : MonoBehaviour
         }
         if (GetComponent<StateController>().crane)
         {
-
             //Move
             if (CheckForGroundContact()  && !GetComponent<StateController>().isChanging || controller.isGrounded)
             {
@@ -780,8 +783,9 @@ public class ThirdPersonMovement : MonoBehaviour
 
     private void CoyoteTime()
     {
-        isCoyoteGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask, QueryTriggerInteraction.Ignore);
-        
+        RaycastHit hit;
+        isCoyoteGrounded = Physics.SphereCast(groundCheck.position, groundDistance * 0.7f, -groundCheck.up, out hit, 0.2f, groundMask, QueryTriggerInteraction.Ignore);
+        //vorher Physics.CheckSphere(groundCheck.position, groundDistance * 0.5f, groundMask, QueryTriggerInteraction.Ignore);
     }
 
     // Felix Test:
