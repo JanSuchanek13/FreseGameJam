@@ -10,8 +10,8 @@ public class Shadow : MonoBehaviour
     // Referenz auf das GameObject mit dem Decal Projector
     public GameObject shadowPlane;
 
-    int layerMask = ~0; // all layers
-
+    //int layerMask = ~0; // all layers
+    [SerializeField] LayerMask layerMask; // manual layers
 
 
     void Update()

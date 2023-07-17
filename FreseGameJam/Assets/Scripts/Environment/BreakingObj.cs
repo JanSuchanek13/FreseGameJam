@@ -14,6 +14,7 @@ public class BreakingObj : MonoBehaviour
     public GameObject origamiFriend;
 
     // local variables:
+    [SerializeField] bool _isBox = false;
     [SerializeField] bool _turnOffCollidersAfterBreak = false; // making this optional allows to have breaking objects which become part of the traversable environment
     [SerializeField] float _timeTillReset = 5.0f;
 
@@ -88,6 +89,13 @@ public class BreakingObj : MonoBehaviour
 
     void Break()
     {
+        if (_isBox)
+        {
+            // change the layer of destroyed boxes, so the camera no longer tries to snap in front of these empty husks:
+            gameObject.layer = LayerMask.NameToLayer("NonInteractiveSurfaceThatCanTurnTransluscent");
+            Debug.Log("this was called");
+        }
+
         if (_arrayOfCollapsingSounds.Length != 0)
         {
             AudioSource _randomCollapsingSound = _arrayOfCollapsingSounds[Random.Range(0, _arrayOfCollapsingSounds.Length)];
