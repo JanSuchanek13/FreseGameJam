@@ -15,6 +15,7 @@ namespace Loneflower
         private void Awake()
         {
             animator = this.GetComponent<Animator>();
+            StartCoroutine("SetRandomIdle");
         }
 
         private void FixedUpdate()
@@ -51,6 +52,29 @@ namespace Loneflower
         private void FallCheck()
         {
             animator.SetBool("isFalling", thirdPersonMovement.forcedFalling);
+        }
+
+        IEnumerator SetRandomIdle()
+        {
+            float duration = 1;
+            float value = 0;
+            while (true)
+            {
+                yield return new WaitForSeconds(5f);
+                float currentAnimation = animator.GetFloat("randomIdle");
+                float nextAnimation = Random.Range(1, 4);
+                float elapsed = 0.0f;
+                while (elapsed < duration)
+                {
+                    value = Mathf.Lerp(currentAnimation, nextAnimation, elapsed / duration);
+                    elapsed += Time.deltaTime;
+                    yield return null;
+                    animator.SetFloat("randomIdle", value);
+                }
+                value = nextAnimation;
+                
+                
+            }
         }
     }
 }
