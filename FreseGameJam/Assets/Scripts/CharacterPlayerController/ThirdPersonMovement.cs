@@ -433,10 +433,16 @@ public class ThirdPersonMovement : MonoBehaviour
         //controller = GetComponent<CharacterController>();
 
         //isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance * 2, groundMask, QueryTriggerInteraction.Ignore);
-        if (!CheckForGroundContact() && velocity.y < -10 && movingDownwards || forcedFalling)
+        if (!CheckForGroundContact() && velocity.y < -10 && movingDownwards)
         {
             falling = true; //animation
 
+            FindObjectOfType<CloseQuarterCamera>().isFalling = falling; // be sure that any other paper avatar in the scene does not have this script attached!
+        }
+        else if(forcedFalling)
+        {
+            falling = true; //animation
+            input.enabled = false;
             FindObjectOfType<CloseQuarterCamera>().isFalling = falling; // be sure that any other paper avatar in the scene does not have this script attached!
         }
         else

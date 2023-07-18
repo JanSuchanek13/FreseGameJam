@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BreakingObj : MonoBehaviour
 {
+    private GameObject _player;
+
     [Header("Breaking Objects Settings:")] // warum muss irgednwas hiervon public sein?
     //public GameObject origamiFriend;
     public bool levelEnd;
@@ -53,7 +55,7 @@ public class BreakingObj : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            GameObject _player = collision.gameObject;
+            _player = collision.gameObject;
             StateController stateController = _player.GetComponent<StateController>();
             if (onlyCapricorn)
             {
@@ -67,7 +69,7 @@ public class BreakingObj : MonoBehaviour
                 Invoke("Break", timeTillBreak);
                 if (levelEnd)
                 {
-                    _player.GetComponent<ThirdPersonMovement>().forcedFalling = true;
+                    Invoke("SetForcedFalling", 0.5f);
                     //_player.GetComponent<InputHandler>().enabled = false; if this is not active, the player can walk till the end
                     stateController.enabled = false;
                     if (!stateController.human)
@@ -85,6 +87,12 @@ public class BreakingObj : MonoBehaviour
                 }
             }
         }
+    }
+
+    void SetForcedFalling()
+    {
+        Debug.Log("forcedFalling");
+        _player.GetComponent<ThirdPersonMovement>().forcedFalling = true;
     }
 
     void Break()

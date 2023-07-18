@@ -22,6 +22,7 @@ namespace Loneflower
             GroundCheck();
             SetVelocity();
             JumpCheck();
+            FallCheck();
         }
 
         /// <summary>
@@ -45,6 +46,11 @@ namespace Loneflower
         private void JumpCheck()
         {
             animator.SetBool("isJumping", !thirdPersonMovement.isGrounded);
+        }
+
+        private void FallCheck()
+        {
+            animator.SetBool("isFalling", thirdPersonMovement.forcedFalling);
         }
     }
 }
