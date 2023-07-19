@@ -31,10 +31,18 @@ public class NarrowSpaceDetector : MonoBehaviour
         Debug.Log(_lastTimeInNarrowSpace + "    " + timeInNarrowSpace);
         if (_lastTimeInNarrowSpace < timeInNarrowSpace)
         {
+            if (isInNarrowSpace)
+            {
+                GetComponent<CloseQuarterCamera>().ZoomIn();
+            }
             isInNarrowSpace = true;
         }
         else
         {
+            if (!isInNarrowSpace)
+            {
+                GetComponent<CloseQuarterCamera>().ZoomOut();
+            }
             isInNarrowSpace = false;
         }
     }
