@@ -60,7 +60,7 @@ public class BreakingObj : MonoBehaviour
             if (onlyCapricorn)
             {
                 
-                if (_player.GetComponent<StateController>().capricorn && _player.GetComponent<ThirdPersonMovement>().inDash)
+                if (_player.GetComponent<StateController>().capricorn && _player.GetComponent<ThirdPersonMovement>().breakableDash)
                 {
                     Invoke("Break", timeTillBreak);
                 }

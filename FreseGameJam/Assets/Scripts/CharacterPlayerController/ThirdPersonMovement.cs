@@ -109,6 +109,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public Transform dashCheck;
     public LayerMask dashMask;
     public bool inDash;
+    public bool breakableDash;
     public AudioSource buildingUp_Sound;
     public AudioSource dash_Sound;
     public AudioSource dashCrash_Sound;
@@ -835,7 +836,9 @@ public class ThirdPersonMovement : MonoBehaviour
         dash.Play();
         dash02.Play();
         GetComponent<Rigidbody>(); // why?
-        
+        breakableDash = true;
+
+
         for (int i = 0; i < 15; i++)
         {
             speed = dashSpeed;
@@ -884,6 +887,7 @@ public class ThirdPersonMovement : MonoBehaviour
         
         speed = 2;
         inDash = false;
+        breakableDash = false;
         dashWallBreakCheck.SetActive(false);
         // Turn on player input while dashing:
         GetComponent<InputHandler>().enabled = true;
