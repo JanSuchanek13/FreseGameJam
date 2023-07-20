@@ -477,11 +477,12 @@ public class StateController : MonoBehaviour
                 break;
 
             case 2:
+                /* // this is probably called accidentally as you have a wait call before. click - wait - abort - done waiting execute
                 pad = Gamepad.current;
                 if (pad != null && input.controlType == InputHandler.ControlType.Controller)
                 {
                     pad.SetMotorSpeeds(0.2f, 0.2f);
-                }
+                }*/
                 craneVisuell.SetActive(true);
                 ballVisuell.SetActive(false);
                 break;

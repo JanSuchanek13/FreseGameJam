@@ -50,21 +50,20 @@ public class HardcoreMode : MonoBehaviour
         DisableScriptOfType<DelaySound>();
         DisableScriptOfType<TriggerSound>();
         FindObjectOfType<FocusPlayerViewOnObject>().enabled = false;
-        //FindObjectOfType<BackgroundSoundPlayer>().PlayHardcoreMusic(); // this worked with replacing the PlayThisTrackFirst
 
         foreach(Transform child in _signs.transform)
         {
             foreach(Transform childOfChild in child)
             {
             Collider collider = childOfChild.GetComponent<Collider>();
-            if(collider != null && collider.isTrigger)
-            {
-            //child.gameObject.SetActive(false);
-            childOfChild.gameObject.SetActive(false);
-            break; // exit the inner loop if a trigger collider is found
+
+                if(collider != null && collider.isTrigger)
+                {
+                    childOfChild.gameObject.SetActive(false);
+                    break; // exit the inner loop if a trigger collider is found
+                }
             }
         }
-}
 
         // Start countdown to run:
         StartCoroutine(CountDownToGo());

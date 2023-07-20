@@ -33,46 +33,43 @@ public class Level_Manager : MonoBehaviour
     public TextMeshProUGUI[] HS_TimeCounters;
     public TextMeshProUGUI[] HS_DeathCounters;
 
-    // Felix add:
-    //[SerializeField] GameObject immersePlayerIntoWorldKit;
-
-    // Start is called before the first frame update
     void Start()
     {
-        //Level buttons
+        // currently redundant - used to unlock future levels:
         levelIsUnlocked = PlayerPrefs.GetInt("levelIsUnlocked", 1);
         
+        // disable all buttons:
         for (int i = 0; i < buttons.Length; i++)
         {
             buttons[i].interactable = false;
         }
 
+        // enable all buttons that have been unlocked:
         for (int i = 0; i < levelIsUnlocked; i++)
         {
             buttons[i].interactable = true;
         }
 
+        // lock continue-button if the level has not been played yet:
         if (levelIsUnlocked > 1)
         {
             continueButton.interactable = false;
         }
 
-        //crown Counter
-        int currentLevel = SceneManager.GetActiveScene().buildIndex;
-        /*
-        crowns[0] = PlayerPrefs.GetInt("crowns", 0);
-        crowns[1] = PlayerPrefs.GetInt("crowns", 0);
-        crowns[2] = PlayerPrefs.GetInt("crowns", 0);
-        */
+        //crown Counter // redundant?
+        //int currentLevel = SceneManager.GetActiveScene().buildIndex;
+
+        // update current-run-info in the highscore screen? I think
         for (int i = 0; i < levelIsUnlocked; i++)   // shows only stats for unlocked levels
         {
+            // what happens here?
             crowns[i] = PlayerPrefs.GetInt("crowns"+ i, 1);
+
             if (i < numberOfLevels)     // fixes error cause only 1 Level is shown
             {
                 CrownCounters[i].text = crowns[i].ToString();
                 HS_CrownCounters[i].text = crowns[i].ToString();
             }
-            
         }
 
 
@@ -115,18 +112,20 @@ public class Level_Manager : MonoBehaviour
         for (int i = 0; i < levelIsUnlocked; i++)
         {
             deaths[i] = PlayerPrefs.GetInt("deaths" + i, 0);
+
             if (i < numberOfLevels)
             {
                 DeathCounters[i].text = deaths[i].ToString();
                 HS_DeathCounters[i].text = deaths[i].ToString();
             }
-            
         }
     }
 
     public void LoadLevel(int levelIndex)   //not in use
     {
         SceneManager.LoadScene(levelIndex);
+
+        // reset the crowns in a specific level:
         PlayerPrefs.SetInt("crowns" + (levelIndex - 2), 0);
 
         PlayerPrefs.SetInt("_reachedEndOfTravel", 0);
@@ -134,13 +133,14 @@ public class Level_Manager : MonoBehaviour
 
     public void ResetLevel()
     {
+        // what does this do?
         if(levelIsUnlocked == 2)
         {
             highscore.SafeLastStats();
         }
         
-        
         PlayerPrefs.SetInt("levelIsUnlocked", 1);
+
         PlayerPrefs.SetInt("_cutScene_0_HasAlreadyPlayed", 0);
         PlayerPrefs.SetInt("_cutScene_1_HasAlreadyPlayed", 0);
         PlayerPrefs.SetInt("_cutScene_2_HasAlreadyPlayed", 0);
@@ -167,19 +167,22 @@ public class Level_Manager : MonoBehaviour
             }
             PlayerPrefs.SetString("bitString" + (i), bits.ArrayToString());
         }
+
         foreach (float i in timer)
         {
             PlayerPrefs.SetFloat("timer" + i, 0);
-            //PlayerPrefs.SetFloat("lastTimer" + i, 0);
         }
+
         foreach(int i in deaths)
         {
             PlayerPrefs.SetInt("deaths" + i, 0);
         }
+
         foreach (int i in checkpoints)
         {
             PlayerPrefs.SetInt("lastCheckpoint" + i, 0);
         }
+
         foreach (int i in states)
         {
             PlayerPrefs.SetInt("State" + i, 0);
@@ -193,10 +196,6 @@ public class Level_Manager : MonoBehaviour
     public void ContinueLevel()
     {
         SceneManager.LoadScene(levelIsUnlocked);
-
-        //Felix added for juice:
-        //GetComponent<PlayWasPressed>().ImmersePlayer(1);
-           // immersePlayerIntoWorldKit.SetActive(true);
     }
 
     public void FastRestartHardcore()
@@ -214,20 +213,25 @@ public class Level_Manager : MonoBehaviour
             {
                 bits[j] = '1';
             }
+
             PlayerPrefs.SetString("bitString" + (i), bits.ArrayToString());
         }
+
         foreach (float i in timer)
         {
             PlayerPrefs.SetFloat("timer" + i, 0);
         }
+
         foreach (int i in deaths)
         {
             PlayerPrefs.SetInt("deaths" + i, 0);
         }
+
         foreach (int i in checkpoints) // redundant here?
         {
             PlayerPrefs.SetInt("lastCheckpoint" + i, 0);
         }
+
         foreach (int i in states)
         {
             PlayerPrefs.SetInt("State" + i, 0);

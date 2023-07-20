@@ -243,6 +243,9 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         playerInput = new PlayerInput();
         SetGliding();
+
+        // when is this otherwise declared ? only in dash?
+        pad = Gamepad.current;
     }
 
     public void SetGliding()
@@ -554,9 +557,22 @@ public class ThirdPersonMovement : MonoBehaviour
         }
         if (GetComponent<StateController>().crane)
         {
+            // Felix put this here to see if it start the cranse vibration at the right place!
+            if (pad != null && input.controlType == InputHandler.ControlType.Controller)
+            {
+                pad.SetMotorSpeeds(0.2f, 0.2f);
+            }
+
             //Move
             if (CheckForGroundContact()  && !GetComponent<StateController>().isChanging || controller.isGrounded)
             {
+                
+                // Felix put this here to see if it stops the cranse vibration at the right place!
+                if (pad != null)
+                {
+                    pad.SetMotorSpeeds(0f, 0f);
+                }
+
                 speed = 0f; //walk speed
 
                 //change back to human on ground
@@ -581,6 +597,8 @@ public class ThirdPersonMovement : MonoBehaviour
             craneCam.SetActive(true);
 
             
+
+
             //No Player Input -> fly forward
             if (input.moveValue.x == 0 && input.moveValue.y == 0)
             {
@@ -892,9 +910,11 @@ public class ThirdPersonMovement : MonoBehaviour
         // Turn on player input while dashing:
         GetComponent<InputHandler>().enabled = true;
 
+        /* // should be antiquated and only lead to accidental bugs
         //stop rumble
         yield return new WaitForSeconds(0.5f);
         pad.SetMotorSpeeds(0, 0);
+        */
     }
 
     /*
