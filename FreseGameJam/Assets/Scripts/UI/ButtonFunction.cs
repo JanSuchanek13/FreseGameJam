@@ -31,6 +31,7 @@ public class ButtonFunction : MonoBehaviour
     [Header("REFERENCES")]
     [Tooltip("Reference to the PlayerInput Action Mapping")]
     private PlayerInput playerInput;
+    private InputHandler inputHandler;
     #endregion
 
 
@@ -68,6 +69,8 @@ public class ButtonFunction : MonoBehaviour
 
         // Get CloseQuaterCamera-script reference:
         _closeQuarterCamera = GameObject.Find("Third Person Player_GameLevel_1").GetComponent<CloseQuarterCamera>();
+        // Get Input Handler reference:
+        inputHandler = GameObject.Find("Third Person Player_GameLevel_1").GetComponent<InputHandler>();
     }
 
     private void Update()
@@ -120,6 +123,9 @@ public class ButtonFunction : MonoBehaviour
         {
             if (pauseMenu.activeInHierarchy != true)
             {
+                // deactivate Player Input
+                inputHandler.enabled = false;
+
                 // lower volume or pause music:
                 GameObject.Find("GameManager").GetComponent<BackgroundSoundPlayer>().PauseMusic();
 
@@ -140,6 +146,9 @@ public class ButtonFunction : MonoBehaviour
                 Camera.main.GetComponent<CinemachineBrain>().enabled = false;
             }else
             {
+                // activate Player Input
+                inputHandler.enabled = true;
+
                 // increase volume or unpause music:
                 GameObject.Find("GameManager").GetComponent<BackgroundSoundPlayer>().UnpauseMusic();
 
