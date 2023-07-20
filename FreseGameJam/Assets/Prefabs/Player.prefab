@@ -5236,6 +5236,7 @@ GameObject:
   - component: {fileID: 568031738014859542}
   - component: {fileID: 1987243545723200610}
   - component: {fileID: 1749891120773515700}
+  - component: {fileID: 921337818693101444}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -5386,6 +5387,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 68
   inDash: 0
+  breakableDash: 0
   buildingUp_Sound: {fileID: 6090093490203039453}
   dash_Sound: {fileID: 7926287271397028026}
   dashCrash_Sound: {fileID: 2114902642047474431}
@@ -5601,6 +5603,18 @@ MonoBehaviour:
   _transluscentAlpha: 0.5
   _detectionRadius: 5
   _material: {fileID: 2100000, guid: 0306f4577af82a646a59fa63abfa824c, type: 2}
+--- !u!114 &921337818693101444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 240851668594198196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2df5070bf62c0e84ab71cabbcda8dfb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &259389069916638749
 GameObject:
   m_ObjectHideFlags: 0
