@@ -68,7 +68,7 @@ public class Level_Manager : MonoBehaviour
             // what happens here?
             //crowns[i] = PlayerPrefs.GetInt("crowns"+ i, 1);
             crowns[i] = PlayerPrefs.GetInt("crowns" + i, 0);
-            Debug.Log("crowns current: " + crowns[i]);
+            //Debug.Log("crowns current: " + crowns[i]);
 
             if (i < numberOfLevels)     // fixes error cause only 1 Level is shown
             {
@@ -78,7 +78,7 @@ public class Level_Manager : MonoBehaviour
                 // show cur crowns in highscore window:
                 HS_CrownCounters[i].text = crowns[i].ToString();
             }
-            Debug.Log("crowns current text: " + CrownCounters[i].text);
+            //Debug.Log("crowns current text: " + CrownCounters[i].text);
 
         }
 

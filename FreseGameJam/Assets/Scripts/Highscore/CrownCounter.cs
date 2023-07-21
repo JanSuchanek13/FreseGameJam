@@ -33,13 +33,7 @@ public class CrownCounter : MonoBehaviour
         // update the crown counter in a regular run:
         if (PlayerPrefs.GetInt("HardcoreMode", 0) == 0)
         {
-            Debug.Log("crowns 1: " + PlayerPrefs.GetInt("crowns" + 0, 0));
-            //_arrayOfCrowns[0] = PlayerPrefs.GetInt("crowns" + 0, 0);
-            //PlayerPrefs.SetInt("crowns" + _currentLevel, _arrayOfCrowns[0] + 1);
-            //PlayerPrefs.SetInt("crowns" + 0, _arrayOfCrowns[0] + 1); // dumbed down version!!!
-            //Debug.Log("crowns 2: " + PlayerPrefs.GetInt("crowns" + 0, 0));
-            
-            _crowns = PlayerPrefs.GetInt("crowns" + 0, 0);
+            _crowns = PlayerPrefs.GetInt("crowns" + 0, 0); // dumbed down version. the  + 0 should be the level index. redundant until we have more levels.
             _crownCounterTMPro.text = _crowns.ToString();
         }
     }

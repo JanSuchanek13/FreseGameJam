@@ -59,7 +59,7 @@ public class CollectedCrowns : MonoBehaviour
 					boolValuesArr.Add(Crowns[i].activeInHierarchy);
 				}*/
 
-				Debug.Log("regular crown spawn called");
+				//Debug.Log("regular crown spawn called");
 				DeactivateCrowns();
 				//bitString = PlayerPrefs.GetString("bitString" + (currentLevel - 2));
 				//Debug.Log("first");
@@ -68,7 +68,7 @@ public class CollectedCrowns : MonoBehaviour
             }else
             {
 				// Don't turn off crowns depending on collected, as this is always a new run!
-				Debug.Log("hardcore crown spawn called");
+				//Debug.Log("hardcore crown spawn called");
 			}
 				
 		}else // this happens on continue I guess?
@@ -84,11 +84,11 @@ public class CollectedCrowns : MonoBehaviour
 				UnpackDataFromBitString();
 				DeactivateCrowns();
 				//PackDataToBitString();
-				Debug.Log("reg continued");
+				//Debug.Log("reg continued");
 			}else
             {
 				// Don't turn off crowns depending on collected, as this is always a new run!
-				Debug.Log("hardcore continued");
+				//Debug.Log("hardcore continued");
 			}
 		}
 	}
