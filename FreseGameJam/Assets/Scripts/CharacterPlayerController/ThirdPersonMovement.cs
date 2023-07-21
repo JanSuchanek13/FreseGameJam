@@ -902,19 +902,19 @@ public class ThirdPersonMovement : MonoBehaviour
                 yield break;
             }*/
         }
-        
+
+        yield return new WaitForSeconds(0.5f);
+        if (pad != null && input.controlType == InputHandler.ControlType.Controller)
+        {
+            pad.SetMotorSpeeds(0, 0);
+        }
+
         speed = 2;
         inDash = false;
         breakableDash = false;
         dashWallBreakCheck.SetActive(false);
         // Turn on player input while dashing:
         GetComponent<InputHandler>().enabled = true;
-
-        /* // should be antiquated and only lead to accidental bugs
-        //stop rumble
-        yield return new WaitForSeconds(0.5f);
-        pad.SetMotorSpeeds(0, 0);
-        */
     }
 
     /*
