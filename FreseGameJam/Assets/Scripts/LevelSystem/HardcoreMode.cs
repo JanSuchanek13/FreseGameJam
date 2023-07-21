@@ -107,9 +107,7 @@ public class HardcoreMode : MonoBehaviour
     {
         if (_runStarted && !runFinished)
         {
-            int _crowns = PlayerPrefs.GetInt("crowns" + 0, 1);
-            //transform crowns counted into Hardcore crowns:
-            PlayerPrefs.SetInt("HardcoreCrowns" + 0, _crowns);
+            int _crowns = PlayerPrefs.GetInt("HardcoreCrowns" + 0, 0);
             _crowns_txt.text = _crowns.ToString();
 
             _timeElapsed += Time.deltaTime;
@@ -141,21 +139,14 @@ public class HardcoreMode : MonoBehaviour
         }
     }
 
-    
-    /*
-    public void Retry()
+    /// <summary>
+    /// This is called by the HealthScript when the player dies in the hardcore mode.
+    /// He will immediatly lose all collected crowns and cannot attempt to collect them in the same run again.
+    /// </summary>
+    public void ResetCurrentHardcoreCrowns()
     {
-        // reset level:
-        Debug.Log("this was called");
-        PlayerPrefs.SetInt("FastReset", 1);
-        SceneManager.LoadScene(0);
-
-
-
-        // restart level:
-        //PlayerPrefs.SetInt("HardcoreMode", 1);
-        //GetComponent<Level_Manager>().LoadLevel(1);
-    }*/
-
-
+        PlayerPrefs.SetInt("HardcoreCrowns" + 0, 0);
+        int _crowns = PlayerPrefs.GetInt("HardcoreCrowns" + 0, 0);
+        _crowns_txt.text = _crowns.ToString();
+    }
 }

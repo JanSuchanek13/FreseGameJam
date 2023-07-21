@@ -106,7 +106,7 @@ public class PlayWasPressed : MonoBehaviour
         }else if(ContinueOrNewRound == 0)
         {
             Invoke("StartNewRound", delayBeforeStarting);
-        }else
+        }else if(ContinueOrNewRound == 2)
         {
             Invoke("StartHardcoreRound", delayBeforeStarting);
         }
@@ -120,7 +120,6 @@ public class PlayWasPressed : MonoBehaviour
         leftBoat.GetComponent<MoveTowardPoint>().MoveIt();
         rightBoat.GetComponent<MoveTowardPoint>().MoveIt();
 
-        //Invoke("StartDelayedFade", delayBeforeStarting * .4f);
         StartDelayedFade();
     }
     void StartNewRound()

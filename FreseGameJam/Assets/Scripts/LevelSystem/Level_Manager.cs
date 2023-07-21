@@ -16,6 +16,7 @@ public class Level_Manager : MonoBehaviour
     public float[] timer = new float[3];
     
     public int[] crowns = new int[3];
+    // newly added to track hardcore crowns:
 
     public int[] deaths = new int[3];
 
@@ -32,6 +33,8 @@ public class Level_Manager : MonoBehaviour
     public TextMeshProUGUI[] HS_CrownCounters;
     public TextMeshProUGUI[] HS_TimeCounters;
     public TextMeshProUGUI[] HS_DeathCounters;
+
+    public bool hardcoreActive = false;
 
     void Start()
     {
@@ -63,49 +66,39 @@ public class Level_Manager : MonoBehaviour
         for (int i = 0; i < levelIsUnlocked; i++)   // shows only stats for unlocked levels
         {
             // what happens here?
-            crowns[i] = PlayerPrefs.GetInt("crowns"+ i, 1);
+            //crowns[i] = PlayerPrefs.GetInt("crowns"+ i, 1);
+            crowns[i] = PlayerPrefs.GetInt("crowns" + i, 0);
+            Debug.Log("crowns current: " + crowns[i]);
 
             if (i < numberOfLevels)     // fixes error cause only 1 Level is shown
             {
+                // show cur crowns in play window:
                 CrownCounters[i].text = crowns[i].ToString();
+
+                // show cur crowns in highscore window:
                 HS_CrownCounters[i].text = crowns[i].ToString();
             }
+            Debug.Log("crowns current text: " + CrownCounters[i].text);
+
         }
-
-
 
         //Timer
         for (int i = 0; i < levelIsUnlocked; i++)
         {
             timer[i] = PlayerPrefs.GetFloat("timer" + i, 0);
 
-            //FelixBeginn:
-            //experiment
-            /*public string FormatTime( float time )
-            {
-                int minutes = (int) time / 60 ;
-                int seconds = (int) time - 60 * minutes;
-                int milliseconds = (int) (1000 * (time - minutes * 60 - seconds));
-                return string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds );
-            }
-            void Start()
-            {
-                Debug.Log( FormatTime( 79.230 ) ) ; // Outputs 01:19:230
-            }*/
-            //Debug.Log(timer[i].ToString()); // this should show jans number
             int minutes = (int)timer[i] / 60;
             int seconds = (int)timer[i] - 60 * minutes;
             int milliseconds = (int)(1000 * (timer[i] - minutes * 60 - seconds));
+
             if (i < numberOfLevels)
             {
+                // show cur time in play window:
                 TimeCounters[i].text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
+                
+                // show cur time in highscore window:
                 HS_TimeCounters[i].text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds); // to display current stats in Highscore (HS) interface of start screen
             }
-            
-            //Debug.Log(timer[i].ToString()); // this should STILL show jans number
-            //FelixEnd:
-            
-            //TimeCounters[i].text = timer[i].ToString(); //Jans original
         }
 
         //Death
@@ -115,31 +108,73 @@ public class Level_Manager : MonoBehaviour
 
             if (i < numberOfLevels)
             {
+                // show cur deaths in play window:
                 DeathCounters[i].text = deaths[i].ToString();
+
+                // show cur deaths in highscore window:
                 HS_DeathCounters[i].text = deaths[i].ToString();
             }
         }
     }
 
-    public void LoadLevel(int levelIndex)   //not in use
+    // start a new run in a chosen level:
+    public void LoadLevel(int levelIndex)
     {
-        SceneManager.LoadScene(levelIndex);
+        //SceneManager.LoadScene(levelIndex);
 
         // reset the crowns in a specific level:
-        PlayerPrefs.SetInt("crowns" + (levelIndex - 2), 0);
+        // this has to be here for the levelIndex.
+        if (PlayerPrefs.GetInt("HardcoreMode", 0) != 0)
+        {
+            hardcoreActive = true;
 
+            //ResetHardcore();
+        }else
+        {
+            PlayerPrefs.SetInt("crowns" + (levelIndex - 2), 0);
+        }
+
+        /* // this is the same as the thing above
+        if (!hardcoreActive)
+        {
+            PlayerPrefs.SetInt("crowns" + (levelIndex - 2), 0);
+        }*/
+
+        SceneManager.LoadScene(levelIndex);
+    }
+
+    public void ResetHardcore()
+    {
+        //PlayerPrefs.SetInt("levelIsUnlocked", 1); // this enables continue button!
+        PlayerPrefs.SetInt("_boatPosition", 0);
+        PlayerPrefs.SetInt("HardcoreCrowns" + 0, 0);
+        PlayerPrefs.SetFloat("HardcoreTime" + 0, 0.0f);
+
+        // tell the boat that it hasn't reached the end of its travel yet (even if it has),
+        // so it can spawn and relocate to that position:
         PlayerPrefs.SetInt("_reachedEndOfTravel", 0);
+
+        // reset previously collected shapes:
+        foreach (int i in states)
+        {
+            PlayerPrefs.SetInt("HardcoreStates" + i, 0);
+        }
     }
 
     public void ResetLevel()
     {
+
         // what does this do?
         if(levelIsUnlocked == 2)
         {
             highscore.SafeLastStats();
         }
-        
-        PlayerPrefs.SetInt("levelIsUnlocked", 1);
+
+        PlayerPrefs.SetInt("levelIsUnlocked", 1); // this enables continue button!
+
+        // tell the boat that it hasn't reached the end of its travel yet (even if it has),
+        // so it can spawn and relocate to that position:
+        PlayerPrefs.SetInt("_reachedEndOfTravel", 0);
 
         PlayerPrefs.SetInt("_cutScene_0_HasAlreadyPlayed", 0);
         PlayerPrefs.SetInt("_cutScene_1_HasAlreadyPlayed", 0);
@@ -188,7 +223,8 @@ public class Level_Manager : MonoBehaviour
             PlayerPrefs.SetInt("State" + i, 0);
         }
 
-        PlayerPrefs.SetFloat("HardcoreTime", 0.0f);
+        
+        //PlayerPrefs.SetFloat("HardcoreTime", 0.0f);
 
         Start();
     }
@@ -200,44 +236,56 @@ public class Level_Manager : MonoBehaviour
 
     public void FastRestartHardcore()
     {
-        PlayerPrefs.SetInt("levelIsUnlocked", 1);
+        //PlayerPrefs.SetInt("levelIsUnlocked", 1); // this enables continue button!
         PlayerPrefs.SetInt("_boatPosition", 0);
-
-        foreach (int i in crowns)
-        {
-            PlayerPrefs.SetInt("crowns" + i, 0);
-
-            //reset for collected Crowns
-            char[] bits = PlayerPrefs.GetString("bitString" + (i)).ToCharArray();
-            for (int j = 0; j < bits.Length; j++)
-            {
-                bits[j] = '1';
-            }
-
-            PlayerPrefs.SetString("bitString" + (i), bits.ArrayToString());
-        }
-
-        foreach (float i in timer)
-        {
-            PlayerPrefs.SetFloat("timer" + i, 0);
-        }
-
-        foreach (int i in deaths)
-        {
-            PlayerPrefs.SetInt("deaths" + i, 0);
-        }
-
-        foreach (int i in checkpoints) // redundant here?
-        {
-            PlayerPrefs.SetInt("lastCheckpoint" + i, 0);
-        }
+        PlayerPrefs.SetInt("HardcoreCrowns" + 0, 0);
+        PlayerPrefs.SetFloat("HardcoreTime" + 0, 0.0f);
 
         foreach (int i in states)
         {
-            PlayerPrefs.SetInt("State" + i, 0);
+            PlayerPrefs.SetInt("HardcoreStates" + i, 0);
         }
+    }
 
-        PlayerPrefs.SetFloat("HardcoreTime", 0.0f);
+    /// <summary>
+    /// This button-function allows to reset all stats and current progression in the main menu for testing (non-recoverable).
+    /// Use with care and caution!
+    /// </summary>
+    public void ResetAllStats()
+    {
+        // reset current progression:
+        ResetHardcore();
+        ResetLevel();
+
+        // disable the continue-button (normally this happens when finishing the game!)
+        PlayerPrefs.SetInt("levelIsUnlocked", 2);
+
+        // reset last regular runs progression:
+        PlayerPrefs.SetFloat("Lasttimer" + (0), 0.0f);
+        PlayerPrefs.SetInt("Lastcrowns" + (0), 0);
+        PlayerPrefs.SetInt("Lastdeaths" + (0), 0);
+    
+        // reset all highscores:
+        PlayerPrefs.SetFloat("HTtimer" + 0, 0.0f);
+        PlayerPrefs.SetInt("HTcrowns" + 0, 0);
+        PlayerPrefs.SetInt("HTdeaths" + 0, 0);
+
+        PlayerPrefs.SetFloat("HCtimer" + 0, 0.0f);
+        PlayerPrefs.SetInt("HCcrowns" + 0, 0);
+        PlayerPrefs.SetInt("HCdeaths" + 0, 0);
+
+        PlayerPrefs.SetFloat("HighscoreHardcoreCrowns_Time" + 0, 0.0f);
+        PlayerPrefs.SetInt("HighscoreHardcoreCrowns_Crowns" + 0, 0);
+        PlayerPrefs.SetInt("HighscoreHardcoreCrowns_Deaths" + 0, 0);
+            
+        PlayerPrefs.SetFloat("HighscoreHardcoreTime_Time" + 0, 0.0f);
+        PlayerPrefs.SetInt("HighscoreHardcoreTime_Crowns" + 0, 0);
+        PlayerPrefs.SetInt("HighscoreHardcoreTime_Deaths" + 0, 0);
+
+        FindObjectOfType<Highscore>().ResetAllHighscores();
+
+        Start();
+        Debug.Log("All highscores and progression have been reset!");
     }
 }
 

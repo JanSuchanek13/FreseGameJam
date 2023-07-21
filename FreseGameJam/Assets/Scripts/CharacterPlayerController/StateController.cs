@@ -54,7 +54,7 @@ public class StateController : MonoBehaviour
     [SerializeField] AudioSource Friend_Sound; // currently not used
     [SerializeField] AudioSource transformationSound;
 
-    CollectedCrowns CollectedCrowns;
+    //CollectedCrowns CollectedCrowns;
 
     private void Awake()
     {
@@ -85,11 +85,21 @@ public class StateController : MonoBehaviour
         
         if (other.gameObject.CompareTag("Crane"))
         {
-            //Debug.Log("hit:Crane");
-            availableCrane = true;
-            PickUpNewForm_Sound.Play();
-            Destroy(other.gameObject, .3f);
-            PlayerPrefs.SetInt("State" + 0, 1);
+            if(PlayerPrefs.GetInt("HardcoreMode", 0) == 0)
+            {
+                //Debug.Log("hit:Crane");
+                availableCrane = true;
+                PickUpNewForm_Sound.Play();
+                Destroy(other.gameObject, .3f);
+                PlayerPrefs.SetInt("State" + 0, 1);
+            }else
+            {
+                Debug.Log("HARDCORE-Crane");
+                availableCrane = true;
+                PickUpNewForm_Sound.Play();
+                Destroy(other.gameObject, .3f);
+                PlayerPrefs.SetInt("HardcoreStates" + 0, 1);
+            }
         }
         if (other.gameObject.CompareTag("Frog"))
         {
@@ -102,11 +112,21 @@ public class StateController : MonoBehaviour
 
         if (other.gameObject.CompareTag("Capricorn"))
         {
-            //Debug.Log("hit:Capricorn");
-            availableCapricorn = true;
-            PickUpNewForm_Sound.Play();
-            Destroy(other.gameObject, .3f);
-            PlayerPrefs.SetInt("State" + 0, 2);
+            if (PlayerPrefs.GetInt("HardcoreMode", 0) == 0)
+            {
+                //Debug.Log("hit:Capricorn");
+                availableCapricorn = true;
+                PickUpNewForm_Sound.Play();
+                Destroy(other.gameObject, .3f);
+                PlayerPrefs.SetInt("State" + 0, 2);
+            }else
+            {
+                //Debug.Log("hit:Capricorn");
+                availableCapricorn = true;
+                PickUpNewForm_Sound.Play();
+                Destroy(other.gameObject, .3f);
+                PlayerPrefs.SetInt("HardcoreStates" + 0, 2);
+            }
         }
         if (other.gameObject.CompareTag("Lama"))
         {
@@ -124,8 +144,10 @@ public class StateController : MonoBehaviour
             Destroy(other.gameObject, .3f);
             PlayerPrefs.SetInt("State" + 0, 4);
         }
+        /* // now in CrownCounter!
         if (other.gameObject.CompareTag("Crown"))
         {
+
             Debug.Log("hit:Crown");
 
             // for Level Stats
@@ -142,7 +164,8 @@ public class StateController : MonoBehaviour
 
             // for CollectedCrowns
             CollectedCrowns.MakeBoolArray(false);
-        }
+        }*/
+
         if (other.gameObject.CompareTag("Friend"))
         {
             Debug.Log("hit:Friend");
@@ -157,7 +180,7 @@ public class StateController : MonoBehaviour
     {
         currentLevel = SceneManager.GetActiveScene().buildIndex;
         human = true;
-        CollectedCrowns = GameObject.Find("GameManager").GetComponent<CollectedCrowns>();
+        //CollectedCrowns = GameObject.Find("GameManager").GetComponent<CollectedCrowns>();
 
         //PlayerPrefs.SetInt("State" + currentLevel, 0);
         // activate the available States

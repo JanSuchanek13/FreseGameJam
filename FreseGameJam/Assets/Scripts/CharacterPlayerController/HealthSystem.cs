@@ -10,6 +10,7 @@ public class HealthSystem : MonoBehaviour
 {
     private IEnumerator coroutine;
     public Vector3 respawnPoint; // felix made this public for portable respawn position
+    Vector3 _hardcoreRespawn; // kinda redundant...
     public bool inCoroutine;
 
     [SerializeField] GameObject Cam;
@@ -44,6 +45,9 @@ public class HealthSystem : MonoBehaviour
 
     private void Start()
     {
+        // save the spawnposition to circumvent the tori-gates
+        _hardcoreRespawn = transform.position;
+
         CamScript = GetComponentInChildren<CloseQuarterCamera>();
         Character = GetComponentInChildren<CharacterController>();
         gravity = GetComponent<ThirdPersonMovement>().gravity;
@@ -52,7 +56,7 @@ public class HealthSystem : MonoBehaviour
         currentLevel = SceneManager.GetActiveScene().buildIndex;
 
         // save respawn for HARDCORE!:
-        respawnPoint = transform.position;
+        //respawnPoint = transform.position;
 
         //Debug.Log(CheckpointsGO.Count);
         for (int i = 0; i < CheckpointsGO.Count; i++)
@@ -64,7 +68,7 @@ public class HealthSystem : MonoBehaviour
         
 
         
-        if (Checkpoints[lastCheckpoint[0]] != new Vector3(0, 0, 0)) // this was "currentLevel - 2"?
+        if (Checkpoints[lastCheckpoint[0]] != new Vector3(0, 0, 0) && PlayerPrefs.GetInt("HardcoreMode", 0) == 0) // this was "currentLevel - 2"?
         {
             //Debug.Log("I spawned");
             gameObject.transform.position = new Vector3(0, -3, 0) + Checkpoints[PlayerPrefs.GetInt("lastCheckpoint" + 0)];// (currentLevel - 2)
@@ -107,16 +111,19 @@ public class HealthSystem : MonoBehaviour
 
     IEnumerator DieAndRespawn()
     {
-        /*if (!inCoroutine)
-        {*/
+        if (PlayerPrefs.GetInt("HardcoreMode", 0) == 0)
+        {
+
+            /*if (!inCoroutine)
+            {*/
             inCoroutine = true;
-        
+
             // hauler your scream:
             StartCoroutine(DeathScream());
 
-        // turn off artificial shadow:
-        Shadow _shadowGO = FindObjectOfType<Shadow>();
-        _shadowGO.DisableShadow();
+            // turn off artificial shadow:
+            Shadow _shadowGO = FindObjectOfType<Shadow>();
+            _shadowGO.DisableShadow();
 
             //count deaths and save them
             deaths[0] = PlayerPrefs.GetInt("deaths" + 0); // (currentLevel - 2) & (currentLevel - 2) in end
@@ -140,32 +147,78 @@ public class HealthSystem : MonoBehaviour
             _craneCam.SetActive(false);*/
             GetComponent<ThirdPersonMovement>().gravity = 0;
             //yield return new WaitForSeconds(1f);
-            
+
             GetComponent<ThirdPersonMovement>().enabled = false; // no movement hopefully stops me from being able to survive death zones
             GetComponent<CharacterController>().enabled = false; // no colission = sink into even shallow deathzones
             GetComponent<Rigidbody>().isKinematic = false;
 
-        yield return new WaitForSeconds(1f);
-        GetComponent<Rigidbody>().isKinematic = true;
-        gameObject.transform.position = new Vector3(0, -3, 0) + respawnPoint;
+            yield return new WaitForSeconds(1f);
+            GetComponent<Rigidbody>().isKinematic = true;
+            gameObject.transform.position = new Vector3(0, -3, 0) + respawnPoint;
 
-            
+
             GetComponent<ThirdPersonMovement>().enabled = true; // no movement hopefully stops me from being able to survive death zones
             GetComponent<CharacterController>().enabled = true;
 
-        EnableCameras();
-        ResetCloseUpCam(); // this resets closeup-cam to the respawned pos of player
+            EnableCameras();
+            ResetCloseUpCam(); // this resets closeup-cam to the respawned pos of player
 
             GetComponent<ThirdPersonMovement>().gravity = gravity;
             inCoroutine = false;
 
-        // turn on artificial shadow:
-        _shadowGO.EnableShadow();
-        /*}
-        else
+            // turn on artificial shadow:
+            _shadowGO.EnableShadow();
+            /*}
+            else
+            {
+                return;
+            }*/
+        } else // hardcore!
         {
-            return;
-        }*/
+            inCoroutine = true;
+
+            StartCoroutine(DeathScream());
+
+            // turn off artificial shadow:
+            Shadow _shadowGO = FindObjectOfType<Shadow>();
+            _shadowGO.DisableShadow();
+
+            //count deaths and save them
+            deaths[0] = PlayerPrefs.GetInt("HardcoreDeaths" + 0, 0); // (currentLevel - 2) & (currentLevel - 2) in end
+            PlayerPrefs.SetInt("HardcoreDeaths" + 0, deaths[0] + 1);// (currentLevel - 2) & (currentLevel - 2) in end
+
+            //stop Riverboat
+            if (RiverBoat_Friend.activeInHierarchy)
+            {
+                RiverBoat_Friend.GetComponent<SpeedUpNavMeshAgent>().StopForDead();
+            }
+
+            DisableCameras();
+
+            GetComponent<ThirdPersonMovement>().gravity = 0;
+            GetComponent<ThirdPersonMovement>().enabled = false; // no movement hopefully stops me from being able to survive death zones
+            GetComponent<CharacterController>().enabled = false; // no colission = sink into even shallow deathzones
+            GetComponent<Rigidbody>().isKinematic = false;
+
+            yield return new WaitForSeconds(1f);
+
+            GetComponent<Rigidbody>().isKinematic = true;
+            gameObject.transform.position = new Vector3(0, -3, 0) + _hardcoreRespawn;
+            GetComponent<ThirdPersonMovement>().enabled = true; // no movement hopefully stops me from being able to survive death zones
+            GetComponent<CharacterController>().enabled = true;
+
+            EnableCameras();
+            ResetCloseUpCam(); // this resets closeup-cam to the respawned pos of player
+
+            GetComponent<ThirdPersonMovement>().gravity = gravity;
+            inCoroutine = false;
+
+            // turn on artificial shadow:
+            _shadowGO.EnableShadow();
+
+            // throw away progression on crowns:
+            FindObjectOfType<HardcoreMode>().ResetCurrentHardcoreCrowns();
+        }
     }
 
     /// <summary>

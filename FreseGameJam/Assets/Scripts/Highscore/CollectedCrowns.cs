@@ -26,8 +26,6 @@ public class CollectedCrowns : MonoBehaviour
 		currentLevel = SceneManager.GetActiveScene().buildIndex;
 		GetAllCrowns();
 		MakeBoolArray(true);
-		
-
 	}
 
 	private void GetAllCrowns()
@@ -37,7 +35,6 @@ public class CollectedCrowns : MonoBehaviour
         {
 			Crowns.Add(child.gameObject);
 		}
-		
     }
 
 	/// <summary>
@@ -54,27 +51,46 @@ public class CollectedCrowns : MonoBehaviour
 				boolValuesArr.Add(Crowns[i].activeInHierarchy);
 			}
 
-			Debug.Log("second");
-			DeactivateCrowns();
-			//bitString = PlayerPrefs.GetString("bitString" + (currentLevel - 2));
-			//Debug.Log("first");
-			//UnpackDataFromBitString();
-			PackDataToBitString();
-		}
-        else
+			if (PlayerPrefs.GetInt("HardcoreMode", 0) == 0)
+            {
+				/*boolValuesArr.Clear();
+				for (int i = 0; i < Crowns.Count; i++)
+				{
+					boolValuesArr.Add(Crowns[i].activeInHierarchy);
+				}*/
+
+				Debug.Log("regular crown spawn called");
+				DeactivateCrowns();
+				//bitString = PlayerPrefs.GetString("bitString" + (currentLevel - 2));
+				//Debug.Log("first");
+				//UnpackDataFromBitString();
+				PackDataToBitString();
+            }else
+            {
+				// Don't turn off crowns depending on collected, as this is always a new run!
+				Debug.Log("hardcore crown spawn called");
+			}
+				
+		}else // this happens on continue I guess?
         {
 			for (int i = 0; i < Crowns.Count; i++)
 			{
 				boolValuesArr.Add(Crowns[i].activeInHierarchy);
 			}
 
-			bitString = PlayerPrefs.GetString("bitString" + 0);
-			UnpackDataFromBitString();
-			DeactivateCrowns();
-			//PackDataToBitString();
+			if (PlayerPrefs.GetInt("HardcoreMode", 0) == 0)
+            {
+				bitString = PlayerPrefs.GetString("bitString" + 0);
+				UnpackDataFromBitString();
+				DeactivateCrowns();
+				//PackDataToBitString();
+				Debug.Log("reg continued");
+			}else
+            {
+				// Don't turn off crowns depending on collected, as this is always a new run!
+				Debug.Log("hardcore continued");
+			}
 		}
-        
-
 	}
 
 	/// <summary>
@@ -132,6 +148,5 @@ public class CollectedCrowns : MonoBehaviour
 			boolValuesArr[i] = bits[i] == '1' ? true : false;
 			//Debug.Log("unpacked data: " + boolValuesArr[i]);
 		}
-		
 	}
 }
