@@ -28,7 +28,7 @@ public class NarrowSpaceDetector : MonoBehaviour
     IEnumerator CheckForNarrowSpace(float _lastTimeInNarrowSpace)
     {
         yield return new WaitForSeconds(1f);
-        Debug.Log(_lastTimeInNarrowSpace + "    " + timeInNarrowSpace);
+        //Debug.Log(_lastTimeInNarrowSpace + "    " + timeInNarrowSpace);
         if (_lastTimeInNarrowSpace < timeInNarrowSpace)
         {
             if (!isInNarrowSpace)
