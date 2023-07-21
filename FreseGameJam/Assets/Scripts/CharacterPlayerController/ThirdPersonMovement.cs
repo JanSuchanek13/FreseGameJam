@@ -703,7 +703,7 @@ public class ThirdPersonMovement : MonoBehaviour
             }
 
             //Move 
-            speed = 4f;
+            speed = 4f; // this will cause an issue, dont use hardcoded speeds
 
             //Jump
             if (input.jumpValue != 0 && CheckForGroundContact())
@@ -891,28 +891,18 @@ public class ThirdPersonMovement : MonoBehaviour
                     }
                 }
             }
-
-
-            /* // unsure why this is currently not working:
-            // Stop when you hit anything:
-            if (Physics.CheckSphere(dashCheck.position, 0.15f, dashMask))
-            {
-                //dash_Sound.Stop();
-                dashCrash_Sound.Play();
-                yield break;
-            }*/
         }
 
-        yield return new WaitForSeconds(0.5f);
+        speed = 2; // this should be set to an adjustable value, not hardcoded (if we change goat speed this will cause issue)
+        inDash = false;
+        breakableDash = false;
+        dashWallBreakCheck.SetActive(false);
+        // no waiting. not needed, please dont add it back
         if (pad != null && input.controlType == InputHandler.ControlType.Controller)
         {
             pad.SetMotorSpeeds(0, 0);
         }
 
-        speed = 2;
-        inDash = false;
-        breakableDash = false;
-        dashWallBreakCheck.SetActive(false);
         // Turn on player input while dashing:
         GetComponent<InputHandler>().enabled = true;
     }
