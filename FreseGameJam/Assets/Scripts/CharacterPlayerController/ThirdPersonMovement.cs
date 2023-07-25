@@ -18,6 +18,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public GameObject thirdPersonCam;
     public GameObject craneCam;
     private Gamepad pad;
+    private bool useVibration;
 
     public float speed = 6f;
     public float humanSpeed = 6f;
@@ -242,17 +243,21 @@ public class ThirdPersonMovement : MonoBehaviour
     private void Awake()
     {
         playerInput = new PlayerInput();
-        SetGliding();
+        SetSettings();
 
         // when is this otherwise declared ? only in dash?
         pad = Gamepad.current;
     }
 
-    public void SetGliding()
+    public void SetSettings()
     {
-        if (PlayerPrefs.GetInt("glidingSettings") > 0)
+        if (PlayerPrefs.HasKey("glidingSettings"))
         {
-            holdForGliding = true;
+            holdForGliding = PlayerPrefs.GetInt("glidingSettings") == 1 ? true : false;
+        }
+        if (PlayerPrefs.HasKey("vibrationSettings"))
+        {
+            useVibration = PlayerPrefs.GetInt("vibrationSettings") == 1 ? true : false;
         }
     }
 
@@ -558,7 +563,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if (GetComponent<StateController>().crane)
         {
             // Felix put this here to see if it start the cranse vibration at the right place!
-            if (pad != null && input.controlType == InputHandler.ControlType.Controller)
+            if (pad != null && input.controlType == InputHandler.ControlType.Controller && useVibration)
             {
                 pad.SetMotorSpeeds(0.2f, 0.2f);
             }
@@ -826,7 +831,7 @@ public class ThirdPersonMovement : MonoBehaviour
         GetComponent<InputHandler>().enabled = false;
         //rumble
         pad = Gamepad.current;
-        if (pad != null && input.controlType == InputHandler.ControlType.Controller)
+        if (pad != null && input.controlType == InputHandler.ControlType.Controller && useVibration)
         {
             pad.SetMotorSpeeds(0f, 0.3f);
         }
@@ -880,7 +885,7 @@ public class ThirdPersonMovement : MonoBehaviour
                     rig.AddExplosionForce(1.0f, transform.position, 1, 1f, ForceMode.Impulse);
                     dashCrash_Sound.Play();
                     
-                    if (pad != null && input.controlType == InputHandler.ControlType.Controller)
+                    if (pad != null && input.controlType == InputHandler.ControlType.Controller && useVibration)
                     {
                         pad.SetMotorSpeeds(0.7f, 0.7f);
                     }

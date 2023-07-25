@@ -19,6 +19,7 @@ public class SettingsMenu : MonoBehaviour
     public Slider MusicSlider;
     public TMPro.TMP_Dropdown controlsDropdown;
     public Toggle glidingToggle;
+    public Toggle vibrationToggle;
     public AudioMixer audioMixer;
     public AudioMixer musicMixer;
     public Toggle lightningToggle;
@@ -60,10 +61,11 @@ public class SettingsMenu : MonoBehaviour
         }
         if (PlayerPrefs.HasKey("glidingSettings") && glidingToggle!=null)
         {
-            if (PlayerPrefs.GetInt("glidingSettings") > 0)
-            {
-                glidingToggle.isOn = true;
-            }
+            glidingToggle.isOn = PlayerPrefs.GetInt("glidingSettings") == 1 ? true : false;
+        }
+        if (PlayerPrefs.HasKey("vibrationSettings") && vibrationToggle != null)
+        {
+            vibrationToggle.isOn = PlayerPrefs.GetInt("vibrationSettings") == 1 ? true : false;
         }
 
         initialized = true;
@@ -77,6 +79,7 @@ public class SettingsMenu : MonoBehaviour
         MusicSlider.value = MusicSlider.minValue / 2;                           //Music half of Min
         controlsDropdown.value = 0;                                             //Controls to Keyboard
         glidingToggle.isOn = true;                                              //Hold for gliding
+        vibrationToggle.isOn = true;                                            //Use Vibration
         lightningToggle.isOn = true;                                            //Enable Lightning Flash
     }
     
@@ -144,11 +147,19 @@ public class SettingsMenu : MonoBehaviour
     {
         if (!initialized) return;
         if (!Application.isPlaying) return;
-
+        
         int holdGlidingInt = holdGliding ? 1 : 0;
         PlayerPrefs.SetInt("glidingSettings", holdGlidingInt);
     }
 
+    public void SetVibration(bool useVibration)
+    {
+        if (!initialized) return;
+        if (!Application.isPlaying) return;
+        
+        int useVibrationInt = useVibration ? 1 : 0;
+        PlayerPrefs.SetInt("vibrationSettings", useVibrationInt);
+    }
 
     public void SetLightning(bool enableLightning)
     {
