@@ -5238,6 +5238,7 @@ GameObject:
   - component: {fileID: 1749891120773515700}
   - component: {fileID: 921337818693101444}
   - component: {fileID: 2801747631105741083}
+  - component: {fileID: 8147188511698680984}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -5632,6 +5633,19 @@ MonoBehaviour:
   _timeCounterTMPro: {fileID: 0}
   _deathCounterTMPro: {fileID: 0}
   _pickUpCrownSound: {fileID: 1666000721838983581}
+--- !u!114 &8147188511698680984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 240851668594198196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a875a32ed2986cd47b2981c3a07efccc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VulcanoPP: {fileID: 0}
 --- !u!1 &259389069916638749
 GameObject:
   m_ObjectHideFlags: 0

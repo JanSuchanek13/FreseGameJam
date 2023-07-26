@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NarrowSpaceDetector : MonoBehaviour
 {
-    [Header("RAYCAST")]
+    [Header("NARROWSPACE")]
     private bool isInNarrowSpace;
     private float timeInNarrowSpace = 0;
     private float lastTimeInNarrowSpace = 0;

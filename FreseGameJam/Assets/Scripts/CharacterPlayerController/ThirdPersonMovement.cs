@@ -478,12 +478,24 @@ public class ThirdPersonMovement : MonoBehaviour
         }
         
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance *1.5f, groundMask, QueryTriggerInteraction.Ignore);
+        /*
         if (Physics.CheckSphere(groundCheck.position, groundDistance * 3, groundMask, QueryTriggerInteraction.Ignore) && velocity.y < 0.5 && !onBridge) //is falling
         {
             controller.stepOffset = 0.5f;
             //falling = false; //animation
             jumping = false; //animation
                                 //controller.slopeLimit = 45.0f;
+            velocity.y = -4f;
+        }
+        */
+        float _groundCheckRadius = GetComponent<CharacterController>().radius;
+        RaycastHit groundHit;
+        if (Physics.SphereCast(groundCheck.position, _groundCheckRadius * 0.9f, -groundCheck.up, out groundHit, 1f, groundMask) && velocity.y < 0.5 && !onBridge)
+        {
+            controller.stepOffset = 0.5f;
+            //falling = false; //animation
+            jumping = false; //animation
+                             //controller.slopeLimit = 45.0f;
             velocity.y = -4f;
         }
         else
