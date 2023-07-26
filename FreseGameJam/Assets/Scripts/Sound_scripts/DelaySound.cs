@@ -76,7 +76,7 @@ public class DelaySound : MonoBehaviour
 
         }
 
-        if (_targetAudioSource != null)
+        if (_targetAudioSource != null && _targetAudioSource.isActiveAndEnabled)
         {
             _targetAudioSource.Play();
         }

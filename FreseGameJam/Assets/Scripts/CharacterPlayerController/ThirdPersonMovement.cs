@@ -882,7 +882,10 @@ public class ThirdPersonMovement : MonoBehaviour
             //float targetAngle = transform.eulerAngles.y; // dash forward from AVATARS looking direction:
             
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            controller.Move(moveDir.normalized * (speed) * Time.deltaTime);
+            if (controller.enabled)
+            {
+                controller.Move(moveDir.normalized * (speed) * Time.deltaTime);
+            }
 
             // wait a splitsecond so this loop actually covers a certain distance:
             yield return new WaitForSeconds(.001f);

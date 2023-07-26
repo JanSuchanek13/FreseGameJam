@@ -141,7 +141,7 @@ public class BreakingObj : MonoBehaviour
                     }
                 }
             }
-        }else
+        }else if(GetComponent<Rigidbody>())
         {
             GetComponent<Rigidbody>().isKinematic = false;
         }
@@ -170,9 +170,12 @@ public class BreakingObj : MonoBehaviour
                     i++;
                 }
             }
-        }else
+        }else 
         {
-            GetComponent<Rigidbody>().isKinematic = true;
+            if (GetComponent<Rigidbody>())
+            {
+                GetComponent<Rigidbody>().isKinematic = true;
+            }
             transform.position = _resetPos;
             transform.rotation = Quaternion.Euler(_resetRot);
         }

@@ -50,7 +50,7 @@ public class InteractWithNoFlyZone : MonoBehaviour
         
         _randomTrack.Play();
 
-        if (_useNoFlyAnimation)
+        if (_useNoFlyAnimation && animator.transform.gameObject.activeInHierarchy)
         {
             //play animation for _lengthOfSound seconds
             animator.SetBool("isShook", true);
@@ -67,7 +67,7 @@ public class InteractWithNoFlyZone : MonoBehaviour
         // Reset:
         yield return new WaitForSeconds(_lengthOfSound);
 
-        if (_useNoFlyAnimation)
+        if (_useNoFlyAnimation && animator.transform.gameObject.activeInHierarchy)
         {
             animator.SetBool("isShook", false);
         }
