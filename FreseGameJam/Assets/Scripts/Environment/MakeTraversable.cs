@@ -5,6 +5,7 @@ using UnityEngine;
 public class MakeTraversable : MonoBehaviour
 {
     public bool hasSettled = false;
+    public int typeOfObject = 0;
 
     private void OnEnable()
     {

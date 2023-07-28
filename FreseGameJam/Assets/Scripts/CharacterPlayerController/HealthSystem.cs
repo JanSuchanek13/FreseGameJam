@@ -203,7 +203,7 @@ public class HealthSystem : MonoBehaviour
             yield return new WaitForSeconds(1f);
 
             GetComponent<Rigidbody>().isKinematic = true;
-            gameObject.transform.position = new Vector3(0, -3, 0) + _hardcoreRespawn;
+            gameObject.transform.position = new Vector3(0, 2, 0) + _hardcoreRespawn;
             GetComponent<ThirdPersonMovement>().enabled = true; // no movement hopefully stops me from being able to survive death zones
             GetComponent<CharacterController>().enabled = true;
 
@@ -329,6 +329,9 @@ public class HealthSystem : MonoBehaviour
     }
     void ResetCloseUpCam()
     {
-        FindObjectOfType<SmoothCloseUpCameraAdjuster>().ResetPosition(); // in case you died far from the last respawn in closeUpCam!
+        if (FindObjectOfType<SmoothCloseUpCameraAdjuster>())
+        {
+            FindObjectOfType<SmoothCloseUpCameraAdjuster>().ResetPosition(); // in case you died far from the last respawn in closeUpCam!
+        }
     }
 }

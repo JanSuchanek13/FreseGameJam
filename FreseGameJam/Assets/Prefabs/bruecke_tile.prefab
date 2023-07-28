@@ -132,8 +132,12 @@ MonoBehaviour:
   breakingChildren: 0
   timeTillBreak: 0.5
   reset: 1
+  origamiFriend: {fileID: 0}
+  _isBox: 0
   _turnOffCollidersAfterBreak: 0
   _timeTillReset: 5
+  _typeOfObject: 2
+  _arrayOfCollapsingSounds: []
 --- !u!65 &350408307879008695
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -159,6 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f65950fc77b35c6439cf73ff0c432e7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrayOfBreakingSounds: []
   Wood: {fileID: 0}
+  _delayForOtherParicle: 0
+  _otherParticle: {fileID: 0}
   _canBreak: 1

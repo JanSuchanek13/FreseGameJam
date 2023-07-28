@@ -148,6 +148,7 @@ public class Level_Manager : MonoBehaviour
         //PlayerPrefs.SetInt("levelIsUnlocked", 1); // this enables continue button!
         PlayerPrefs.SetInt("_boatPosition", 0);
         PlayerPrefs.SetInt("HardcoreCrowns" + 0, 0);
+        PlayerPrefs.SetInt("HardcoreDeaths" + 0, 0);
         PlayerPrefs.SetFloat("HardcoreTime" + 0, 0.0f);
 
         // tell the boat that it hasn't reached the end of its travel yet (even if it has),

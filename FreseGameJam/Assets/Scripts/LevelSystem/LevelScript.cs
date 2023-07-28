@@ -230,7 +230,21 @@ public class LevelScript : MonoBehaviour
                 int _milliseconds = (int)(1000 * (_totalLevelTime - _minutes * 60 - _seconds));
 
                 _statDisplay_Time.text = string.Format("{0:00}:{1:00}:{2:000}", _minutes, _seconds, _milliseconds);
-            }else if(_usingHardcoreMode)
+
+                // display current levels total deaths:
+                if (_statDisplay_Deaths != null)
+                {
+                    _statDisplay_Deaths.text = PlayerPrefs.GetInt("deaths" + level, 1).ToString();
+                }
+
+                // display current levels total crowns:
+                if (_statDisplay_Crowns != null)
+                {
+                    int crowns = PlayerPrefs.GetInt("crowns" + level, 1);
+                    _statDisplay_Crowns.text = crowns.ToString();
+                }
+            }
+            else if(_usingHardcoreMode)
             {
                 float _totalLevelTime = PlayerPrefs.GetFloat("HardcoreTime" + level, 0);
                 int _minutes = (int)_totalLevelTime / 60;
@@ -238,19 +252,19 @@ public class LevelScript : MonoBehaviour
                 int _milliseconds = (int)(1000 * (_totalLevelTime - _minutes * 60 - _seconds));
 
                 _statDisplay_Time.text = string.Format("{0:00}:{1:00}:{2:000}", _minutes, _seconds, _milliseconds);
-            }
 
-            // display current levels total deaths:
-            if (_statDisplay_Deaths != null)
-            {
-                _statDisplay_Deaths.text = PlayerPrefs.GetInt("deaths" + level, 1).ToString();
-            }
+                // display current levels total deaths:
+                if (_statDisplay_Deaths != null)
+                {
+                    _statDisplay_Deaths.text = PlayerPrefs.GetInt("HardcoreDeaths" + level, 1).ToString(); // +level could be an issue here
+                }
 
-            // display current levels total crowns:
-            if (_statDisplay_Crowns != null)
-            {
-                int crowns = PlayerPrefs.GetInt("crowns" + level, 1);
-                _statDisplay_Crowns.text = crowns.ToString();
+                // display current levels total crowns:
+                if (_statDisplay_Crowns != null)
+                {
+                    int crowns = PlayerPrefs.GetInt("HardcoreCrowns" + level, 1); // +level could be an issue here
+                    _statDisplay_Crowns.text = crowns.ToString();
+                }
             }
         }
     }

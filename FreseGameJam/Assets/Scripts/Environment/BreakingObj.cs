@@ -19,6 +19,12 @@ public class BreakingObj : MonoBehaviour
     [SerializeField] bool _isBox = false;
     [SerializeField] bool _turnOffCollidersAfterBreak = false; // making this optional allows to have breaking objects which become part of the traversable environment
     [SerializeField] float _timeTillReset = 5.0f;
+    [Space(10)]
+
+    [Tooltip("This is used to tell the transcluscency-script which type of material to apply. 0 is the default for no changing materials." +
+        " 1 is for breaking boxes, 2 is for breaking wood, 3+ is currently unassigned.")]
+    [SerializeField] int _typeOfObject = 0;
+    [Space(10)]
 
     [Tooltip("Add AudioSources here to be played upon collapsing the structure. Do not put anything in otherwise!")]
     [SerializeField] AudioSource[] _arrayOfCollapsingSounds;
@@ -51,6 +57,8 @@ public class BreakingObj : MonoBehaviour
         }
     }
 
+    bool _calledBreak = false;
+
     void OnTriggerStay(Collider collision) // was on triggerenter
     {
         if (collision.gameObject.tag == "Player")
@@ -62,11 +70,21 @@ public class BreakingObj : MonoBehaviour
                 
                 if (_player.GetComponent<StateController>().capricorn && _player.GetComponent<ThirdPersonMovement>().breakableDash)
                 {
-                    Invoke("Break", timeTillBreak);
+                    if (!_calledBreak)
+                    {
+                        Invoke("Break", timeTillBreak);
+                        _calledBreak = true;
+                    }
                 }
             }else
             {
-                Invoke("Break", timeTillBreak);
+                if (!_calledBreak)
+                {
+                    Invoke("Break", timeTillBreak);
+                    _calledBreak = true;
+                }
+                //Invoke("Break", timeTillBreak);
+
                 if (levelEnd)
                 {
                     Invoke("SetForcedFalling", 0.5f);
@@ -101,7 +119,7 @@ public class BreakingObj : MonoBehaviour
         {
             // change the layer of destroyed boxes, so the camera no longer tries to snap in front of these empty husks:
             gameObject.layer = LayerMask.NameToLayer("NonInteractiveSurfaceThatCanTurnTransluscent");
-            Debug.Log("this was called");
+            //Debug.Log("this was called");
         }
 
         if (_arrayOfCollapsingSounds.Length != 0)
@@ -124,6 +142,7 @@ public class BreakingObj : MonoBehaviour
                     if (_turnOffCollidersAfterBreak)
                     {
                         child.gameObject.AddComponent<MakeTraversable>(); // this will take care of making fragments traversable
+                        child.gameObject.GetComponent<MakeTraversable>().typeOfObject = _typeOfObject; // this is used to allovate the correct transluscent material
                     }
                 }
 
@@ -137,6 +156,7 @@ public class BreakingObj : MonoBehaviour
                         if (_turnOffCollidersAfterBreak)
                         {
                             _grandChild.gameObject.AddComponent<MakeTraversable>(); // this will take care of making fragments traversable
+                            _grandChild.gameObject.GetComponent<MakeTraversable>().typeOfObject = _typeOfObject; // this is used to allovate the correct transluscent material
                         }
                     }
                 }

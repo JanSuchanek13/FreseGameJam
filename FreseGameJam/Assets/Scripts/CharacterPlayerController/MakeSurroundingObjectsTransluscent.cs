@@ -7,7 +7,9 @@ public class MakeSurroundingObjectsTransluscent : MonoBehaviour
     [SerializeField] private float _transluscentAlpha = 0.5f;
     [SerializeField] private float _detectionRadius = 5f;
 
-    [SerializeField] Material _material;
+    [SerializeField] Material _boxMaterial;
+    [SerializeField] Material _woodMaterial;
+
 
     private Collider[] _colliders;
     private Renderer[] _originalRenderers;
@@ -34,6 +36,7 @@ public class MakeSurroundingObjectsTransluscent : MonoBehaviour
 
                 Material[] materials = renderer.materials;
 
+
                 /* // this worked! But using default-transparent mats leads to really crappy artifacts on GO's
                 // Create a temporary copy of the materials
                 Material[] copiedMaterials = new Material[materials.Length];
@@ -41,17 +44,40 @@ public class MakeSurroundingObjectsTransluscent : MonoBehaviour
                 {
                     copiedMaterials[j] = new Material(materials[j]);
                     copiedMaterials[j].color = new Color(materials[j].color.r, materials[j].color.g, materials[j].color.b, _transluscentAlpha);
-                }
+                }*/
 
-                // Apply the copied materials to the renderer
-                renderer.materials = copiedMaterials;*/
 
                 // NEW: switching to a set material, as having them generally transparent leads to really weird see-through issues!
-                // Create a temporary copy of the materials
+                // create a temporary copy of the materials:
                 Material[] copiedMaterials = new Material[materials.Length];
                 for (int j = 0; j < materials.Length; j++)
                 {
-                    copiedMaterials[j] = _material;
+                    // check the type of fragment and replace with the correct alpha-material:
+                    Material _mat = null;
+                    switch (_colliders[j].GetComponent<MakeTraversable>().typeOfObject)
+                    {
+                        case 0: // default value
+                            //do nothing
+                            break;
+
+                        case 1: // box fragment
+                            _mat = _boxMaterial;
+                            break;
+
+                        case 2: // wooden fragment
+                            _mat = _woodMaterial;
+                            break;
+
+                        case 3: // not yet used!
+                            //do nothing
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                    copiedMaterials[j] = _mat;
+                    //copiedMaterials[j] = _boxMaterial;
                     //copiedMaterials[j].color = new Color(materials[j].color.r, materials[j].color.g, materials[j].color.b, _transluscentAlpha);
                 }
 
@@ -97,117 +123,4 @@ public class MakeSurroundingObjectsTransluscent : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, _detectionRadius);
     }
-
-
-    //this worked!:
-    /*
-    [SerializeField] private LayerMask _targetLayer;
-    [SerializeField] private float _transluscentAlpha = 0.5f;
-    [SerializeField] private float _detectionRadius = 5f;
-
-    private Collider[] _colliders;
-    private Renderer[] _originalRenderers;
-    private Material[][] _originalMaterials;
-
-    private void Update()
-    {
-        // Get all the colliders within the detection radius
-        _colliders = Physics.OverlapSphere(transform.position, _detectionRadius, _targetLayer);
-
-        // Iterate through each collider and update the material transparency
-        for (int i = 0; i < _colliders.Length; i++)
-        {
-            Renderer renderer = _colliders[i].GetComponent<Renderer>();
-
-            if (renderer != null)
-            {
-                Material[] materials = renderer.materials;
-
-                // Create a temporary copy of the materials
-                Material[] copiedMaterials = new Material[materials.Length];
-                for (int j = 0; j < materials.Length; j++)
-                {
-                    copiedMaterials[j] = new Material(materials[j]);
-                }
-
-                // Apply translucency to the copied materials
-                /*for (int j = 0; j < copiedMaterials.Length; j++)
-                {
-                    Color color = copiedMaterials[j].color;
-                    color.a = _transluscentAlpha;
-                    copiedMaterials[j].color = color;
-                } // here was an end to a commentary
-                // Apply translucency to the copied materials
-                for (int j = 0; j < copiedMaterials.Length; j++)
-                {
-                    Color color = copiedMaterials[j].color;
-                    color.a = _transluscentAlpha;
-                    copiedMaterials[j].color = color;
-
-                    /*
-                    // Set the rendering mode to Transparent
-                    copiedMaterials[j].SetOverrideTag("RenderType", "Transparent");
-                    copiedMaterials[j].SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
-                    copiedMaterials[j].SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-                    copiedMaterials[j].SetInt("_ZWrite", 0);
-                    copiedMaterials[j].DisableKeyword("_ALPHATEST_ON");
-                    copiedMaterials[j].EnableKeyword("_ALPHABLEND_ON");
-                    copiedMaterials[j].DisableKeyword("_ALPHAPREMULTIPLY_ON");
-                    copiedMaterials[j].renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;// here was an end to an commentary
-                }
-
-
-                // Assign the copied materials to the renderer
-                renderer.materials = copiedMaterials;
-            }
-        }
-
-        // Iterate through each previously detected renderer
-        // and restore their original materials if they are no longer within the detection radius
-        for (int i = 0; i < _originalRenderers.Length; i++)
-        {
-            if (!ArrayContainsRenderer(_colliders, _originalRenderers[i]))
-            {
-                Renderer renderer = _originalRenderers[i];
-
-                if (renderer != null)
-                {
-                    renderer.materials = _originalMaterials[i];
-                }
-            }
-        }
-    }
-
-    private bool ArrayContainsRenderer(Collider[] array, Renderer renderer)
-    {
-        for (int i = 0; i < array.Length; i++)
-        {
-            Renderer arrayRenderer = array[i].GetComponent<Renderer>();
-
-            if (arrayRenderer == renderer)
-                return true;
-        }
-
-        return false;
-    }
-
-    private void OnEnable()
-    {
-        // Store the original renderers and materials
-        _colliders = new Collider[0];
-        _originalRenderers = GetComponentsInChildren<Renderer>();
-        _originalMaterials = new Material[_originalRenderers.Length][];
-
-        for (int i = 0; i < _originalRenderers.Length; i++)
-        {
-            _originalMaterials[i] = _originalRenderers[i].materials;
-        }
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        // Draw a wire sphere to visualize the detection radius
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, _detectionRadius);
-    }*/
 }

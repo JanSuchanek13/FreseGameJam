@@ -180,40 +180,74 @@ public class StateController : MonoBehaviour
     {
         currentLevel = SceneManager.GetActiveScene().buildIndex;
         human = true;
-        //CollectedCrowns = GameObject.Find("GameManager").GetComponent<CollectedCrowns>();
 
-        //PlayerPrefs.SetInt("State" + currentLevel, 0);
-        // activate the available States
-        bool[] availableStates = new bool[] { availableCrane, availableCapricorn, availableLama, availableJesus, availableFrog };
-        StateNumber = PlayerPrefs.GetInt("State" + 0);
-        for (int i = 0; i < StateNumber; i++)
+        // activate the available states/shapes:
+        //bool[] availableStates = new bool[] { availableCrane, availableCapricorn, availableLama, availableJesus, availableFrog }; // what does this do?
+        if (PlayerPrefs.GetInt("HardcoreMode", 0) == 0)
         {
-            switch (i+1)
+            StateNumber = PlayerPrefs.GetInt("State" + 0);
+            for (int i = 0; i < StateNumber; i++)
             {
-                case 1:
-                    availableCrane = true;
-                    break;
+                switch (i + 1)
+                {
+                    case 1:
+                        availableCrane = true;
+                        break;
 
-                case 2:
-                    availableCapricorn = true;
-                    break;
+                    case 2:
+                        availableCapricorn = true;
+                        break;
 
-                case 3:
-                    availableLama = true;
-                    break;
+                    case 3:
+                        availableLama = true;
+                        break;
 
-                case 4:
-                    availableJesus = true;
-                    break;
+                    case 4:
+                        availableJesus = true;
+                        break;
 
-                case 5:
-                    availableFrog = true;
-                    break;
+                    case 5:
+                        availableFrog = true;
+                        break;
 
-                default:
-                    break;
+                    default:
+                        break;
+                }
             }
         }
+        else
+        {
+            StateNumber = PlayerPrefs.GetInt("HardcoreStates" + 0);
+            for (int i = 0; i < StateNumber; i++)
+            {
+                switch (i + 1)
+                {
+                    case 1:
+                        availableCrane = true;
+                        break;
+
+                    case 2:
+                        availableCapricorn = true;
+                        break;
+
+                    case 3:
+                        availableLama = true;
+                        break;
+
+                    case 4:
+                        availableJesus = true;
+                        break;
+
+                    case 5:
+                        availableFrog = true;
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        }
+        
     }
 
     // Update is called once per frame
