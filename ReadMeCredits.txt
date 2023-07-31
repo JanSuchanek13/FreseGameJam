@@ -26,6 +26,10 @@ Positive Cartoon Loop Music by Sergei Chetvertnykh https://pixabay.com/de/music/
 Blue Island by matthewmikecolemusic from Pixabay
 Luau by matthewmikecolemusic from Pixabay
 Caribbean Dream by OYStudio from Pixabay
+The Unkillable by BrightestAvenue from Pixabay
+Despair Metal Trailer by LiteSaturation from Pixabay
+The Beast In My Head by BrightestAvenue from Pixabay
+Crag - Hard Rock by AlexGrohl from Pixabay
 
 
 Sounds:
