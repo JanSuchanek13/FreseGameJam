@@ -28,7 +28,8 @@ public class HardcoreMode : MonoBehaviour
 
     float _timeElapsed;
     bool _runStarted = false;
-    public bool runFinished = false; // this gets updated by the LevelScript!
+    public bool stopTheClock = false; // this gets updated by the Levelscript when the friend is reached!
+    public bool runFinished = false; // this gets updated by the LevelScript when the bottom-trigger is reached falling!
 
     private void Start()
     {
@@ -103,13 +104,31 @@ public class HardcoreMode : MonoBehaviour
         FindObjectOfType<InputHandler>().enabled = true;
     }
 
+
+    int _minutes;
+    int _seconds;
+    int _milliseconds;
+
     private void Update()
     {
         if (_runStarted && !runFinished)
         {
+            if (!stopTheClock)
+            {
+                _timeElapsed += Time.deltaTime;
+                PlayerPrefs.SetFloat("HardcoreTime" + 0, _timeElapsed);
+
+                //_timer_txt.text += Time.deltaTime.ToString();
+                //float _totalLevelTime = PlayerPrefs.GetFloat("timer" + 0, 0) + PlayerPrefs.GetFloat("lastTimer" + 0, 0);
+                _minutes = Mathf.FloorToInt(_timeElapsed / 60);
+                _seconds = Mathf.FloorToInt(_timeElapsed % 60);
+                _milliseconds = Mathf.FloorToInt((_timeElapsed * 1000) % 1000);
+            }
+
             int _crowns = PlayerPrefs.GetInt("HardcoreCrowns" + 0, 0);
             _crowns_txt.text = _crowns.ToString();
 
+            /*
             _timeElapsed += Time.deltaTime;
             PlayerPrefs.SetFloat("HardcoreTime" + 0, _timeElapsed);
 
@@ -117,7 +136,7 @@ public class HardcoreMode : MonoBehaviour
             //float _totalLevelTime = PlayerPrefs.GetFloat("timer" + 0, 0) + PlayerPrefs.GetFloat("lastTimer" + 0, 0);
             int _minutes = Mathf.FloorToInt(_timeElapsed / 60);
             int _seconds = Mathf.FloorToInt(_timeElapsed % 60);
-            int _milliseconds = Mathf.FloorToInt((_timeElapsed * 1000) % 1000);
+            int _milliseconds = Mathf.FloorToInt((_timeElapsed * 1000) % 1000);*/
 
             // the chosen way ensures that the number display doesnt flicker during rapid changes:
             //_minuteTimer_txt.text = string.Format("{0:00}:{1:00}:{2:000}", _minutes, _seconds, _milliseconds);

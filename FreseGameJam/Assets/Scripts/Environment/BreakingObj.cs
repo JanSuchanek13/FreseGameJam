@@ -102,6 +102,10 @@ public class BreakingObj : MonoBehaviour
                     }
                     //_player.GetComponent<Animator>().SetBool("Falling", true);
                     origamiFriend.GetComponent<Rigidbody>().isKinematic = false;
+
+                    // stopping the clock when end is reached, not need to fall to the trigger at the bottom!
+                    FindObjectOfType<LevelScript>().StopTheClock();
+                    Debug.Log("1");
                 }
             }
         }

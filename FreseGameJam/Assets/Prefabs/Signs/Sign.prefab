@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 743541091902794286}
   m_Layer: 0
   m_Name: 'Collider:'
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -242,6 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 624e0aa68b3a6554585d7495c387cea1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _destroyThis: 0
 --- !u!1 &743541092396174834
 GameObject:
   m_ObjectHideFlags: 0

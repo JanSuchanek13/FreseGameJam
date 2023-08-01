@@ -39,6 +39,7 @@ public class LevelScript : MonoBehaviour
     float[] lastTimer = new float[3];
     int _currentLevel;
     bool _endZoneReached = false;
+    bool _clockRunning = true;
     GameObject _gameManager;
 
     // variables for fading screen:
@@ -73,7 +74,7 @@ public class LevelScript : MonoBehaviour
         _usingHardcoreMode = true;
         }
         // save time per frame
-        if (!_endZoneReached && !_usingHardcoreMode)
+        if (!_endZoneReached && !_usingHardcoreMode && _clockRunning)
         {
             PlayerPrefs.SetFloat("timer" + 0, Time.timeSinceLevelLoad + _timer[0]); //(currentLevel - 2)
         }
@@ -125,7 +126,6 @@ public class LevelScript : MonoBehaviour
                     _endZoneReached = true;
 
                     FindObjectOfType<HardcoreMode>().runFinished = true;
-                    Debug.Log("hardcore finished");
 
                     if (_fadeToBlackBlende != null) // only fade if there is a fadeBlende in place.
                     {
@@ -144,6 +144,19 @@ public class LevelScript : MonoBehaviour
                     HardcoreFinished();
                 }
             }
+        }
+    }
+
+    public void StopTheClock()
+    {
+        if (PlayerPrefs.GetInt("HardcoreMode", 0) != 0)
+        {
+            Debug.Log("stopped hardcore clock");
+            FindObjectOfType<HardcoreMode>().stopTheClock = true;
+        }else
+        {
+            Debug.Log("stopped regular clock");
+            _clockRunning = false;
         }
     }
 

@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class PortableSpawnPoint : MonoBehaviour
 {
-    GameObject _player;
     [SerializeField] bool useThisSpawnPosition = false;
+
+    GameObject _player;
 
     void Start()
     {
@@ -13,7 +14,6 @@ public class PortableSpawnPoint : MonoBehaviour
         {
             _player = GameObject.Find("Third Person Player_GameLevel_1");
             _player.GetComponent<HealthSystem>().respawnPoint = this.transform.position;
-
             Invoke("Spawn", 1f);
         }
     }
