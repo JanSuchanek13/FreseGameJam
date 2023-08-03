@@ -98,6 +98,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GOBackInUI"",
+                    ""type"": ""Button"",
+                    ""id"": ""f3bd133d-5231-4b96-a33b-1e15f77dbb08"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -428,6 +437,17 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Option"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""635808c0-a6e1-46c9-a009-e4de0ed0424c"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GOBackInUI"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1687,6 +1707,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_CharacterControls_Cheating = m_CharacterControls.FindAction("Cheating", throwIfNotFound: true);
         m_CharacterControls_CamToggle = m_CharacterControls.FindAction("CamToggle", throwIfNotFound: true);
         m_CharacterControls_Option = m_CharacterControls.FindAction("Option", throwIfNotFound: true);
+        m_CharacterControls_GOBackInUI = m_CharacterControls.FindAction("GOBackInUI", throwIfNotFound: true);
         // CharacterControlsController
         m_CharacterControlsController = asset.FindActionMap("CharacterControlsController", throwIfNotFound: true);
         m_CharacterControlsController_Move = m_CharacterControlsController.FindAction("Move", throwIfNotFound: true);
@@ -1790,6 +1811,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_CharacterControls_Cheating;
     private readonly InputAction m_CharacterControls_CamToggle;
     private readonly InputAction m_CharacterControls_Option;
+    private readonly InputAction m_CharacterControls_GOBackInUI;
     public struct CharacterControlsActions
     {
         private @PlayerInput m_Wrapper;
@@ -1802,6 +1824,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @Cheating => m_Wrapper.m_CharacterControls_Cheating;
         public InputAction @CamToggle => m_Wrapper.m_CharacterControls_CamToggle;
         public InputAction @Option => m_Wrapper.m_CharacterControls_Option;
+        public InputAction @GOBackInUI => m_Wrapper.m_CharacterControls_GOBackInUI;
         public InputActionMap Get() { return m_Wrapper.m_CharacterControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1835,6 +1858,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Option.started -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnOption;
                 @Option.performed -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnOption;
                 @Option.canceled -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnOption;
+                @GOBackInUI.started -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnGOBackInUI;
+                @GOBackInUI.performed -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnGOBackInUI;
+                @GOBackInUI.canceled -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnGOBackInUI;
             }
             m_Wrapper.m_CharacterControlsActionsCallbackInterface = instance;
             if (instance != null)
@@ -1863,6 +1889,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @Option.started += instance.OnOption;
                 @Option.performed += instance.OnOption;
                 @Option.canceled += instance.OnOption;
+                @GOBackInUI.started += instance.OnGOBackInUI;
+                @GOBackInUI.performed += instance.OnGOBackInUI;
+                @GOBackInUI.canceled += instance.OnGOBackInUI;
             }
         }
     }
@@ -2201,6 +2230,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnCheating(InputAction.CallbackContext context);
         void OnCamToggle(InputAction.CallbackContext context);
         void OnOption(InputAction.CallbackContext context);
+        void OnGOBackInUI(InputAction.CallbackContext context);
     }
     public interface ICharacterControlsControllerActions
     {

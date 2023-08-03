@@ -11,11 +11,12 @@ namespace Loneflower
         [SerializeField] private CharacterController myController;
         [SerializeField] private ThirdPersonMovement thirdPersonMovement;
         private Animator animator;
+        private bool randomIdleIsRunning;
 
         private void Awake()
         {
             animator = this.GetComponent<Animator>();
-            StartCoroutine("SetRandomIdle");
+            //StartCoroutine("SetRandomIdle");
         }
 
         private void FixedUpdate()
@@ -24,6 +25,15 @@ namespace Loneflower
             SetVelocity();
             JumpCheck();
             FallCheck();
+            if(animator.GetFloat("xVelocity") == 0 && !randomIdleIsRunning)
+            {
+                StartCoroutine("SetRandomIdle");
+            }
+            else if(animator.GetFloat("xVelocity") != 0)
+            {
+                randomIdleIsRunning = false;
+                StopCoroutine("SetRandomIdle");
+            }
         }
 
         /// <summary>
@@ -56,6 +66,8 @@ namespace Loneflower
 
         IEnumerator SetRandomIdle()
         {
+            randomIdleIsRunning = true;
+            animator.SetFloat("randomIdle", 1);
             float duration = 1;
             float value = 0;
             while (true)
