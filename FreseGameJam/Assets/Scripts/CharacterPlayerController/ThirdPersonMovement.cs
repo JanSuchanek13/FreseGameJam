@@ -694,7 +694,7 @@ public class ThirdPersonMovement : MonoBehaviour
             }
             */
 
-            if (input.jumpValue != 0 & !isInCooldown)
+            if (/*input.jumpValue != 0 & */!isInCooldown) //hier ändern damit dash nicht automaitsch stattfindet !!!!!!!!!!!!!!!!!!!!
             {
                 action = true;
                 Invoke("EndOfAction", 1.2f);
@@ -925,6 +925,18 @@ public class ThirdPersonMovement : MonoBehaviour
 
         // Turn on player input while dashing:
         GetComponent<InputHandler>().enabled = true;
+
+        //hier ändern damit dash nicht automaitsch stattfindet !!!!!!!!!!!!!!!!!!!!
+        //change back to human
+        GetComponent<StateController>().isChanging = true;
+
+        stateController.ball = false;
+        stateController.human = true;
+        stateController.frog = false;
+        stateController.crane = false;
+        stateController.capricorn = false;
+        stateController.lama = false;
+        StartCoroutine(GetComponent<StateController>().changeModell(1));
     }
 
     /*
