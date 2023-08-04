@@ -82,7 +82,9 @@ public class ThirdPersonMovement : MonoBehaviour
     public float cooldownTime = 0.5f;
 
     //jumpChange
+    [Header("JUMP:")]
     bool jumpChange;
+    bool beforeJumpZenith;
 
     //Sound
     [Header("Sounds:")]
@@ -345,7 +347,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (willSlideOnSlopes && isSliding && !isOnSteps && !onBridge)
+        if (willSlideOnSlopes && isSliding && !isOnSteps && !onBridge && !beforeJumpZenith)
         {
             Vector3 moveDir = new Vector3(hitPointNormal.x, -hitPointNormal.y, hitPointNormal.z) * slopeSpeed;
             controller.Move(moveDir.normalized * humanSpeed * 0.5f * Time.deltaTime);
@@ -537,6 +539,8 @@ public class ThirdPersonMovement : MonoBehaviour
             }
             if (input.jumpTriggerd && isCoyoteGrounded)
             {
+                beforeJumpZenith = true;
+                Invoke("AfterJumpZenith", 0.3f);
                 controller.stepOffset = 0;
                 jumping = true; //animation
                 //controller.slopeLimit = 100f;
@@ -781,6 +785,11 @@ public class ThirdPersonMovement : MonoBehaviour
 
     }
 
+    private void AfterJumpZenith()
+    {
+        beforeJumpZenith = false;
+    }
+
 
     // Felix:
     public bool CheckForGroundContact()
@@ -937,6 +946,7 @@ public class ThirdPersonMovement : MonoBehaviour
         stateController.capricorn = false;
         stateController.lama = false;
         StartCoroutine(GetComponent<StateController>().changeModell(1));
+        //bis hier ändern damit dash nicht automaitsch stattfindet !!!!!!!!!!!!!!!!!!!!
     }
 
     /*

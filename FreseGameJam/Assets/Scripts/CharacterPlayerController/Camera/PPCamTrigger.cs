@@ -11,7 +11,12 @@ public class PPCamTrigger : MonoBehaviour
     private float timeInVulcano = 0;
     private float lastTimeInVulcano = 0;
     private float vulcanoTransitionSpeed = 0.3f;
-    public GameObject VulcanoPP;
+    public GameObject vulcanoPP;
+
+    [Header("LightFlash_PP")]
+    public GameObject lightFlashPP;
+    private float lightFlashTransitionSpeed = 0.3f;
+    private bool inLightFlash;
 
     private void OnTriggerStay(Collider other)
     {
@@ -26,10 +31,10 @@ public class PPCamTrigger : MonoBehaviour
     {
         lastTimeInVulcano = timeInVulcano;
         //Invoke("CheckForNarrowSpace", 1f);
-        StartCoroutine("CheckForNarrowSpace", lastTimeInVulcano);
+        StartCoroutine("UpdateVulcano", lastTimeInVulcano);
     }
 
-    IEnumerator CheckForNarrowSpace(float _lastTimeInVulcano)
+    IEnumerator UpdateVulcano(float _lastTimeInVulcano)
     {
         yield return new WaitForSeconds(0.5f);
         //Debug.Log(_lastTimeInVulcano + "    " + timeInVulcano);
@@ -37,30 +42,52 @@ public class PPCamTrigger : MonoBehaviour
         {
             if (!isInVulcano)
             {
-                VulcanoPP.GetComponent<Volume>().enabled = true;
+                vulcanoPP.GetComponent<Volume>().enabled = true;
             }
-            if (VulcanoPP.GetComponent<Volume>().weight <= 0.5f)
+            if (vulcanoPP.GetComponent<Volume>().weight <= 0.5f)
             {
-                VulcanoPP.GetComponent<Volume>().weight += Time.deltaTime * vulcanoTransitionSpeed;
+                vulcanoPP.GetComponent<Volume>().weight += Time.deltaTime * vulcanoTransitionSpeed;
             }
             isInVulcano = true;
         }
         else
         {
             
-            if (VulcanoPP.GetComponent<Volume>().weight >= 0f)
+            if (vulcanoPP.GetComponent<Volume>().weight >= 0f)
             {
-                VulcanoPP.GetComponent<Volume>().weight -= Time.deltaTime * vulcanoTransitionSpeed;
+                vulcanoPP.GetComponent<Volume>().weight -= Time.deltaTime * vulcanoTransitionSpeed;
             }
             if (isInVulcano)
             {
+                if (!inLightFlash)
+                {
+                    StartCoroutine("LightFlash");
+                }
+                
                 yield return new WaitForSeconds(1f);
                 if (! (_lastTimeInVulcano < timeInVulcano))
                 {
-                    VulcanoPP.GetComponent<Volume>().enabled = false;
+                    vulcanoPP.GetComponent<Volume>().enabled = false;
                 }
             }
             isInVulcano = false;
         }
     }
+
+    IEnumerator LightFlash()
+    {
+        inLightFlash = true;
+        lightFlashPP.GetComponent<Volume>().enabled = true;
+        yield return new WaitForSeconds(0.3f);
+        
+        while (lightFlashPP.GetComponent<Volume>().weight >= 0f)
+        {
+            yield return new WaitForSeconds(0.01f);
+            lightFlashPP.GetComponent<Volume>().weight -= Time.deltaTime * lightFlashTransitionSpeed;
+        }
+        lightFlashPP.GetComponent<Volume>().enabled = false;
+        lightFlashPP.GetComponent<Volume>().weight = 1;
+        inLightFlash = false;
+    }
+        
 }
