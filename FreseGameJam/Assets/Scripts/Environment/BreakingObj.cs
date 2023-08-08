@@ -59,7 +59,59 @@ public class BreakingObj : MonoBehaviour
 
     bool _calledBreak = false;
 
-    void OnTriggerStay(Collider collision) // was on triggerenter
+    void OnTriggerEnter(Collider collision) // was on triggerstay // not sure why we switched away from this?!
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            _player = collision.gameObject;
+            StateController stateController = _player.GetComponent<StateController>();
+            if (onlyCapricorn)
+            {
+
+                if (_player.GetComponent<StateController>().capricorn && _player.GetComponent<ThirdPersonMovement>().breakableDash)
+                {
+                    if (!_calledBreak)
+                    {
+                        Invoke("Break", timeTillBreak);
+                        _calledBreak = true;
+                    }
+                }
+            }
+            else
+            {
+                if (!_calledBreak)
+                {
+                    Invoke("Break", timeTillBreak);
+                    _calledBreak = true;
+                }
+                //Invoke("Break", timeTillBreak);
+
+                if (levelEnd)
+                {
+                    Invoke("SetForcedFalling", 0.5f);
+                    //_player.GetComponent<InputHandler>().enabled = false; if this is not active, the player can walk till the end
+                    stateController.enabled = false;
+                    if (!stateController.human)
+                    {
+                        StartCoroutine(stateController.changeModell(1));
+                        stateController.ball = false;
+                        stateController.human = true;
+                        stateController.frog = false;
+                        stateController.crane = false;
+                        stateController.capricorn = false;
+                        stateController.lama = false;
+                    }
+                    //_player.GetComponent<Animator>().SetBool("Falling", true);
+                    origamiFriend.GetComponent<Rigidbody>().isKinematic = false;
+
+                    // stopping the clock when end is reached, not need to fall to the trigger at the bottom!
+                    FindObjectOfType<LevelScript>().StopTheClock();
+                }
+            }
+        }
+    }
+
+    /*void OnTriggerStay(Collider collision) // was on triggerenter
     {
         if (collision.gameObject.tag == "Player")
         {
@@ -105,11 +157,10 @@ public class BreakingObj : MonoBehaviour
 
                     // stopping the clock when end is reached, not need to fall to the trigger at the bottom!
                     FindObjectOfType<LevelScript>().StopTheClock();
-                    Debug.Log("1");
                 }
             }
         }
-    }
+    }*/
 
     void SetForcedFalling()
     {
@@ -192,6 +243,8 @@ public class BreakingObj : MonoBehaviour
                     child.transform.position = _resetPosListOfChildren[i];
                     child.transform.rotation = Quaternion.Euler(_resetPosListOfChildren[i]);
                     i++;
+
+                    _calledBreak = false;
                 }
             }
         }else 
@@ -202,6 +255,8 @@ public class BreakingObj : MonoBehaviour
             }
             transform.position = _resetPos;
             transform.rotation = Quaternion.Euler(_resetRot);
+
+            _calledBreak = false;
         }
     }
 }
