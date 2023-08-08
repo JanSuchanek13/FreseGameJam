@@ -73,6 +73,10 @@ public class GoBackInUI : MonoBehaviour
     private void GoBack()
     {
         Debug.Log("Go back in UI");
-        currentBackButton.GetComponent<Button>().onClick.Invoke();
+        if (currentBackButton.gameObject.activeInHierarchy)
+        {
+            currentBackButton.GetComponent<Button>().onClick.Invoke();
+        }
+        
     }
 }

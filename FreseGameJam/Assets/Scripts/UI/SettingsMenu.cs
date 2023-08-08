@@ -140,6 +140,8 @@ public class SettingsMenu : MonoBehaviour
         if (controlerInt > 0)
         {
             EventSystem.current.SetSelectedGameObject(controlsDropdown.gameObject);
+            vibrationToggle.isOn = true;
+            PlayerPrefs.SetInt("vibrationSettings", 1);
         }
     }
 
