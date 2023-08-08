@@ -5,7 +5,7 @@ using UnityEngine;
 public class HighscoreCompilerJson : MonoBehaviour
 {
     [Tooltip("Enter the exact file path where the highscore-stats Json gets saved on the gaming-device here! (Exact means EXACT!)")]
-    [SerializeField] string _filePath = "C:/Users/fmund/AppData/LocalLow/Lone Flower Games/Origami Lovers/HighscoreData.json";
+    [SerializeField] string _filePath = "xxx";
 
     [Space(10)]
     [Tooltip("Day 1 is the 24th; day 2 is the 25th; day 3 is the 26th; day 4 is 27th. Switch at the start of every day!")]
@@ -19,6 +19,12 @@ public class HighscoreCompilerJson : MonoBehaviour
     [Tooltip("DO NOT TOUCH:")]
     public HighscoreData currentHighscores = new HighscoreData(); // this contains the most recent highscores of the ongoing day.
 
+    private void Start()
+    {
+        Debug.Log("Jo Jo Jo homeskillets!!! copy this:    " + Application.persistentDataPath + "/HighscoreData.json     into the file-path section of the HighscoreDataGatherer-script in the display app");
+        Debug.Log("For this to work you have to first create a default save-file by pressing S while the game is running");
+        Debug.Log("Now hit play in the display app!");
+    }
     /*
     private void Start()
     {
