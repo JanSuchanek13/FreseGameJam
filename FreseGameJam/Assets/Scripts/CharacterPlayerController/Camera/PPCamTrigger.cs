@@ -166,7 +166,6 @@ public class PPCamTrigger : MonoBehaviour
         }
         else
         {
-            Debug.Log("test");
             if (minesPP.GetComponent<Volume>().weight >= 0f)
             {
                 minesPP.GetComponent<Volume>().weight -= Time.deltaTime * minesTransitionSpeed;
