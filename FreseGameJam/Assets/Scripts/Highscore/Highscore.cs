@@ -44,6 +44,16 @@ public class Highscore : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Do not delete or turn off while prepping for gamescom!
+        if (_atGamescom23)
+        {
+            Debug.Log("Gamescom23-mode is active. The Highscore-display logic is now enabled.");
+        }else
+        {
+            Debug.Log("Gamescom23-mode is NOT active. The Highscore-display logic is NOT enabled.");
+            Debug.Log("To change this just check the atGamescom-box in the inspector of the Highscore-script!");
+        }
+
         //safe level
         currentLevel = SceneManager.GetActiveScene().buildIndex;
 
