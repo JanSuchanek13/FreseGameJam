@@ -162,7 +162,7 @@ public class Highscore : MonoBehaviour
             PlayerPrefs.SetInt("HighscoreHardcoreCrowns_Deaths" + 0, PlayerPrefs.GetInt("HardcoreDeaths" + 0, 0));
 
             // GAMESCOM STUFF:
-            _newSpeedRecord = true;
+            _newCrownsRecord = true;
         }
 
         // update highscore for hardcore time:
@@ -173,7 +173,7 @@ public class Highscore : MonoBehaviour
             PlayerPrefs.SetInt("HighscoreHardcoreTime_Deaths" + 0, PlayerPrefs.GetInt("HardcoreDeaths" + 0, 0));
 
             // GAMESCOM STUFF:
-            _newCrownsRecord = true;
+            _newSpeedRecord = true;
         }
 
         // GAMESCOM STUFF:

@@ -17,12 +17,16 @@ public class HighscoreCompilerJson : MonoBehaviour
     [Tooltip("This determins the length of the intervals to check for new highscores. Adjust as needed.")]
     [SerializeField] float _updateInterval = 30.0f;
     */
-    //[Space(30)]
+    [SerializeField] int _typeOfHighscoreID = 0;
+
+    [Space(30)]
     [SerializeField] GameObject _givePermissionUI;
 
     [Space(10)]
     [SerializeField] TMP_InputField _nameInputField;
     [SerializeField] TMP_InputField _emailInputField;
+    [SerializeField] TextMeshProUGUI _timeDisplay;
+    [SerializeField] TextMeshProUGUI _crownsDisplay;
 
     int _typeOfHighscore;
     float _highscoreTime;
@@ -37,12 +41,34 @@ public class HighscoreCompilerJson : MonoBehaviour
     private void Start()
     {
         // instructions:
-        Debug.Log("Homeskillets!!! copy this:    " + Application.persistentDataPath + "/HighscoreData.json     into the file-path section of the HighscoreDataGatherer-script in the display app");
+        Debug.Log("Homeskillets!!! copy this:    " + Application.persistentDataPath + "/SpeedHighscoreData.json     into the file-path (speed) section of the HighscoreDataGatherer-script in the display app");
+        Debug.Log("And copy this:    " + Application.persistentDataPath + "/CrownsHighscoreData.json     into the file-path (speed) section of the HighscoreDataGatherer-script in the display app");
+
         Debug.Log("For this to work you have to first create a default save-file by pressing S while the game is running");
         Debug.Log("Now hit play in the display app!");
 
         // setup variables:
         _highscoreScript = FindObjectOfType<Highscore>();
+
+        if(PlayerPrefs.GetInt("JsonCreated", 0) == 0) // this never needs to be reset.
+        {
+            currentSpeedHighscores.speedName = "";
+            currentSpeedHighscores.speedEmail = "";
+            currentSpeedHighscores.speedTime = 0.0f;
+            currentSpeedHighscores.speedCrowns = 0;
+
+            currentCrownHighscores.crownsName = "";
+            currentCrownHighscores.crownsEmail = "";
+            currentCrownHighscores.crownsTime = 0.0f;
+            currentCrownHighscores.crownsCrowns = 0;
+
+            // create two empty Json-placeholders:
+            SaveSpeedHighscoreToJson();
+            SaveCrownsHighscoreToJson();
+
+            // avoid saving this twice:
+            PlayerPrefs.SetInt("JsonCreated", 1);
+        }
     }
 
     //TESTING!
@@ -52,8 +78,8 @@ public class HighscoreCompilerJson : MonoBehaviour
         {
             //SaveCrownsHighscoreToJson();
             
-            // simulate achieving a new (speed) highscore
-            NewHighscore(0);
+            // simulate achieving a new highscore
+            NewHighscore(_typeOfHighscoreID);
         }
 
         /*if (Input.GetKeyDown(KeyCode.L))
@@ -75,6 +101,14 @@ public class HighscoreCompilerJson : MonoBehaviour
 
         FindObjectOfType<ButtonFunction>().Pause(); // make UI interactable
         FindObjectOfType<ButtonFunction>().TogglePauseScreen(); // turn off the pause menu-UI to give access to the permission-UI
+
+        float _rawTime = PlayerPrefs.GetFloat("HardcoreTime" + 0, 0.0f);
+        int minutes = (int)_rawTime / 60;
+        int seconds = (int)_rawTime - 60 * minutes;
+        int milliseconds = (int)(1000 * (_rawTime - minutes * 60 - seconds));
+        _timeDisplay.text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
+
+        _crownsDisplay.text = PlayerPrefs.GetInt("HardcoreCrowns" + 0).ToString();
 
         _givePermissionUI.SetActive(true);
     }
@@ -134,6 +168,7 @@ public class HighscoreCompilerJson : MonoBehaviour
         }
 
         // unpause the game: (since the pause-UI is inactive, this will unpause)
+        FindObjectOfType<ButtonFunction>().TogglePauseScreen(); // turn onthe pause menu-UI to give access to the permission-UI
         FindObjectOfType<ButtonFunction>().Pause();
     }
 
