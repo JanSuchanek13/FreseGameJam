@@ -6,36 +6,39 @@ using TMPro;
 
 public class Highscore : MonoBehaviour
 {
-    int currentLevel;
-
-    public bool overwriteUI;
+    // GAMESCOM STUFF:
+    [SerializeField] bool _atGamescom23 = false;
+    
     [Space(15)]
-
+    public bool overwriteUI;
+    
+    [Space(15)]
     [SerializeField] TextMeshProUGUI _hardcoreCrowns_Time;
     [SerializeField] TextMeshProUGUI _hardcoreCrowns_Crowns;
     [SerializeField] TextMeshProUGUI _hardcoreCrowns_Deaths; // kind of redundant
+   
     [Space(15)]
-
     [SerializeField] TextMeshProUGUI _hardcoreTime_Time;
     [SerializeField] TextMeshProUGUI _hardcoreTime_Crowns;
     [SerializeField] TextMeshProUGUI _hardcoreTime_Deaths; // kind of redundant
+    
     [Space(15)]
-
     [SerializeField] TextMeshProUGUI HTtimer;
     [SerializeField] TextMeshProUGUI HTcrowns;
     [SerializeField] TextMeshProUGUI HTdeaths;
+   
     [Space(15)]
-
     [SerializeField] TextMeshProUGUI HCtimer;
     [SerializeField] TextMeshProUGUI HCcrowns;
     [SerializeField] TextMeshProUGUI HCdeaths;
+    
     [Space(15)]
-
     [SerializeField] TextMeshProUGUI Lasttimer;
     [SerializeField] TextMeshProUGUI Lastcrowns;
     [SerializeField] TextMeshProUGUI Lastdeaths;
 
     float timer;
+    int currentLevel;
 
 
     // Start is called before the first frame update
@@ -130,6 +133,11 @@ public class Highscore : MonoBehaviour
 
     public void CompareHighscore()
     {
+        // only whilse at gamescom:
+        bool _newSpeedRecord = false;
+        bool _newCrownsRecord = false;
+
+
         // for Highscore Time
         if (PlayerPrefs.GetFloat("timer" + 0) < PlayerPrefs.GetFloat("HTtimer" + 0) || PlayerPrefs.GetFloat("HTtimer" + 0) == 0)
         {
@@ -152,6 +160,9 @@ public class Highscore : MonoBehaviour
             PlayerPrefs.SetFloat("HighscoreHardcoreCrowns_Time" + 0, PlayerPrefs.GetFloat("HardcoreTime" + 0, 0.0f));
             PlayerPrefs.SetInt("HighscoreHardcoreCrowns_Crowns" + 0, PlayerPrefs.GetInt("HardcoreCrowns" + 0, 0));
             PlayerPrefs.SetInt("HighscoreHardcoreCrowns_Deaths" + 0, PlayerPrefs.GetInt("HardcoreDeaths" + 0, 0));
+
+            // GAMESCOM STUFF:
+            _newSpeedRecord = true;
         }
 
         // update highscore for hardcore time:
@@ -160,6 +171,26 @@ public class Highscore : MonoBehaviour
             PlayerPrefs.SetFloat("HighscoreHardcoreTime_Time" + 0, PlayerPrefs.GetFloat("HardcoreTime" + 0, 0.0f));
             PlayerPrefs.SetInt("HighscoreHardcoreTime_Crowns" + 0, PlayerPrefs.GetInt("HardcoreCrowns" + 0, 0));
             PlayerPrefs.SetInt("HighscoreHardcoreTime_Deaths" + 0, PlayerPrefs.GetInt("HardcoreDeaths" + 0, 0));
+
+            // GAMESCOM STUFF:
+            _newCrownsRecord = true;
+        }
+
+        // GAMESCOM STUFF:
+        if (_atGamescom23)
+        {
+            HighscoreCompilerJson _compilerScript = FindObjectOfType<HighscoreCompilerJson>();
+
+            if (_newSpeedRecord && !_newCrownsRecord)
+            {
+                _compilerScript.NewHighscore(0);
+            }else if(!_newSpeedRecord && _newCrownsRecord)
+            {
+                _compilerScript.NewHighscore(1);
+            }else if (_newSpeedRecord && _newCrownsRecord)
+            {
+                _compilerScript.NewHighscore(2);
+            }
         }
     }
 

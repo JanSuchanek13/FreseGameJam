@@ -72,7 +72,6 @@ public class ButtonFunction : MonoBehaviour
         // Get Input Handler reference:
         inputHandler = GameObject.Find("Third Person Player_GameLevel_1").GetComponent<InputHandler>();
     }
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) || playerInput.CharacterControls.Option.triggered)
@@ -117,7 +116,23 @@ public class ButtonFunction : MonoBehaviour
             SkipCutscene();
         }
     }
-    public void Pause()
+
+    /// <summary>
+    /// By Felix: Added this to allow calling the "Pause"-function but turning the pause-UI on/off if need be.
+    /// For example when achieving a highscore and wanting to collect the players information this gets called
+    /// (from the HighscoreCompiler-class)
+    /// </summary>
+    public void TogglePauseScreen()
+    {
+        if (pauseMenu.activeInHierarchy != true)
+        {
+            pauseMenu.SetActive(true);
+        }else
+        {
+            pauseMenu.SetActive(false);
+        }
+    }
+        public void Pause()
     {
         if (_retryHardcoreRun_UI.activeInHierarchy != true) // this allows to close the retry-hardcore UI when applicable by pressing ESC
         {
