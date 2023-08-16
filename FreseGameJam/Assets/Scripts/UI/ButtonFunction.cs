@@ -17,6 +17,7 @@ public class ButtonFunction : MonoBehaviour
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject[] arrayOfAllOtherMenus;
     [SerializeField] GameObject settingsButton;
+    [SerializeField] GameObject permissionButton;
     [Space(10)]
     [SerializeField] GameObject _retryHardcoreRun_UI;
 
@@ -130,6 +131,7 @@ public class ButtonFunction : MonoBehaviour
         }else
         {
             pauseMenu.SetActive(false);
+            EventSystem.current.SetSelectedGameObject(permissionButton);
         }
     }
         public void Pause()
