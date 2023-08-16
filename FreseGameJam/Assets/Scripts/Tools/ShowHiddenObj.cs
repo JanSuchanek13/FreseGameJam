@@ -6,6 +6,12 @@ public class ShowHiddenObj : MonoBehaviour
 {
     public GameObject hiddenObj;
 
+    private void Awake()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
     void OnGUI()
     {
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.H))
