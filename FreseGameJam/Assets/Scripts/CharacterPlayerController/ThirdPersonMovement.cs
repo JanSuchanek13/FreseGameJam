@@ -938,7 +938,7 @@ public class ThirdPersonMovement : MonoBehaviour
         //hier ändern damit dash nicht automaitsch stattfindet !!!!!!!!!!!!!!!!!!!!
         //change back to human
         GetComponent<StateController>().isChanging = true;
-
+        GetComponent<StateController>().currentFormId = 1;
         stateController.ball = false;
         stateController.human = true;
         stateController.frog = false;

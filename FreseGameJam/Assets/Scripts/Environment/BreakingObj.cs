@@ -59,7 +59,7 @@ public class BreakingObj : MonoBehaviour
 
     bool _calledBreak = false;
 
-    void OnTriggerEnter(Collider collision) // was on triggerstay // not sure why we switched away from this?!
+    void OnTriggerStay(Collider collision) // was on triggerstay // not sure why we switched away from this?!
     {
         if (collision.gameObject.tag == "Player")
         {

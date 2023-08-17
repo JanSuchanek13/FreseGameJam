@@ -386,15 +386,48 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "079d5afb-ac3d-42e5-a76d-bf7262053be5",
+                    "name": "Two Modifiers",
+                    "id": "e9aa10f6-8296-40ec-901d-9d635cbaf017",
+                    "path": "TwoModifiers",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CamToggle",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier1",
+                    "id": "776df6ad-a5de-4e97-aa4c-7b5b26c3507c",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CamToggle",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "modifier2",
+                    "id": "c6280d84-e9b3-461e-8251-ac065050556f",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CamToggle",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "4d33574b-baf2-4088-9c48-321fb4e7661b",
                     "path": "<Mouse>/middleButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "CamToggle",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
                 },
                 {
                     "name": "",
