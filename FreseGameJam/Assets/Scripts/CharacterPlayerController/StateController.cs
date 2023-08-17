@@ -90,7 +90,7 @@ public class StateController : MonoBehaviour
                 //Debug.Log("hit:Crane");
                 availableCrane = true;
                 PickUpNewForm_Sound.Play();
-                Destroy(other.gameObject, .3f);
+                Destroy(other.gameObject, .3f); //please let this be at 0.3!!!! 
                 PlayerPrefs.SetInt("State" + 0, 1);
             }else
             {
@@ -100,6 +100,7 @@ public class StateController : MonoBehaviour
                 Destroy(other.gameObject, .3f);
                 PlayerPrefs.SetInt("HardcoreStates" + 0, 1);
             }
+            other.gameObject.GetComponent<LocoParticles>().PickupParticles(this.transform);
         }
         if (other.gameObject.CompareTag("Frog"))
         {
@@ -117,8 +118,9 @@ public class StateController : MonoBehaviour
                 //Debug.Log("hit:Capricorn");
                 availableCapricorn = true;
                 PickUpNewForm_Sound.Play();
-                Destroy(other.gameObject, .3f);
+                Destroy(other.gameObject, .3f); //please let this be at 0.3!!!! 
                 PlayerPrefs.SetInt("State" + 0, 2);
+
             }else
             {
                 //Debug.Log("hit:Capricorn");
@@ -127,6 +129,7 @@ public class StateController : MonoBehaviour
                 Destroy(other.gameObject, .3f);
                 PlayerPrefs.SetInt("HardcoreStates" + 0, 2);
             }
+            other.gameObject.GetComponent<LocoParticles>().PickupParticles(this.transform);
         }
         if (other.gameObject.CompareTag("Lama"))
         {

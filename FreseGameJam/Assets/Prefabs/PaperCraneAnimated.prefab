@@ -363,6 +363,7 @@ GameObject:
   - component: {fileID: 8888899197864236960}
   - component: {fileID: 2575509778771651656}
   - component: {fileID: 2410037576376168753}
+  - component: {fileID: 1912404081444078091}
   m_Layer: 0
   m_Name: Particle System
   m_TagString: Untagged
@@ -5165,6 +5166,23 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &1912404081444078091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3522345403922425028}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d41c288e575eb84aac00fc3b880a5d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  speed: 1
+  destroyThreshold: 0.1
+  particleDestroyCounter: 4
+  acceleration: 4
 --- !u!1 &3763634962645554194
 GameObject:
   m_ObjectHideFlags: 0
@@ -5407,7 +5425,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6478536213147159724, guid: f4e726b4cf033cd4ab50e81a1f0ddf0f, type: 3}
+  - {fileID: 2100000, guid: 29d42b8c9e52a5748a3b72b2428fe4ef, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5761,6 +5779,7 @@ GameObject:
   - component: {fileID: -9103836133708703970}
   - component: {fileID: 8127155798004807336}
   - component: {fileID: 1164069163869999467}
+  - component: {fileID: 506392816512804068}
   m_Layer: 0
   m_Name: PaperCraneAnimated
   m_TagString: Crane
@@ -5777,7 +5796,7 @@ Transform:
   m_GameObject: {fileID: 8798608901020148425}
   m_LocalRotation: {x: -0.018564017, y: -0.037372597, z: -0.03759562, w: 0.99842143}
   m_LocalPosition: {x: -27.716856, y: 31.83371, z: 3.5644817}
-  m_LocalScale: {x: 2.1356, y: 2.1356, z: 2.1356}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1000350882111351021}
@@ -5825,11 +5844,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4e897e99b9cbd14e9bfbe7f4d74ad46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationVector: {x: 0, y: -1, z: 0}
-  speed: 30
+  rotationVector: {x: 0, y: 1, z: 0}
+  speed: 65
   partialRotation: 0
   maxRotationLeft: 100
   maxRotationRight: -100
+--- !u!114 &506392816512804068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8798608901020148425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d615a76ccc345b642a1b9220dcac0fb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickupParticles: {fileID: 3522345403922425028}
 --- !u!1 &9209184230032688965
 GameObject:
   m_ObjectHideFlags: 0

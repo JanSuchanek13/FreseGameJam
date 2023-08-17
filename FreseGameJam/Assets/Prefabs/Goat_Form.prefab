@@ -846,6 +846,7 @@ GameObject:
   - component: {fileID: 1385878101079440124}
   - component: {fileID: 3107685696156627667}
   - component: {fileID: 2776929823827586561}
+  - component: {fileID: 4248894994024362287}
   m_Layer: 0
   m_Name: Particle System
   m_TagString: Untagged
@@ -860,8 +861,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4622090544445114818}
-  m_LocalRotation: {x: -7.1492234e-10, y: 0.107894376, z: 0.000000007593177, w: -0.9941624}
-  m_LocalPosition: {x: -0.08, y: 1.62, z: -0.1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.561, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -941,7 +942,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: 0
@@ -5648,6 +5649,23 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &4248894994024362287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4622090544445114818}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d41c288e575eb84aac00fc3b880a5d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  speed: 1
+  destroyThreshold: 0.1
+  particleDestroyCounter: 4
+  acceleration: 1
 --- !u!1 &4926976267998107017
 GameObject:
   m_ObjectHideFlags: 0
@@ -5722,6 +5740,7 @@ GameObject:
   - component: {fileID: 1710563847240814212}
   - component: {fileID: 6464390131242852707}
   - component: {fileID: 7503230376999844328}
+  - component: {fileID: 2256615888832352252}
   m_Layer: 0
   m_Name: Goat_Form
   m_TagString: Capricorn
@@ -5736,8 +5755,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5265045879615021014}
-  m_LocalRotation: {x: -0, y: -0.107894376, z: -0, w: -0.9941624}
-  m_LocalPosition: {x: -170.092, y: 27.355, z: 138.278}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.58949155, y: 0.58949155, z: 0.58949155}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5746,7 +5765,7 @@ Transform:
   - {fileID: 1385878101079440124}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 372.388, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1710563847240814212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5791,6 +5810,19 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1.9423733
   m_Center: {x: 0.2599999, y: 1.5, z: 0.46}
+--- !u!114 &2256615888832352252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5265045879615021014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d615a76ccc345b642a1b9220dcac0fb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickupParticles: {fileID: 4622090544445114818}
 --- !u!1 &5451320912331547085
 GameObject:
   m_ObjectHideFlags: 0
