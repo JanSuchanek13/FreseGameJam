@@ -1,8 +1,50 @@
 fileFormatVersion: 2
 guid: f254aef433b27e649baa0ce6cd3d8024
 ModelImporter:
-  serializedVersion: 22200
-  internalIDToNameTable: []
+  serializedVersion: 21300
+  internalIDToNameTable:
+  - first:
+      74: 3153547840802052288
+    second: Paperman|Paperman|Paperman|Paperman|Paperman|Falling|Paperman|Falling|Pa
+  - first:
+      74: -3512941895672416311
+    second: Paperman|Paperman|Paperman|Paperman|Paperman|Idle02|Paperman|Idle02|Pape
+  - first:
+      74: -4887217409801258789
+    second: Paperman|Paperman|Paperman|Paperman|Paperman|Jump|Paperman|Jump|Paperman
+  - first:
+      74: -1873627780089580839
+    second: Paperman|Paperman|Paperman|Paperman|Paperman|LookAround|Paperman|LookAro
+  - first:
+      74: -7699285991504802741
+    second: Paperman|Paperman|Paperman|Paperman|Paperman|Run|Paperman|Run|Paperman|P
+  - first:
+      74: 2123861020625473764
+    second: Paperman|Paperman|Paperman|Paperman|Paperman|T_Pose|Paperman|T_Pose|Pape
+  - first:
+      74: 1499114916529402173
+    second: Paperman|Paperman|Paperman|Paperman|Paperman|Winken|Paperman|Winken|Pape
+  - first:
+      74: -7788482790987249866
+    second: Paperman|LookAround_noStep
+  - first:
+      74: 1083307533196234407
+    second: Paperman|Paperman|Paperman|Falling|Paperman|Falling
+  - first:
+      74: 4978697690672645017
+    second: Paperman|Paperman|Paperman|Idle02|Paperman|Idle02
+  - first:
+      74: -4848280851110779395
+    second: Paperman|Paperman|Paperman|Jump|Paperman|Jump
+  - first:
+      74: -1370220810750141375
+    second: Paperman|Paperman|Paperman|Run|Paperman|Run
+  - first:
+      74: -484889146757547191
+    second: Paperman|Paperman|Paperman|T_Pose|Paperman|T_Pose
+  - first:
+      74: -6376551296609643294
+    second: Paperman|Paperman|Paperman|Winken|Paperman|Winken
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -31,7 +73,36 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Paperman|LookAround_noStep
+      takeName: Paperman|LookAround_noStep
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 135
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 0
   meshes:
     lODScreenPercentages: []
@@ -40,7 +111,6 @@ ModelImporter:
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
-    importPhysicalCameras: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
@@ -68,7 +138,6 @@ ModelImporter:
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
-    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -101,7 +170,6 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
-  importBlendShapeDeformPercent: 1
   remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0
   userData: 
