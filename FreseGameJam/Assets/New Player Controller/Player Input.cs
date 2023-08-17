@@ -397,17 +397,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""da5e53bf-e1af-4dac-9b88-0a81e52279c2"",
-                    ""path"": ""<Gamepad>/rightStickPress"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""CamToggle"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
                     ""name"": ""Two Modifiers"",
                     ""id"": ""e9aa10f6-8296-40ec-901d-9d635cbaf017"",
                     ""path"": ""TwoModifiers"",

@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using Cinemachine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class HealthSystem : MonoBehaviour
@@ -12,6 +13,8 @@ public class HealthSystem : MonoBehaviour
     public Vector3 respawnPoint; // felix made this public for portable respawn position
     Vector3 _hardcoreRespawn; // kinda redundant...
     public bool inCoroutine;
+    public bool fadeBlackOnDeath;
+    public GameObject fadeToBlackBlende;
 
     [SerializeField] GameObject Cam;
     [SerializeField] GameObject Cam2;
@@ -113,7 +116,11 @@ public class HealthSystem : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("HardcoreMode", 0) == 0)
         {
-
+            if (fadeBlackOnDeath && fadeToBlackBlende != null)
+            {
+                StartCoroutine("FadeToBlack");
+            }
+            
             /*if (!inCoroutine)
             {*/
             inCoroutine = true;
@@ -288,6 +295,24 @@ public class HealthSystem : MonoBehaviour
         {
             // clamp death scream to last a max. of 1 seconds (which is the time of respawn)
             yield return new WaitForSeconds(Mathf.Clamp(_lengthOfScream, 0.0f, 1.0f));
+        }
+    }
+
+    IEnumerator FadeToBlack()
+    {
+        Color tempColor = fadeToBlackBlende.GetComponent<Image>().color;
+        while (tempColor.a < 1)
+        {
+            yield return new WaitForSeconds(0.05f);
+            tempColor.a += 0.1f;
+            fadeToBlackBlende.GetComponent<Image>().color = tempColor;
+        }
+        yield return new WaitForSeconds(0.5f);
+        while (tempColor.a > 0)
+        {
+            yield return new WaitForSeconds(0.05f);
+            tempColor.a -= 0.1f;
+            fadeToBlackBlende.GetComponent<Image>().color = tempColor;
         }
     }
 
