@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TestyMcTestFace : MonoBehaviour
 {
-
+    /*
     //[SerializeField] string _filePath = "C:/Users/fmund/AppData/LocalLow/Lone Flower Games/Origami Lovers/InventoryData.json";
     [SerializeField] string _filePath = "xxx";
     // Start is called before the first frame update
@@ -15,11 +15,11 @@ public class TestyMcTestFace : MonoBehaviour
         Debug.Log("HCtimer is: " + _savedHcTime);
 
         float _currentRunTime = PlayerPrefs.GetFloat("timer" + 0, 0.0f);
-        Debug.Log("current time is: " + _currentRunTime);*/
+        Debug.Log("current time is: " + _currentRunTime);
 
     }
 
-    public Inventory inventory = new Inventory();
+    public ListOfSpeedHighscores _listOfSpeedHighscores = new ListOfSpeedHighscores();
 
     private void Update()
     {
@@ -36,10 +36,10 @@ public class TestyMcTestFace : MonoBehaviour
 
     public void SaveToJson()
     {
-        string inventoryData = JsonUtility.ToJson(inventory);
+        string _speedHighscores = JsonUtility.ToJson(_listOfSpeedHighscores);
         string filePath = Application.persistentDataPath + "/InventoryData.json"; // this could be anything "x" with ".json" in the end!
         Debug.Log(filePath);
-        System.IO.File.WriteAllText(filePath, inventoryData);
+        System.IO.File.WriteAllText(filePath, _speedHighscores);
         Debug.Log("savefile has been created");
     }
 
@@ -50,24 +50,25 @@ public class TestyMcTestFace : MonoBehaviour
         //string filePath = _filePath;
         string inventoryData = System.IO.File.ReadAllText(_filePath);
 
-        inventory = JsonUtility.FromJson<Inventory>(inventoryData);
+        _listOfSpeedHighscores = JsonUtility.FromJson<ListOfSpeedHighscores>(inventoryData);
         Debug.Log("Load Complete!");
     }
 }
 
 
 [System.Serializable]
-public class Inventory
+public class ListOfSpeedHighscores
 {
-    public int gold;
-    public bool isFulL;
-    public List<Items> items = new List<Items>();
+    public string _name;
+    public stromg isFulL;
+    public List<HighscoreEntry> items = new List<HighscoreEntry>();
 }
 
 [System.Serializable]
-public class Items
+public class HighscoreEntry
 {
     public string name;
     public string description;
-}
+}*/
 
+}

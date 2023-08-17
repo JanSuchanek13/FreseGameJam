@@ -54,23 +54,11 @@ public class Highscore : MonoBehaviour
             Debug.Log("To change this just check the atGamescom-box in the inspector of the Highscore-script!");
         }
 
-        //safe level
+        // save level: // currently redundant
         currentLevel = SceneManager.GetActiveScene().buildIndex;
 
-        //activate this if you want to reset all Highscore Values
+        UpdateHighscoreUI();
         /*
-        PlayerPrefs.SetFloat("HTtimer" + (0), 0);
-        PlayerPrefs.SetInt("HTcrowns" + (0), 0);
-        PlayerPrefs.SetInt("HTdeaths" + (0), 0);
-        PlayerPrefs.SetFloat("HCtimer" + (0), 0);
-        PlayerPrefs.SetInt("HCcrowns" + (0), 0);
-        PlayerPrefs.SetInt("HCdeaths" + (0), 0);
-        PlayerPrefs.SetFloat("Lasttimer" + (0), 0);
-        PlayerPrefs.SetInt("Lastcrowns" + (0), 0);
-        PlayerPrefs.SetInt("Lastdeaths" + (0), 0);
-        */
-
-
         if (overwriteUI)
         {
             //for Level 1
@@ -128,7 +116,65 @@ public class Highscore : MonoBehaviour
             Lastcrowns.text = PlayerPrefs.GetInt("Lastcrowns" + (0), 0).ToString();
             Lastdeaths.text = PlayerPrefs.GetInt("Lastdeaths" + (0), 0).ToString();
 
-        }
+        }*/
+    }
+
+    void UpdateHighscoreUI()
+    {
+        //for Level 1
+
+        //for HARDCORE-crowns Highscore
+        timer = PlayerPrefs.GetFloat("HighscoreHardcoreCrowns_Time" + 0, 0.0f);
+        int minutes = (int)timer / 60;
+        int seconds = (int)timer - 60 * minutes;
+        int milliseconds = (int)(1000 * (timer - minutes * 60 - seconds));
+
+        _hardcoreCrowns_Time.text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
+        _hardcoreCrowns_Crowns.text = PlayerPrefs.GetInt("HighscoreHardcoreCrowns_Crowns" + 0, 0).ToString();
+        _hardcoreCrowns_Deaths.text = PlayerPrefs.GetInt("HighscoreHardcoreCrowns_Deaths" + 0, 0).ToString();
+
+
+        //for HARDCORE-time Highscore
+        timer = PlayerPrefs.GetFloat("HighscoreHardcoreTime_Time" + 0, 0.0f);
+
+        minutes = (int)timer / 60;
+        seconds = (int)timer - 60 * minutes;
+        milliseconds = (int)(1000 * (timer - minutes * 60 - seconds));
+
+        _hardcoreTime_Time.text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
+        _hardcoreTime_Crowns.text = PlayerPrefs.GetInt("HighscoreHardcoreTime_Crowns" + 0, 0).ToString();
+        _hardcoreTime_Deaths.text = PlayerPrefs.GetInt("HighscoreHardcoreTime_Deaths" + 0, 0).ToString();
+
+
+        //for Highscore Time
+        timer = PlayerPrefs.GetFloat("HTtimer" + 0, 0.0f);
+        minutes = (int)timer / 60;
+        seconds = (int)timer - 60 * minutes;
+        milliseconds = (int)(1000 * (timer - minutes * 60 - seconds));
+
+        HTtimer.text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
+        HTcrowns.text = PlayerPrefs.GetInt("HTcrowns" + (0), 0).ToString();
+        HTdeaths.text = PlayerPrefs.GetInt("HTdeaths" + (0), 0).ToString();
+
+        //for Highscore Crowns
+        timer = PlayerPrefs.GetFloat("HCtimer" + 0, 0.0f);
+        minutes = (int)timer / 60;
+        seconds = (int)timer - 60 * minutes;
+        milliseconds = (int)(1000 * (timer - minutes * 60 - seconds));
+
+        HCtimer.text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
+        HCcrowns.text = PlayerPrefs.GetInt("HCcrowns" + (0), 0).ToString();
+        HCdeaths.text = PlayerPrefs.GetInt("HCdeaths" + (0), 0).ToString();
+
+        //for Highscore Last Run
+        timer = PlayerPrefs.GetFloat("Lasttimer" + 0, 0.0f);
+        minutes = (int)timer / 60;
+        seconds = (int)timer - 60 * minutes;
+        milliseconds = (int)(1000 * (timer - minutes * 60 - seconds));
+
+        Lasttimer.text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
+        Lastcrowns.text = PlayerPrefs.GetInt("Lastcrowns" + (0), 0).ToString();
+        Lastdeaths.text = PlayerPrefs.GetInt("Lastdeaths" + (0), 0).ToString();
     }
 
     public void SafeLastStats()
@@ -138,7 +184,9 @@ public class Highscore : MonoBehaviour
         PlayerPrefs.SetFloat("Lasttimer" + (0), PlayerPrefs.GetFloat("timer" + (0), 0));
         PlayerPrefs.SetInt("Lastcrowns" + (0), PlayerPrefs.GetInt("crowns" + (0), 0));
         PlayerPrefs.SetInt("Lastdeaths" + (0), PlayerPrefs.GetInt("deaths" + (0), 0));
-        Start();
+        
+        //Start();
+        UpdateHighscoreUI();
     }
 
     public void CompareHighscore()
@@ -213,7 +261,8 @@ public class Highscore : MonoBehaviour
     public void ResetAllHighscores()
     {
         CompareHighscore();
-        overwriteUI = true;
-        Start();
+        //overwriteUI = true;
+        //Start();
+        UpdateHighscoreUI();
     }
 }

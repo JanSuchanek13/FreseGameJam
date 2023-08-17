@@ -144,7 +144,11 @@ public class BackgroundSoundPlayer : MonoBehaviour
     }
     public void TurnOffMusic()
     {
+        // changed this to make end of run more juicy by playing screetch:
+        AudioSource _randomScreetch = _interruptingMusicSounds[Random.Range(0, _interruptingMusicSounds.Length)];
         _activeTrack.Stop();
+        _activeTrack = _randomScreetch;
+        _activeTrack.Play();
     }
 
     public void UnpauseMusic()

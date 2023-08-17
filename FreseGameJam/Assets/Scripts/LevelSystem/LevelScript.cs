@@ -69,12 +69,12 @@ public class LevelScript : MonoBehaviour
 
     private void Update()
     {
-        if(FindObjectOfType<HardcoreMode>().useHardcoreMode == true)
+        //if(FindObjectOfType<HardcoreMode>().useHardcoreMode == true)
+        if (PlayerPrefs.GetInt("HardcoreMode", 0) == 1)
         {
         _usingHardcoreMode = true;
         }
-        // save time per frame
-        if (!_endZoneReached && !_usingHardcoreMode && _clockRunning)
+        else if (!_endZoneReached && _clockRunning)
         {
             PlayerPrefs.SetFloat("timer" + 0, Time.timeSinceLevelLoad + _timer[0]); //(currentLevel - 2)
         }
@@ -125,8 +125,8 @@ public class LevelScript : MonoBehaviour
                     // this bool ensures that the end of a level is triggered only once and immediatly!
                     _endZoneReached = true;
 
+                    // turn off the (hardcore-) UI and fade to black:
                     FindObjectOfType<HardcoreMode>().runFinished = true;
-
                     if (_fadeToBlackBlende != null) // only fade if there is a fadeBlende in place.
                     {
                         StartCoroutine(FadeToBlack());
@@ -134,7 +134,8 @@ public class LevelScript : MonoBehaviour
                     }
 
                     // stop music & play success-music:
-                    _gameManager.GetComponent<BackgroundSoundPlayer>().PauseMusic();
+                    //_gameManager.GetComponent<BackgroundSoundPlayer>().PauseMusic(); // pausing will just lower volume
+                    _gameManager.GetComponent<BackgroundSoundPlayer>().TurnOffMusic();
                     _choirSound.Play();
                     _victorySound.Play();
 
@@ -172,8 +173,7 @@ public class LevelScript : MonoBehaviour
             Debug.Log("Level " + PlayerPrefs.GetInt("levelIsUnlocked") + " is now unlocked!");
         }
 
-        // save highscore:
-        //_highscore.CompareHighscore();
+        // check for- and process possible highscore (relevant for regular here):
         _gameManager.GetComponent<Highscore>().CompareHighscore();
 
         // change level:
@@ -191,8 +191,7 @@ public class LevelScript : MonoBehaviour
             Debug.Log("Level " + PlayerPrefs.GetInt("levelIsUnlocked") + " is now unlocked!");
         }
 
-        // save highscore:
-        //_highscore.CompareHighscore();
+        // check for- and process possible highscore (relevant for hardcore here):
         _gameManager.GetComponent<Highscore>().CompareHighscore();
 
         // change level:

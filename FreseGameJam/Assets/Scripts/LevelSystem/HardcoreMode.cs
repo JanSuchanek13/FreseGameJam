@@ -7,8 +7,8 @@ using TMPro;
 
 public class HardcoreMode : MonoBehaviour
 {
-    [Header("Hardcore Mode settings:")]
-    public bool useHardcoreMode = false;
+    [Header("Hardcore Mode settings:")]// cant this be turnt off?
+    public bool useHardcoreMode = false;// cant this be turnt off?
     [Tooltip("The display will always show 3,2,1 --> but the time this takes can be adjusted here.")]
     [SerializeField] float _countdownTimeInSeconds = 3.0f;
     [SerializeField] GameObject _hardcoreUI;
@@ -23,50 +23,50 @@ public class HardcoreMode : MonoBehaviour
 
     [Header("Things to turn off:")]
     [SerializeField] GameObject _checkpointParent;
-    [SerializeField] GameObject _signs;
+    [SerializeField] GameObject _signs; 
     [SerializeField] GameObject _normalUI;
+    // new:
+    [SerializeField] GameObject _normalSky;
+    [SerializeField] GameObject _normalClouds;
+
+    [Header("Things to turn on instead:")]
+    [SerializeField] Material _burningSkySkybox;
+    //[SerializeField] GameObject _burningSky; // all turn on objects should be combined to a single parent later!
+    [SerializeField] GameObject _darkClouds; // all turn on objects should be combined to a single parent later!
+    //[SerializeField] GameObject _magmaOcean; // not yet in the game 
+
 
     float _timeElapsed;
+    int _minutes;
+    int _seconds;
+    int _milliseconds;
     bool _runStarted = false;
+
     public bool stopTheClock = false; // this gets updated by the Levelscript when the friend is reached!
     public bool runFinished = false; // this gets updated by the LevelScript when the bottom-trigger is reached falling!
 
     private void Start()
     {
-        int _playHardcore = PlayerPrefs.GetInt("HardcoreMode", 0);
-        if (_playHardcore == 1)
+        //int _playHardcore = PlayerPrefs.GetInt("HardcoreMode", 0);
+
+        //if (_playHardcore == 1)
+        if (PlayerPrefs.GetInt("HardcoreMode", 0) == 1)
         {
-            useHardcoreMode = true;
+            useHardcoreMode = true; // cant this be turnt off?
             StartHardcoreRun();
+            ResetCurrentHardcoreCrowns(); // this should reset crown display at start of run:
         }
     }
     public void StartHardcoreRun()
     {
-        // Adjust the level to HARDCORE:
+        // adjust the level to HARDCORE:
         FindObjectOfType<InputHandler>().enabled = false;    
         _timeElapsed = 0.0f;
-        _hardcoreUI.SetActive(true);
-        _checkpointParent.SetActive(false);
-        _normalUI.SetActive(false);
-        DisableScriptOfType<DelaySound>();
-        DisableScriptOfType<TriggerSound>();
-        FindObjectOfType<FocusPlayerViewOnObject>().enabled = false;
 
-        foreach(Transform child in _signs.transform)
-        {
-            foreach(Transform childOfChild in child)
-            {
-            Collider collider = childOfChild.GetComponent<Collider>();
+        // change world, UI, and logic:
+        ChangeUIAndEnvironment();
 
-                if(collider != null && collider.isTrigger)
-                {
-                    childOfChild.gameObject.SetActive(false);
-                    break; // exit the inner loop if a trigger collider is found
-                }
-            }
-        }
-
-        // Start countdown to run:
+        // start countdown to run:
         StartCoroutine(CountDownToGo());
     }
 
@@ -104,10 +104,39 @@ public class HardcoreMode : MonoBehaviour
         FindObjectOfType<InputHandler>().enabled = true;
     }
 
+    void ChangeUIAndEnvironment()
+    {
+        // turn off that, which needs turning off:
+        _hardcoreUI.SetActive(true);
+        _checkpointParent.SetActive(false);
+        _normalUI.SetActive(false);
+        //_normalSky.SetActive(false);
+        //_normalClouds.SetActive(false);
+   
+        // turn off scripts which are not needed in Hardcore:
+        DisableScriptOfType<DelaySound>();
+        DisableScriptOfType<TriggerSound>();
+        FindObjectOfType<FocusPlayerViewOnObject>().enabled = false;
 
-    int _minutes;
-    int _seconds;
-    int _milliseconds;
+        foreach (Transform child in _signs.transform)
+        {
+            foreach (Transform childOfChild in child)
+            {
+                Collider collider = childOfChild.GetComponent<Collider>();
+
+                if (collider != null && collider.isTrigger)
+                {
+                    childOfChild.gameObject.SetActive(false);
+                    break; // exit the inner loop if a trigger collider is found
+                }
+            }
+        }
+
+        // turn on that, which needs turning on:
+        //_burningSky.SetActive(true); // this will be redundant!
+        //_darkClouds.SetActive(true);
+        //RenderSettings.skybox = _burningSkySkybox; // swap skybox in runtime
+    }
 
     private void Update()
     {
@@ -118,8 +147,6 @@ public class HardcoreMode : MonoBehaviour
                 _timeElapsed += Time.deltaTime;
                 PlayerPrefs.SetFloat("HardcoreTime" + 0, _timeElapsed);
 
-                //_timer_txt.text += Time.deltaTime.ToString();
-                //float _totalLevelTime = PlayerPrefs.GetFloat("timer" + 0, 0) + PlayerPrefs.GetFloat("lastTimer" + 0, 0);
                 _minutes = Mathf.FloorToInt(_timeElapsed / 60);
                 _seconds = Mathf.FloorToInt(_timeElapsed % 60);
                 _milliseconds = Mathf.FloorToInt((_timeElapsed * 1000) % 1000);
@@ -128,18 +155,7 @@ public class HardcoreMode : MonoBehaviour
             int _crowns = PlayerPrefs.GetInt("HardcoreCrowns" + 0, 0);
             _crowns_txt.text = _crowns.ToString();
 
-            /*
-            _timeElapsed += Time.deltaTime;
-            PlayerPrefs.SetFloat("HardcoreTime" + 0, _timeElapsed);
-
-            //_timer_txt.text += Time.deltaTime.ToString();
-            //float _totalLevelTime = PlayerPrefs.GetFloat("timer" + 0, 0) + PlayerPrefs.GetFloat("lastTimer" + 0, 0);
-            int _minutes = Mathf.FloorToInt(_timeElapsed / 60);
-            int _seconds = Mathf.FloorToInt(_timeElapsed % 60);
-            int _milliseconds = Mathf.FloorToInt((_timeElapsed * 1000) % 1000);*/
-
             // the chosen way ensures that the number display doesnt flicker during rapid changes:
-            //_minuteTimer_txt.text = string.Format("{0:00}:{1:00}:{2:000}", _minutes, _seconds, _milliseconds);
             _minuteTimer_txt.text = string.Format("{0:00}", _minutes);
             _secondTimer_txt.text = string.Format("{0:00}", _seconds);
             _milisecondTimer_txt.text = string.Format("{0:000}", _milliseconds);

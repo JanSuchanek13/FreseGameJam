@@ -71,6 +71,7 @@ public class HighscoreCompilerJson : MonoBehaviour
         }
     }
 
+    /*
     //TESTING!
     private void Update()
     {
@@ -82,11 +83,11 @@ public class HighscoreCompilerJson : MonoBehaviour
             NewHighscore(_typeOfHighscoreID);
         }
 
-        /*if (Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.L))
         {
             //LoadCurrentHighscoresFromJson();
-        }*/
-    }
+        }
+    }*/
 
     /// <summary>
     /// This should be called by the Highscore-script whenever a new highscore is achieved,
