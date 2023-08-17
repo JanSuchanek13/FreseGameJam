@@ -70,7 +70,7 @@ public class LevelScript : MonoBehaviour
     private void Update()
     {
         //if(FindObjectOfType<HardcoreMode>().useHardcoreMode == true)
-        if (PlayerPrefs.GetInt("HardcoreMode", 0) == 1)
+        if (PlayerPrefs.GetInt("HardcoreMode", 0) == 1 && !_usingHardcoreMode) // in update, as its switched later than start, i think?
         {
         _usingHardcoreMode = true;
         }
@@ -120,13 +120,15 @@ public class LevelScript : MonoBehaviour
 
                     // this bool ensures that the end of a level is triggered only once and immediatly!
                     //_endZoneReached = true;
-                }else
+                }
+                else
                 {
                     // this bool ensures that the end of a level is triggered only once and immediatly!
-                    _endZoneReached = true;
+                    //_endZoneReached = true;
 
                     // turn off the (hardcore-) UI and fade to black:
                     FindObjectOfType<HardcoreMode>().runFinished = true;
+
                     if (_fadeToBlackBlende != null) // only fade if there is a fadeBlende in place.
                     {
                         StartCoroutine(FadeToBlack());
@@ -142,7 +144,13 @@ public class LevelScript : MonoBehaviour
                     //GameObject.Find("Hardcore_UI").SetActive(false); // turn off the Hardcore_UI
                     //_hardcoreUI.SetActive(false);
 
-                    HardcoreFinished();
+                    //HardcoreFinished();
+
+                    // call up the data-entry UI:
+                    FindObjectOfType<GamesomHighscoreManager>().GamescomHardcoreRunFinished(); // DELETE AFTER GAMESCOM2023!
+
+                    // this is commented to not allow people enter hardcore data, without providing their email and potentially skewer the results.
+                    //LevelFinished(); // UNCOMMENT AFTER GAMESCOM2023!
                 }
             }
         }
@@ -179,6 +187,7 @@ public class LevelScript : MonoBehaviour
         // change level:
         StartCoroutine(LoadLevel(nextLevel)); // may need a _inCoroutine bool to avoid starting loading the next level multiple times -F
     }
+    /*
     public void HardcoreFinished()
     {
         // save level:
@@ -196,6 +205,14 @@ public class LevelScript : MonoBehaviour
 
         // change level:
         StartCoroutine(LoadLevel(nextLevel)); // may need a _inCoroutine bool to avoid starting loading the next level multiple times -F
+    }*/
+
+    /// <summary>
+    /// This is to be used if someone didnt want their info collected. It goes back to main without comparing highscores.
+    /// </summary>
+    public void AbortHighscoreCheck()
+    {
+        StartCoroutine(LoadLevel(nextLevel));
     }
 
     IEnumerator LoadLevel(int levelIndex)

@@ -3,13 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System.IO;
+using TMPro;
 
 
 public class GamesomHighscoreManager : MonoBehaviour
 {
-    private const int _maxHighscores = 5;
+    //private const int _maxHighscores = 5;
+    [Header("Set this int to the current day of gamescom:")]
     [Tooltip("1 = Donnerstag, 2 = Freitag, 3 = Samstag, 4 = Sonntag")]
     [SerializeField] private int currentDay = 1; // set this in the editor to your current day
+
+    [Header("UI-Settings for data-entry:")]
+    [SerializeField] GameObject _givePermissionUI;
+
+    [Space(10)]
+    [SerializeField] TMP_InputField _nameInputField;
+    [SerializeField] TMP_InputField _emailInputField;
+    [SerializeField] TextMeshProUGUI _timeDisplay;
+    [SerializeField] TextMeshProUGUI _crownsDisplay;
 
     private List<HighscoreEntry> _overallSpeedHighscoreList = new List<HighscoreEntry>();
     private List<HighscoreEntry> _overallCrownsHighscoreList = new List<HighscoreEntry>();
@@ -27,11 +38,9 @@ public class GamesomHighscoreManager : MonoBehaviour
     private void Start()
     {
         // instructions:
-        Debug.Log("Homeskillets!!! copy this:    " + Application.persistentDataPath + "/SpeedHighscoreData.json     into the file-path (speed) section of the HighscoreDataGatherer-script in the display app");
-        Debug.Log("And copy this:    " + Application.persistentDataPath + "/CrownsHighscoreData.json     into the file-path (speed) section of the HighscoreDataGatherer-script in the display app");
-
-        Debug.Log("For this to work you have to first create a default save-file by pressing S while the game is running");
-        Debug.Log("Now hit play in the display app!");
+        Debug.Log("Moin! copy this:    " + Application.persistentDataPath + "into the file-path section of the HighscoreDataGatherer-script in the display app");
+        Debug.Log("Hit play in the game, open the pause menu and hit the Reset button, now hit play in the app --> all entries should be default entries and 0 data");
+        Debug.Log("Now open the pause menu again and hit the CreateRandomEntries button, now 14 rng-chars should populate the highscore lists of day 1 and 2 and overall!");
 
         if (PlayerPrefs.GetInt("JsonCreated", 0) == 0) // this never needs to be reset.
         {
@@ -44,7 +53,62 @@ public class GamesomHighscoreManager : MonoBehaviour
         LoadFromJson();
     }
 
-    public void RegisterRun(string playerName, string playerEmail, float timeTaken, int crownsCollected)
+    /// <summary>
+    /// Call this function when a hardcore run was finished at the gamescom 2023.
+    /// </summary>
+    public void GamescomHardcoreRunFinished()
+    {
+        FindObjectOfType<ButtonFunction>().Pause(); // make UI interactable
+        FindObjectOfType<ButtonFunction>().TogglePauseScreen(); // turn off the pause menu-UI to give access to the permission-UI
+
+        float _rawTime = PlayerPrefs.GetFloat("HardcoreTime" + 0, 0.0f);
+        int minutes = (int)_rawTime / 60;
+        int seconds = (int)_rawTime - 60 * minutes;
+        int milliseconds = (int)(1000 * (_rawTime - minutes * 60 - seconds));
+        _timeDisplay.text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
+
+        _crownsDisplay.text = PlayerPrefs.GetInt("HardcoreCrowns" + 0).ToString();
+
+        _givePermissionUI.SetActive(true);
+    }
+
+    /// <summary>
+    /// Call this on the "No"-option of the data-entry UI in case someone does not wish to have their data collected.
+    /// This will delete the results of their run! Beware!
+    /// </summary>
+    public void PermissionNotGranted()
+    {
+        // This should be not required, as were skipping the compare highscore stage and thus this data will be deleted:
+        //PlayerPrefs.SetInt("HardcoreCrowns" + 0);
+        //PlayerPrefs.SetFloat("HardcoreTime" + 0, 0.0f);
+
+        FindObjectOfType<LevelScript>().AbortHighscoreCheck(); // this could be ambiguous as we have more than one instance in the level!
+
+        // unpause the game: (since the pause-UI is inactive, this will unpause)
+        FindObjectOfType<ButtonFunction>().TogglePauseScreen(); // turn onthe pause menu-UI to give access to the permission-UI
+        FindObjectOfType<ButtonFunction>().Pause();
+    }
+
+    /// <summary>
+    /// Call this function when a player is done entering his/her data into the intake-sheet.
+    /// Note, collecting this data is only possible after they have agreed to us using their info!
+    /// This is a Button--function.
+    /// </summary>
+    public void DoneEnteringData()
+    {
+        string _name = _nameInputField.text;
+        string _email = _emailInputField.text;
+        float _time = PlayerPrefs.GetFloat("HardcoreTime" + 0, 0.0f);
+        int _crowns = PlayerPrefs.GetInt("HardcoreCrowns" + 0);
+
+        RegisterRun(_name, _email, _time, _crowns);
+
+        // unpause the game: (since the pause-UI is inactive, this will unpause)
+        FindObjectOfType<ButtonFunction>().TogglePauseScreen(); // turn onthe pause menu-UI to give access to the permission-UI
+        FindObjectOfType<ButtonFunction>().Pause();
+    } 
+
+    private void RegisterRun(string playerName, string playerEmail, float timeTaken, int crownsCollected)
     {
         HighscoreEntry newEntry = new HighscoreEntry
         {
@@ -186,7 +250,12 @@ public class GamesomHighscoreManager : MonoBehaviour
         File.WriteAllText(fullPath, jsonData);
     }
 
-    // TEST!!!!
+    #region Testing:
+    /// <summary>
+    /// Create several fake entries over two days to check functionality and list-sorting.
+    /// Using low possible values helps test sorting at close proximity.
+    /// This is a Button--function.
+    /// </summary>
     public void TestInput()
     {
         string[] randomNamesDay1 = { "Alice", "Bob", "Charlie", "Dave", "Ella", "Finn", "Grace" };
@@ -195,23 +264,23 @@ public class GamesomHighscoreManager : MonoBehaviour
 
         // Day 1 entries
         currentDay = 1;
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < 10; i++)
         {
             string playerName = randomNamesDay1[i];
             string playerEmail = "test@test.test";
-            float timeTaken = (float)(random.NextDouble() * 10); // random float between 0 and 10
-            int crownsCollected = random.Next(11); // random int between 0 and 5
+            float timeTaken = (float)(random.NextDouble() * 6); // random float between 0 and 5
+            int crownsCollected = random.Next(6); // random int between 0 and 5
             RegisterRun(playerName, playerEmail, timeTaken, crownsCollected);
         }
 
         // Day 2 entries
         currentDay = 2;
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < 10; i++)
         {
             string playerName = randomNamesDay2[i];
             string playerEmail = "test2@test.test";
-            float timeTaken = (float)(random.NextDouble() * 10); // random float between 0 and 10
-            int crownsCollected = random.Next(11); // random int between 0 and 5
+            float timeTaken = (float)(random.NextDouble() * 6); // random float between 0 and 5
+            int crownsCollected = random.Next(6); // random int between 0 and 5
             RegisterRun(playerName, playerEmail, timeTaken, crownsCollected);
         }
 
@@ -219,6 +288,11 @@ public class GamesomHighscoreManager : MonoBehaviour
         Debug.Log("---- Entries Created ----");
     }
 
+    /// <summary>
+    /// This function creates "default" entries for all lists so that the display-app has data to use and display.
+    /// Even if nobody has played hardcore yet.
+    /// This is a Button--function.
+    /// </summary>
     public void SetListsToDefault()
     {
         HighscoreEntry defaultEntry = new HighscoreEntry
@@ -283,6 +357,7 @@ public class GamesomHighscoreManager : MonoBehaviour
         string dayFourCrowns = JsonUtility.ToJson(new SerializableList<HighscoreEntry>(_dayThreeCrownsHighscoreList));
         File.WriteAllText(Application.persistentDataPath + "/DayThreeCrownsHighscores.json", dayFourCrowns);
     }
+    #endregion
 }
 
 [System.Serializable]

@@ -159,7 +159,9 @@ public class HardcoreMode : MonoBehaviour
             _minuteTimer_txt.text = string.Format("{0:00}", _minutes);
             _secondTimer_txt.text = string.Format("{0:00}", _seconds);
             _milisecondTimer_txt.text = string.Format("{0:000}", _milliseconds);
-        }else if(_runStarted && runFinished)
+
+        }
+        else if(_runStarted && runFinished) // = no longer update time
         {
             _hardcoreUI.SetActive(false);
         }

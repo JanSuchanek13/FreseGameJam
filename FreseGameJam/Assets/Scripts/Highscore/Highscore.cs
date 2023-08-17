@@ -7,7 +7,7 @@ using TMPro;
 public class Highscore : MonoBehaviour
 {
     // GAMESCOM STUFF:
-    [SerializeField] bool _atGamescom23 = false;
+    //[SerializeField] bool _atGamescom23 = false;
     
     [Space(15)]
     public bool overwriteUI;
@@ -44,6 +44,7 @@ public class Highscore : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        /*
         // Do not delete or turn off while prepping for gamescom!
         if (_atGamescom23)
         {
@@ -52,7 +53,7 @@ public class Highscore : MonoBehaviour
         {
             Debug.Log("Gamescom23-mode is NOT active. The Highscore-display logic is NOT enabled.");
             Debug.Log("To change this just check the atGamescom-box in the inspector of the Highscore-script!");
-        }
+        }*/
 
         // save level: // currently redundant
         currentLevel = SceneManager.GetActiveScene().buildIndex;
@@ -192,8 +193,8 @@ public class Highscore : MonoBehaviour
     public void CompareHighscore()
     {
         // only whilse at gamescom:
-        bool _newSpeedRecord = false;
-        bool _newCrownsRecord = false;
+        //bool _newSpeedRecord = false;
+        //bool _newCrownsRecord = false;
 
 
         // for Highscore Time
@@ -220,7 +221,7 @@ public class Highscore : MonoBehaviour
             PlayerPrefs.SetInt("HighscoreHardcoreCrowns_Deaths" + 0, PlayerPrefs.GetInt("HardcoreDeaths" + 0, 0));
 
             // GAMESCOM STUFF:
-            _newCrownsRecord = true;
+            //_newCrownsRecord = true;
         }
 
         // update highscore for hardcore time:
@@ -231,9 +232,10 @@ public class Highscore : MonoBehaviour
             PlayerPrefs.SetInt("HighscoreHardcoreTime_Deaths" + 0, PlayerPrefs.GetInt("HardcoreDeaths" + 0, 0));
 
             // GAMESCOM STUFF:
-            _newSpeedRecord = true;
+            //_newSpeedRecord = true;
         }
 
+        /*
         // GAMESCOM STUFF:
         if (_atGamescom23)
         {
@@ -249,7 +251,7 @@ public class Highscore : MonoBehaviour
             {
                 _compilerScript.NewHighscore(2);
             }
-        }
+        }*/
     }
 
 
