@@ -58,7 +58,12 @@ public class Highscore : MonoBehaviour
         // save level: // currently redundant
         currentLevel = SceneManager.GetActiveScene().buildIndex;
 
-        UpdateHighscoreUI();
+        // only call the UI-update, if in start screen, bc. outside of that, there is no highscore UI!
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            UpdateHighscoreUI();
+        }
+
         /*
         if (overwriteUI)
         {
@@ -133,7 +138,7 @@ public class Highscore : MonoBehaviour
         _hardcoreCrowns_Time.text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
         _hardcoreCrowns_Crowns.text = PlayerPrefs.GetInt("HighscoreHardcoreCrowns_Crowns" + 0, 0).ToString();
         _hardcoreCrowns_Deaths.text = PlayerPrefs.GetInt("HighscoreHardcoreCrowns_Deaths" + 0, 0).ToString();
-
+        
 
         //for HARDCORE-time Highscore
         timer = PlayerPrefs.GetFloat("HighscoreHardcoreTime_Time" + 0, 0.0f);
@@ -141,7 +146,7 @@ public class Highscore : MonoBehaviour
         minutes = (int)timer / 60;
         seconds = (int)timer - 60 * minutes;
         milliseconds = (int)(1000 * (timer - minutes * 60 - seconds));
-
+        
         _hardcoreTime_Time.text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
         _hardcoreTime_Crowns.text = PlayerPrefs.GetInt("HighscoreHardcoreTime_Crowns" + 0, 0).ToString();
         _hardcoreTime_Deaths.text = PlayerPrefs.GetInt("HighscoreHardcoreTime_Deaths" + 0, 0).ToString();

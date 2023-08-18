@@ -15,6 +15,7 @@ public class GamesomHighscoreManager : MonoBehaviour
 
     [Header("UI-Settings for data-entry:")]
     [SerializeField] GameObject _givePermissionUI;
+    [SerializeField] TextMeshProUGUI _permissionUIHeader;
 
     [Space(10)]
     [SerializeField] TMP_InputField _nameInputField;
@@ -53,23 +54,128 @@ public class GamesomHighscoreManager : MonoBehaviour
         LoadFromJson();
     }
 
+    public enum HighscoreStatus
+    {
+        None,
+        SpeedOverall,
+        CrownsOverall,
+        DoubleOverall,
+        SpeedDayTop5,
+        CrownsDayTop5,
+        DoubleDayTop5
+    }
+
     /// <summary>
     /// Call this function when a hardcore run was finished at the gamescom 2023.
     /// </summary>
     public void GamescomHardcoreRunFinished()
     {
-        FindObjectOfType<ButtonFunction>().Pause(); // make UI interactable
-        FindObjectOfType<ButtonFunction>().TogglePauseScreen(); // turn off the pause menu-UI to give access to the permission-UI
-
         float _rawTime = PlayerPrefs.GetFloat("HardcoreTime" + 0, 0.0f);
-        int minutes = (int)_rawTime / 60;
-        int seconds = (int)_rawTime - 60 * minutes;
-        int milliseconds = (int)(1000 * (_rawTime - minutes * 60 - seconds));
-        _timeDisplay.text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
+        int _crowns = PlayerPrefs.GetInt("HardcoreCrowns" + 0, 0);
+        HighscoreStatus highscoreStatus = CheckForHighscoreAchieved(_rawTime, _crowns);
 
-        _crownsDisplay.text = PlayerPrefs.GetInt("HardcoreCrowns" + 0).ToString();
+        if (highscoreStatus != HighscoreStatus.None)
+        {
+            // Set the UI header based on the highscore status
+            switch (highscoreStatus)
+            {
+                case HighscoreStatus.SpeedOverall:
+                    _permissionUIHeader.text = "SPEED HIGHSCORE!";
+                    break;
+                case HighscoreStatus.CrownsOverall:
+                    _permissionUIHeader.text = "CROWN HIGHSCORE!";
+                    break;
+                case HighscoreStatus.DoubleOverall:
+                    _permissionUIHeader.text = "DOUBLE HIGHSCORE!";
+                    break;
+                case HighscoreStatus.SpeedDayTop5:
+                    _permissionUIHeader.text = "Top 5 Speed!";
+                    break;
+                case HighscoreStatus.CrownsDayTop5:
+                    _permissionUIHeader.text = "Top 5 Crowns!";
+                    break;
+                case HighscoreStatus.DoubleDayTop5:
+                    _permissionUIHeader.text = "Top 5 Speed AND Crowns!";
+                    break;
+                default:
+                    _permissionUIHeader.text = "";  // Default empty just in case
+                    break;
+            }
 
-        _givePermissionUI.SetActive(true);
+            FindObjectOfType<ButtonFunction>().Pause(); // make UI interactable
+            FindObjectOfType<ButtonFunction>().TogglePauseScreen(); // turn off the pause menu-UI to give access to the permission-UI
+
+            int minutes = (int)_rawTime / 60;
+            int seconds = (int)_rawTime - 60 * minutes;
+            int milliseconds = (int)(1000 * (_rawTime - minutes * 60 - seconds));
+            _timeDisplay.text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
+
+            _crownsDisplay.text = _crowns.ToString();
+
+            _givePermissionUI.SetActive(true);
+        }
+        else // No highscore achieved:
+        {
+            FindObjectOfType<LevelScript>().AbortHighscoreCheck(); // this could be ambiguous as we have more than one instance in the level!
+            Debug.Log("No highscore achieved this run.");
+        }
+    }
+    private HighscoreStatus CheckForHighscoreAchieved(float time, int crowns)
+    {
+        bool isSpeedHighscoreOverall = _overallSpeedHighscoreList.Count < 5 || _overallSpeedHighscoreList[4].time == 0 || time < _overallSpeedHighscoreList[4].time;
+        bool isCrownsHighscoreOverall = _overallCrownsHighscoreList.Count < 5 || _overallCrownsHighscoreList[4].crowns == 0 || crowns > _overallCrownsHighscoreList[4].crowns;
+
+        if (isSpeedHighscoreOverall && isCrownsHighscoreOverall)
+            return HighscoreStatus.DoubleOverall;
+        if (isSpeedHighscoreOverall)
+            return HighscoreStatus.SpeedOverall;
+        if (isCrownsHighscoreOverall)
+            return HighscoreStatus.CrownsOverall;
+
+        // Existing Day Check Logic
+        List<HighscoreEntry> speedList;
+        List<HighscoreEntry> crownsList;
+
+        switch (currentDay)
+        {
+            case 1:
+                speedList = _dayOneSpeedHighscoreList;
+                crownsList = _dayOneCrownsHighscoreList;
+                break;
+
+            case 2:
+                speedList = _dayTwoSpeedHighscoreList;
+                crownsList = _dayTwoCrownsHighscoreList;
+                break;
+
+            case 3:
+                speedList = _dayThreeSpeedHighscoreList;
+                crownsList = _dayThreeCrownsHighscoreList;
+                break;
+
+            case 4:
+                speedList = _dayFourSpeedHighscoreList;
+                crownsList = _dayFourCrownsHighscoreList;
+                break;
+
+            default:
+                Debug.Log("Error! Wrong day selected!");
+                speedList = _dayOneSpeedHighscoreList;
+                crownsList = _dayOneCrownsHighscoreList;
+                break;
+        }
+
+        bool isSpeedHighscoreDay = speedList.Count < 5 || speedList[4].time == 0 || time < speedList[4].time;
+        bool isCrownsHighscoreDay = crownsList.Count < 5 || crownsList[4].crowns == 0 || crowns > crownsList[4].crowns;
+
+        if (isSpeedHighscoreDay && isCrownsHighscoreDay)
+            return HighscoreStatus.DoubleDayTop5;
+        if (isSpeedHighscoreDay)
+            return HighscoreStatus.SpeedDayTop5;
+        if (isCrownsHighscoreDay)
+            return HighscoreStatus.CrownsDayTop5;
+
+        return HighscoreStatus.None;
     }
 
     /// <summary>
@@ -106,6 +212,9 @@ public class GamesomHighscoreManager : MonoBehaviour
         // unpause the game: (since the pause-UI is inactive, this will unpause)
         FindObjectOfType<ButtonFunction>().TogglePauseScreen(); // turn onthe pause menu-UI to give access to the permission-UI
         FindObjectOfType<ButtonFunction>().Pause();
+
+        // finish the wrap-up and go back to main menu (also enter potential highscore in the actual game):
+        FindObjectOfType<LevelScript>().LevelFinished();
     } 
 
     private void RegisterRun(string playerName, string playerEmail, float timeTaken, int crownsCollected)

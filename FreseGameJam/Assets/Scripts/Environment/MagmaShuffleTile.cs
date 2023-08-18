@@ -91,14 +91,13 @@ public class MagmaShuffleTile : MonoBehaviour
             }
             if (GetComponent<Patrol>())
             {
-                GetComponent<Patrol>().enabled = false;
+                GetComponent<Patrol>().patrolling = false; // stop patrolling:
                 GetComponent<Rotator>().enabled = false;
             }
 
             // submerge tile:
             transform.position += new Vector3(0, -2f, 0);
             PlaySubmergeSound();
-            Debug.Log("shoulda sunk now");
 
             // turn off all fires:
             foreach (GameObject i in firesOfPlattform)
@@ -109,7 +108,6 @@ public class MagmaShuffleTile : MonoBehaviour
             yield return new WaitForSeconds(timeBeforeResurface);
             
             transform.position += new Vector3(0, +2f, 0);
-            Debug.Log("shoulda come back up now");
 
             _inCoroutine = false;
 
@@ -120,7 +118,8 @@ public class MagmaShuffleTile : MonoBehaviour
             }
             if (GetComponent<Patrol>())
             {
-                GetComponent<Patrol>().enabled = true;
+                GetComponent<Patrol>().ContinuePatrol(); // continue the patrol:
+
                 GetComponent<Rotator>().enabled = true;
             }
             yield break;
