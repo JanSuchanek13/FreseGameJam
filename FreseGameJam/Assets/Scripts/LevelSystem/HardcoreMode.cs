@@ -26,7 +26,8 @@ public class HardcoreMode : MonoBehaviour
     [SerializeField] GameObject _signs; 
     [SerializeField] GameObject _normalUI;
     // new:
-    [SerializeField] GameObject _normalSky;
+    [SerializeField] bool _newHardcoreWorld = true;
+    //[SerializeField] GameObject _normalSky; // redundant since it gets replaced
     [SerializeField] GameObject _normalClouds;
 
     [Header("Things to turn on instead:")]
@@ -110,9 +111,13 @@ public class HardcoreMode : MonoBehaviour
         _hardcoreUI.SetActive(true);
         _checkpointParent.SetActive(false);
         _normalUI.SetActive(false);
-        //_normalSky.SetActive(false);
-        //_normalClouds.SetActive(false);
-   
+        // new:
+        //_normalSky.SetActive(false); // redundant as it gets replaced
+        if (_newHardcoreWorld)
+        {
+            _normalClouds.SetActive(false);
+        }
+
         // turn off scripts which are not needed in Hardcore:
         DisableScriptOfType<DelaySound>();
         DisableScriptOfType<TriggerSound>();
@@ -134,8 +139,11 @@ public class HardcoreMode : MonoBehaviour
 
         // turn on that, which needs turning on:
         //_burningSky.SetActive(true); // this will be redundant!
-        //_darkClouds.SetActive(true);
-        //RenderSettings.skybox = _burningSkySkybox; // swap skybox in runtime
+        if (_newHardcoreWorld)
+        {
+            _darkClouds.SetActive(true);
+            RenderSettings.skybox = _burningSkySkybox; // swap skybox in runtime
+        }
     }
 
     private void Update()
