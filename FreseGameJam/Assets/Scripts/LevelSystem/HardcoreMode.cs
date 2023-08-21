@@ -22,20 +22,21 @@ public class HardcoreMode : MonoBehaviour
     [Space(10)]
 
     [Header("Things to turn off:")]
+    [SerializeField] bool _newHardcoreWorld = true;
+    [Space(10)]
     [SerializeField] GameObject _checkpointParent;
     [SerializeField] GameObject _signs; 
     [SerializeField] GameObject _normalUI;
-    // new:
-    [SerializeField] bool _newHardcoreWorld = true;
-    //[SerializeField] GameObject _normalSky; // redundant since it gets replaced
+    [Space(10)]
+    [SerializeField] GameObject _ocean;
+    [SerializeField] GameObject _waterSpray;
     [SerializeField] GameObject _normalClouds;
 
     [Header("Things to turn on instead:")]
     [SerializeField] Material _burningSkySkybox;
-    //[SerializeField] GameObject _burningSky; // all turn on objects should be combined to a single parent later!
     [SerializeField] GameObject _darkClouds; // all turn on objects should be combined to a single parent later!
-    //[SerializeField] GameObject _magmaOcean; // not yet in the game 
-
+    [SerializeField] GameObject _magmaOcean;
+    [SerializeField] GameObject _flameAndAshSpray;
 
     float _timeElapsed;
     int _minutes;
@@ -116,6 +117,8 @@ public class HardcoreMode : MonoBehaviour
         if (_newHardcoreWorld)
         {
             _normalClouds.SetActive(false);
+            _waterSpray.SetActive(false);
+            _ocean.SetActive(false);
         }
 
         // turn off scripts which are not needed in Hardcore:
@@ -138,9 +141,10 @@ public class HardcoreMode : MonoBehaviour
         }
 
         // turn on that, which needs turning on:
-        //_burningSky.SetActive(true); // this will be redundant!
         if (_newHardcoreWorld)
         {
+            _magmaOcean.SetActive(true);
+            _flameAndAshSpray.SetActive(true);
             _darkClouds.SetActive(true);
             RenderSettings.skybox = _burningSkySkybox; // swap skybox in runtime
         }

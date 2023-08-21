@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5754228790826949257}
   - component: {fileID: 7313323917237283563}
   - component: {fileID: 7818161410243388588}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LavaPlane_Ver3
   m_TagString: Damage
   m_Icon: {fileID: 0}
@@ -30,7 +30,6 @@ Transform:
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: 26.00467, y: -2.3228993, z: -1.8947892}
   m_LocalScale: {x: 500, y: 500, z: 286.03937}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -54,7 +53,6 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
