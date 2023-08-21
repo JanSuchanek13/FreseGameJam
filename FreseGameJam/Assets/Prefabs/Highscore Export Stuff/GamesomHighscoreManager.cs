@@ -4,16 +4,22 @@ using UnityEngine;
 using System.Linq;
 using System.IO;
 using TMPro;
+using System;
 
 
 public class GamesomHighscoreManager : MonoBehaviour
 {
     //private const int _maxHighscores = 5;
-    [Header("Set this int to the current day of gamescom:")]
-    [Tooltip("1 = Donnerstag, 2 = Freitag, 3 = Samstag, 4 = Sonntag")]
-    [SerializeField] private int currentDay = 1; // set this in the editor to your current day
+    [Header("Day Settings:")]
+    [Tooltip("1 = Mittwoch, 2 = Donnerstag, 3 = Freitag, 4 = Samstag, 5 = Sonntag")]
+    [SerializeField] private int _currentDay = 0; // set this in the editor to your current day
+    [SerializeField] GameObject _overwriteDayUI;
+    [SerializeField] TMP_Dropdown _overwriteDayInputField;
+    private DateTime _startDate = new DateTime(2023, 08, 23);
 
     [Header("UI-Settings for data-entry:")]
+    [Tooltip("How many characters/letters can a player use for her/his name?")]
+    [SerializeField] int _allowedNrOfCharacters = 10;
     [SerializeField] GameObject _givePermissionUI;
     [SerializeField] TextMeshProUGUI _permissionUIHeader;
 
@@ -33,15 +39,25 @@ public class GamesomHighscoreManager : MonoBehaviour
     private List<HighscoreEntry> _dayThreeCrownsHighscoreList = new List<HighscoreEntry>();
     private List<HighscoreEntry> _dayFourSpeedHighscoreList = new List<HighscoreEntry>();
     private List<HighscoreEntry> _dayFourCrownsHighscoreList = new List<HighscoreEntry>();
+    private List<HighscoreEntry> _dayFiveSpeedHighscoreList = new List<HighscoreEntry>();
+    private List<HighscoreEntry> _dayFiveCrownsHighscoreList = new List<HighscoreEntry>();
 
     private HashSet<string> _gamescomEmails = new HashSet<string>(); // HashSet ensures unique emails
 
     private void Start()
     {
+        _nameInputField.characterLimit = _allowedNrOfCharacters;
         // instructions:
         Debug.Log("Moin! copy this:    " + Application.persistentDataPath + "into the file-path section of the HighscoreDataGatherer-script in the display app");
         Debug.Log("Hit play in the game, open the pause menu and hit the Reset button, now hit play in the app --> all entries should be default entries and 0 data");
         Debug.Log("Now open the pause menu again and hit the CreateRandomEntries button, now 14 rng-chars should populate the highscore lists of day 1 and 2 and overall!");
+        Debug.Log("Ctrl+Shift+2 will toggle the UI that allows manual overwrite of the day-id. " +
+            "NOTE: This is done automatically too, so first check if the correct day is not already selected (read here in log)");
+
+        if (_currentDay == 0)
+        {
+            SetDayAutomatically();
+        }
 
         if (PlayerPrefs.GetInt("JsonCreated", 0) == 0) // this never needs to be reset.
         {
@@ -53,6 +69,63 @@ public class GamesomHighscoreManager : MonoBehaviour
 
         LoadFromJson();
     }
+
+    #region Set Day ID automatically AND/OR manually:
+    void SetDayAutomatically()
+    {
+        DateTime now = DateTime.Now;
+        TimeSpan durationSinceStart = now - _startDate;
+        int daysSinceStart = durationSinceStart.Days;
+
+        if (daysSinceStart >= 0) // ensure we're not before the start date
+        {
+            _currentDay = daysSinceStart + 1; // +1 because if it's the start date, it should be day 1, not day 0
+            if (_currentDay > 5) // 5 days event
+            {
+                _currentDay = 5;
+            }
+        }
+        else // the event hasn't started yet
+        {
+            _currentDay = 1;
+        }
+
+        Debug.Log("Current day: " + _currentDay + ", if this is incorrect, manually overwrite!");
+    }
+
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            ToggleManualDayOverwrite();
+        }
+    }
+    private void ToggleManualDayOverwrite()
+    {
+        if (!_overwriteDayUI.activeInHierarchy)
+        {
+            FindObjectOfType<ButtonFunction>().Pause(); // make UI interactable
+            FindObjectOfType<ButtonFunction>().TogglePauseScreen(); // turn off the pause menu-UI to give access to the permission-UI
+
+            _overwriteDayUI.SetActive(true);
+        }
+        else
+        {
+            _overwriteDayUI.SetActive(false);
+            
+            FindObjectOfType<ButtonFunction>().TogglePauseScreen(); // turn on the pause menu-UI to give allow PAUSE to close the screen
+            FindObjectOfType<ButtonFunction>().Pause(); // make UI interactable
+        }
+    }
+    public void SetDateManually()
+    {
+        _currentDay = _overwriteDayInputField.value + 1; // accounting for the value starting at 0!
+        Debug.Log("current day has been manually overwritten by: " + _currentDay);
+
+        FindObjectOfType<ButtonFunction>().TogglePauseScreen(); // turn on the pause menu-UI to give allow PAUSE to close the screen
+        FindObjectOfType<ButtonFunction>().Pause(); // make UI interactable
+    }
+#endregion
 
     public enum HighscoreStatus
     {
@@ -136,7 +209,7 @@ public class GamesomHighscoreManager : MonoBehaviour
         List<HighscoreEntry> speedList;
         List<HighscoreEntry> crownsList;
 
-        switch (currentDay)
+        switch (_currentDay)
         {
             case 1:
                 speedList = _dayOneSpeedHighscoreList;
@@ -156,6 +229,11 @@ public class GamesomHighscoreManager : MonoBehaviour
             case 4:
                 speedList = _dayFourSpeedHighscoreList;
                 crownsList = _dayFourCrownsHighscoreList;
+                break;
+
+            case 5:
+                speedList = _dayFiveSpeedHighscoreList;
+                crownsList = _dayFiveCrownsHighscoreList;
                 break;
 
             default:
@@ -184,10 +262,6 @@ public class GamesomHighscoreManager : MonoBehaviour
     /// </summary>
     public void PermissionNotGranted()
     {
-        // This should be not required, as were skipping the compare highscore stage and thus this data will be deleted:
-        //PlayerPrefs.SetInt("HardcoreCrowns" + 0);
-        //PlayerPrefs.SetFloat("HardcoreTime" + 0, 0.0f);
-
         FindObjectOfType<LevelScript>().AbortHighscoreCheck(); // this could be ambiguous as we have more than one instance in the level!
 
         // unpause the game: (since the pause-UI is inactive, this will unpause)
@@ -232,7 +306,7 @@ public class GamesomHighscoreManager : MonoBehaviour
         UpdateList(_overallCrownsHighscoreList, newEntry, e => -e.crowns, e => e.time);
 
         // Update Day-specific Lists
-        switch (currentDay)
+        switch (_currentDay)
         {
             case 1:
                 UpdateList(_dayOneSpeedHighscoreList, newEntry, e => e.time, e => -e.crowns);
@@ -249,6 +323,10 @@ public class GamesomHighscoreManager : MonoBehaviour
             case 4:
                 UpdateList(_dayFourSpeedHighscoreList, newEntry, e => e.time, e => -e.crowns);
                 UpdateList(_dayFourCrownsHighscoreList, newEntry, e => -e.crowns, e => e.time);
+                break;
+            case 5:
+                UpdateList(_dayFiveSpeedHighscoreList, newEntry, e => e.time, e => -e.crowns);
+                UpdateList(_dayFiveCrownsHighscoreList, newEntry, e => -e.crowns, e => e.time);
                 break;
         }
 
@@ -308,6 +386,9 @@ public class GamesomHighscoreManager : MonoBehaviour
         SaveListToJson(_dayFourSpeedHighscoreList, "/DayFourSpeedHighscores.json");
         SaveListToJson(_dayFourCrownsHighscoreList, "/DayFourCrownsHighscores.json");
 
+        SaveListToJson(_dayFiveSpeedHighscoreList, "/DayFiveSpeedHighscores.json");
+        SaveListToJson(_dayFiveCrownsHighscoreList, "/DayFiveCrownsHighscores.json");
+
         // Saving emails
         string emailFilePath = Application.persistentDataPath + "/GamescomEmails.json";
         File.WriteAllText(emailFilePath, JsonUtility.ToJson(new SerializableList<string>(_gamescomEmails.ToList())));
@@ -330,6 +411,9 @@ public class GamesomHighscoreManager : MonoBehaviour
 
         _dayFourSpeedHighscoreList = LoadListFromJson("/DayFourSpeedHighscores.json");
         _dayFourCrownsHighscoreList = LoadListFromJson("/DayFourCrownsHighscores.json");
+
+        _dayFiveSpeedHighscoreList = LoadListFromJson("/DayFiveSpeedHighscores.json");
+        _dayFiveCrownsHighscoreList = LoadListFromJson("/DayFiveCrownsHighscores.json");
 
         // Loading emails
         string emailFilePath = Application.persistentDataPath + "/GamescomEmails.json";
@@ -372,7 +456,7 @@ public class GamesomHighscoreManager : MonoBehaviour
         System.Random random = new System.Random();
 
         // Day 1 entries
-        currentDay = 1;
+        _currentDay = 1;
         for (int i = 0; i < 10; i++)
         {
             string playerName = randomNamesDay1[i];
@@ -383,7 +467,7 @@ public class GamesomHighscoreManager : MonoBehaviour
         }
 
         // Day 2 entries
-        currentDay = 2;
+        _currentDay = 2;
         for (int i = 0; i < 10; i++)
         {
             string playerName = randomNamesDay2[i];
@@ -393,7 +477,7 @@ public class GamesomHighscoreManager : MonoBehaviour
             RegisterRun(playerName, playerEmail, timeTaken, crownsCollected);
         }
 
-        currentDay = 1; // reset, juuuust in case:
+        _currentDay = 1; // reset, juuuust in case:
         Debug.Log("---- Entries Created ----");
     }
 
@@ -429,6 +513,9 @@ public class GamesomHighscoreManager : MonoBehaviour
         _dayFourSpeedHighscoreList = new List<HighscoreEntry>(defaultList);
         _dayFourCrownsHighscoreList = new List<HighscoreEntry>(defaultList);
 
+        _dayFiveSpeedHighscoreList = new List<HighscoreEntry>(defaultList);
+        _dayFiveCrownsHighscoreList = new List<HighscoreEntry>(defaultList);
+
         // Save to JSON, so changes are reflected in saved files
         SaveAllToJSON();
     }
@@ -438,33 +525,33 @@ public class GamesomHighscoreManager : MonoBehaviour
         // Save each list to its respective JSON file
         string speedHighscores = JsonUtility.ToJson(new SerializableList<HighscoreEntry>(_overallSpeedHighscoreList));
         File.WriteAllText(Application.persistentDataPath + "/OverallSpeedHighscores.json", speedHighscores);
-
         string crownsHighscores = JsonUtility.ToJson(new SerializableList<HighscoreEntry>(_overallCrownsHighscoreList));
         File.WriteAllText(Application.persistentDataPath + "/OverallCrownsHighscores.json", crownsHighscores);
 
         string dayOneSpeed = JsonUtility.ToJson(new SerializableList<HighscoreEntry>(_dayOneSpeedHighscoreList));
         File.WriteAllText(Application.persistentDataPath + "/DayOneSpeedHighscores.json", dayOneSpeed);
-
         string dayOneCrowns = JsonUtility.ToJson(new SerializableList<HighscoreEntry>(_dayOneCrownsHighscoreList));
         File.WriteAllText(Application.persistentDataPath + "/DayOneCrownsHighscores.json", dayOneCrowns);
 
         string dayTwoSpeed = JsonUtility.ToJson(new SerializableList<HighscoreEntry>(_dayTwoSpeedHighscoreList));
         File.WriteAllText(Application.persistentDataPath + "/DayTwoSpeedHighscores.json", dayTwoSpeed);
-
         string dayTwoCrowns = JsonUtility.ToJson(new SerializableList<HighscoreEntry>(_dayTwoCrownsHighscoreList));
         File.WriteAllText(Application.persistentDataPath + "/DayTwoCrownsHighscores.json", dayTwoCrowns);
 
         string dayThreeSpeed = JsonUtility.ToJson(new SerializableList<HighscoreEntry>(_dayThreeSpeedHighscoreList));
         File.WriteAllText(Application.persistentDataPath + "/DayThreeSpeedHighscores.json", dayThreeSpeed);
-
         string dayThreeCrowns = JsonUtility.ToJson(new SerializableList<HighscoreEntry>(_dayThreeCrownsHighscoreList));
         File.WriteAllText(Application.persistentDataPath + "/DayThreeCrownsHighscores.json", dayThreeCrowns);
 
-        string dayFourSpeed = JsonUtility.ToJson(new SerializableList<HighscoreEntry>(_dayThreeSpeedHighscoreList));
-        File.WriteAllText(Application.persistentDataPath + "/DayThreeSpeedHighscores.json", dayFourSpeed);
+        string dayFourSpeed = JsonUtility.ToJson(new SerializableList<HighscoreEntry>(_dayFourSpeedHighscoreList));
+        File.WriteAllText(Application.persistentDataPath + "/DayFourSpeedHighscores.json", dayFourSpeed);
+        string dayFourCrowns = JsonUtility.ToJson(new SerializableList<HighscoreEntry>(_dayFourCrownsHighscoreList));
+        File.WriteAllText(Application.persistentDataPath + "/DayFourCrownsHighscores.json", dayFourCrowns);
 
-        string dayFourCrowns = JsonUtility.ToJson(new SerializableList<HighscoreEntry>(_dayThreeCrownsHighscoreList));
-        File.WriteAllText(Application.persistentDataPath + "/DayThreeCrownsHighscores.json", dayFourCrowns);
+        string dayFiveSpeed = JsonUtility.ToJson(new SerializableList<HighscoreEntry>(_dayFiveSpeedHighscoreList));
+        File.WriteAllText(Application.persistentDataPath + "/DayFiveSpeedHighscores.json", dayFiveSpeed);
+        string dayFiveCrowns = JsonUtility.ToJson(new SerializableList<HighscoreEntry>(_dayFiveCrownsHighscoreList));
+        File.WriteAllText(Application.persistentDataPath + "/DayFiveCrownsHighscores.json", dayFiveCrowns);
     }
     #endregion
 }
