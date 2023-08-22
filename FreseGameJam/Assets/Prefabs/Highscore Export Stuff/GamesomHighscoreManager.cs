@@ -14,6 +14,7 @@ public class GamesomHighscoreManager : MonoBehaviour
     [Tooltip("1 = Mittwoch, 2 = Donnerstag, 3 = Freitag, 4 = Samstag, 5 = Sonntag")]
     [SerializeField] private int _currentDay = 0; // set this in the editor to your current day
     [SerializeField] GameObject _overwriteDayUI;
+    [SerializeField] TextMeshProUGUI _dayDisplay;
     [SerializeField] TMP_Dropdown _overwriteDayInputField;
     private DateTime _startDate = new DateTime(2023, 08, 23);
 
@@ -90,6 +91,7 @@ public class GamesomHighscoreManager : MonoBehaviour
             _currentDay = 1;
         }
 
+        _dayDisplay.text = _currentDay.ToString();
         Debug.Log("Current day: " + _currentDay + ", if this is incorrect, manually overwrite!");
     }
 
