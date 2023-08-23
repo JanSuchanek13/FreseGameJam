@@ -5,6 +5,9 @@ using System.Linq;
 using System.IO;
 using TMPro;
 using System;
+using UnityEngine.UI;
+using System.Text.RegularExpressions;
+
 
 
 public class GamesomHighscoreManager : MonoBehaviour
@@ -23,6 +26,10 @@ public class GamesomHighscoreManager : MonoBehaviour
     [SerializeField] int _allowedNrOfCharacters = 10;
     [SerializeField] GameObject _givePermissionUI;
     [SerializeField] TextMeshProUGUI _permissionUIHeader;
+    
+    [Space (10)]
+    [SerializeField] GameObject _errorMessage;
+    [SerializeField] Button _finishedDataEntryButton; 
 
     [Space(10)]
     [SerializeField] TMP_InputField _nameInputField;
@@ -101,6 +108,18 @@ public class GamesomHighscoreManager : MonoBehaviour
         {
             ToggleManualDayOverwrite();
         }
+        /*
+        // if a highscore was achieved and the permission UI is active check if valid input has been made to enable button:
+        if (_givePermissionUI.activeInHierarchy)
+        {
+            if (_nameInputField.text != String.Empty && IsValidEmail(_emailInputField.text))
+            {
+                _finishedDataEntryButton.interactable = true;
+            }else
+            {
+                _finishedDataEntryButton.interactable = false;
+            }
+        }*/
     }
     private void ToggleManualDayOverwrite()
     {
@@ -278,8 +297,25 @@ public class GamesomHighscoreManager : MonoBehaviour
     /// </summary>
     public void DoneEnteringData()
     {
-        string _name = _nameInputField.text;
-        string _email = _emailInputField.text;
+        string _name;
+        string _email;
+
+        if (_nameInputField.text != String.Empty && IsValidEmail(_emailInputField.text))
+        {
+            //string _name = _nameInputField.text;
+            //string _email = _emailInputField.text;
+            _name = _nameInputField.text;
+            _email = _emailInputField.text;
+        }else
+        {
+            _errorMessage.SetActive(true);
+
+            Debug.Log("Empty name or Invalid email format!");
+            return;
+        }
+        _givePermissionUI.SetActive(false);
+        _errorMessage.SetActive(false); // redundant maybe
+
         float _time = PlayerPrefs.GetFloat("HardcoreTime" + 0, 0.0f);
         int _crowns = PlayerPrefs.GetInt("HardcoreCrowns" + 0);
 
@@ -444,7 +480,13 @@ public class GamesomHighscoreManager : MonoBehaviour
         string fullPath = Application.persistentDataPath + filePath;
         File.WriteAllText(fullPath, jsonData);
     }
-
+    #region Check Legal Email:
+    private bool IsValidEmail(string email)
+    {
+        string pattern = @"^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)*(\.[a-zA-Z]{2,4})$";
+        return Regex.IsMatch(email, pattern);
+    }
+    #endregion
     #region Testing:
     /// <summary>
     /// Create several fake entries over two days to check functionality and list-sorting.
