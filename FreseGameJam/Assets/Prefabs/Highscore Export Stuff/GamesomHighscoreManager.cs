@@ -108,18 +108,6 @@ public class GamesomHighscoreManager : MonoBehaviour
         {
             ToggleManualDayOverwrite();
         }
-        /*
-        // if a highscore was achieved and the permission UI is active check if valid input has been made to enable button:
-        if (_givePermissionUI.activeInHierarchy)
-        {
-            if (_nameInputField.text != String.Empty && IsValidEmail(_emailInputField.text))
-            {
-                _finishedDataEntryButton.interactable = true;
-            }else
-            {
-                _finishedDataEntryButton.interactable = false;
-            }
-        }*/
     }
     private void ToggleManualDayOverwrite()
     {
@@ -157,6 +145,59 @@ public class GamesomHighscoreManager : MonoBehaviour
         SpeedDayTop5,
         CrownsDayTop5,
         DoubleDayTop5
+    }
+
+    public void GamescomRegularRunFinished()
+    {
+        float _rawTime = PlayerPrefs.GetFloat("timer" + 0, 0.0f);
+        int _crowns = PlayerPrefs.GetInt("crowns" + 0, 0);
+        HighscoreStatus highscoreStatus = CheckForHighscoreAchieved(_rawTime, _crowns);
+
+        if (highscoreStatus != HighscoreStatus.None)
+        {
+            // Set the UI header based on the highscore status
+            switch (highscoreStatus)
+            {
+                case HighscoreStatus.SpeedOverall:
+                    _permissionUIHeader.text = "SPEED HIGHSCORE!";
+                    break;
+                case HighscoreStatus.CrownsOverall:
+                    _permissionUIHeader.text = "CROWN HIGHSCORE!";
+                    break;
+                case HighscoreStatus.DoubleOverall:
+                    _permissionUIHeader.text = "DOUBLE HIGHSCORE!";
+                    break;
+                case HighscoreStatus.SpeedDayTop5:
+                    _permissionUIHeader.text = "Top 5 Speed!";
+                    break;
+                case HighscoreStatus.CrownsDayTop5:
+                    _permissionUIHeader.text = "Top 5 Crowns!";
+                    break;
+                case HighscoreStatus.DoubleDayTop5:
+                    _permissionUIHeader.text = "Top 5 Speed AND Crowns!";
+                    break;
+                default:
+                    _permissionUIHeader.text = "";  // Default empty just in case
+                    break;
+            }
+
+            FindObjectOfType<ButtonFunction>().Pause(); // make UI interactable
+            FindObjectOfType<ButtonFunction>().TogglePauseScreen(); // turn off the pause menu-UI to give access to the permission-UI
+
+            int minutes = (int)_rawTime / 60;
+            int seconds = (int)_rawTime - 60 * minutes;
+            int milliseconds = (int)(1000 * (_rawTime - minutes * 60 - seconds));
+            _timeDisplay.text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
+
+            _crownsDisplay.text = _crowns.ToString();
+
+            _givePermissionUI.SetActive(true);
+        }
+        else // No highscore achieved:
+        {
+            FindObjectOfType<LevelScript>().AbortHighscoreCheck(); // this could be ambiguous as we have more than one instance in the level!
+            Debug.Log("No highscore achieved this run.");
+        }
     }
 
     /// <summary>
@@ -216,8 +257,13 @@ public class GamesomHighscoreManager : MonoBehaviour
     }
     private HighscoreStatus CheckForHighscoreAchieved(float time, int crowns)
     {
+        //bool isSpeedHighscoreOverall = _overallSpeedHighscoreList.Count < 5 || _overallSpeedHighscoreList[4].time == 0 || time < _overallSpeedHighscoreList[4].time;
+        //bool isCrownsHighscoreOverall = _overallCrownsHighscoreList.Count < 5 || _overallCrownsHighscoreList[4].crowns == 0 || crowns > _overallCrownsHighscoreList[4].crowns;
+
+        // Added a condition crowns > 0 to prevent 0 crowns from being considered as a highscore
         bool isSpeedHighscoreOverall = _overallSpeedHighscoreList.Count < 5 || _overallSpeedHighscoreList[4].time == 0 || time < _overallSpeedHighscoreList[4].time;
-        bool isCrownsHighscoreOverall = _overallCrownsHighscoreList.Count < 5 || _overallCrownsHighscoreList[4].crowns == 0 || crowns > _overallCrownsHighscoreList[4].crowns;
+        bool isCrownsHighscoreOverall = crowns > 0 && (_overallCrownsHighscoreList.Count < 5 || _overallCrownsHighscoreList[4].crowns == 0 || crowns > _overallCrownsHighscoreList[4].crowns);
+
 
         if (isSpeedHighscoreOverall && isCrownsHighscoreOverall)
             return HighscoreStatus.DoubleOverall;
@@ -264,8 +310,13 @@ public class GamesomHighscoreManager : MonoBehaviour
                 break;
         }
 
+        //bool isSpeedHighscoreDay = speedList.Count < 5 || speedList[4].time == 0 || time < speedList[4].time;
+        //bool isCrownsHighscoreDay = crownsList.Count < 5 || crownsList[4].crowns == 0 || crowns > crownsList[4].crowns;
+
+        // Added a condition crowns > 0 for the day-specific check
         bool isSpeedHighscoreDay = speedList.Count < 5 || speedList[4].time == 0 || time < speedList[4].time;
-        bool isCrownsHighscoreDay = crownsList.Count < 5 || crownsList[4].crowns == 0 || crowns > crownsList[4].crowns;
+        bool isCrownsHighscoreDay = crowns > 0 && (crownsList.Count < 5 || crownsList[4].crowns == 0 || crowns > crownsList[4].crowns);
+
 
         if (isSpeedHighscoreDay && isCrownsHighscoreDay)
             return HighscoreStatus.DoubleDayTop5;
@@ -316,8 +367,23 @@ public class GamesomHighscoreManager : MonoBehaviour
         _givePermissionUI.SetActive(false);
         _errorMessage.SetActive(false); // redundant maybe
 
-        float _time = PlayerPrefs.GetFloat("HardcoreTime" + 0, 0.0f);
-        int _crowns = PlayerPrefs.GetInt("HardcoreCrowns" + 0);
+
+        // allow regular runs to count:
+        float _time;
+        int _crowns;
+        if (PlayerPrefs.GetInt("HardcoreMode", 0) == 1)
+        {
+            _time = PlayerPrefs.GetFloat("HardcoreTime" + 0, 0.0f);
+            _crowns = PlayerPrefs.GetInt("HardcoreCrowns" + 0);
+        }else
+        {
+            _time = PlayerPrefs.GetFloat("timer" + 0, 0.0f);
+            _crowns = PlayerPrefs.GetInt("crowns" + 0);
+        }
+
+        // this is the logic if only hardcore runs are counted:
+        //float _time = PlayerPrefs.GetFloat("HardcoreTime" + 0, 0.0f);
+        //int _crowns = PlayerPrefs.GetInt("HardcoreCrowns" + 0);
 
         RegisterRun(_name, _email, _time, _crowns);
 
@@ -327,8 +393,61 @@ public class GamesomHighscoreManager : MonoBehaviour
 
         // finish the wrap-up and go back to main menu (also enter potential highscore in the actual game):
         FindObjectOfType<LevelScript>().LevelFinished();
-    } 
+    }
 
+    private void RegisterRun(string playerName, string playerEmail, float timeTaken, int crownsCollected)
+    {
+        HighscoreEntry newEntry = new HighscoreEntry
+        {
+            name = playerName,
+            email = playerEmail,
+            time = timeTaken,
+            crowns = crownsCollected
+        };
+
+        // Update Overall Lists
+        UpdateList(_overallSpeedHighscoreList, newEntry, e => e.time, e => -e.crowns);
+        if (crownsCollected > 0) // Add this condition
+            UpdateList(_overallCrownsHighscoreList, newEntry, e => -e.crowns, e => e.time);
+
+        // Update Day-specific Lists
+        switch (_currentDay)
+        {
+            case 1:
+                UpdateList(_dayOneSpeedHighscoreList, newEntry, e => e.time, e => -e.crowns);
+                if (crownsCollected > 0) // Add this condition
+                    UpdateList(_dayOneCrownsHighscoreList, newEntry, e => -e.crowns, e => e.time);
+                break;
+            case 2:
+                UpdateList(_dayTwoSpeedHighscoreList, newEntry, e => e.time, e => -e.crowns);
+                if (crownsCollected > 0) // Add this condition
+                    UpdateList(_dayTwoCrownsHighscoreList, newEntry, e => -e.crowns, e => e.time);
+                break;
+            case 3:
+                UpdateList(_dayThreeSpeedHighscoreList, newEntry, e => e.time, e => -e.crowns);
+                if (crownsCollected > 0) // Add this condition
+                    UpdateList(_dayThreeCrownsHighscoreList, newEntry, e => -e.crowns, e => e.time);
+                break;
+            case 4:
+                UpdateList(_dayFourSpeedHighscoreList, newEntry, e => e.time, e => -e.crowns);
+                if (crownsCollected > 0) // Add this condition
+                    UpdateList(_dayFourCrownsHighscoreList, newEntry, e => -e.crowns, e => e.time);
+                break;
+            case 5:
+                UpdateList(_dayFiveSpeedHighscoreList, newEntry, e => e.time, e => -e.crowns);
+                if (crownsCollected > 0) // Add this condition
+                    UpdateList(_dayFiveCrownsHighscoreList, newEntry, e => -e.crowns, e => e.time);
+                break;
+        }
+
+        // Add email to set
+        _gamescomEmails.Add(playerEmail);
+
+        // Save the data to JSON after every update
+        SaveToJson();
+    }
+
+    /*
     private void RegisterRun(string playerName, string playerEmail, float timeTaken, int crownsCollected)
     {
         HighscoreEntry newEntry = new HighscoreEntry
@@ -373,7 +492,7 @@ public class GamesomHighscoreManager : MonoBehaviour
 
         // Save the data to JSON after every update
         SaveToJson();
-    }
+    }*/
 
     private void UpdateList(List<HighscoreEntry> list, HighscoreEntry entry, params System.Func<HighscoreEntry, object>[] orderBy)
     {

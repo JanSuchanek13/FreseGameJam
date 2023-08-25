@@ -116,7 +116,11 @@ public class LevelScript : MonoBehaviour
                     //_regularUI.SetActive(false);
 
                     //Debug.Log("Level endzone reached!");
-                    LevelFinished();
+                    //LevelFinished();
+
+                    // call up the data-entry UI:
+                    FindObjectOfType<GamesomHighscoreManager>().GamescomRegularRunFinished(); // DELETE AFTER GAMESCOM2023!
+
 
                     // this bool ensures that the end of a level is triggered only once and immediatly!
                     //_endZoneReached = true;
