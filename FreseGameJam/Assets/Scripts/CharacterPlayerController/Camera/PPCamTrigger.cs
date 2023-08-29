@@ -99,7 +99,7 @@ public class PPCamTrigger : MonoBehaviour
                 */
                 
                 yield return new WaitForSeconds(1f);
-                if (! (_lastTimeInVulcano < timeInVulcano))
+                if (! (_lastTimeInVulcano < timeInVulcano) && vulcanoPP.GetComponent<Volume>().weight <= 0f)
                 {
                     vulcanoPP.GetComponent<Volume>().enabled = false;
                 }
@@ -139,7 +139,7 @@ public class PPCamTrigger : MonoBehaviour
                 }
 
                 yield return new WaitForSeconds(1f);
-                if (!(_lastTimeInTunnel < timeInTunnel))
+                if (!(_lastTimeInTunnel < timeInTunnel) && tunnelPP.GetComponent<Volume>().weight <= 0f)
                 {
                     tunnelPP.GetComponent<Volume>().enabled = false;
                 }
@@ -178,7 +178,7 @@ public class PPCamTrigger : MonoBehaviour
                 }
 
                 yield return new WaitForSeconds(1f);
-                if (!(_lastTimeInMines < timeInMines))
+                if (!(_lastTimeInMines < timeInMines) && minesPP.GetComponent<Volume>().weight <= 0f)
                 {
                     minesPP.GetComponent<Volume>().enabled = false;
                 }

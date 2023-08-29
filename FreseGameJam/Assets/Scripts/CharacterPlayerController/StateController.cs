@@ -321,7 +321,7 @@ public class StateController : MonoBehaviour
                         break;
 
                     case 3:
-                        if (availableCapricorn && !toggleBlock)
+                        if (availableCapricorn && !toggleBlock && playerInput.CharacterControls.SwitchState.triggered)
                         {
                             toggleBlock = true;
                             switch (human)
