@@ -116,20 +116,12 @@ public class LevelScript : MonoBehaviour
                     //_regularUI.SetActive(false);
 
                     //Debug.Log("Level endzone reached!");
-                    //LevelFinished();
+                    LevelFinished();
 
                     // call up the data-entry UI:
-                    FindObjectOfType<GamesomHighscoreManager>().GamescomRegularRunFinished(); // DELETE AFTER GAMESCOM2023!
-
-
-                    // this bool ensures that the end of a level is triggered only once and immediatly!
-                    //_endZoneReached = true;
-                }
-                else
+                    //FindObjectOfType<GamesomHighscoreManager>().GamescomRegularRunFinished(); // DELETE AFTER GAMESCOM2023!
+                }else
                 {
-                    // this bool ensures that the end of a level is triggered only once and immediatly!
-                    //_endZoneReached = true;
-
                     // turn off the (hardcore-) UI and fade to black:
                     FindObjectOfType<HardcoreMode>().runFinished = true;
 
@@ -151,10 +143,10 @@ public class LevelScript : MonoBehaviour
                     //HardcoreFinished();
 
                     // call up the data-entry UI:
-                    FindObjectOfType<GamesomHighscoreManager>().GamescomHardcoreRunFinished(); // DELETE AFTER GAMESCOM2023!
+                    //FindObjectOfType<GamesomHighscoreManager>().GamescomHardcoreRunFinished(); // DELETE AFTER GAMESCOM2023!
 
                     // this is commented to not allow people enter hardcore data, without providing their email and potentially skewer the results.
-                    //LevelFinished(); // UNCOMMENT AFTER GAMESCOM2023!
+                    LevelFinished(); // UNCOMMENT AFTER GAMESCOM2023!
                 }
             }
         }

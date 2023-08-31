@@ -11,6 +11,8 @@ public class HealthSystem : MonoBehaviour
 {
     private IEnumerator coroutine;
     public Vector3 respawnPoint; // felix made this public for portable respawn position
+    // felix added this to grab respawn orientation-point:
+    GameObject _respawnPointGO;
     Vector3 _hardcoreRespawn; // kinda redundant...
     public bool inCoroutine;
     public bool fadeBlackOnDeath;
@@ -88,6 +90,7 @@ public class HealthSystem : MonoBehaviour
             //fireSwoosh.Play();
 
             respawnPoint = other.transform.position;
+            _respawnPointGO = other.gameObject;
 
             //safe last checkpoint
             for (int i = 0; i < Checkpoints.Count ; i++)
@@ -114,15 +117,13 @@ public class HealthSystem : MonoBehaviour
 
     IEnumerator DieAndRespawn()
     {
+        if (fadeBlackOnDeath && fadeToBlackBlende != null)
+        {
+            StartCoroutine("FadeToBlack");
+        }
+
         if (PlayerPrefs.GetInt("HardcoreMode", 0) == 0)
         {
-            if (fadeBlackOnDeath && fadeToBlackBlende != null)
-            {
-                StartCoroutine("FadeToBlack");
-            }
-            
-            /*if (!inCoroutine)
-            {*/
             inCoroutine = true;
 
             // hauler your scream:
@@ -152,35 +153,33 @@ public class HealthSystem : MonoBehaviour
             Cam2.SetActive(false);
             Cam.SetActive(false);
             _craneCam.SetActive(false);*/
-            GetComponent<ThirdPersonMovement>().gravity = 0;
-            //yield return new WaitForSeconds(1f);
 
+            GetComponent<ThirdPersonMovement>().gravity = 0;
             GetComponent<ThirdPersonMovement>().enabled = false; // no movement hopefully stops me from being able to survive death zones
             GetComponent<CharacterController>().enabled = false; // no colission = sink into even shallow deathzones
             GetComponent<Rigidbody>().isKinematic = false;
 
             yield return new WaitForSeconds(1f);
-            GetComponent<Rigidbody>().isKinematic = true;
-            gameObject.transform.position = new Vector3(0, -3, 0) + respawnPoint;
 
+            GetComponent<Rigidbody>().isKinematic = true;
+            // respawn player and face him toward direction of linear level progression:
+            gameObject.transform.position = new Vector3(0, -3, 0) + respawnPoint;
+            gameObject.transform.LookAt(_respawnPointGO.transform.Find("Orientation Point"));
 
             GetComponent<ThirdPersonMovement>().enabled = true; // no movement hopefully stops me from being able to survive death zones
             GetComponent<CharacterController>().enabled = true;
 
             EnableCameras();
             ResetCloseUpCam(); // this resets closeup-cam to the respawned pos of player
+            RefocusCamera();
 
             GetComponent<ThirdPersonMovement>().gravity = gravity;
             inCoroutine = false;
 
             // turn on artificial shadow:
             _shadowGO.EnableShadow();
-            /*}
-            else
-            {
-                return;
-            }*/
-        } else // hardcore!
+        } 
+        else // hardcore!
         {
             inCoroutine = true;
 
@@ -216,6 +215,7 @@ public class HealthSystem : MonoBehaviour
 
             EnableCameras();
             ResetCloseUpCam(); // this resets closeup-cam to the respawned pos of player
+            RefocusCamera();
 
             GetComponent<ThirdPersonMovement>().gravity = gravity;
             inCoroutine = false;
@@ -347,11 +347,87 @@ public class HealthSystem : MonoBehaviour
         if(_lastUsedMainCam == null)
         {
             Cam.SetActive(true);
+
+            //Cam.GetComponent<CinemachineFreeLook>().Follow = this.gameObject.transform;
+            //Cam.GetComponent<CinemachineFreeLook>().LookAt = this.gameObject.transform;
+            //Cam.transform.position = new Vector3(_respawnPointGO.transform.Find("Orientation Point").transform.position.x * -5, _respawnPointGO.transform.Find("Orientation Point").transform.position.y, _respawnPointGO.transform.Find("Orientation Point").transform.position.z * -5);
+
+            // turn cam to look in maps linear-progression-direction:
+
+            //Transform _saveTrans = this.gameObject.transform;
+            //Cam.GetComponent<CinemachineFreeLook>().LookAt = _respawnPointGO.transform.Find("Orientation Point");
+            //Cam.GetComponent<CinemachineFreeLook>().LookAt = _saveTrans;
+
+            //_cinemachineCamComponent.m_LookAt = _respawnPointGO.transform.Find("Orientation Point");
+            //GetComponent<CinemachineFreeLook>().LookAt = _focusTargetObject.transform;
+            //_cinemachineCamComponent.LookAt(_respawnPointGO.transform.Find("Orientation Point"));
+
+            //}
+
+            //RefocusCamera(Cam);
+        }
+        else
+        {
+            _lastUsedMainCam.SetActive(true);
+
+            //Transform _saveTrans = this.gameObject.transform;
+            //_lastUsedMainCam.transform.position = _respawnPointGO.transform.Find("Orientation Point").transform.position;
+
+            //_lastUsedMainCam.GetComponent<CinemachineFreeLook>().LookAt = _respawnPointGO.transform.Find("Orientation Point");
+            //_lastUsedMainCam.GetComponent<CinemachineFreeLook>().LookAt = _saveTrans;
+
+            // turn cam to look in maps linear-progression-direction:
+            /*if (_respawnPointGO != null)
+            {
+                Cinemachine.CinemachineVirtualCamera _cinemachineCamComponent = _lastUsedMainCam.GetComponent<Cinemachine.CinemachineVirtualCamera>();
+                _cinemachineCamComponent.m_LookAt = _respawnPointGO.transform.Find("Orientation Point");
+            }*/
+            //RefocusCamera(_lastUsedMainCam);
+
+        }
+    }
+
+    public void RefocusCamera()
+    {
+        GameObject _cam;
+        if (_lastUsedMainCam == null)
+        {
+            Cam.SetActive(true);
+            _cam = Cam;
         }else
         {
             _lastUsedMainCam.SetActive(true);
+            _cam = _lastUsedMainCam;
         }
+
+        if (_cam == null)
+        {
+            Debug.LogError("The provided camera GameObject is null!");
+            return;
+        }
+
+        Cinemachine.CinemachineFreeLook freeLookCam = _cam.GetComponent<Cinemachine.CinemachineFreeLook>();
+
+        if (freeLookCam == null)
+        {
+            Debug.LogError("The provided GameObject doesn't have a CinemachineFreeLook component!");
+            return;
+        }
+
+        freeLookCam.LookAt = this.transform;
+
+        // Adjust the camera's horizontal axis to match the respawn point's intended direction.
+        freeLookCam.m_XAxis.Value = this.transform.eulerAngles.y;
+        freeLookCam.m_YAxis.Value = 0.65f; 
     }
+
+    private IEnumerator WaitAndReleaseCamera(Cinemachine.CinemachineFreeLook freeLookCam, float _storedSettings)
+    {
+        yield return new WaitForSeconds(0.1f); // wait for 0.1 seconds
+                                               // Reset the axis control to allow player input to control the camera.
+        freeLookCam.m_XAxis.m_MaxSpeed = 300; // reset to a typical value or whatever value you use
+    }
+
     void ResetCloseUpCam()
     {
         if (FindObjectOfType<SmoothCloseUpCameraAdjuster>())

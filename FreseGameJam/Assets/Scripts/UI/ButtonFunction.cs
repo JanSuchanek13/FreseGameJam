@@ -80,6 +80,11 @@ public class ButtonFunction : MonoBehaviour
             Pause();
         }
 
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            FindObjectOfType<HealthSystem>().RefocusCamera();
+        }
+
         if (playerInput.CharacterControlsController.Retry.triggered || playerInput.CharacterControlsKeyboard.Retry.triggered)
         {
             if (PlayerPrefs.GetInt("HardcoreMode", 0) != 0)

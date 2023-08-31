@@ -528,7 +528,7 @@ public class ThirdPersonMovement : MonoBehaviour
             //Cam
             //thirdPersonCam.SetActive(true);
             craneCam.SetActive(false);
-            FindObjectOfType<HealthSystem>().EnableCameras();
+            FindObjectOfType<HealthSystem>().EnableCameras(); // why is this called in an update?
 
 
             //Jump
