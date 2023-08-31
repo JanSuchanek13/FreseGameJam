@@ -80,7 +80,7 @@ public class ButtonFunction : MonoBehaviour
             Pause();
         }
 
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (playerInput.CharacterControls.ResetCam.triggered)
         {
             FindObjectOfType<HealthSystem>().RefocusCamera();
         }

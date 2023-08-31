@@ -107,6 +107,15 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ResetCam"",
+                    ""type"": ""Button"",
+                    ""id"": ""63d2725e-8900-4e85-955a-0629407d2e79"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -470,6 +479,28 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""GOBackInUI"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5ef0ed6d-979e-4cd4-92d4-7cd22588b14b"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ResetCam"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""07631251-8904-40a5-9cab-0d5d961153b2"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ResetCam"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1730,6 +1761,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_CharacterControls_CamToggle = m_CharacterControls.FindAction("CamToggle", throwIfNotFound: true);
         m_CharacterControls_Option = m_CharacterControls.FindAction("Option", throwIfNotFound: true);
         m_CharacterControls_GOBackInUI = m_CharacterControls.FindAction("GOBackInUI", throwIfNotFound: true);
+        m_CharacterControls_ResetCam = m_CharacterControls.FindAction("ResetCam", throwIfNotFound: true);
         // CharacterControlsController
         m_CharacterControlsController = asset.FindActionMap("CharacterControlsController", throwIfNotFound: true);
         m_CharacterControlsController_Move = m_CharacterControlsController.FindAction("Move", throwIfNotFound: true);
@@ -1834,6 +1866,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_CharacterControls_CamToggle;
     private readonly InputAction m_CharacterControls_Option;
     private readonly InputAction m_CharacterControls_GOBackInUI;
+    private readonly InputAction m_CharacterControls_ResetCam;
     public struct CharacterControlsActions
     {
         private @PlayerInput m_Wrapper;
@@ -1847,6 +1880,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         public InputAction @CamToggle => m_Wrapper.m_CharacterControls_CamToggle;
         public InputAction @Option => m_Wrapper.m_CharacterControls_Option;
         public InputAction @GOBackInUI => m_Wrapper.m_CharacterControls_GOBackInUI;
+        public InputAction @ResetCam => m_Wrapper.m_CharacterControls_ResetCam;
         public InputActionMap Get() { return m_Wrapper.m_CharacterControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1883,6 +1917,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @GOBackInUI.started -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnGOBackInUI;
                 @GOBackInUI.performed -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnGOBackInUI;
                 @GOBackInUI.canceled -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnGOBackInUI;
+                @ResetCam.started -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnResetCam;
+                @ResetCam.performed -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnResetCam;
+                @ResetCam.canceled -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnResetCam;
             }
             m_Wrapper.m_CharacterControlsActionsCallbackInterface = instance;
             if (instance != null)
@@ -1914,6 +1951,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @GOBackInUI.started += instance.OnGOBackInUI;
                 @GOBackInUI.performed += instance.OnGOBackInUI;
                 @GOBackInUI.canceled += instance.OnGOBackInUI;
+                @ResetCam.started += instance.OnResetCam;
+                @ResetCam.performed += instance.OnResetCam;
+                @ResetCam.canceled += instance.OnResetCam;
             }
         }
     }
@@ -2253,6 +2293,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         void OnCamToggle(InputAction.CallbackContext context);
         void OnOption(InputAction.CallbackContext context);
         void OnGOBackInUI(InputAction.CallbackContext context);
+        void OnResetCam(InputAction.CallbackContext context);
     }
     public interface ICharacterControlsControllerActions
     {
