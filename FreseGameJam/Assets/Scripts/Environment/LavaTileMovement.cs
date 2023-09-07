@@ -19,6 +19,9 @@ public class LavaTileMovement : MonoBehaviour
     private int currentPositionIndex = 0;
     private bool isAtLastPosition = false;
 
+    [Header("Fire")]
+    public GameObject[] Fire;
+
     private void Start()
     {
         // Prüfe, ob mindestens eine Zielposition vorhanden ist
@@ -71,6 +74,34 @@ public class LavaTileMovement : MonoBehaviour
             
             currentPositionIndex = 0;
             MoveToNextPosition();
+        }
+    }
+
+    private void PlayBurnSound()
+    {
+
+    }
+
+    public IEnumerator ActivateFire()
+    {
+        foreach (GameObject i in Fire)
+        {
+            i.SetActive(true);
+            yield return new WaitForSeconds(0.75f);
+            PlayBurnSound();
+        }
+
+        // Wackeln
+        transform.DOPunchPosition(Vector3.right * wiggleStrength, wiggleDuration, 1, 0);
+
+        // Warte für die Dauer des Stopps
+        yield return new WaitForSeconds(stopDuration);
+
+        // Bewege das GameObject um einen halben Meter nach unten
+        Vector3 newPosition = transform.position - new Vector3(0f, bounceDistance, 0f);
+        foreach (GameObject i in Fire)
+        {
+            i.SetActive(false);
         }
     }
 
