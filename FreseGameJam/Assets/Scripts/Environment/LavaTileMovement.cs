@@ -9,7 +9,7 @@ public class LavaTileMovement : MonoBehaviour
     public Transform[] targetPositions; // Array der Zielpositionen
 
     [Header("Movement Settings")]
-    public float moveDuration = 2.0f; // Dauer der Bewegung
+    public float moveSpeed = 2.0f; // Konstante Geschwindigkeit
     public Ease moveEase = Ease.Linear; // Easing-Funktion für die Bewegung
     public float wiggleDuration = 0.5f; // Dauer des Wackelns
     public float wiggleStrength = 0.1f; // Stärke des Wackelns
@@ -21,6 +21,7 @@ public class LavaTileMovement : MonoBehaviour
 
     [Header("Fire")]
     public GameObject[] Fire;
+    bool activeFireISRunning;
 
     private void Start()
     {
@@ -42,6 +43,12 @@ public class LavaTileMovement : MonoBehaviour
         if (currentPositionIndex < targetPositions.Length)
         {
             Transform targetPosition = targetPositions[currentPositionIndex];
+
+            // Berechne die Entfernung zur nächsten Zielposition
+            float distance = Vector3.Distance(transform.position, targetPosition.position);
+
+            // Berechne die Dauer der Bewegung basierend auf der Entfernung und der konstanten Geschwindigkeit
+            float moveDuration = distance / moveSpeed;
 
             // Bewege das GameObject zur Zielposition
             transform.DOMove(targetPosition.position, moveDuration)
@@ -84,6 +91,13 @@ public class LavaTileMovement : MonoBehaviour
 
     public IEnumerator ActivateFire()
     {
+        if (activeFireISRunning)
+        {
+            yield break;
+        }
+        activeFireISRunning = true;
+        Debug.Log("Fire");
+
         foreach (GameObject i in Fire)
         {
             i.SetActive(true);
@@ -103,6 +117,8 @@ public class LavaTileMovement : MonoBehaviour
         {
             i.SetActive(false);
         }
+        currentPositionIndex = targetPositions.Length - 1;
+        MoveToNextPosition();
     }
 
     private IEnumerator PerformWiggleAndBounce()
