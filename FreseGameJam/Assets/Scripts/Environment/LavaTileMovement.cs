@@ -117,8 +117,10 @@ public class LavaTileMovement : MonoBehaviour
         {
             i.SetActive(false);
         }
-        currentPositionIndex = targetPositions.Length - 1;
-        MoveToNextPosition();
+
+        // Setze den Index zurück, um die normale Bewegung fortzusetzen
+        currentPositionIndex = 0;
+        activeFireISRunning = false;
     }
 
     private IEnumerator PerformWiggleAndBounce()
