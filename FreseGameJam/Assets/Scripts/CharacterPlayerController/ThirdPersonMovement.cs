@@ -597,6 +597,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 speed = 0f; //walk speed
 
                 //change back to human on ground
+                GetComponent<StateController>().isChanging = true;
                 StartCoroutine(GetComponent<StateController>().changeModell(1));
                 stateController.ball = false;
                 stateController.human = true;

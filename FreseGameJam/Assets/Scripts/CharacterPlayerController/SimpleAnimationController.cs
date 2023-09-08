@@ -10,8 +10,11 @@ namespace Loneflower
         [Header("REFERENCES")]
         [SerializeField] private CharacterController myController;
         [SerializeField] private ThirdPersonMovement thirdPersonMovement;
+        [SerializeField] private StateController stateController;
         private Animator animator;
         private bool randomIdleIsRunning;
+
+        bool test;
 
         private void Awake()
         {
@@ -25,7 +28,8 @@ namespace Loneflower
             SetVelocity();
             JumpCheck();
             FallCheck();
-            if(animator.GetFloat("xVelocity") == 0 && !randomIdleIsRunning)
+            FoldUpCheck();
+            if (animator.GetFloat("xVelocity") == 0 && !randomIdleIsRunning)
             {
                 StartCoroutine("SetRandomIdle");
             }
@@ -62,6 +66,31 @@ namespace Loneflower
         private void FallCheck()
         {
             animator.SetBool("isFalling", thirdPersonMovement.forcedFalling);
+        }
+
+        private void FoldUpCheck()
+        {
+            // use this if we cant use transition to self = false in Animator
+            /*
+            if (stateController.isChanging && !test)
+            {
+                Debug.Log(animator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
+                animator.SetTrigger("TurnToCrane");
+                test = true;
+                Invoke("ResetTransitionTest", 0.5f);
+            }
+            */
+            if (stateController.isChanging)
+            {
+                animator.SetTrigger("TurnToCrane");
+            }
+                
+            //animator.SetBool("isFolding", stateController.isChanging);
+        }
+
+        private void ResetTransitionTest()
+        {
+            test = false;
         }
 
         IEnumerator SetRandomIdle()

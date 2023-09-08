@@ -510,7 +510,8 @@ public class StateController : MonoBehaviour
 
         //change to ball
         transformationSound.Play();
-        ballVisuell.SetActive(true);
+        yield return new WaitForSeconds(.3f);
+        //ballVisuell.SetActive(true);
         humanVisuell.SetActive(false);
         frogVisuell.SetActive(false);
         craneVisuell.SetActive(false);
@@ -521,8 +522,6 @@ public class StateController : MonoBehaviour
         // play sound for transformation here!
 
 
-        //change to new form
-        yield return new WaitForSeconds(.5f);
         switch (state)
         {
             case 1:

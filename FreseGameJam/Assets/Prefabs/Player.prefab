@@ -5239,6 +5239,7 @@ GameObject:
   - component: {fileID: 921337818693101444}
   - component: {fileID: 2801747631105741083}
   - component: {fileID: 8147188511698680984}
+  - component: {fileID: 6500775675470662500}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -5449,6 +5450,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   respawnPoint: {x: 0, y: 0, z: 0}
   inCoroutine: 0
+  fadeBlackOnDeath: 0
+  fadeToBlackBlende: {fileID: 0}
   Cam: {fileID: 0}
   Cam2: {fileID: 0}
   Cam2_Falling: {fileID: 0}
@@ -5604,7 +5607,8 @@ MonoBehaviour:
     m_Bits: 1024
   _transluscentAlpha: 0.5
   _detectionRadius: 5
-  _material: {fileID: 2100000, guid: 0306f4577af82a646a59fa63abfa824c, type: 2}
+  _boxMaterial: {fileID: 0}
+  _woodMaterial: {fileID: 0}
 --- !u!114 &921337818693101444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5645,7 +5649,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a875a32ed2986cd47b2981c3a07efccc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  VulcanoPP: {fileID: 0}
+  vulcanoPP: {fileID: 0}
+  tunnelPP: {fileID: 0}
+  minesPP: {fileID: 0}
+  lightFlashPP: {fileID: 0}
+--- !u!114 &6500775675470662500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 240851668594198196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b952061194dfe534598234396a9731af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &259389069916638749
 GameObject:
   m_ObjectHideFlags: 0
@@ -6846,6 +6865,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myController: {fileID: 510890566596334925}
   thirdPersonMovement: {fileID: 8476848767638494030}
+  stateController: {fileID: 902242434731577413}
 --- !u!114 &3498487958436319137
 MonoBehaviour:
   m_ObjectHideFlags: 0
