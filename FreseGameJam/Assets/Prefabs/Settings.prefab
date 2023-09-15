@@ -617,7 +617,7 @@ GameObject:
   - component: {fileID: 3698475572450551729}
   - component: {fileID: 3698475572450551734}
   - component: {fileID: 1908877549819208576}
-  - component: {fileID: 1386226799908521339}
+  - component: {fileID: 4902335319345182725}
   m_Layer: 5
   m_Name: Dropdown_Controls
   m_TagString: Untagged
@@ -771,7 +771,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverSoundObject: {fileID: 0}
   selectSoundObject: {fileID: 0}
---- !u!114 &1386226799908521339
+--- !u!114 &4902335319345182725
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -780,34 +780,62 @@ MonoBehaviour:
   m_GameObject: {fileID: 3698475572450551732}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Script: {fileID: 11500000, guid: aaa8b94bee4229b4cb26bd75bed29fee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_StringReference:
-    m_TableReference:
-      m_TableCollectionName: GUID:400c0deceeb05654d8fc3c8e45399205
-    m_TableEntryReference:
-      m_KeyId: 360252259164160
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  m_FormatArguments: []
-  m_UpdateString:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3698475572450551734}
-        m_TargetAssemblyTypeName: UnityEngine.Object, UnityEngine
-        m_MethodName: set_name
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  options:
+  - text:
+      m_TableReference:
+        m_TableCollectionName: GUID:400c0deceeb05654d8fc3c8e45399205
+      m_TableEntryReference:
+        m_KeyId: 360250715660288
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    sprite:
+      m_TableReference:
+        m_TableCollectionName: 
+      m_TableEntryReference:
+        m_KeyId: 0
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+  - text:
+      m_TableReference:
+        m_TableCollectionName: GUID:400c0deceeb05654d8fc3c8e45399205
+      m_TableEntryReference:
+        m_KeyId: 360252259164160
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    sprite:
+      m_TableReference:
+        m_TableCollectionName: 
+      m_TableEntryReference:
+        m_KeyId: 0
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+  - text:
+      m_TableReference:
+        m_TableCollectionName: GUID:400c0deceeb05654d8fc3c8e45399205
+      m_TableEntryReference:
+        m_KeyId: 360403958751232
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    sprite:
+      m_TableReference:
+        m_TableCollectionName: 
+      m_TableEntryReference:
+        m_KeyId: 0
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+  selectedOptionIndex: 0
   references:
     version: 2
     RefIds: []

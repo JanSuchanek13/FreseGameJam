@@ -6,6 +6,10 @@ using TMPro;
 
 public class LocaleSelector : MonoBehaviour
 {
+    // references:
+    // https://docs.unity3d.com/Packages/com.unity.localization@1.0/manual/LocalizedPropertyVariants.html
+    // https://forum.unity.com/threads/localizing-ui-dropdown-options.896951/
+
     [Tooltip("This UI will only be called if the player has never picked an initial language.")]
     [SerializeField] GameObject _languageSelectorUI;
 
