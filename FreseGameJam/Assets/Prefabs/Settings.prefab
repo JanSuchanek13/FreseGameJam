@@ -783,59 +783,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa8b94bee4229b4cb26bd75bed29fee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  options:
-  - text:
-      m_TableReference:
-        m_TableCollectionName: GUID:400c0deceeb05654d8fc3c8e45399205
-      m_TableEntryReference:
-        m_KeyId: 360250715660288
-        m_Key: 
-      m_FallbackState: 0
-      m_WaitForCompletion: 0
-      m_LocalVariables: []
-    sprite:
-      m_TableReference:
-        m_TableCollectionName: 
-      m_TableEntryReference:
-        m_KeyId: 0
-        m_Key: 
-      m_FallbackState: 0
-      m_WaitForCompletion: 0
-  - text:
-      m_TableReference:
-        m_TableCollectionName: GUID:400c0deceeb05654d8fc3c8e45399205
-      m_TableEntryReference:
-        m_KeyId: 360252259164160
-        m_Key: 
-      m_FallbackState: 0
-      m_WaitForCompletion: 0
-      m_LocalVariables: []
-    sprite:
-      m_TableReference:
-        m_TableCollectionName: 
-      m_TableEntryReference:
-        m_KeyId: 0
-        m_Key: 
-      m_FallbackState: 0
-      m_WaitForCompletion: 0
-  - text:
-      m_TableReference:
-        m_TableCollectionName: GUID:400c0deceeb05654d8fc3c8e45399205
-      m_TableEntryReference:
-        m_KeyId: 360403958751232
-        m_Key: 
-      m_FallbackState: 0
-      m_WaitForCompletion: 0
-      m_LocalVariables: []
-    sprite:
-      m_TableReference:
-        m_TableCollectionName: 
-      m_TableEntryReference:
-        m_KeyId: 0
-        m_Key: 
-      m_FallbackState: 0
-      m_WaitForCompletion: 0
-  selectedOptionIndex: 0
+  dropdownOptions:
+  - m_TableReference:
+      m_TableCollectionName: GUID:400c0deceeb05654d8fc3c8e45399205
+    m_TableEntryReference:
+      m_KeyId: 360250715660288
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  - m_TableReference:
+      m_TableCollectionName: GUID:400c0deceeb05654d8fc3c8e45399205
+    m_TableEntryReference:
+      m_KeyId: 360252259164160
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  - m_TableReference:
+      m_TableCollectionName: GUID:400c0deceeb05654d8fc3c8e45399205
+    m_TableEntryReference:
+      m_KeyId: 360403958751232
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   references:
     version: 2
     RefIds: []

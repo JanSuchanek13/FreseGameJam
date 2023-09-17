@@ -27,11 +27,16 @@ public class LevelScript : MonoBehaviour
 
 
     [SerializeField] Image _fadeToBlackBlende;
-    [SerializeField] GameObject _thankYouForPlayingOverlay;
+    [SerializeField] GameObject _regularRunCompleteOverlay;
+    [SerializeField] GameObject _hardcoreRunCompleteOverlay;
 
-    [SerializeField] TextMeshProUGUI _statDisplay_Time;
-    [SerializeField] TextMeshProUGUI _statDisplay_Deaths;
-    [SerializeField] TextMeshProUGUI _statDisplay_Crowns;
+    TextMeshProUGUI _statDisplay_Time;
+    TextMeshProUGUI _statDisplay_Deaths;
+    TextMeshProUGUI _statDisplay_Crowns;
+    //[SerializeField] TextMeshProUGUI _statDisplay_Time;
+    //[SerializeField] TextMeshProUGUI _statDisplay_Deaths;
+    //[SerializeField] TextMeshProUGUI _statDisplay_Crowns;
+
     [SerializeField] int level;
 
     // local variables:
@@ -72,7 +77,7 @@ public class LevelScript : MonoBehaviour
         //if(FindObjectOfType<HardcoreMode>().useHardcoreMode == true)
         if (PlayerPrefs.GetInt("HardcoreMode", 0) == 1 && !_usingHardcoreMode) // in update, as its switched later than start, i think?
         {
-        _usingHardcoreMode = true;
+            _usingHardcoreMode = true;
         }
         else if (!_endZoneReached && _clockRunning)
         {
@@ -232,10 +237,46 @@ public class LevelScript : MonoBehaviour
         
         StartCoroutine(FadeToBlack());
     }
+    void DisplayRegularStats()
+    {
+        // Set the display variables by getting them from the correct UI:
+        _statDisplay_Time = _regularRunCompleteOverlay.transform.Find("YourStats_Timer_txt").GetComponent<TextMeshProUGUI>();
+        _statDisplay_Deaths = _regularRunCompleteOverlay.transform.Find("YourStats_Deaths_txt").GetComponent<TextMeshProUGUI>();
+        _statDisplay_Crowns = _regularRunCompleteOverlay.transform.Find("YourStats_Crowns_txt").GetComponent<TextMeshProUGUI>();
 
+        // format the time:
+        float _totalLevelTime = PlayerPrefs.GetFloat("timer" + level, 0) + PlayerPrefs.GetFloat("lastTimer" + level, 0);
+        int _minutes = (int)_totalLevelTime / 60;
+        int _seconds = (int)_totalLevelTime - 60 * _minutes;
+        int _milliseconds = (int)(1000 * (_totalLevelTime - _minutes * 60 - _seconds));
+
+        // display the runs stats:
+        _statDisplay_Time.text = string.Format("{0:00}:{1:00}:{2:000}", _minutes, _seconds, _milliseconds);
+        _statDisplay_Deaths.text = PlayerPrefs.GetInt("deaths" + level, 1).ToString();
+        _statDisplay_Crowns.text = PlayerPrefs.GetInt("crowns" + level, 1).ToString();
+    }
+
+    void DisplayHardcoreStats()
+    {
+        // Set the display variables by getting them from the correct UI:
+        _statDisplay_Time = _hardcoreRunCompleteOverlay.transform.Find("YourStats_Timer_txt").GetComponent<TextMeshProUGUI>();
+        _statDisplay_Deaths = _hardcoreRunCompleteOverlay.transform.Find("YourStats_Deaths_txt").GetComponent<TextMeshProUGUI>();
+        _statDisplay_Crowns = _hardcoreRunCompleteOverlay.transform.Find("YourStats_Crowns_txt").GetComponent<TextMeshProUGUI>();
+
+        // format the time:
+        float _totalLevelTime = PlayerPrefs.GetFloat("HardcoreTime" + level, 0);
+        int _minutes = (int)_totalLevelTime / 60;
+        int _seconds = (int)_totalLevelTime - 60 * _minutes;
+        int _milliseconds = (int)(1000 * (_totalLevelTime - _minutes * 60 - _seconds));
+
+        // display the runs stats:
+        _statDisplay_Time.text = string.Format("{0:00}:{1:00}:{2:000}", _minutes, _seconds, _milliseconds);
+        _statDisplay_Deaths.text = PlayerPrefs.GetInt("HardcoreDeaths" + level, 1).ToString();
+        _statDisplay_Crowns.text = PlayerPrefs.GetInt("HardcoreCrowns" + level, 1).ToString();
+    }
     void DisplayText()
     {
-        if (_thankYouForPlayingOverlay != null) // only try to display overlay-text, if there is overlay-text in place.
+        if (_regularRunCompleteOverlay != null) // only try to display overlay-text, if there is overlay-text in place.
         {
             // turn off all player input in the background:
             if(FindObjectOfType<InputHandler>() != null)
@@ -243,53 +284,17 @@ public class LevelScript : MonoBehaviour
                 FindObjectOfType<InputHandler>().enabled = false;
             }
 
-
-            _thankYouForPlayingOverlay.SetActive(true);
-
-            // display current levels total runtime:
-            if (_statDisplay_Time != null && !_usingHardcoreMode)
+            // load the correct text for the playmode:
+            if (!_usingHardcoreMode)
             {
-                float _totalLevelTime = PlayerPrefs.GetFloat("timer" + level, 0) + PlayerPrefs.GetFloat("lastTimer" + level, 0);
-                int _minutes = (int)_totalLevelTime / 60;
-                int _seconds = (int)_totalLevelTime - 60 * _minutes;
-                int _milliseconds = (int)(1000 * (_totalLevelTime - _minutes * 60 - _seconds));
+                _regularRunCompleteOverlay.SetActive(true);
 
-                _statDisplay_Time.text = string.Format("{0:00}:{1:00}:{2:000}", _minutes, _seconds, _milliseconds);
-
-                // display current levels total deaths:
-                if (_statDisplay_Deaths != null)
-                {
-                    _statDisplay_Deaths.text = PlayerPrefs.GetInt("deaths" + level, 1).ToString();
-                }
-
-                // display current levels total crowns:
-                if (_statDisplay_Crowns != null)
-                {
-                    int crowns = PlayerPrefs.GetInt("crowns" + level, 1);
-                    _statDisplay_Crowns.text = crowns.ToString();
-                }
-            }
-            else if(_usingHardcoreMode)
+                DisplayRegularStats();
+            }else
             {
-                float _totalLevelTime = PlayerPrefs.GetFloat("HardcoreTime" + level, 0);
-                int _minutes = (int)_totalLevelTime / 60;
-                int _seconds = (int)_totalLevelTime - 60 * _minutes;
-                int _milliseconds = (int)(1000 * (_totalLevelTime - _minutes * 60 - _seconds));
+                _hardcoreRunCompleteOverlay.SetActive(true);
 
-                _statDisplay_Time.text = string.Format("{0:00}:{1:00}:{2:000}", _minutes, _seconds, _milliseconds);
-
-                // display current levels total deaths:
-                if (_statDisplay_Deaths != null)
-                {
-                    _statDisplay_Deaths.text = PlayerPrefs.GetInt("HardcoreDeaths" + level, 1).ToString(); // +level could be an issue here
-                }
-
-                // display current levels total crowns:
-                if (_statDisplay_Crowns != null)
-                {
-                    int crowns = PlayerPrefs.GetInt("HardcoreCrowns" + level, 1); // +level could be an issue here
-                    _statDisplay_Crowns.text = crowns.ToString();
-                }
+                DisplayHardcoreStats();
             }
         }
     }

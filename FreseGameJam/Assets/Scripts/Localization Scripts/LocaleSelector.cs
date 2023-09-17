@@ -65,7 +65,10 @@ public class LocaleSelector : MonoBehaviour
 
     void CloseLanguageSelectorUI()
     {
-        _languageSelectorUI.SetActive(false);
+        if(_languageSelectorUI != null)
+        {
+            _languageSelectorUI.SetActive(false);
+        }
     }
 
     /// <summary>
