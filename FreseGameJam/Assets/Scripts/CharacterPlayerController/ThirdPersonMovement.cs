@@ -873,26 +873,33 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public void MoveToTarget(Vector3 targetPos)
     {
-        // Disable player input:
-        playerInput.Disable();
+        // disable player input:
+        //Destroy(GetComponent<PlayerInput>());
+        //playerInput.Disable();
+        input.enabled = false;
 
         isMovingToTarget = true;
         targetPosition = targetPos;
+        transform.LookAt(targetPos);
     }
     void MoveCharacterToTarget()
     {
         Vector3 directionToTarget = (targetPosition - transform.position).normalized;
 
-        // Move the player towards the target:
+        // move the player towards the target:
         controller.Move(directionToTarget * speed * Time.deltaTime);
 
-        // If the player is close enough to the target, stop moving:
-        if (Vector3.Distance(transform.position, targetPosition) < 0.5f) // The value 0.5f can be adjusted as per requirement
+        // if the player is close enough to the target, stop moving:
+        if (Vector3.Distance(transform.position, targetPosition) < 1.45f) // The value 0.5f can be adjusted as per requirement
         {
             isMovingToTarget = false;
-
+            // Disable player input:
+            //playerInput.Disable();
+            //Debug.Log("disabled!");
             // Enable player input:
-            playerInput.Enable();
+            //playerInput.Enable();
+
+            // start waving and cheering
         }
     }
     #endregion

@@ -16,6 +16,8 @@ public class Patrolling : MonoBehaviour
 
     [SerializeField] GameObject _turnOffElements;
     [SerializeField] GameObject _turnOnElements;
+    [Tooltip("Put the end of game collider/trigger (box) in here. This will only be turnt on when the ship has actually arrived.")]
+    [SerializeField] BoxCollider _endOfGameCollider;
 
     private float _defaultSpeed;
 
@@ -114,6 +116,7 @@ public class Patrolling : MonoBehaviour
         
         _turnOnElements.SetActive(true);
         _turnOffElements.SetActive(false);
+        _endOfGameCollider.enabled = true;
     }
 
     // polish: this makes friend wait when touching trigger at a given location, needs a wake-up-trigger to call "StopWaiting()".
