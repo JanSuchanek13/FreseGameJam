@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.InputSystem;
@@ -305,46 +304,6 @@ public class ThirdPersonMovement : MonoBehaviour
         }
     }
 
-    /*
-    void Update()
-    {
-        //crane juice
-        craneSound.SetActive(stateController.crane);
-        craneVFX.SetActive(stateController.crane);
-
-        if (GetComponent<StateController>().human)
-        {
-            //if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && !isGrounded && !(Physics.CheckSphere(groundCheck.position, groundDistance * 7, groundMask, QueryTriggerInteraction.Ignore)) && !GetComponent<StateController>().isChanging) // double jump change you into crane
-            if ((input.jumpTriggerd) && !isGrounded && !isCoyoteGrounded && !CheckForGroundContact() && !GetComponent<StateController>().isChanging) // double jump change you into crane
-            {
-
-                if (stateController.availableCrane)
-                {
-                    GetComponent<StateController>().isChanging = true;
-                    stateController.ball = false;
-                    stateController.human = false;
-                    stateController.frog = false;
-                    stateController.crane = true;
-                    stateController.capricorn = false;
-                    stateController.lama = false;
-                    StartCoroutine(GetComponent<StateController>().changeModell(2));
-                }
-
-            }
-            if (holdForGliding && input.jumpValue == 0 && stateController.crane)
-            {
-                GetComponent<StateController>().isChanging = true;
-                stateController.ball = false;
-                stateController.human = true;
-                stateController.frog = false;
-                stateController.crane = false;
-                stateController.capricorn = false;
-                stateController.lama = false;
-                StartCoroutine(GetComponent<StateController>().changeModell(1));
-            }
-        }
-    }*/
-
     private void FixedUpdate()
     {
         if (willSlideOnSlopes && isSliding && !isOnSteps && !onBridge && !beforeJumpZenith)
@@ -357,6 +316,13 @@ public class ThirdPersonMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // part of Felix new logic to force-move player to target pos (see region at class end)
+        if (isMovingToTarget) 
+        {
+            MoveCharacterToTarget();
+            return; // To prevent other updates.
+        }
+
         ReadyForJumpChange();
         bool test = isOnSteps;
         //crane juice
@@ -365,7 +331,6 @@ public class ThirdPersonMovement : MonoBehaviour
 
         if (GetComponent<StateController>().human)
         {
-            //if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && !isGrounded && !(Physics.CheckSphere(groundCheck.position, groundDistance * 7, groundMask, QueryTriggerInteraction.Ignore)) && !GetComponent<StateController>().isChanging) // double jump change you into crane
             if (/*input.jumpValue == 1 && jumpChange*/input.jumpTriggerd && !Physics.Raycast(transform.position, Vector3.down, 3f, groundMask, QueryTriggerInteraction.Ignore) && !isCoyoteGrounded && !GetComponent<StateController>().isChanging) // double jump change you into crane
             {
 
@@ -420,13 +385,9 @@ public class ThirdPersonMovement : MonoBehaviour
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            //Debug.Log(hitPointNormal);
-            //Debug.Log(moveDir);
             //if sliding the move direction will be overwriten
             if (willSlideOnSlopes && isSliding && !isOnSteps && !onBridge)
             {
-                //moveDir = new Vector3(hitPointNormal.x, -hitPointNormal.y, hitPointNormal.z) * slopeSpeed; //wird ausgeführt in Fixedupdate
-                //controller.Move(moveDir.normalized * humanSpeed*0.5f * Time.deltaTime);
             }
             else
             {
@@ -439,11 +400,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
         movingDownwards = transform.position.y +.1 < oldtransform.y;
         oldtransform = transform.position;
-
-        //Check Ground
-        //controller = GetComponent<CharacterController>();
-
-        //isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance * 2, groundMask, QueryTriggerInteraction.Ignore);
+        
         if (!CheckForGroundContact() && velocity.y < -10 && movingDownwards)
         {
             falling = true; //animation
@@ -480,24 +437,12 @@ public class ThirdPersonMovement : MonoBehaviour
         }
         
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance *1.5f, groundMask, QueryTriggerInteraction.Ignore);
-        /*
-        if (Physics.CheckSphere(groundCheck.position, groundDistance * 3, groundMask, QueryTriggerInteraction.Ignore) && velocity.y < 0.5 && !onBridge) //is falling
-        {
-            controller.stepOffset = 0.5f;
-            //falling = false; //animation
-            jumping = false; //animation
-                                //controller.slopeLimit = 45.0f;
-            velocity.y = -4f;
-        }
-        */
         float _groundCheckRadius = GetComponent<CharacterController>().radius;
         RaycastHit groundHit;
         if (Physics.SphereCast(groundCheck.position, _groundCheckRadius * 0.9f, -groundCheck.up, out groundHit, 1f, groundMask) && velocity.y < 0.5 && !onBridge)
         {
             controller.stepOffset = 0.5f;
-            //falling = false; //animation
             jumping = false; //animation
-                             //controller.slopeLimit = 45.0f;
             velocity.y = -4f;
         }
         else
@@ -578,7 +523,6 @@ public class ThirdPersonMovement : MonoBehaviour
         }
         if (GetComponent<StateController>().crane)
         {
-            // Felix put this here to see if it start the cranse vibration at the right place!
             if (pad != null && input.controlType == InputHandler.ControlType.Controller && useVibration)
             {
                 pad.SetMotorSpeeds(0.2f, 0.2f);
@@ -605,9 +549,6 @@ public class ThirdPersonMovement : MonoBehaviour
                 stateController.crane = false;
                 stateController.capricorn = false;
                 stateController.lama = false;
-                //StartCoroutine(GetComponent<StateController>().changeModell(1));
-
-                
             }
             else
             {
@@ -671,33 +612,15 @@ public class ThirdPersonMovement : MonoBehaviour
             }
 
             //Gravity
-            //float curve = 1 ^ Time.deltaTime;
             velocity.y = gravity / (flyCurve * Time.deltaTime); //low gravity
 
             controller.Move(velocity * Time.deltaTime);
-
-            //velocity.y += gravity/10 * Time.deltaTime; //low gravity
-            //controller.Move(velocity * Time.deltaTime);
             
         }
         if (GetComponent<StateController>().capricorn)
         {
             //Move 
             speed = 2;
-            /*
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            controller.Move(moveDir.normalized * speed * Time.deltaTime);
-            */
-
-            //Jump
-            /*
-            if (playerInput.CharacterControls.Jump.ReadValue<float>() != 0 && isGrounded)
-            {
-                controller.slopeLimit = 100f;
-                velocity.y = Mathf.Sqrt(jumpHeight / 150 * -2f * gravity);
-            }
-            */
 
             if (/*input.jumpValue != 0 & */!isInCooldown) //hier ändern damit dash nicht automaitsch stattfindet !!!!!!!!!!!!!!!!!!!!
             {
@@ -754,11 +677,6 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             //Move 
             speed = 5;
-            /*
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            controller.Move(moveDir.normalized * speed * Time.deltaTime);
-            */
 
             //Jump
             if (input.jumpValue != 0 && CheckForGroundContact())
@@ -868,11 +786,6 @@ public class ThirdPersonMovement : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, angle, 0);
             yield return new WaitForSeconds(0.01f);
         }
-
-        
-        //dash_Sound.Play();
-
-        //yield return new WaitForSeconds(buildingUp_Sound.clip.length);
         yield return new WaitForSeconds(chargeTime);
         
         
@@ -927,6 +840,7 @@ public class ThirdPersonMovement : MonoBehaviour
         inDash = false;
         breakableDash = false;
         dashWallBreakCheck.SetActive(false);
+
         // no waiting. not needed, please dont add it back
         if (pad != null && input.controlType == InputHandler.ControlType.Controller)
         {
@@ -936,7 +850,6 @@ public class ThirdPersonMovement : MonoBehaviour
         // Turn on player input while dashing:
         GetComponent<InputHandler>().enabled = true;
 
-        //hier ändern damit dash nicht automaitsch stattfindet !!!!!!!!!!!!!!!!!!!!
         //change back to human
         GetComponent<StateController>().isChanging = true;
         GetComponent<StateController>().currentFormId = 1;
@@ -947,96 +860,40 @@ public class ThirdPersonMovement : MonoBehaviour
         stateController.capricorn = false;
         stateController.lama = false;
         StartCoroutine(GetComponent<StateController>().changeModell(1));
-        //bis hier ändern damit dash nicht automaitsch stattfindet !!!!!!!!!!!!!!!!!!!!
     }
-
-    /*
-    /// <summary>
-    /// execute Dash of Capricorn
-    /// </summary>
-    /// <returns></returns>
-    IEnumerator CapricornDash()
-    {
-        //change capricorn Rotation towards cam
-        for (int i = 0; i < 15; i++)
-        {
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, cam.eulerAngles.y, ref turnSmoothVelocity, turnSmoothTime);
-            transform.rotation = Quaternion.Euler(0, angle, 0);
-            yield return new WaitForSeconds(0.01f);
-        }
-        
-
-        buildingUp_Sound.Play();
-        buildingup.Play();
-
-        dash_Sound.Play(); // warum spielt der dash shound hier wo der aufbau stattfindet?! beide sounds spielen dann parallel!
-
-        yield return new WaitForSeconds(chargeTime);
-        inDash = true;
-        dash.Play();
-        dash02.Play();
-
-        //speed = capricornSpeed;
-        GetComponent<Rigidbody>();
-        for (int i = 0; i < dashWidth *5; i++) //was passiert hier? dashWitdth * 5 in einer for loop?! benutzt du hier die vermeindliche breite des dashcorridors * 5 um die distanz zu ermitteln?
-        {
-            if(Physics.CheckSphere(dashCheck.position, 0.3f, dashMask)) //if we hit a Ground obj we stop the dash
-            {
-                dashCrash_Sound.Play();
-                //Debug.Log("stopped");
-                yield break;
-            }
-            speed = dashSpeed; // wofür ist dann die CapricornSpeed variables?!
-            float horizontal = input.moveValue.x;
-            float vertical = input.moveValue.y;
-            Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized; // this is unused, or not?! what does this do?
-            //float targetAngle = cam.eulerAngles.y; // dash forward from CAMERA:
-            float targetAngle = transform.eulerAngles.y; // dash forward from AVATARS looking direction:
-            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            controller.Move(moveDir.normalized * (speed * 3) * Time.deltaTime); // warum wird hier speed multipliziert? warum nicht einfach den speed benutzen der eingestellt ist?!
-            yield return new WaitForSeconds(.001f);
-            //Debug.Log("lauf");
-
-            //extra push power
-            Collider[] allObjects = Physics.OverlapSphere(transform.position, 3);   //all Objects in explosion Range
-            foreach (Collider j in allObjects)
-            {
-                Rigidbody rig = j.GetComponent<Rigidbody>();
-                if (rig != null && rig.gameObject != this.gameObject)
-                {
-                    //Debug.Log(rig.gameObject.name);
-                    rig.AddExplosionForce(1f, transform.position, 1, 1f, ForceMode.Impulse); // force was 1
-                    dashCrash_Sound.Play();
-                }
-            }
-        }
-        
-        speed = 2;
-        inDash = false;
-    }
-    */
     void LamaShoot()
     {
-        /*
-        if (arrayOfGun_Sounds.Length == 0)
-        {
-            //Debug.Log("trying to play fire sound, why tho");
-            AudioSource gunSound = arrayOfGun_Sounds[UnityEngine.Random.Range(0, arrayOfGun_Sounds.Length)];
-            gunSound.pitch = UnityEngine.Random.Range(1, 2);
-            gunSound.Play();
-        }
-        */
-        //restingPosition = transform.rotation; // needed to reset gun
-        //transform.Rotate(new Vector3(1, 1, 0), UnityEngine.Random.Range(-8f, 8f)); // spray randomly
-        //transform.LookAt(reticlePosition);
-
-
         Rigidbody bulletClone = (Rigidbody)Instantiate(bulletType, transform.position + (transform.forward * 2), transform.rotation);
         bulletClone.velocity = transform.forward * bulletSpeed;
-        //transform.rotation = restingPosition; // reset gun
     }
-}
 
-// replaced all isGrounded with the CheckForGroundContact() function and now everything seems to work much better on my end
-// previously you were checking for isGrounded two seperate times in the same update(?) unsure if this was on purpose, so
-// i just commented the old stuff and replaced all isGroundeds as said...
+    #region Force-Move player to a target position (ask Felix)
+    private bool isMovingToTarget = false;
+    private Vector3 targetPosition;
+
+    public void MoveToTarget(Vector3 targetPos)
+    {
+        // Disable player input:
+        playerInput.Disable();
+
+        isMovingToTarget = true;
+        targetPosition = targetPos;
+    }
+    void MoveCharacterToTarget()
+    {
+        Vector3 directionToTarget = (targetPosition - transform.position).normalized;
+
+        // Move the player towards the target:
+        controller.Move(directionToTarget * speed * Time.deltaTime);
+
+        // If the player is close enough to the target, stop moving:
+        if (Vector3.Distance(transform.position, targetPosition) < 0.5f) // The value 0.5f can be adjusted as per requirement
+        {
+            isMovingToTarget = false;
+
+            // Enable player input:
+            playerInput.Enable();
+        }
+    }
+    #endregion
+}

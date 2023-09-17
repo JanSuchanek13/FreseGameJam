@@ -37,6 +37,8 @@ public class HardcoreMode : MonoBehaviour
     [SerializeField] GameObject _darkClouds; // all turn on objects should be combined to a single parent later!
     [SerializeField] GameObject _magmaOcean;
     [SerializeField] GameObject _flameAndAshSpray;
+    //new:
+    [SerializeField] GameObject _breakingFloor;
 
     float _timeElapsed;
     int _minutes;
@@ -50,13 +52,21 @@ public class HardcoreMode : MonoBehaviour
     private void Start()
     {
         //int _playHardcore = PlayerPrefs.GetInt("HardcoreMode", 0);
-
+        Debug.Log("1");
         //if (_playHardcore == 1)
         if (PlayerPrefs.GetInt("HardcoreMode", 0) == 1)
         {
             useHardcoreMode = true; // cant this be turnt off?
             StartHardcoreRun();
             ResetCurrentHardcoreCrowns(); // this should reset crown display at start of run:
+        }
+        else // no longer destroy dropzone at end of game, instead add Script to call the forced move when reaching endzone!
+        {
+            Debug.Log("2");
+            Destroy(_breakingFloor.GetComponent<BreakingObj>());
+            Debug.Log("3");
+            _breakingFloor.GetComponent<RegularGameEnd>().RegularEnd = true;
+            Debug.Log("4");
         }
     }
     public void StartHardcoreRun()
