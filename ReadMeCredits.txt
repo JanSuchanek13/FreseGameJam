@@ -113,3 +113,5 @@ Paintbrush: https://www.dafont.com/de/paintbrush-2.font
 Paper Cuts 2: https://www.dafont.com/de/paper-cuts.font
 Quikhand: https://www.dafont.com/de/quikhand.font
 TTMasters Demo Black: https://dafontfree.net
+Remains by ljk_Remains: https://old.fonts-online.ru/font/ljk_Remains
+Yokomoji by YOKO文字: https://note.com/chitosekato/n/nc162552f8c1f
