@@ -27,6 +27,7 @@ public class HardcoreMode : MonoBehaviour
     [SerializeField] GameObject _checkpointParent;
     [SerializeField] GameObject _signs; 
     [SerializeField] GameObject _normalUI;
+    [SerializeField] GameObject _regularEndGameTrigger;
     [Space(10)]
     [SerializeField] GameObject _ocean;
     [SerializeField] GameObject _waterSpray;
@@ -84,7 +85,6 @@ public class HardcoreMode : MonoBehaviour
 
     IEnumerator CountDownToGo()
     {
-        //float _currentCountDown = _countdownTime;
         float _countDownInterval = _countdownTimeInSeconds / 3;
 
         _countDown_txt.text = 3.ToString();
@@ -122,8 +122,8 @@ public class HardcoreMode : MonoBehaviour
         _hardcoreUI.SetActive(true);
         _checkpointParent.SetActive(false);
         _normalUI.SetActive(false);
-        // new:
-        //_normalSky.SetActive(false); // redundant as it gets replaced
+        _regularEndGameTrigger.SetActive(false);
+
         if (_newHardcoreWorld)
         {
             _normalClouds.SetActive(false);
