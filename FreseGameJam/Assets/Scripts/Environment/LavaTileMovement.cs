@@ -15,8 +15,8 @@ public class LavaTileMovement : MonoBehaviour
     public float wiggleStrength = 0.1f; // Stärke des Wackelns
     public float bounceDistance = 0.5f; // Höhe des Auf- und Abbewegens
     public float stopDuration = 1.0f; // Dauer des Stopps
+    public  int currentPositionIndex = 0;
 
-    private int currentPositionIndex = 0;
     private bool isAtLastPosition = false;
 
     [Header("Fire")]
@@ -28,6 +28,16 @@ public class LavaTileMovement : MonoBehaviour
         // Prüfe, ob mindestens eine Zielposition vorhanden ist
         if (targetPositions.Length > 0)
         {
+            if(currentPositionIndex == 0)
+            {
+                transform.GetChild(0).position = transform.position - new Vector3(0f, bounceDistance, 0f);
+                gameObject.GetComponent<Collider>().enabled = false;
+            }
+            else 
+            {
+                transform.GetChild(0).position = transform.position;
+            }
+
             // Starte die Bewegung zur ersten Zielposition
             MoveToNextPosition();
         }
@@ -58,13 +68,14 @@ public class LavaTileMovement : MonoBehaviour
                     if (currentPositionIndex == targetPositions.Length - 1)
                     {
                         // Wenn am letzten Positionspunkt, führe das Wackeln und Auf- und Abbewegen aus
-                        StartCoroutine(PerformWiggleAndBounce());
+                        PerformWiggleAndBounce();
                     }
                     else if(currentPositionIndex == 0)
                     {
                         // Nach dem Abwärtsbewegen, setze die Position zurück und bewege zum nächsten Punkt
                         transform.position = targetPositions[currentPositionIndex].position;
                         gameObject.GetComponent<Collider>().enabled = true;
+                        transform.GetChild(0).position = transform.position; 
                         currentPositionIndex++;
                         MoveToNextPosition();
                     }
@@ -106,40 +117,26 @@ public class LavaTileMovement : MonoBehaviour
             PlayBurnSound();
         }
 
-        // Wackeln
-        transform.DOPunchPosition(Vector3.right * wiggleStrength, wiggleDuration, 1, 0);
-
-
         // Bewege das GameObject um einen halben Meter nach unten
         //Vector3 newPosition = transform.position - new Vector3(0f, bounceDistance, 0f);
         foreach (GameObject i in Fire)
         {
             i.SetActive(false);
         }
-        gameObject.GetComponent<Collider>().enabled = false;
-
-
-        // Setze den Index zurück, um die normale Bewegung fortzusetzen
-        currentPositionIndex = 0;
         activeFireISRunning = false;
+        transform.GetChild(0).position = transform.position - new Vector3(0f, bounceDistance, 0f);
+        gameObject.GetComponent<Collider>().enabled = false;
     }
 
-    private IEnumerator PerformWiggleAndBounce()
+    private void PerformWiggleAndBounce()
     {
         // Wackeln
-        transform.DOPunchPosition(Vector3.right * wiggleStrength, wiggleDuration, 1, 0);
 
-        // Warte für die Dauer des Stopps
-        yield return new WaitForSeconds(stopDuration);
 
         // Bewege das GameObject um einen halben Meter nach unten
-        Vector3 newPosition = transform.position - new Vector3(0f, bounceDistance, 0f);
-        transform.DOMove(newPosition, wiggleDuration)
-            .OnComplete(() =>
-            {
-                
-                currentPositionIndex++;
-                MoveToNextPosition();
-            });
+        transform.GetChild(0).position = transform.position - new Vector3(0f, bounceDistance, 0f);
+        gameObject.GetComponent<Collider>().enabled = false;
+        currentPositionIndex++;
+        MoveToNextPosition();
     }
 }
