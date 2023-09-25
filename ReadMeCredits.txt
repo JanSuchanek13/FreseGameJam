@@ -115,3 +115,7 @@ Quikhand: https://www.dafont.com/de/quikhand.font
 TTMasters Demo Black: https://dafontfree.net
 Remains by ljk_Remains: https://old.fonts-online.ru/font/ljk_Remains
 Yokomoji by YOKO文字: https://note.com/chitosekato/n/nc162552f8c1f
+BorakOMJ by Mustafa Jabbar: https://www.freebanglafont.com/download.php?id=850
+Kalam by Google Fonts: https://fonts.google.com/specimen/Kalam
+Muyao Softbrush https://www.freechinesefont.com/simplified-muyao-softbrush-download/
+Noto Serif Traditional Chinese by Google Fonts: https://fonts.google.com/noto/specimen/Noto+Serif+TC?preview.text=dgahhae選擇您的語言：&preview.text_type=custom&subset=chinese-traditional&noto.script=Hant
