@@ -119,3 +119,5 @@ BorakOMJ by Mustafa Jabbar: https://www.freebanglafont.com/download.php?id=850
 Kalam by Google Fonts: https://fonts.google.com/specimen/Kalam
 Muyao Softbrush https://www.freechinesefont.com/simplified-muyao-softbrush-download/
 Noto Serif Traditional Chinese by Google Fonts: https://fonts.google.com/noto/specimen/Noto+Serif+TC?preview.text=dgahhae選擇您的語言：&preview.text_type=custom&subset=chinese-traditional&noto.script=Hant
+Just Me Again Down Here Designed by Kimberly Geswein: https://fonts.google.com/specimen/Just+Me+Again+Down+Here/glyphs?classification=Handwriting&sort=alpha&subset=latin-ext 
+Galada Designed by Black Foundry: https://fonts.google.com/specimen/Galada?preview.text=তুমি%20তোমার%20ভাষা%20চয়ন%20করো:&preview.text_type=custom&sort=alpha&subset=bengali&noto.script=Beng
