@@ -185,6 +185,9 @@ public class LevelScript : MonoBehaviour
         // check for- and process possible highscore (relevant for regular here):
         _gameManager.GetComponent<Highscore>().CompareHighscore();
 
+        //set to current Score to last Run Highscore
+        _highscore.SafeLastStats();
+
         // change level:
         StartCoroutine(LoadLevel(nextLevel)); // may need a _inCoroutine bool to avoid starting loading the next level multiple times -F
     }
@@ -224,6 +227,9 @@ public class LevelScript : MonoBehaviour
 
         yield return new WaitForSeconds(_timeBeforeLoadingNewLevel);
 
+        PlayerPrefs.SetFloat("timer" + (0), 0);
+        PlayerPrefs.SetInt("crowns" + (0), 0);
+        PlayerPrefs.SetInt("deaths" + (0), 0);
         SceneManager.LoadScene(nextLevel);
     }
 

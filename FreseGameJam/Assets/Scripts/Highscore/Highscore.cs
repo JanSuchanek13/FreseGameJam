@@ -190,9 +190,11 @@ public class Highscore : MonoBehaviour
         PlayerPrefs.SetFloat("Lasttimer" + (0), PlayerPrefs.GetFloat("timer" + (0), 0));
         PlayerPrefs.SetInt("Lastcrowns" + (0), PlayerPrefs.GetInt("crowns" + (0), 0));
         PlayerPrefs.SetInt("Lastdeaths" + (0), PlayerPrefs.GetInt("deaths" + (0), 0));
+
+
         
         //Start();
-        UpdateHighscoreUI();
+        //UpdateHighscoreUI();
     }
 
     public void CompareHighscore()

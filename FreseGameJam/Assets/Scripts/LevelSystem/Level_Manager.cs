@@ -168,7 +168,7 @@ public class Level_Manager : MonoBehaviour
         // what does this do?
         if(levelIsUnlocked == 2)
         {
-            highscore.SafeLastStats();
+            //highscore.SafeLastStats();
         }
 
         PlayerPrefs.SetInt("levelIsUnlocked", 1); // this enables continue button!
