@@ -259,8 +259,7 @@ public class StateController : MonoBehaviour
         if (isChanging == false)
         {
 
-            float i;
-            i = playerInput.CharacterControls.SwitchState.ReadValue<float>();
+            var i = (int) playerInput.CharacterControls.SwitchState.ReadValue<float>();
 
             if (isChanging == false)
             {
@@ -407,7 +406,7 @@ public class StateController : MonoBehaviour
 
 
                 //chaet for switching
-                i = playerInput.CharacterControls.Cheating.ReadValue<float>();
+                i = (int) playerInput.CharacterControls.Cheating.ReadValue<float>();
                 switch (i)//change Movement state
                 {
                     case 1:
@@ -500,7 +499,7 @@ public class StateController : MonoBehaviour
         }
     }
 
-    public IEnumerator changeModell(float state)
+    public IEnumerator changeModell(int state)
     {
         pad = Gamepad.current;
         if (pad != null)
