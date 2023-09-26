@@ -21,7 +21,7 @@ public class CheckpointFeedback : MonoBehaviour
         _variablesAreUpdated = true;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player") & _variablesAreUpdated)
         {
