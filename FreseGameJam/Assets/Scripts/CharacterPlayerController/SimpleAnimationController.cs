@@ -88,6 +88,11 @@ namespace Loneflower
             //animator.SetBool("isFolding", stateController.isChanging);
         }
 
+        public void StartWaving()
+        {
+            animator.SetBool("isWaving", true);
+        }
+
         private void ResetTransitionTest()
         {
             test = false;
