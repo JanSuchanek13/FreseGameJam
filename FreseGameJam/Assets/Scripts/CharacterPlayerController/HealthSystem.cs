@@ -156,7 +156,7 @@ public class HealthSystem : MonoBehaviour
 
             GetComponent<ThirdPersonMovement>().gravity = 0;
             GetComponent<ThirdPersonMovement>().velocity.y = 1;
-            //GetComponent<ThirdPersonMovement>().enabled = false; // no movement hopefully stops me from being able to survive death zones
+            //GetComponent<ThirdPersonMovement>().enabled = false; // no movement hopefully stops me from being able to survive death zones //LavaTiles wont Work if this is aktiv
             GetComponent<CharacterController>().enabled = false; // no colission = sink into even shallow deathzones
             GetComponent<Rigidbody>().isKinematic = false;
 
@@ -167,7 +167,7 @@ public class HealthSystem : MonoBehaviour
             gameObject.transform.position = new Vector3(0, -3, 0) + respawnPoint;
             gameObject.transform.LookAt(_respawnPointGO.transform.Find("Orientation Point"));
 
-            //GetComponent<ThirdPersonMovement>().enabled = true; // no movement hopefully stops me from being able to survive death zones
+            //GetComponent<ThirdPersonMovement>().enabled = true; // no movement hopefully stops me from being able to survive death zones //LavaTiles wont Work if this is aktiv
             GetComponent<CharacterController>().enabled = true;
 
             EnableCameras();
@@ -203,7 +203,7 @@ public class HealthSystem : MonoBehaviour
             DisableCameras();
 
             GetComponent<ThirdPersonMovement>().gravity = 0;
-            //GetComponent<ThirdPersonMovement>().enabled = false; // no movement hopefully stops me from being able to survive death zones
+            //GetComponent<ThirdPersonMovement>().enabled = false; // no movement hopefully stops me from being able to survive death zones //LavaTiles wont Work if this is aktiv
             GetComponent<CharacterController>().enabled = false; // no colission = sink into even shallow deathzones
             GetComponent<Rigidbody>().isKinematic = false;
 
@@ -211,7 +211,7 @@ public class HealthSystem : MonoBehaviour
 
             GetComponent<Rigidbody>().isKinematic = true;
             gameObject.transform.position = new Vector3(0, 2, 0) + _hardcoreRespawn;
-            //GetComponent<ThirdPersonMovement>().enabled = true; // no movement hopefully stops me from being able to survive death zones
+            //GetComponent<ThirdPersonMovement>().enabled = true; // no movement hopefully stops me from being able to survive death zones //LavaTiles wont Work if this is aktiv
             GetComponent<CharacterController>().enabled = true;
 
             EnableCameras();
@@ -304,8 +304,8 @@ public class HealthSystem : MonoBehaviour
         Color tempColor = fadeToBlackBlende.GetComponent<Image>().color;
         while (tempColor.a < 1)
         {
-            yield return new WaitForSeconds(0.05f);
-            tempColor.a += 0.1f;
+            yield return new WaitForSeconds(0.005f);
+            tempColor.a += 0.2f;
             fadeToBlackBlende.GetComponent<Image>().color = tempColor;
         }
         yield return new WaitForSeconds(0.5f);

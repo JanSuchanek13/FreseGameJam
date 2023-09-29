@@ -470,6 +470,18 @@ public class ThirdPersonMovement : MonoBehaviour
                 speed = humanSpeed;
             animationSpeed = speedInput;
 
+            //Move Rigidbody Obj
+            // create a small bubble-explosion at impact point:
+            Collider[] allObjects = Physics.OverlapSphere(transform.position, 1);
+            foreach (Collider j in allObjects)
+            {
+                Rigidbody rig = j.GetComponent<Rigidbody>();
+                if (rig != null && rig.gameObject != this.gameObject)
+                {
+                    rig.AddExplosionForce(0.5f, transform.position, 0.7f, 1f, ForceMode.Force);
+                }
+            }
+
             //Cam
             //thirdPersonCam.SetActive(true);
             craneCam.SetActive(false);
