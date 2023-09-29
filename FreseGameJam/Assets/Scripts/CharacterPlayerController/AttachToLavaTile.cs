@@ -30,7 +30,7 @@ public class AttachToLavaTile : MonoBehaviour
             {
                 // Das GameObject aus der Hierarchie des Vorgängers entfernen
                 transform.parent = null;
-                Debug.Log("new parent null");
+                //Debug.Log("new parent null");
             }
         }
         else

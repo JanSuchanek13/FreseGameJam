@@ -16,12 +16,14 @@ public class Highscore : MonoBehaviour
     [SerializeField] TextMeshProUGUI _hardcoreCrowns_Time;
     [SerializeField] TextMeshProUGUI _hardcoreCrowns_Crowns;
     [SerializeField] TextMeshProUGUI _hardcoreCrowns_Deaths; // kind of redundant
-   
+    [SerializeField] LeadMan _hardcoreCrowns_LeadManager; // Leaderboard Manager for Most Crowns in Hardcore
+
     [Space(15)]
     [SerializeField] TextMeshProUGUI _hardcoreTime_Time;
     [SerializeField] TextMeshProUGUI _hardcoreTime_Crowns;
     [SerializeField] TextMeshProUGUI _hardcoreTime_Deaths; // kind of redundant
-    
+    [SerializeField] SpeedRunLeadManager _hardcoreTime_LeadManager; // Leaderboard Manager for Best Speedrun in Hardcore
+
     [Space(15)]
     [SerializeField] TextMeshProUGUI HTtimer;
     [SerializeField] TextMeshProUGUI HTcrowns;
@@ -227,6 +229,9 @@ public class Highscore : MonoBehaviour
             PlayerPrefs.SetInt("HighscoreHardcoreCrowns_Crowns" + 0, PlayerPrefs.GetInt("HardcoreCrowns" + 0, 0));
             PlayerPrefs.SetInt("HighscoreHardcoreCrowns_Deaths" + 0, PlayerPrefs.GetInt("HardcoreDeaths" + 0, 0));
 
+            //Steam Leaderboard
+            _hardcoreCrowns_LeadManager.Debug_SetScore(PlayerPrefs.GetInt("HardcoreCrowns" + 0));
+
             // GAMESCOM STUFF:
             //_newCrownsRecord = true;
         }
@@ -237,6 +242,11 @@ public class Highscore : MonoBehaviour
             PlayerPrefs.SetFloat("HighscoreHardcoreTime_Time" + 0, PlayerPrefs.GetFloat("HardcoreTime" + 0, 0.0f));
             PlayerPrefs.SetInt("HighscoreHardcoreTime_Crowns" + 0, PlayerPrefs.GetInt("HardcoreCrowns" + 0, 0));
             PlayerPrefs.SetInt("HighscoreHardcoreTime_Deaths" + 0, PlayerPrefs.GetInt("HardcoreDeaths" + 0, 0));
+
+            //Steam Leaderboard
+            Debug.Log(PlayerPrefs.GetFloat("HardcoreTime" + 0));
+            int hardcoreTimeInt = (int)PlayerPrefs.GetFloat("HardcoreTime" + 0);
+            _hardcoreTime_LeadManager.Debug_SetScore(hardcoreTimeInt);
 
             // GAMESCOM STUFF:
             //_newSpeedRecord = true;

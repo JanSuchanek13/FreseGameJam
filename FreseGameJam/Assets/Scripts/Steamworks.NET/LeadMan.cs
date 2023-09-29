@@ -40,7 +40,7 @@ public class LeadMan : MonoBehaviour
 
     private void Awake()
     {
-        SteamAPICall_t hSteamAPICall = SteamUserStats.FindLeaderboard("Most Crowns");
+        SteamAPICall_t hSteamAPICall = SteamUserStats.FindLeaderboard("Crowns");
         m_findResult.Set(hSteamAPICall, OnLeaderboardFindResult);
     }
 
