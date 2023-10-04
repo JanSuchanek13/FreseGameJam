@@ -21,7 +21,7 @@ public class CheckpointFeedback : MonoBehaviour
         _variablesAreUpdated = true;
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerStay(Collider other) // stay instead of Enter to also light up when spawning in portals!
     {
         if (other.CompareTag("Player") & _variablesAreUpdated)
         {
