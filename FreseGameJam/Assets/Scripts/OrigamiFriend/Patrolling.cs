@@ -119,7 +119,12 @@ public class Patrolling : MonoBehaviour
         
         _turnOnElements.SetActive(true);
         _turnOffElements.SetActive(false);
-        _endOfGameCollider.enabled = true;
+
+        // If we want the game to only end when the boat arrives at the end, then we have to disable the
+        // Trigger on the BreakingGround object and turn off the "turnON" objects of the friend in sailboat
+        // so they are off by default. Currently this line is useless, as i turnt the trigger on regardless! -F
+        _endOfGameCollider.enabled = true; 
+
         //_regularEndOfGameTrigger.SetActive(true); // made this separate from turnOnElements, as this is a logic/trigger element.
     }
 
