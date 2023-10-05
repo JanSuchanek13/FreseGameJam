@@ -24,6 +24,11 @@ public class AttachToLavaTile : MonoBehaviour
             {
                 if (transform.gameObject.GetComponent<InputHandler>().moveValue.magnitude == 0)
                 {
+                    if(hit.transform.gameObject.GetComponent<LavaTileMovement>() != null)
+                    {
+                        StartCoroutine(hit.collider.transform.gameObject.GetComponent<LavaTileMovement>().ActivateFire());
+                    }
+
                     if (firstContact)
                     {
                         offset.x = transform.position.x - hit.transform.position.x;
@@ -31,7 +36,7 @@ public class AttachToLavaTile : MonoBehaviour
                         firstContact = false;
                     }
 
-                    Debug.Log(offset);
+                    //Debug.Log(offset);
                     transform.position = new Vector3(hit.transform.position.x + offset.x, transform.position.y, hit.transform.position.z + offset.y);
                 }
                 else
