@@ -10,8 +10,76 @@ public class SteamAchievementsManager : MonoBehaviour
     // https://partner.steamgames.com/doc/features/achievements
     // https://partner.steamgames.com/doc/features/achievements/stats_guide
 
+    // scripts to track:
+    // HealthSystem _playerHealth;
+    // CrownCounter _playerCrownCounter;
+
+    // general achievements:
+    int _waterDeaths;
+    int _lavaDeaths;
+    bool _friendReached = false;
+    bool _gotCrane = false;
+    bool _gotGoat = false;
+    bool _goatManAchieved = false;
+    bool _pushTree = false;
+
+    // regular run only:
+    float _reg_runtime;
+    int _reg_deaths;
+    int _reg_crownsFound;
+    // checkpoint-achievements:
+    [SerializeField] int _checkpointsInGame = 11; // 0 is the start spawnpoint, not a checkpoint per se
+    int _currentCheckpoint = 0;
+    int _sumOfCheckpointsReached; // this is needed to controll that all checkpoints were reached - not just the last!
+    //int _reg_checkpointsReached; // currently not used
+
+    // hardcore run only:
+    float _hc_runtime;
+    int _hc_deaths;
+    int _hc_crownsFound;
+
+    private void Awake()
+    {
+        StartCoroutine("CheckForAchievements");
+
+        // enable to test specific math/solutions/conclusions:
+        //Debug.Log("The max sum of checkpoints is: " + (_checkpointsInGame * (_checkpointsInGame + 1) / 2) + " based on having " + _checkpointsInGame + " checkpoints in the game");
+    }
+
+    /// <summary>
+    /// Track ingame progression and check for new achievements every 0.1 seconds:
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator CheckForAchievements()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        // ensure the SteamManager was loaded successfully: 
+        if (!SteamManager.Initialized)
+        {
+            StartCoroutine("CheckForAchievements");
+            yield break;
+        }
+
+        // track checkpoints reached:
+        if (_currentCheckpoint != PlayerPrefs.GetInt("lastCheckpoint" + 0, 0))
+        {
+            _sumOfCheckpointsReached += PlayerPrefs.GetInt("lastCheckpoint" + 0);
+            _currentCheckpoint = PlayerPrefs.GetInt("lastCheckpoint" + 0);
+
+            if (_sumOfCheckpointsReached == _checkpointsInGame * (_checkpointsInGame + 1) / 2)
+            {
+                UnlockAchievement(13);
+            }
+        }
+
+        // start over:
+        StartCoroutine("CheckForAchievements");
+    }
+
     void Update()
     {
+        // ensure the SteamManager was loaded successfully: 
         if (!SteamManager.Initialized)
         {
             return;
@@ -26,21 +94,17 @@ public class SteamAchievementsManager : MonoBehaviour
 
         // store all stats AND achievements to steam
         //SteamUserStats.StoreStats();
-        Debug.Log("X 1");
 
         if (Input.GetKeyUp(KeyCode.KeypadEnter)) // save example achievement on ENTER
         {
-            Debug.Log("X 2");
             UnlockAchievement(0);
+            Debug.Log("you've unlocked the test achievement - dont forget to delete it again by hitting ESC!");
         }
 
         if (Input.GetKeyDown(KeyCode.Delete)) // delete all stats & achievements on ESC
         {
-            Debug.Log("X 3");
-
             ResetAllStats(true);
-            Debug.Log("X 4");
-
+            Debug.Log("good job, you've deleted all achievements!");
         }
     }
 

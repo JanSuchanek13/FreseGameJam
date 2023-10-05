@@ -104,7 +104,7 @@ public class HealthSystem : MonoBehaviour
             //Debug.Log(PlayerPrefs.GetInt("lastCheckpoint" + (currentLevel - 2)));
 
             //other.gameObject.transform.GetChild(0).gameObject.SetActive(true);
-            //Debug.Log("updated checkpouin"); //felix add
+            Debug.Log("currently reached checkpoints: " + PlayerPrefs.GetInt("lastCheckpoint" + 0) + " of " + Checkpoints.Count); //felix add
         }
         if (other.gameObject.CompareTag("Damage"))
         {
