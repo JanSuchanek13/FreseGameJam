@@ -10,7 +10,7 @@ public class SteamAchievementsManager : MonoBehaviour
     // https://partner.steamgames.com/doc/features/achievements
     // https://partner.steamgames.com/doc/features/achievements/stats_guide
 
-    /*void Update()
+    void Update()
     {
         if (!SteamManager.Initialized)
         {
@@ -22,11 +22,27 @@ public class SteamAchievementsManager : MonoBehaviour
         //SteamUserStats.SetStat("exampleStatKey", _dataExample);
 
         // achievement = actually reachable target which does not need tracked progression
-        SteamUserStats.SetAchievement("exampleAchievementKey"); // use keycode for achievement here!
+        //SteamUserStats.SetAchievement("exampleAchievementKey"); // use keycode for achievement here!
 
         // store all stats AND achievements to steam
-        SteamUserStats.StoreStats();
-    }*/
+        //SteamUserStats.StoreStats();
+        Debug.Log("X 1");
+
+        if (Input.GetKeyUp(KeyCode.KeypadEnter)) // save example achievement on ENTER
+        {
+            Debug.Log("X 2");
+            UnlockAchievement(0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Delete)) // delete all stats & achievements on ESC
+        {
+            Debug.Log("X 3");
+
+            ResetAllStats(true);
+            Debug.Log("X 4");
+
+        }
+    }
 
     /// <summary>
     /// Call this function when unlocking an achievement at any place in the game by populating the correct ID
@@ -37,6 +53,11 @@ public class SteamAchievementsManager : MonoBehaviour
     {
         switch (_achievementID)
         {
+            case 0: // TEST
+                SteamUserStats.SetAchievement("ach_TEST");
+                Debug.Log("Test achievement called");
+                break;
+
             case 1: // achievement: Find first crown ever
                 SteamUserStats.SetAchievement("ach_REG_CrownsFound_1");
                 break;
