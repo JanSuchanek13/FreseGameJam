@@ -75,12 +75,13 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  moveSpeed: 2
+  moveSpeed: 1
   moveEase: 1
   wiggleDuration: 0.5
   wiggleStrength: 0.1
   bounceDistance: 0.5
   stopDuration: 1
+  currentPositionIndex: 0
   Fire:
   - {fileID: 7263504578528514194}
   - {fileID: 7263504577919023341}
