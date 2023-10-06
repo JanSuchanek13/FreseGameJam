@@ -22,7 +22,6 @@ public class RegularGameEnd : MonoBehaviour
 
             StartCoroutine("WaitUntilAtFriend");
             _player = other.gameObject;
-            // end of round still needs to be called here!
         }
     }
 
@@ -37,11 +36,8 @@ public class RegularGameEnd : MonoBehaviour
 
         if (Vector3.Distance(_player.transform.position, _targetTransform.position) < _toleratedDistanceToStartWaving)
         {
-            Debug.Log("called 3");
             _player.transform.Find("GFX:/PaperMan_Form").GetComponent<SimpleAnimationController>().StartWaving();
-            Debug.Log("called 4");
-        }
-        else
+        }else
         {
             StartCoroutine("WaitUntilAtFriend");
         }

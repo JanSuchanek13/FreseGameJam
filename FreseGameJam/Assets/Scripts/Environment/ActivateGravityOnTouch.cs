@@ -11,6 +11,12 @@ public class ActivateGravityOnTouch : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             GetComponent<Rigidbody>().isKinematic = false;
+
+            // check if this is a tree (for achievements): -F
+            if(name == "PalmTree" || name == "PineTree")
+            {
+                PlayerPrefs.SetInt("TreeKnockedOver" + 0, 1);
+            }
         }
     }
 }

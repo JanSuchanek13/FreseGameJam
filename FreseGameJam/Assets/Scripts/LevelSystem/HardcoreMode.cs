@@ -52,22 +52,15 @@ public class HardcoreMode : MonoBehaviour
 
     private void Start()
     {
-        //int _playHardcore = PlayerPrefs.GetInt("HardcoreMode", 0);
-        Debug.Log("1");
-        //if (_playHardcore == 1)
         if (PlayerPrefs.GetInt("HardcoreMode", 0) == 1)
         {
             useHardcoreMode = true; // cant this be turnt off?
             StartHardcoreRun();
             ResetCurrentHardcoreCrowns(); // this should reset crown display at start of run:
-        }
-        else // no longer destroy dropzone at end of game, instead add Script to call the forced move when reaching endzone!
+        }else // no longer destroy dropzone at end of game, instead add Script to call the forced move when reaching endzone!
         {
-            Debug.Log("2");
             Destroy(_breakingFloor.GetComponent<BreakingObj>());
-            Debug.Log("3");
             _breakingFloor.GetComponent<RegularGameEnd>().RegularEnd = true;
-            Debug.Log("4");
         }
     }
     public void StartHardcoreRun()

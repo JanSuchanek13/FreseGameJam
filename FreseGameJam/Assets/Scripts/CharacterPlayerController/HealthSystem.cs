@@ -47,6 +47,12 @@ public class HealthSystem : MonoBehaviour
     AudioSource[] _arrayOfScreams;
     [SerializeField] bool useFullLengthDeathScreams = true;
 
+    // new vars to check for achievements: 
+    [Space(10)]
+    [Header("Achievement-variables. Do not touch!")]
+    public int waterDeaths = 0;
+    public int fireDeaths = 0;
+
 
     private void Start()
     {
@@ -111,6 +117,17 @@ public class HealthSystem : MonoBehaviour
             if (!inCoroutine)
             {
                 StartCoroutine(DieAndRespawn());
+            }
+
+            // check for cause of death (for achievements): -F
+            if (other.gameObject.name == "Water_deathZone")
+            {
+                waterDeaths++;
+                Debug.Log("You fell into water and died: " + waterDeaths + " time(s)!");
+            }else
+            {
+                fireDeaths++;
+                Debug.Log("You fell into something else (fire/lava) and died: " + fireDeaths + " time(s)!");
             }
         }
     }

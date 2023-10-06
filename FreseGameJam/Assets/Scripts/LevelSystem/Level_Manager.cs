@@ -258,6 +258,9 @@ public class Level_Manager : MonoBehaviour
         ResetHardcore();
         ResetLevel();
 
+        // reset achievement-only related PlayerPrefs:
+        PlayerPrefs.SetInt("TreeKnockedOver" + 0, 0);
+
         // disable the continue-button (normally this happens when finishing the game!)
         PlayerPrefs.SetInt("levelIsUnlocked", 2);
 
