@@ -229,7 +229,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8629695521573796879}
   - component: {fileID: 6040351480203542190}
-  - component: {fileID: 2759406056276210532}
   m_Layer: 5
   m_Name: Item
   m_TagString: Untagged
@@ -309,20 +308,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 1
---- !u!114 &2759406056276210532
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2248415484606418617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df3eb09c533f2a04582165777f317a54, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hoverSoundObject: {fileID: 0}
-  selectSoundObject: {fileID: 0}
 --- !u!1 &2841316397223720173
 GameObject:
   m_ObjectHideFlags: 0
@@ -702,6 +687,7 @@ GameObject:
   - component: {fileID: 1989327422920997239}
   - component: {fileID: 1153369980147924145}
   - component: {fileID: 2169302191361722348}
+  - component: {fileID: 1284138193137804095}
   m_Layer: 5
   m_Name: LanguageSelector_Dropdown_Small
   m_TagString: Untagged
@@ -866,6 +852,20 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_AlphaFadeSpeed: 0.15
+--- !u!114 &1284138193137804095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5130546225896691595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df3eb09c533f2a04582165777f317a54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSoundObject: {fileID: 0}
+  selectSoundObject: {fileID: 0}
 --- !u!1 &5741817499772308431
 GameObject:
   m_ObjectHideFlags: 0
