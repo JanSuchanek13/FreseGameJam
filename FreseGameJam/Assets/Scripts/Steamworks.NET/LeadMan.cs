@@ -2,6 +2,7 @@ using Steamworks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class LeadMan : MonoBehaviour
 {
@@ -11,9 +12,16 @@ public class LeadMan : MonoBehaviour
     private  CallResult<LeaderboardScoreUploaded_t> m_uploadResult = new CallResult<LeaderboardScoreUploaded_t>();
     private  CallResult<LeaderboardScoresDownloaded_t> m_downloadResult = new CallResult<LeaderboardScoresDownloaded_t>();
 
+    [SerializeField]
+    List<TMP_Text> LeaderboardNames = new List<TMP_Text>();
+    [SerializeField]
+    List<TMP_Text> LeaderboardCrowns = new List<TMP_Text>();
+
     public void Debug_SetScore(int _score)
     {
-        UpdateScore(_score);
+        //UpdateScore(_score);
+
+        GetLeaderBoardData();
     }
 
     public struct LeaderboardData
@@ -94,6 +102,8 @@ public class LeadMan : MonoBehaviour
             lD.score = leaderboardEntry.m_nScore;
             LeaderboardDataset.Add(lD);
             Debug.Log($"User: {lD.username} - Score: {lD.score} - Rank: {lD.rank}");
+            LeaderboardNames[i].text = lD.username;
+            LeaderboardCrowns[i].text = lD.score.ToString();
         }
         //This is the callback for my own project - function is asynchronous so it must return from here rather than from GetLeaderBoardData
         //FindObjectOfType<HighscoreUIMan>().FillLeaderboard(LeaderboardDataset);
