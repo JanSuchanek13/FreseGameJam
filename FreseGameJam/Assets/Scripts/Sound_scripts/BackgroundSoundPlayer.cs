@@ -10,6 +10,9 @@ public class BackgroundSoundPlayer : MonoBehaviour
     [Space(10)]
 
     [Header("Background Sound Settings:")]
+    [SerializeField] bool _playMusicOnLoad = true; // this is set to false in start menu to allow music to start after warning
+    
+    [Space(10)]
     [SerializeField] bool _turnMusicOffDuringCutscenes = true;
     [SerializeField] bool _lowerMusicVolumeDuringCutscenes = false;
     [SerializeField] AudioSource _playThisSongFirst; // if a song is put in here, that will be the first song played on load
@@ -30,31 +33,32 @@ public class BackgroundSoundPlayer : MonoBehaviour
 
     private void Start()
     {
-        Invoke("PlayTrack", .1f);
+        if (_playMusicOnLoad)
+        {
+            Invoke("PlayTrack", .1f);
+        }
     }
 
-    void PlayTrack()
+    /// <summary>
+    /// This is public so the sound can be started after displaying the epilepsy warning in the start menu.
+    /// </summary>
+    public void PlayTrack()
     {
         if (_playThisSongFirst == null) // play random background track:
         {
             _randomTrack = arrayOfBackgroundMusic[Random.Range(0, arrayOfBackgroundMusic.Length)];
             _activeTrack = _randomTrack;
-            //float _lengthOfTrack = _activeTrack.clip.length;
             _activeTrack.Play();
 
-            //Debug.Log("1");
-            //StartCoroutine(PlayNextTrack(_lengthOfTrack));
             StartCoroutine(PlayNextTrack());
         }
         else // play a specific track first:
         {
             _playThisSongFirst.Play();
             _activeTrack = _playThisSongFirst;
-            //float _lengthOfTrack = _activeTrack.clip.length;
 
             if (!_playThisSongFirst.loop)
             {
-                //StartCoroutine(PlayNextTrack(_lengthOfTrack));
                 StartCoroutine(PlayNextTrack());
             }
         }
