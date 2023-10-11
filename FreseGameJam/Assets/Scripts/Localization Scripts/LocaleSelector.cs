@@ -19,7 +19,7 @@ public class LocaleSelector : MonoBehaviour
 
     private void Start()
     {
-        // if this is the first time loading the game, have player select their preferred language:
+        // if this is the first time loading the game, have player select their preferred language, otherwise close the UI:
         if(PlayerPrefs.GetInt("PlayerPickedInitialLanguage", 0) != 0 || _languageSelectorUI == null)
         {
             CloseLanguageSelectorUI();
@@ -87,7 +87,6 @@ public class LocaleSelector : MonoBehaviour
     /// </summary>
     public void ResetLanguageUI()
     {
-        //StartCoroutine(SetLocale(0));
         PlayerPrefs.SetInt("PlayerPickedInitialLanguage", 0);
     }
 }

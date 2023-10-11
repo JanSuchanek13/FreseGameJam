@@ -5,10 +5,19 @@ using Loneflower; // need this as Jan established this in the SimpleAnimationCon
 
 public class RegularGameEnd : MonoBehaviour
 {
-    public bool RegularEnd = false;
+    [Header("Regular Game End Settings:")]
     [SerializeField] Transform _targetTransform;
+    [Tooltip("This sound is played when the player arrives at the endgame-trigger and runs towards his friend")]
+    [SerializeField] AudioSource _victorySound_1;
+    [Tooltip("This sound is played when the player arrives at their friend after the forced-run")]
+    [SerializeField] AudioSource _victorySound_2;
+
+    [Header("DO NOT TOUCH:")]
+    public bool RegularEnd = false;
 
     private GameObject _player;
+
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && RegularEnd)
@@ -18,10 +27,18 @@ public class RegularGameEnd : MonoBehaviour
             // stopping the clock when end is reached, not need to fall to the trigger at the bottom!
             FindAnyObjectByType<LevelScript>().StopTheClock();
 
+            // force the player to run towards friend:
             FindAnyObjectByType<ThirdPersonMovement>().MoveToTarget(_targetTransform.position);
 
+            // start waving when reaching the friend:
             StartCoroutine("WaitUntilAtFriend");
             _player = other.gameObject;
+
+            // play sound or music #1 for finishing the game upon arriving at target trigger:
+            if(_victorySound_1 != null)
+            {
+                _victorySound_1.Play();
+            }
         }
     }
 
@@ -37,7 +54,14 @@ public class RegularGameEnd : MonoBehaviour
         if (Vector3.Distance(_player.transform.position, _targetTransform.position) < _toleratedDistanceToStartWaving)
         {
             _player.transform.Find("GFX:/PaperMan_Form").GetComponent<SimpleAnimationController>().StartWaving();
-        }else
+
+            // play sound or music #2 after having run to the friend and starting to wave:
+            if (_victorySound_2 != null)
+            {
+                _victorySound_2.Play();
+            }
+        }
+        else
         {
             StartCoroutine("WaitUntilAtFriend");
         }
