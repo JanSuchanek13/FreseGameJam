@@ -245,7 +245,8 @@ public class Highscore : MonoBehaviour
 
             //Steam Leaderboard
             Debug.Log(PlayerPrefs.GetFloat("HardcoreTime" + 0));
-            int hardcoreTimeInt = (int)PlayerPrefs.GetFloat("HardcoreTime" + 0);
+            float hardcoreTimeMiliSec = PlayerPrefs.GetFloat("HardcoreTime" + 0) * 1000;
+            int hardcoreTimeInt = (int)hardcoreTimeMiliSec;
             _hardcoreTime_LeadManager.UpdateScore(hardcoreTimeInt);
 
             // GAMESCOM STUFF:

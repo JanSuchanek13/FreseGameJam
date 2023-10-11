@@ -48,7 +48,7 @@ public class LocalizeFonts : MonoBehaviour
 
         foreach (var textField in localizedTextFields)
         {
-            Debug.Log("Setting font: " + desiredFont.name);
+            //Debug.Log("Setting font: " + desiredFont.name);
 
             textField.font = desiredFont;
         }

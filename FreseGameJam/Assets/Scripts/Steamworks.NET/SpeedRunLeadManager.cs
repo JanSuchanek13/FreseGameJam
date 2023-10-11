@@ -2,6 +2,7 @@ using Steamworks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class SpeedRunLeadManager : MonoBehaviour
 {
@@ -11,9 +12,16 @@ public class SpeedRunLeadManager : MonoBehaviour
     private CallResult<LeaderboardScoreUploaded_t> m_uploadResult = new CallResult<LeaderboardScoreUploaded_t>();
     private CallResult<LeaderboardScoresDownloaded_t> m_downloadResult = new CallResult<LeaderboardScoresDownloaded_t>();
 
+    [SerializeField]
+    List<TMP_Text> LeaderboardNames = new List<TMP_Text>();
+    [SerializeField]
+    List<TMP_Text> LeaderboardTimes = new List<TMP_Text>();
+
     public void Debug_SetScore(int _score)
     {
-        UpdateScore(_score);
+        //UpdateScore(_score);
+
+        GetLeaderBoardData();
     }
 
     public struct LeaderboardData
@@ -94,6 +102,12 @@ public class SpeedRunLeadManager : MonoBehaviour
             lD.score = leaderboardEntry.m_nScore;
             LeaderboardDataset.Add(lD);
             Debug.Log($"User: {lD.username} - Score: {lD.score} - Rank: {lD.rank}");
+            LeaderboardNames[i].text = lD.username;
+            int timer = lD.score;
+            int minutes = (int)timer / 60;
+            int seconds = (int)timer - 60 * minutes;
+            int milliseconds = (int)(1000 * (timer - minutes * 60 - seconds));
+            LeaderboardTimes[i].text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
         }
         //This is the callback for my own project - function is asynchronous so it must return from here rather than from GetLeaderBoardData
         //FindObjectOfType<HighscoreUIMan>().FillLeaderboard(LeaderboardDataset);
