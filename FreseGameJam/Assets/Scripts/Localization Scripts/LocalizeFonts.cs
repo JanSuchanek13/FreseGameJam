@@ -30,7 +30,9 @@ public class LocalizeFonts : MonoBehaviour
         {
             TMP_Text tmpText = localizeEvent.GetComponent<TMP_Text>();
             if (tmpText)
+            {
                 localizedTextFields.Add(tmpText);
+            }
         }
 
         UpdateFontsForCurrentLocale();
@@ -52,7 +54,7 @@ public class LocalizeFonts : MonoBehaviour
         }
     }
 
-    private TMP_FontAsset GetFontForLocale(string localeIdentifier)
+    public TMP_FontAsset GetFontForLocale(string localeIdentifier)
     {
         foreach (var pair in fontMapping)
         {
