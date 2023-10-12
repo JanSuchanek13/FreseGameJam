@@ -260,6 +260,13 @@ public class Level_Manager : MonoBehaviour
 
         // reset achievement-only related PlayerPrefs:
         PlayerPrefs.SetInt("TreeKnockedOver" + 0, 0);
+        PlayerPrefs.SetInt("WasFastestHardcoreRunner" + 0, 0);
+        PlayerPrefs.SetInt("WasFastestHardcoreCrownRunner" + 0, 0);
+        PlayerPrefs.SetInt("RunsCompleted" + 0, 0);
+        PlayerPrefs.SetInt("RegularCrowsFoundOverLifetime" + 0, 0);
+        PlayerPrefs.SetInt("HardcoreCrowsFoundOverLifetime" + 0, 0);
+        PlayerPrefs.SetFloat("GlideTimeOverLifetime" + 0, 0.0f);
+        PlayerPrefs.SetInt("HiddenLocationsFound" + 0, 0);
 
         // disable the continue-button (normally this happens when finishing the game!)
         PlayerPrefs.SetInt("levelIsUnlocked", 2);

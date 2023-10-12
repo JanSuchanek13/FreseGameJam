@@ -95,6 +95,11 @@ public class LevelScript : MonoBehaviour
                 // this bool ensures that the end of a level is triggered only once and immediatly!
                 _endZoneReached = true;
 
+                // count the completed runs for achievements -F:
+                int currentRuns = PlayerPrefs.GetInt("RunsCompleted", 0);
+                currentRuns += 1;
+                PlayerPrefs.SetInt("RunsCompleted", currentRuns);
+
                 if (!_usingHardcoreMode)
                 {
                     Debug.Log("normal finished");

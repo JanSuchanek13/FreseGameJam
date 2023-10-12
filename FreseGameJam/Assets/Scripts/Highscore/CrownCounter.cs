@@ -65,7 +65,6 @@ public class CrownCounter : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Crown"))
         {
-            //if (!FindObjectOfType<HardcoreMode>().useHardcoreMode)
             if(PlayerPrefs.GetInt("HardcoreMode", 0) == 0)
             {
                 //_currentlevel = SceneManager.GetActiveScene().buildIndex;
@@ -86,6 +85,12 @@ public class CrownCounter : MonoBehaviour
                 // testing:
                 //Debug.Log(PlayerPrefs.GetInt("crowns"));
                 Debug.Log("Found crown! Now: " + PlayerPrefs.GetInt("crowns" + 0));
+
+                // count regular crowns for lifetime achievements:
+                int _lifetimeRegCrowns = PlayerPrefs.GetInt("RegularCrownsFoundOverLifetime" + 0, 0);
+                _lifetimeRegCrowns++;
+                PlayerPrefs.SetInt("RegularCrownsFoundOverLifetime" + 0, _lifetimeRegCrowns);
+                Debug.Log("test: you found " + _lifetimeRegCrowns + " reg-crowns in your lifetime.");
             }else
             {
                 _crowns++;
@@ -98,6 +103,12 @@ public class CrownCounter : MonoBehaviour
 
                 // testing:
                 Debug.Log("Found hardcore-crown!");
+
+                // count hc crowns for lifetime achievements:
+                int _lifetimeHCCrowns = PlayerPrefs.GetInt("HardcoreCrownsFoundOverLifetime" + 0, 0);
+                _lifetimeHCCrowns++;
+                PlayerPrefs.SetInt("HardcoreCrownsFoundOverLifetime" + 0, _lifetimeHCCrowns);
+                Debug.Log("test: you found " + _lifetimeHCCrowns + " hc-crowns in your lifetime.");
             }
         }
     }
