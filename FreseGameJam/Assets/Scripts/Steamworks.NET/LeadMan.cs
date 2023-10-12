@@ -16,6 +16,12 @@ public class LeadMan : MonoBehaviour
     List<TMP_Text> LeaderboardNames = new List<TMP_Text>();
     [SerializeField]
     List<TMP_Text> LeaderboardCrowns = new List<TMP_Text>();
+    [SerializeField]
+    TMP_Text YourName;
+    [SerializeField]
+    TMP_Text YourCrowns;
+    [SerializeField]
+    TMP_Text YourRank;
 
     public void Debug_SetScore(int _score)
     {
@@ -50,6 +56,10 @@ public class LeadMan : MonoBehaviour
     {
         SteamAPICall_t hSteamAPICall = SteamUserStats.FindLeaderboard("Crowns");
         m_findResult.Set(hSteamAPICall, OnLeaderboardFindResult);
+
+        CSteamID[] Users = { SteamUser.GetSteamID() }; // Local user steam id
+        SteamAPICall_t handle = SteamUserStats.DownloadLeaderboardEntriesForUsers(s_currentLeaderboard, Users, Users.Length);
+        Debug.Log(Users[0]);
     }
 
     private void OnLeaderboardFindResult(LeaderboardFindResult_t pCallback, bool failure)
@@ -104,6 +114,18 @@ public class LeadMan : MonoBehaviour
             Debug.Log($"User: {lD.username} - Score: {lD.score} - Rank: {lD.rank}");
             LeaderboardNames[i].text = lD.username;
             LeaderboardCrowns[i].text = lD.score.ToString();
+
+            // Überprüfen, ob die Steam-ID der Eintrag des lokalen Benutzers entspricht
+            if (leaderboardEntry.m_steamIDUser == SteamUser.GetSteamID())
+            {
+                // Die Position des Spielers ist gegeben durch leaderboardEntry.m_nGlobalRank
+                int playerRank = leaderboardEntry.m_nGlobalRank;
+                int playerCrowns = leaderboardEntry.m_nScore;
+                Debug.Log("Spieler ist auf Position " + playerRank + " im Leaderboard.");
+                YourRank.text = playerRank.ToString();
+                YourCrowns.text = playerCrowns.ToString();
+                YourName.text = SteamFriends.GetFriendPersonaName(SteamUser.GetSteamID());
+            }
         }
         //This is the callback for my own project - function is asynchronous so it must return from here rather than from GetLeaderBoardData
         //FindObjectOfType<HighscoreUIMan>().FillLeaderboard(LeaderboardDataset);

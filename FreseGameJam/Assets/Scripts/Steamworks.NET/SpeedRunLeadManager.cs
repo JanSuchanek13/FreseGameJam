@@ -16,6 +16,12 @@ public class SpeedRunLeadManager : MonoBehaviour
     List<TMP_Text> LeaderboardNames = new List<TMP_Text>();
     [SerializeField]
     List<TMP_Text> LeaderboardTimes = new List<TMP_Text>();
+    [SerializeField]
+    TMP_Text YourName;
+    [SerializeField]
+    TMP_Text YourTime;
+    [SerializeField]
+    TMP_Text YourRank;
 
     public void Debug_SetScore(int _score)
     {
@@ -50,6 +56,10 @@ public class SpeedRunLeadManager : MonoBehaviour
     {
         SteamAPICall_t hSteamAPICall = SteamUserStats.FindLeaderboard("Ori Speedrun Best Time");
         m_findResult.Set(hSteamAPICall, OnLeaderboardFindResult);
+
+        CSteamID[] Users = { SteamUser.GetSteamID() }; // Local user steam id
+        SteamAPICall_t handle = SteamUserStats.DownloadLeaderboardEntriesForUsers(s_currentLeaderboard, Users, Users.Length);
+        Debug.Log(Users[0]);
     }
 
     private void OnLeaderboardFindResult(LeaderboardFindResult_t pCallback, bool failure)
@@ -108,6 +118,22 @@ public class SpeedRunLeadManager : MonoBehaviour
             int seconds = (int)timer - 60 * minutes;
             int milliseconds = (int)(1000 * (timer - minutes * 60 - seconds));
             LeaderboardTimes[i].text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
+
+            // Überprüfen, ob die Steam-ID der Eintrag des lokalen Benutzers entspricht
+            if (leaderboardEntry.m_steamIDUser == SteamUser.GetSteamID())
+            {
+                // Die Position des Spielers ist gegeben durch leaderboardEntry.m_nGlobalRank
+                int playerRank = leaderboardEntry.m_nGlobalRank;
+                int playerTime = leaderboardEntry.m_nScore;
+                int playertimer = playerTime;
+                int playerminutes = (int)playertimer / 60;
+                int playerseconds = (int)playertimer - 60 * playerminutes;
+                int playermilliseconds = (int)(1000 * (playertimer - playerminutes * 60 - playerseconds));
+                Debug.Log("Spieler ist auf Position " + playerRank + " im Leaderboard mit" + playerTime);
+                YourRank.text = playerRank.ToString();
+                YourTime.text = string.Format("{0:00}:{1:00}:{2:000}", playerminutes, playerseconds, playermilliseconds);
+                YourName.text = SteamFriends.GetFriendPersonaName(SteamUser.GetSteamID());
+            }
         }
         //This is the callback for my own project - function is asynchronous so it must return from here rather than from GetLeaderBoardData
         //FindObjectOfType<HighscoreUIMan>().FillLeaderboard(LeaderboardDataset);
