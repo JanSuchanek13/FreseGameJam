@@ -197,6 +197,9 @@ public class SteamAchievementsManager : MonoBehaviour
 
         // enable to test specific math/solutions/conclusions:
         //Debug.Log("The max sum of checkpoints is: " + (_checkpointsInGame * (_checkpointsInGame + 1) / 2) + " based on having " + _checkpointsInGame + " checkpoints in the game");
+
+        Debug.Log("youve finished: " + PlayerPrefs.GetInt("RunsCompleted" + 0, 0) + " runs");
+        Debug.Log("youve glided: " + GetTotalCraneTimeActive() + " seconds");
     }
 
     private void GatherRequiredData()
@@ -384,7 +387,7 @@ public class SteamAchievementsManager : MonoBehaviour
 
         // achievement #18: Complete any 10 runs
         // explanation: int gets updated when finishing any run
-        if (_checkForAchievement18 && PlayerPrefs.GetInt("RunsCompleted" + 0, 0) <= 10)
+        if (_checkForAchievement18 && PlayerPrefs.GetInt("RunsCompleted" + 0, 0) >= 10)
         {
             _checkForAchievement18 = false;
             UnlockAchievement(18);
@@ -392,15 +395,17 @@ public class SteamAchievementsManager : MonoBehaviour
 
         // achievement #19: Complete any 50 runs
         // explanation: int gets updated when finishing any run
-        if (_checkForAchievement19 && PlayerPrefs.GetInt("RunsCompleted" + 0, 0) <= 50)
+        if (_checkForAchievement19 && (PlayerPrefs.GetInt("RunsCompleted" + 0, 0) >= 50))
         {
+            Debug.Log("youve now finished: " + PlayerPrefs.GetInt("RunsCompleted" + 0, 0) + " runs");
+
             _checkForAchievement19 = false;
             UnlockAchievement(19);
         }
 
         // achievement #20: Complete any 100 runs
         // explanation: int gets updated when finishing any run in the LevelScript (when entering the finish-trigger)
-        if (_checkForAchievement20 && PlayerPrefs.GetInt("RunsCompleted" + 0, 0) <= 100)
+        if (_checkForAchievement20 && PlayerPrefs.GetInt("RunsCompleted" + 0, 0) >= 100)
         {
             _checkForAchievement20 = false;
             UnlockAchievement(20);
@@ -408,7 +413,7 @@ public class SteamAchievementsManager : MonoBehaviour
 
         // achievement #21: Find 100 crowns over any number of reg. runs
         // explanation: int gets updated whenever a crown is picked up in a regular run
-        if (_checkForAchievement21 && PlayerPrefs.GetInt("RegularCrownsFoundOverLifetime" + 0, 0) <= 100)
+        if (_checkForAchievement21 && PlayerPrefs.GetInt("RegularCrownsFoundOverLifetime" + 0, 0) >= 100)
         {
             _checkForAchievement21 = false;
             UnlockAchievement(21);
@@ -416,7 +421,7 @@ public class SteamAchievementsManager : MonoBehaviour
 
         // achievement #22: Find 500 crowns over any number of reg. runs
         // explanation: int gets updated when finishing any run
-        if (_checkForAchievement22 && PlayerPrefs.GetInt("RegularCrownsFoundOverLifetime" + 0, 0) <= 500)
+        if (_checkForAchievement22 && PlayerPrefs.GetInt("RegularCrownsFoundOverLifetime" + 0, 0) >= 500)
         {
             _checkForAchievement22 = false;
             UnlockAchievement(22);
@@ -424,7 +429,7 @@ public class SteamAchievementsManager : MonoBehaviour
 
         // achievement #23: Find 1000 crowns over any number of reg. runs
         // explanation: int gets updated whenever a crown is picked up in a regular run
-        if (_checkForAchievement23 && PlayerPrefs.GetInt("RegularCrownsFoundOverLifetime" + 0, 0) <= 1000)
+        if (_checkForAchievement23 && PlayerPrefs.GetInt("RegularCrownsFoundOverLifetime" + 0, 0) >= 1000)
         {
             _checkForAchievement23 = false;
             FindAnyObjectByType<WearACrown>().UnlockCharacterCrown(100);
@@ -433,7 +438,7 @@ public class SteamAchievementsManager : MonoBehaviour
 
         // achievement #24: Find 50 crowns over any number of hc. runs
         // explanation: int gets updated whenever a crown is picked up in a hardcore run
-        if (_checkForAchievement24 && PlayerPrefs.GetInt("HardcoreCrownsFoundOverLifetime" + 0, 0) <= 50)
+        if (_checkForAchievement24 && PlayerPrefs.GetInt("HardcoreCrownsFoundOverLifetime" + 0, 0) >= 50)
         {
             _checkForAchievement24 = false;
             UnlockAchievement(24);
@@ -441,7 +446,7 @@ public class SteamAchievementsManager : MonoBehaviour
 
         // achievement #25: Find 100 crowns over any number of hc. runs
         // explanation: int gets updated whenever a crown is picked up in a hardcore run
-        if (_checkForAchievement25 && PlayerPrefs.GetInt("HardcoreCrownsFoundOverLifetime" + 0, 0) <= 100)
+        if (_checkForAchievement25 && PlayerPrefs.GetInt("HardcoreCrownsFoundOverLifetime" + 0, 0) >= 100)
         {
             _checkForAchievement25 = false;
             UnlockAchievement(25);
@@ -449,7 +454,7 @@ public class SteamAchievementsManager : MonoBehaviour
 
         // achievement #26: Find 150 crowns over any number of hc. runs
         // explanation: int gets updated whenever a crown is picked up in a hardcore run
-        if (_checkForAchievement26 && PlayerPrefs.GetInt("HardcoreCrownsFoundOverLifetime" + 0, 0) <= 150)
+        if (_checkForAchievement26 && PlayerPrefs.GetInt("HardcoreCrownsFoundOverLifetime" + 0, 0) >= 150)
         {
             _checkForAchievement26 = false;
             UnlockAchievement(26);
@@ -591,8 +596,11 @@ public class SteamAchievementsManager : MonoBehaviour
     /// 1 = Find crown
     /// </summary>
     /// <param name="_achievementID"></param>
-    public void UnlockAchievement(int _achievementID)
+    void UnlockAchievement(int _achievementID)
     {
+        Debug.Log("UnlockAchievement called with ID " + _achievementID);
+
+
         switch (_achievementID)
         {
             case 0: // TEST (deleted since)

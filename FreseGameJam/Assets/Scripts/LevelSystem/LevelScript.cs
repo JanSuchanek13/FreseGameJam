@@ -96,9 +96,9 @@ public class LevelScript : MonoBehaviour
                 _endZoneReached = true;
 
                 // count the completed runs for achievements -F:
-                int currentRuns = PlayerPrefs.GetInt("RunsCompleted", 0);
+                int currentRuns = PlayerPrefs.GetInt("RunsCompleted" + 0, 0);
                 currentRuns += 1;
-                PlayerPrefs.SetInt("RunsCompleted", currentRuns);
+                PlayerPrefs.SetInt("RunsCompleted" + 0, currentRuns);
 
                 if (!_usingHardcoreMode)
                 {
