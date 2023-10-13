@@ -59,7 +59,7 @@ public class LeadMan : MonoBehaviour
 
         CSteamID[] Users = { SteamUser.GetSteamID() }; // Local user steam id
         SteamAPICall_t handle = SteamUserStats.DownloadLeaderboardEntriesForUsers(s_currentLeaderboard, Users, Users.Length);
-        Debug.Log(Users[0]);
+        //Debug.Log(Users[0]);
     }
 
     private void OnLeaderboardFindResult(LeaderboardFindResult_t pCallback, bool failure)
