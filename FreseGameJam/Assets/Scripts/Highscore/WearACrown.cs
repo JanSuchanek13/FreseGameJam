@@ -17,15 +17,17 @@ public class WearACrown : MonoBehaviour
     [SerializeField] GameObject Crown3;
 
 
-    /* //only importend if you want to store the activatedCrowns
+     //only importend if you want to store the activatedCrowns
     void Start()
     {
         if(PlayerPrefs.GetInt("ActiveCrown") != 0)
         {
             activatedCrowns = PlayerPrefs.GetInt("ActiveCrown");
+            PutOnCrown(activatedCrowns);
         }
     }
 
+    
     public void UnlockCharacterCrown(int crown)
     {
         if((activatedCrowns/crown) %10 == 0)
@@ -35,7 +37,7 @@ public class WearACrown : MonoBehaviour
         Debug.Log(activatedCrowns);
         PlayerPrefs.SetInt("ActiveCrown", activatedCrowns);
     }
-    */
+    
 
     public void PutOnCrown(int _crown)
     {
@@ -47,23 +49,25 @@ public class WearACrown : MonoBehaviour
                 Crown3.SetActive(false);
                 break;
 
+            case >=100:
+                Crown1.SetActive(false);
+                Crown2.SetActive(false);
+                Crown3.SetActive(true);
+                break;
+
+            case >=10:
+                Crown1.SetActive(false);
+                Crown2.SetActive(true);
+                Crown3.SetActive(false);
+                break;
+
             case 1:
                 Crown1.SetActive(true);
                 Crown2.SetActive(false);
                 Crown3.SetActive(false);
                 break;
 
-            case 2:
-                Crown1.SetActive(false);
-                Crown2.SetActive(true);
-                Crown3.SetActive(false);
-                break;
-
-            case 3:
-                Crown1.SetActive(false);
-                Crown2.SetActive(false);
-                Crown3.SetActive(true);
-                break;
+            
 
             default:
                 
