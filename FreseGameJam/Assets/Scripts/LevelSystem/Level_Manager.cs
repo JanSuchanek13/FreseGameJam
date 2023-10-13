@@ -275,7 +275,10 @@ public class Level_Manager : MonoBehaviour
         PlayerPrefs.SetFloat("Lasttimer" + (0), 0.0f);
         PlayerPrefs.SetInt("Lastcrowns" + (0), 0);
         PlayerPrefs.SetInt("Lastdeaths" + (0), 0);
-    
+
+        // reset CharacterCrowns
+        PlayerPrefs.SetInt("ActiveCrown", 0);
+
         // reset all highscores:
         PlayerPrefs.SetFloat("HTtimer" + 0, 0.0f);
         PlayerPrefs.SetInt("HTcrowns" + 0, 0);
