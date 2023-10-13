@@ -361,6 +361,7 @@ public class SteamAchievementsManager : MonoBehaviour
         if (_checkForAchievement15 && _humanForm.activeInHierarchy && _goatForm.activeInHierarchy)
         {
             _checkForAchievement15 = false;
+            FindAnyObjectByType<WearACrown>().UnlockCharacterCrown(010);
             UnlockAchievement(15);
         }
 
@@ -369,6 +370,7 @@ public class SteamAchievementsManager : MonoBehaviour
         if (_checkForAchievement16 && PlayerPrefs.GetInt("WasFastestHardcoreCrownRunner" + 0, 0) == 1)
         {
             _checkForAchievement16 = false;
+            FindAnyObjectByType<WearACrown>().UnlockCharacterCrown(001);
             UnlockAchievement(16);
         }
 
@@ -425,6 +427,7 @@ public class SteamAchievementsManager : MonoBehaviour
         if (_checkForAchievement23 && PlayerPrefs.GetInt("RegularCrownsFoundOverLifetime" + 0, 0) <= 1000)
         {
             _checkForAchievement23 = false;
+            FindAnyObjectByType<WearACrown>().UnlockCharacterCrown(100);
             UnlockAchievement(23);
         }
 
@@ -579,6 +582,7 @@ public class SteamAchievementsManager : MonoBehaviour
         float totalTime = GetTotalCraneTimeActive();
         PlayerPrefs.SetFloat("GlideTimeOverLifetime", totalTime);
         PlayerPrefs.Save(); // this ensures data is written immediately.
+        Debug.Log("lifetime glide time: " + totalTime);
     }
     #endregion
 
