@@ -133,6 +133,10 @@ public class SpeedRunLeadManager : MonoBehaviour
                 YourRank.text = playerRank.ToString();
                 YourTime.text = string.Format("{0:00}:{1:00}:{2:000}", playerminutes, playerseconds, playermilliseconds);
                 YourName.text = SteamFriends.GetFriendPersonaName(SteamUser.GetSteamID());
+                if(playerRank == 1)
+                {
+                    PlayerPrefs.SetInt("WasFastestHardcoreRunner" + 0, 1);
+                }
             }
         }
         //This is the callback for my own project - function is asynchronous so it must return from here rather than from GetLeaderBoardData

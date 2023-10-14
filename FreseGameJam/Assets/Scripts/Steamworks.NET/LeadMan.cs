@@ -125,6 +125,10 @@ public class LeadMan : MonoBehaviour
                 YourRank.text = playerRank.ToString();
                 YourCrowns.text = playerCrowns.ToString();
                 YourName.text = SteamFriends.GetFriendPersonaName(SteamUser.GetSteamID());
+                if (playerRank == 1)
+                {
+                    PlayerPrefs.SetInt("WasFastestHardcoreCrownRunner" + 0, 1);
+                }
             }
         }
         //This is the callback for my own project - function is asynchronous so it must return from here rather than from GetLeaderBoardData

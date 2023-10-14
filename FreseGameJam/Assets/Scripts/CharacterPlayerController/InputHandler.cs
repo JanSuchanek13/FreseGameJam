@@ -23,12 +23,56 @@ public class InputHandler : MonoBehaviour
 
     [Header("REFERENCE")]
     private PlayerInput input;
+    public InputControl activeControl { get; }
+    private List<Gamepad> connectedControllers = new List<Gamepad>();
 
 
     void Awake()
     {
         SwitchControls();
     }
+
+    void Start()
+    {
+        var gamepads = Gamepad.all;
+        foreach (var gamepad in gamepads)
+        {
+            RegisterController(gamepad);
+        }
+    }
+
+    private void RegisterController(Gamepad controller)
+    {
+        Debug.Log("Controller angeschlossen: " + controller.name);
+        connectedControllers.Add(controller);
+
+        bool isXboxController = IsXboxController(controller);
+        bool isPlayStationController = IsPlayStationController(controller);
+
+        if (isXboxController)
+        {
+            Debug.Log("Ein Xbox-Controller ist angeschlossen.");
+        }
+        else if (isPlayStationController)
+        {
+            Debug.Log("Ein PlayStation-Controller ist angeschlossen.");
+        }
+    }
+
+    private bool IsXboxController(Gamepad controller)
+    {
+        // Hier prüfen wir auf typische Xbox-Tasten
+        return controller.buttonSouth.isPressed || controller.buttonNorth.isPressed ||
+               controller.buttonWest.isPressed || controller.buttonEast.isPressed;
+    }
+
+    private bool IsPlayStationController(Gamepad controller)
+    {
+        // Hier prüfen wir auf typische PlayStation-Tasten
+        return controller.buttonSouth.isPressed || controller.buttonEast.isPressed ||
+               controller.buttonWest.isPressed || controller.buttonNorth.isPressed;
+    }
+
 
     private void SwitchControls()
     {
@@ -130,11 +174,12 @@ public class InputHandler : MonoBehaviour
 
     private void Update()
     {
-        if((PlayerPrefs.GetInt("controlsSettings") == 0 && controlType != ControlType.Keyboard) || (PlayerPrefs.GetInt("controlsSettings") >= 1 && controlType != ControlType.Controller))
+        if ((PlayerPrefs.GetInt("controlsSettings") == 0 && controlType != ControlType.Keyboard) || (PlayerPrefs.GetInt("controlsSettings") >= 1 && controlType != ControlType.Controller))
         {
             OnDisable();
             SwitchControls();
             OnEnable();
+            
         }
         
 
