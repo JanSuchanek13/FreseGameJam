@@ -529,7 +529,8 @@ public class SteamAchievementsManager : MonoBehaviour
         }
 
         // achievement #35: Try jumping on friend in boat (H)
-        // explanation: This is tracked by a trigger on the friends boat (in Environment>Characters)
+        // explanation: This is tracked by the OnTriggerEnter Function of the "SpeedUpNavMeshAgent"-Script
+        // on the riverBoat_Friend_Fire GO (your friend in the burning boat: when he accellerates, this is triggered!)
         if (_checkForAchievement35 && PlayerPrefs.GetInt("TriedJumpingOnMovingBoat", 0) != 0)
         {
             _checkForAchievement35 = false;
