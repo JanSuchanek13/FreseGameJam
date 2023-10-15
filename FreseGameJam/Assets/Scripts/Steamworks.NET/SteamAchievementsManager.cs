@@ -19,17 +19,23 @@ public class SteamAchievementsManager : MonoBehaviour
 
     // achievement #2: Find 10 crowns in a run
     [Header("Achievement #2: Find 10 crowns in a run")]
-    [SerializeField] string _settings_2 = "none";
+    [Tooltip("The alternative to this is, to only check at the end of every run")]
+    [SerializeField] bool _updateInRealtime_Ach_2 = true;
+    //[SerializeField] string _settings_2 = "none";
     private bool _checkForAchievement2 = true;
 
     // achievement #3: Find 20 crowns in a run
     [Header("Achievement #3: Find 20 crowns in a run")]
-    [SerializeField] string _settings_3 = "none";
+    [Tooltip("The alternative to this is, to only check at the end of every run")]
+    [SerializeField] bool _updateInRealtime_Ach_3 = true;
+    //[SerializeField] string _settings_3 = "none";
     private bool _checkForAchievement3 = true;
 
     // achievement #4: Find 30 crowns in a run
     [Header("Achievement #4: Find 30 crowns in a run")]
-    [SerializeField] string _settings_4 = "none";
+    [Tooltip("The alternative to this is, to only check at the end of every run")]
+    [SerializeField] bool _updateInRealtime_Ach_4 = true;
+    //[SerializeField] string _settings_4 = "none";
     private bool _checkForAchievement4 = true;
 
     [Header("Achievement #5: Find all crowns in a run")]
@@ -245,27 +251,51 @@ public class SteamAchievementsManager : MonoBehaviour
         }
 
         // achievement #2: Find 10 crowns in a run
-        // explanation: you NEED to finish a run to get this, thus this would be found in highscores
-        if (_checkForAchievement2 && (PlayerPrefs.GetInt("HCcrowns" + 0, 0) >= 10) || PlayerPrefs.GetInt("HighscoreHardcoreCrowns_Crowns" + 0, 0) >= 10)
+        // explanation: You may pick in the settings for this achievement
+        // whether it should only count at the end of a run, or in realtime
+        if (_checkForAchievement2)
         {
-            _checkForAchievement2 = false;
-            UnlockAchievement(2);
+            if (!_updateInRealtime_Ach_2 && (PlayerPrefs.GetInt("HCcrowns" + 0, 0) >= 10 || PlayerPrefs.GetInt("HighscoreHardcoreCrowns_Crowns" + 0, 0) >= 10))
+            {
+                _checkForAchievement2 = false;
+                UnlockAchievement(2);
+            }else if (_updateInRealtime_Ach_2 && (PlayerPrefs.GetInt("crowns" + 0, 0) >= 10 || PlayerPrefs.GetInt("HardcoreCrowns" + 0, 0) >= 10))
+            {
+                _checkForAchievement2 = false;
+                UnlockAchievement(2);
+            }
         }
 
         // achievement #3: Find 20 crowns in a run
-        // explanation: you NEED to finish a run to get this, thus this would be found in highscores
-        if (_checkForAchievement3 && (PlayerPrefs.GetInt("HCcrowns" + 0, 0) >= 20) || PlayerPrefs.GetInt("HighscoreHardcoreCrowns_Crowns" + 0, 0) >= 20)
+        // explanation: You may pick in the settings for this achievement
+        // whether it should only count at the end of a run, or in realtime
+        if (_checkForAchievement3)
         {
-            _checkForAchievement3 = false;
-            UnlockAchievement(3);
+            if (!_updateInRealtime_Ach_3 && (PlayerPrefs.GetInt("HCcrowns" + 0, 0) >= 20 || PlayerPrefs.GetInt("HighscoreHardcoreCrowns_Crowns" + 0, 0) >= 20))
+            {
+                _checkForAchievement3 = false;
+                UnlockAchievement(3);
+            }else if (_updateInRealtime_Ach_3 && (PlayerPrefs.GetInt("crowns" + 0, 0) >= 20 || PlayerPrefs.GetInt("HardcoreCrowns" + 0, 0) >= 20))
+            {
+                _checkForAchievement3 = false;
+                UnlockAchievement(3);
+            }
         }
 
         // achievement #4: Find 30 crowns in a run
-        // explanation: you NEED to finish a run to get this, thus this would be found in highscores
-        if (_checkForAchievement4 && (PlayerPrefs.GetInt("HCcrowns" + 0, 0) >= 30) || PlayerPrefs.GetInt("HighscoreHardcoreCrowns_Crowns" + 0, 0) >= 30)
+        // explanation: You may pick in the settings for this achievement
+        // whether it should only count at the end of a run, or in realtime
+        if (_checkForAchievement4)
         {
-            _checkForAchievement4 = false;
-            UnlockAchievement(4);
+            if (!_updateInRealtime_Ach_4 && (PlayerPrefs.GetInt("HCcrowns" + 0, 0) >= 30 || PlayerPrefs.GetInt("HighscoreHardcoreCrowns_Crowns" + 0, 0) >= 30))
+            {
+                _checkForAchievement4 = false;
+                UnlockAchievement(4);
+            }else if(_updateInRealtime_Ach_4 && (PlayerPrefs.GetInt("crowns" + 0, 0) >= 30 || PlayerPrefs.GetInt("HardcoreCrowns" + 0, 0) >= 30))
+            {
+                _checkForAchievement4 = false;
+                UnlockAchievement(4);
+            }
         }
 
         // achievement #5: Find all crowns in a run
