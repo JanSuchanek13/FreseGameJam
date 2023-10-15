@@ -46,32 +46,19 @@ public class InputHandler : MonoBehaviour
         Debug.Log("Controller angeschlossen: " + controller.name);
         connectedControllers.Add(controller);
 
-        bool isXboxController = IsXboxController(controller);
-        bool isPlayStationController = IsPlayStationController(controller);
 
-        if (isXboxController)
+        if (controller.device.name.Contains("XInputController"))
         {
             Debug.Log("Ein Xbox-Controller ist angeschlossen.");
+            PlayerPrefs.SetInt("controlsSettings", 2);
         }
-        else if (isPlayStationController)
+        else if (controller.device.name.Contains("DualShock"))
         {
             Debug.Log("Ein PlayStation-Controller ist angeschlossen.");
+            PlayerPrefs.SetInt("controlsSettings", 1);
         }
     }
 
-    private bool IsXboxController(Gamepad controller)
-    {
-        // Hier prüfen wir auf typische Xbox-Tasten
-        return controller.buttonSouth.isPressed || controller.buttonNorth.isPressed ||
-               controller.buttonWest.isPressed || controller.buttonEast.isPressed;
-    }
-
-    private bool IsPlayStationController(Gamepad controller)
-    {
-        // Hier prüfen wir auf typische PlayStation-Tasten
-        return controller.buttonSouth.isPressed || controller.buttonEast.isPressed ||
-               controller.buttonWest.isPressed || controller.buttonNorth.isPressed;
-    }
 
 
     private void SwitchControls()
