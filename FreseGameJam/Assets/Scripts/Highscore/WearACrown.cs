@@ -23,11 +23,14 @@ public class WearACrown : MonoBehaviour
         if(PlayerPrefs.GetInt("ActiveCrown") != 0)
         {
             activatedCrowns = PlayerPrefs.GetInt("ActiveCrown");
-            PutOnCrown(activatedCrowns);
+            //PutOnCrown(activatedCrowns);
         }
     }
 
-    
+    /// <summary>
+    /// 1= get 1000Crowns; 10= WasFastestHardcoreRunner; 100= WasFastestHardcoreCrownRunner
+    /// </summary>
+    /// <param name="crown"></param>
     public void UnlockCharacterCrown(int crown)
     {
         if((activatedCrowns/crown) %10 == 0)
