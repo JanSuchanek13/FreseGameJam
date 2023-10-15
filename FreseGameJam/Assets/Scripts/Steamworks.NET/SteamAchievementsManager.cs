@@ -189,6 +189,11 @@ public class SteamAchievementsManager : MonoBehaviour
     [SerializeField] string _settings_34 = "none";
     private bool _checkForAchievement34 = true;
 
+    // achievement #35: Try jumping on the moving boat of friend (H)
+    [Header("Achievement #34: Try jumping on the moving boat of friend (H)")]
+    [SerializeField] string _settings_35 = "none";
+    private bool _checkForAchievement35 = true;
+
     private void Awake()
     {
         GatherRequiredData();
@@ -523,6 +528,14 @@ public class SteamAchievementsManager : MonoBehaviour
             }
         }
 
+        // achievement #35: Try jumping on friend in boat (H)
+        // explanation: This is tracked by a trigger on the friends boat (in Environment>Characters)
+        if (_checkForAchievement35 && PlayerPrefs.GetInt("TriedJumpingOnMovingBoat", 0) != 0)
+        {
+            _checkForAchievement35 = false;
+            UnlockAchievement(35);
+        }
+
         // check again:
         StartCoroutine("CheckForAchievements");
     }
@@ -742,6 +755,10 @@ public class SteamAchievementsManager : MonoBehaviour
 
             case 34: // achievement: Find five hidden locations
                 SteamUserStats.SetAchievement("ach34_ANY_Alltime_Explorer_lvl5");
+                break;
+
+            case 35: // achievement: Try jumping on moving boat (H)
+                SteamUserStats.SetAchievement("ach35_ANY_JumpOnDrivingBoat");
                 break;
 
             default:

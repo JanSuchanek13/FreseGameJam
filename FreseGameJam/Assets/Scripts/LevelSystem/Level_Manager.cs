@@ -266,7 +266,12 @@ public class Level_Manager : MonoBehaviour
         PlayerPrefs.SetInt("RegularCrowsFoundOverLifetime" + 0, 0);
         PlayerPrefs.SetInt("HardcoreCrowsFoundOverLifetime" + 0, 0);
         PlayerPrefs.SetFloat("GlideTimeOverLifetime" + 0, 0.0f);
-        PlayerPrefs.SetInt("HiddenLocationsFound" + 0, 0);
+        PlayerPrefs.SetInt("TriedJumpingOnMovingBoat", 0);
+        for (int i = 0; i < 6; i++) // reset all 5 hidden locations:
+        {
+            PlayerPrefs.SetInt("HiddenLocationNr" + i, 0);
+        }
+        PlayerPrefs.SetInt("HiddenLocationsFound" + 0, 0); // reset total count of found locations:
 
         // disable the continue-button (normally this happens when finishing the game!)
         PlayerPrefs.SetInt("levelIsUnlocked", 2);

@@ -19,6 +19,12 @@ public class SpeedUpNavMeshAgent : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            if (PlayerPrefs.GetInt("TriedJumpingOnMovingBoat", 0) == 0)
+            {
+                PlayerPrefs.SetInt("TriedJumpingOnMovingBoat", 1);
+            }
+            Debug.Log("Player tried jumping on the moving boat. Such a fool!");
+
             StartCoroutine(SpeedUp());
         }
             
