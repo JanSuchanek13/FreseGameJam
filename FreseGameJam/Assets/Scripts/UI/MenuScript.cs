@@ -16,10 +16,19 @@ public class MenuScript : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        if(PlayerPrefs.GetInt("PlayerPickedInitialLanguage", 0) == 1)
+        if(PlayerPrefs.GetInt("PlayerPickedInitialLanguage", 0) == 1 && PlayerPrefs.GetInt("GameLaunched", 0) == 0)
         {
+            PlayerPrefs.SetInt("GameLaunched", 1);
             CallEpilepsyWarning();
         }
+    }
+
+    /// <summary>
+    /// Reset the trigger for the epilepsy-warning UI.
+    /// </summary>
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.SetInt("GameLaunched", 0);
     }
 
     /// <summary>

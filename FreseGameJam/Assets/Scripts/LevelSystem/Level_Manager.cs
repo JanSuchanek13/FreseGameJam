@@ -273,6 +273,12 @@ public class Level_Manager : MonoBehaviour
         }
         PlayerPrefs.SetInt("HiddenLocationsFound" + 0, 0); // reset total count of found locations:
 
+        // reset the initial picking of language:
+        PlayerPrefs.SetInt("PlayerPickedInitialLanguage", 0);
+
+        // reset epilepsy call on boot:
+        PlayerPrefs.SetInt("GameLaunched", 0);
+
         // disable the continue-button (normally this happens when finishing the game!)
         PlayerPrefs.SetInt("levelIsUnlocked", 2);
 
