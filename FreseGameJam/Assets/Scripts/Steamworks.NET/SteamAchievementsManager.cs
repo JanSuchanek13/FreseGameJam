@@ -309,7 +309,7 @@ public class SteamAchievementsManager : MonoBehaviour
 
         // achievement #6: Reach your lover for the first time
         // explanation: When finishing any run for the first time you automatically unlock the next level, using this as indicator
-        if (_checkForAchievement6 && PlayerPrefs.GetInt("levelIsUnlocked" + 0, 0) != 0)
+        if (_checkForAchievement6 && PlayerPrefs.GetInt("RunsCompleted" + 0, 0) != 0)
         {
             _checkForAchievement6 = false;
             UnlockAchievement(6);
