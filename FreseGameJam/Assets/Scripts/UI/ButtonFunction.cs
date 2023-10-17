@@ -139,7 +139,17 @@ public class ButtonFunction : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(permissionButton);
         }
     }
-        public void Pause()
+
+    /// <summary>
+    /// If player leaves the game application this should automatically call the pause function.
+    /// </summary>
+    /// <param name="pause"></param>
+    private void OnApplicationPause(bool pause)
+    {
+        Pause();
+    }
+
+    public void Pause()
     {
         if (_retryHardcoreRun_UI.activeInHierarchy != true) // this allows to close the retry-hardcore UI when applicable by pressing ESC
         {

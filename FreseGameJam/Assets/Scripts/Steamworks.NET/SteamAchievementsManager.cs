@@ -408,7 +408,7 @@ public class SteamAchievementsManager : MonoBehaviour
         if (_checkForAchievement16 && PlayerPrefs.GetInt("WasFastestHardcoreCrownRunner" + 0, 0) == 1)
         {
             _checkForAchievement16 = false;
-            FindAnyObjectByType<WearACrown>().UnlockCharacterCrown(001);
+            FindAnyObjectByType<WearACrown>().UnlockCharacterCrown(100);
             UnlockAchievement(16);
         }
 
@@ -467,7 +467,7 @@ public class SteamAchievementsManager : MonoBehaviour
         if (_checkForAchievement23 && PlayerPrefs.GetInt("RegularCrownsFoundOverLifetime" + 0, 0) >= 1000)
         {
             _checkForAchievement23 = false;
-            FindAnyObjectByType<WearACrown>().UnlockCharacterCrown(100);
+            FindAnyObjectByType<WearACrown>().UnlockCharacterCrown(001);
             UnlockAchievement(23);
         }
 
