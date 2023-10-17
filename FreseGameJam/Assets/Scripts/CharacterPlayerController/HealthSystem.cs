@@ -325,7 +325,11 @@ public class HealthSystem : MonoBehaviour
             tempColor.a += 0.2f;
             fadeToBlackBlende.GetComponent<Image>().color = tempColor;
         }
-        yield return new WaitForSeconds(0.5f);
+        while (inCoroutine)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
+        
         while (tempColor.a > 0)
         {
             yield return new WaitForSeconds(0.05f);
