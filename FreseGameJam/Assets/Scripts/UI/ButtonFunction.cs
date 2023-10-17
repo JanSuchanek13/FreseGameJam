@@ -72,6 +72,11 @@ public class ButtonFunction : MonoBehaviour
         _closeQuarterCamera = GameObject.Find("Third Person Player_GameLevel_1").GetComponent<CloseQuarterCamera>();
         // Get Input Handler reference:
         inputHandler = GameObject.Find("Third Person Player_GameLevel_1").GetComponent<InputHandler>();
+
+        if(inputHandler != null)
+        {
+            Debug.Log("InputHandler found");
+        }   
     }
     private void Update()
     {
@@ -91,8 +96,12 @@ public class ButtonFunction : MonoBehaviour
             {
                 if (!_retryHardcoreRun_UI.activeInHierarchy)
                 {
+                    // deactivate Player Input:
+                    inputHandler.enabled = false;
+
                     Cursor.lockState = CursorLockMode.None;
                     Cursor.visible = true;
+
                     // Force the mouse to be in the max corner of the screen
                     Vector2 warpPosition = Screen.safeArea.max;
                     Mouse.current.WarpCursorPosition(warpPosition);
@@ -105,9 +114,9 @@ public class ButtonFunction : MonoBehaviour
 
                     // disable camera movement in pause UI
                     Camera.main.GetComponent<CinemachineBrain>().enabled = false;
-                }else
+                }else // when pressing the key again reset right away!
                 {
-                    Retry();
+                    Retry(); 
                 }
             }
         }
@@ -121,6 +130,27 @@ public class ButtonFunction : MonoBehaviour
         {
             SkipCutscene();
         }
+    }
+
+    /// <summary>
+    /// This button is called by the NO button on the AreYouSure UI of the FastRetryUI.
+    /// It lets the player continue their run if they only accidentally pressed the fast retry key.
+    /// </summary>
+    public void CancelFastRetry()
+    {
+        // activate Player Input
+        inputHandler.enabled = true;
+
+        // increase volume or unpause music:
+        //GameObject.Find("GameManager").GetComponent<BackgroundSoundPlayer>().UnpauseMusic();
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        _retryHardcoreRun_UI.SetActive(false);
+        //Time.timeScale = 1;
+
+        // enable camera movement in pause UI
+        Camera.main.GetComponent<CinemachineBrain>().enabled = true;
     }
 
     /// <summary>
@@ -144,8 +174,9 @@ public class ButtonFunction : MonoBehaviour
     /// If player leaves the game application this should automatically call the pause function.
     /// </summary>
     /// <param name="pause"></param>
-    private void OnApplicationPause(bool pause)
+    private void OnApplicationPause(bool hasFocus)
     {
+        Debug.Log("app pause called");
         Pause();
     }
 
@@ -271,15 +302,8 @@ public class ButtonFunction : MonoBehaviour
 
     public void Retry()
     {
-        // reset level:
-        Debug.Log("this was called");
-        PlayerPrefs.SetInt("FastReset", 1);
-        SceneManager.LoadScene(0);
-
-
-
-        // restart level:
-        //PlayerPrefs.SetInt("HardcoreMode", 1);
-        //GetComponent<Level_Manager>().LoadLevel(1);
+        // reset hardcore run:
+        PlayerPrefs.SetInt("FastReset", 1); // tells the main menu to immediatly start a new hc-run
+        SceneManager.LoadScene(0); // go to main menu for reset
     }
 }
