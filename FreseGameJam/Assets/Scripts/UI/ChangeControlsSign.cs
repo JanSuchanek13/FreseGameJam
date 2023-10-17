@@ -41,7 +41,7 @@ public class ChangeControlsSign : MonoBehaviour
 
         if (PlayerPrefs.GetInt("HardcoreMode") != 0)
         {
-            Debug.Log("test");
+            //Debug.Log("test");
             switch (controlSettings)
             {
                 case 0:

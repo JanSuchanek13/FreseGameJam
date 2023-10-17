@@ -22,19 +22,32 @@ public class AttachToLavaTile : MonoBehaviour
         {
             if (hit.collider.CompareTag("LavaTile"))
             {
+                offset.x = transform.position.x - hit.transform.position.x;
+                offset.y = transform.position.z - hit.transform.position.z;
+                Vector3 direction = hit.transform.position - oldPos;
+                transform.gameObject.GetComponent<CharacterController>().Move(direction.normalized / 20);
+                oldPos = hit.transform.position;
+
+                if (hit.transform.gameObject.GetComponent<LavaTileMovement>() != null)
+                {
+                    StartCoroutine(hit.collider.transform.gameObject.GetComponent<LavaTileMovement>().ActivateFire());
+                }
+                //Teleportation Issue
+                /*
                 if (transform.gameObject.GetComponent<InputHandler>().moveValue.magnitude == 0)
                 {
                     if(hit.transform.gameObject.GetComponent<LavaTileMovement>() != null)
                     {
                         StartCoroutine(hit.collider.transform.gameObject.GetComponent<LavaTileMovement>().ActivateFire());
                     }
-
+                    
                     if (firstContact)
                     {
                         offset.x = transform.position.x - hit.transform.position.x;
                         offset.y = transform.position.z - hit.transform.position.z;
                         firstContact = false;
                     }
+                    
 
                     //Debug.Log(offset);
                     transform.position = new Vector3(hit.transform.position.x + offset.x, transform.position.y, hit.transform.position.z + offset.y);
@@ -47,7 +60,7 @@ public class AttachToLavaTile : MonoBehaviour
                     transform.gameObject.GetComponent<CharacterController>().Move(direction.normalized / 50);
                     oldPos = hit.transform.position;
                 }
-
+                */
 
             }
             else
