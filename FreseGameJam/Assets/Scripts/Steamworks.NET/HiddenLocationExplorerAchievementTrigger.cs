@@ -37,6 +37,10 @@ public class HiddenLocationExplorerAchievementTrigger : MonoBehaviour
 
             // debug for testing:
             Debug.Log("A hidden location was found! Note: This location cannot be found again unless you reset stats!");
+
+            // update steam stats tracking:
+            FindAnyObjectByType<SteamStatsManager>().UpdateStat("stat_ANY_secretLocationsFound", 1);
+            Debug.Log("Added: " + 1 + " to secret locations found on steam.");
         }
     }
 }

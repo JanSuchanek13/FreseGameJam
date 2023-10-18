@@ -91,7 +91,12 @@ public class CrownCounter : MonoBehaviour
                 _lifetimeRegCrowns++;
                 PlayerPrefs.SetInt("RegularCrownsFoundOverLifetime" + 0, _lifetimeRegCrowns);
                 Debug.Log("test: you found " + _lifetimeRegCrowns + " reg-crowns in your lifetime.");
-            }else
+
+                // update steam stats tracking:
+                FindAnyObjectByType<SteamStatsManager>().UpdateStat("stat_REG_lifetimeCrowns", 1);
+                Debug.Log("Added: " + 1 + " REG crown to lifetime crowns found.");
+            }
+            else
             {
                 _crowns++;
                 // this allows to collect HardcoreCrowns in more than one level if needed:
@@ -109,6 +114,10 @@ public class CrownCounter : MonoBehaviour
                 _lifetimeHCCrowns++;
                 PlayerPrefs.SetInt("HardcoreCrownsFoundOverLifetime" + 0, _lifetimeHCCrowns);
                 Debug.Log("test: you found " + _lifetimeHCCrowns + " hc-crowns in your lifetime.");
+
+                // update steam stats tracking:
+                FindAnyObjectByType<SteamStatsManager>().UpdateStat("stat_HARDC_lifetimeCrowns", 1);
+                Debug.Log("Added: " + 1 + " HC crown to lifetime crowns found.");
             }
         }
     }

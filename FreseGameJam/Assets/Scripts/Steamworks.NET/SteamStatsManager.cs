@@ -50,7 +50,11 @@ public class SteamStatsManager : MonoBehaviour
     /// When called this function updates our tracked stats from anywhere in the game.
     /// Added logic to cache data if steam is not initialized.
     /// List of locations this is called:
-    /// 
+    /// --> OnTriggerEnter(Collider other) in the CrownCounter-script (reg lifetime crowns) (called whenever a crown is collected in runtime)
+    /// --> OnTriggerEnter(Collider other) in the CrownCounter-script (hc lifetime crowns) (called whenever a crown is collected in runtime)
+    /// --> SaveCraneTime() in the SteamAchievementsManager-script (lifetime glide time) (called whenever achievement-milestone is reached in runtime or application is closed)
+    /// --> OnTriggerEnter(Collider other) in the LevelScript-script (lieftime runs completed) (called whenever any run has reached the endzone)
+    /// --> OnTriggerEnter(Collider other) in the HiddenLocationExplorerAchievementTrigger-script (secret locations found) (called whenever a secret location is found in runtime)
     /// </summary>
     /// <param name="statName"></param>
     /// <param name="value"></param>
@@ -63,11 +67,11 @@ public class SteamStatsManager : MonoBehaviour
             if (_unsentUpdates.ContainsKey(statName))
             {
                 _unsentUpdates[statName] += value;
-            }
-            else
+            }else
             {
                 _unsentUpdates.Add(statName, value);
             }
+
             Debug.LogWarning($"Steam not initialized. Caching stat update for {statName}. Total cached updates: {_unsentUpdates.Count}");
             return;
         }

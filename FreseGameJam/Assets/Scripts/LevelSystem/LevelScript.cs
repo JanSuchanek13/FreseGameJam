@@ -100,6 +100,10 @@ public class LevelScript : MonoBehaviour
                 currentRuns += 1;
                 PlayerPrefs.SetInt("RunsCompleted" + 0, currentRuns);
 
+                // update steam stats tracking:
+                FindAnyObjectByType<SteamStatsManager>().UpdateStat("stat_ANY_lifetimeCompletedRuns", 1);
+                Debug.Log("Added: " + 1 + " to lifetime runs finished. This is not checking for hardcore or regular runs.");
+
                 if (!_usingHardcoreMode)
                 {
                     Debug.Log("normal finished");

@@ -502,6 +502,7 @@ public class SteamAchievementsManager : MonoBehaviour
         {
             _checkForAchievement27 = false;
             UnlockAchievement(27);
+            SaveCraneTime(); // this is to update glide time to steam stats
         }
 
         // achievement #28: Glide for 30 mins over any number of runs
@@ -511,6 +512,7 @@ public class SteamAchievementsManager : MonoBehaviour
         {
             _checkForAchievement28 = false;
             UnlockAchievement(28);
+            SaveCraneTime(); // this is to update glide time to steam stats
         }
 
         // achievement #29: Glide for 60 mins over any number of runs
@@ -520,11 +522,13 @@ public class SteamAchievementsManager : MonoBehaviour
         {
             _checkForAchievement29 = false;
             UnlockAchievement(29);
+            SaveCraneTime(); // this is to update glide time to steam stats
         }
 
         // achievement #30-34: Find the hidden locations around the world
         // explanation: Whenever you first find/enter a hidden regions trigger the tracking-Int 
-        // gets updated. The Explorer-status gets updated in accordance to how many locations the player has found
+        // gets updated. The Explorer-status gets updated in accordance to how many locations the player has found.
+        // To be found in the HiddenLocationExplorerAchievementTrigger of secret locations 
         if ((_checkForAchievement30 || _checkForAchievement31 || _checkForAchievement32 || _checkForAchievement33 || _checkForAchievement34) 
             && PlayerPrefs.GetInt("HiddenLocationsFound" + 0, 0) <= 1)
         {
