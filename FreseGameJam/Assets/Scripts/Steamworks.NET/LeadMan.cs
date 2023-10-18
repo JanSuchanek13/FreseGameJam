@@ -7,10 +7,14 @@ using TMPro;
 public class LeadMan : MonoBehaviour
 {
     private  SteamLeaderboard_t s_currentLeaderboard;
+    private SteamLeaderboard_t s_currentLeaderboardTime;
     private  bool s_initialized = false;
     private  CallResult<LeaderboardFindResult_t> m_findResult = new CallResult<LeaderboardFindResult_t>();
+    private  CallResult<LeaderboardFindResult_t> m_findResultTime = new CallResult<LeaderboardFindResult_t>();
     private  CallResult<LeaderboardScoreUploaded_t> m_uploadResult = new CallResult<LeaderboardScoreUploaded_t>();
+    private  CallResult<LeaderboardScoreUploaded_t> m_uploadResultTime = new CallResult<LeaderboardScoreUploaded_t>();
     private  CallResult<LeaderboardScoresDownloaded_t> m_downloadResult = new CallResult<LeaderboardScoresDownloaded_t>();
+    private  CallResult<LeaderboardScoresDownloaded_t> m_downloadResultTime = new CallResult<LeaderboardScoresDownloaded_t>();
 
     [SerializeField]
     List<TMP_Text> LeaderboardNames = new List<TMP_Text>();
@@ -38,8 +42,19 @@ public class LeadMan : MonoBehaviour
     }
     List<LeaderboardData> LeaderboardDataset;
 
-    public  void UpdateScore(int score)
+    public struct LeaderboardDataTime
     {
+        public string usernameTime;
+        public int rankTime;
+        public int scoreTime;
+    }
+    List<LeaderboardDataTime> LeaderboardDatasetTime;
+
+    private int currentCrownTime;
+
+    public  void UpdateScore(int score, int scoreTime)
+    {
+        currentCrownTime = scoreTime;
         if (!s_initialized)
         {
             Debug.LogError("Leaderboard not initialized");
@@ -52,10 +67,27 @@ public class LeadMan : MonoBehaviour
         }
     }
 
+    public void UpdateScoreTime()
+    {
+        if (!s_initialized)
+        {
+            Debug.LogError("Leaderboard not initialized");
+        }
+        else
+        {
+            //Change upload method to 
+            SteamAPICall_t hSteamAPICall = SteamUserStats.UploadLeaderboardScore(s_currentLeaderboardTime, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodForceUpdate, currentCrownTime, null, 0);
+            m_uploadResultTime.Set(hSteamAPICall, OnLeaderboardUploadResultTime);
+        }
+    }
+
     private void Awake()
     {
         SteamAPICall_t hSteamAPICall = SteamUserStats.FindLeaderboard("Crowns");
         m_findResult.Set(hSteamAPICall, OnLeaderboardFindResult);
+
+        SteamAPICall_t hSteamAPICallTime = SteamUserStats.FindLeaderboard("Crowns Time");
+        m_findResultTime.Set(hSteamAPICallTime, OnLeaderboardFindResultTime);
 
         CSteamID[] Users = { SteamUser.GetSteamID() }; // Local user steam id
         SteamAPICall_t handle = SteamUserStats.DownloadLeaderboardEntriesForUsers(s_currentLeaderboard, Users, Users.Length);
@@ -69,7 +101,23 @@ public class LeadMan : MonoBehaviour
         s_initialized = true;
     }
 
-     private void OnLeaderboardUploadResult(LeaderboardScoreUploaded_t pCallback, bool failure)
+    private void OnLeaderboardFindResultTime(LeaderboardFindResult_t pCallback, bool failure)
+    {
+        Debug.Log($"Steam Leaderboard Find: Did it fail? {failure}, Found: {pCallback.m_bLeaderboardFound}, leaderboardID: {pCallback.m_hSteamLeaderboard.m_SteamLeaderboard}");
+        s_currentLeaderboardTime = pCallback.m_hSteamLeaderboard;
+        s_initialized = true;
+    }
+
+    private void OnLeaderboardUploadResult(LeaderboardScoreUploaded_t pCallback, bool failure)
+    {
+        Debug.Log($"Steam Leaderboard Upload: Did it fail? {failure}, Score: {pCallback.m_nScore}, HasChanged: {pCallback.m_bScoreChanged}");
+        if(pCallback.m_bScoreChanged == 1)
+        {
+            UpdateScoreTime();
+        }
+    }
+
+    private void OnLeaderboardUploadResultTime(LeaderboardScoreUploaded_t pCallback, bool failure)
     {
         Debug.Log($"Steam Leaderboard Upload: Did it fail? {failure}, Score: {pCallback.m_nScore}, HasChanged: {pCallback.m_bScoreChanged}");
     }
@@ -95,6 +143,8 @@ public class LeadMan : MonoBehaviour
         }
         //Note that the LeaderboardDataset will not be updated immediatly (see callback below)
     }
+
+    
 
     private void OnLeaderboardDownloadResult(LeaderboardScoresDownloaded_t pCallback, bool failure)
     {

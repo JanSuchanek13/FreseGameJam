@@ -230,7 +230,10 @@ public class Highscore : MonoBehaviour
             PlayerPrefs.SetInt("HighscoreHardcoreCrowns_Deaths" + 0, PlayerPrefs.GetInt("HardcoreDeaths" + 0, 0));
 
             //Steam Leaderboard
-            _hardcoreCrowns_LeadManager.UpdateScore(PlayerPrefs.GetInt("HardcoreCrowns" + 0));
+            Debug.Log(PlayerPrefs.GetFloat("HighscoreHardcoreCrowns_Time" + 0));
+            float hardcoreCrownTimeMiliSec = PlayerPrefs.GetFloat("HighscoreHardcoreCrowns_Time" + 0) * 1000;
+            int hardcoreCrownTimeInt = (int)hardcoreCrownTimeMiliSec;
+            _hardcoreCrowns_LeadManager.UpdateScore(PlayerPrefs.GetInt("HardcoreCrowns" + 0), hardcoreCrownTimeInt);
 
             // GAMESCOM STUFF:
             //_newCrownsRecord = true;
