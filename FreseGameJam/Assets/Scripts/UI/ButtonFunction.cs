@@ -172,12 +172,15 @@ public class ButtonFunction : MonoBehaviour
 
     /// <summary>
     /// If player leaves the game application this should automatically call the pause function.
+    /// Note: This apparently does not work in the editor and needs to be tested in an actual Build.
     /// </summary>
     /// <param name="pause"></param>
     private void OnApplicationPause(bool hasFocus)
     {
-        Debug.Log("app pause called");
-        Pause();
+        if (!hasFocus)
+        {
+            Pause();
+        }
     }
 
     public void Pause()
