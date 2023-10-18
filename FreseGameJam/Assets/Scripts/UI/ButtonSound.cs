@@ -2,18 +2,17 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ButtonSound : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
+
+public class ButtonSound : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler, IPointerClickHandler
 {
     public GameObject hoverSoundObject;
     public GameObject selectSoundObject;
 
     private AudioSource audioSource;
     private bool isHovered = false;
-    private bool isSelected = false;
 
     private void Start()
     {
-        // Hier wird die AudioSource-Komponente des hoverSoundObject abgerufen
         audioSource = hoverSoundObject.GetComponent<AudioSource>();
     }
 
@@ -22,7 +21,6 @@ public class ButtonSound : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (!isHovered)
         {
             isHovered = true;
-            // Hier wird das Audiofeedback beim Hovern abgespielt
             PlaySound(hoverSoundObject);
         }
     }
@@ -34,17 +32,23 @@ public class ButtonSound : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnSelect(BaseEventData eventData)
     {
-        if (!isSelected)
+        if (IsControllerInput())
         {
-            isSelected = true;
-            // Hier wird das Audiofeedback bei der Auswahl abgespielt
-            PlaySound(selectSoundObject);
+            PlaySound(hoverSoundObject);
         }
     }
 
     public void OnDeselect(BaseEventData eventData)
     {
-        isSelected = false;
+        // Hier kannst du bei Bedarf Aktionen für die Deselektion hinzufügen
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (IsControllerInput())
+        {
+            PlaySound(selectSoundObject);
+        }
     }
 
     private void PlaySound(GameObject soundObject)
@@ -57,5 +61,19 @@ public class ButtonSound : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
                 soundSource.PlayOneShot(soundSource.clip);
             }
         }
+    }
+
+    private bool IsControllerInput()
+    {
+        string[] joystickNames = Input.GetJoystickNames();
+        foreach (string name in joystickNames)
+        {
+            if (!string.IsNullOrEmpty(name))
+            {
+                // Wenn ein Controller erkannt wird, gehe davon aus, dass Controller-Eingaben vorliegen
+                return true;
+            }
+        }
+        return true; // Passe dies entsprechend deiner Controller-Logik an
     }
 }
