@@ -113,7 +113,7 @@ public class SpeedRunLeadManager : MonoBehaviour
             LeaderboardDataset.Add(lD);
             Debug.Log($"User: {lD.username} - Score: {lD.score} - Rank: {lD.rank}");
             LeaderboardNames[i].text = lD.username;
-            int timer = lD.score;
+            int timer = lD.score / 100;
             int minutes = (int)timer / 60;
             int seconds = (int)timer - 60 * minutes;
             int milliseconds = (int)(1000 * (timer - minutes * 60 - seconds));
@@ -124,11 +124,11 @@ public class SpeedRunLeadManager : MonoBehaviour
             {
                 // Die Position des Spielers ist gegeben durch leaderboardEntry.m_nGlobalRank
                 int playerRank = leaderboardEntry.m_nGlobalRank;
-                int playerTime = leaderboardEntry.m_nScore;
+                int playerTime = leaderboardEntry.m_nScore / 1000;
                 int playertimer = playerTime;
-                int playerminutes = (int)playertimer / 60;
-                int playerseconds = (int)playertimer - 60 * playerminutes;
-                int playermilliseconds = (int)(1000 * (playertimer - playerminutes * 60 - playerseconds));
+                int playerminutes = (int)timer / 60000;
+                int playerseconds = (int)timer / 1000 % 60;
+                int playermilliseconds = (int)timer % 1000;
                 Debug.Log("Spieler ist auf Position " + playerRank + " im Leaderboard mit" + playerTime);
                 YourRank.text = playerRank.ToString();
                 YourTime.text = string.Format("{0:00}:{1:00}:{2:000}", playerminutes, playerseconds, playermilliseconds);
