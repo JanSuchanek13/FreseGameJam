@@ -23,7 +23,7 @@ public class WearACrown : MonoBehaviour
         if(PlayerPrefs.GetInt("ActiveCrown") != 0)
         {
             activatedCrowns = PlayerPrefs.GetInt("ActiveCrown");
-            //PutOnCrown(activatedCrowns);
+            PutOnCrown(activatedCrowns);
         }
     }
 

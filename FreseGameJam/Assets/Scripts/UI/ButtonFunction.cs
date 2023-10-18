@@ -18,6 +18,7 @@ public class ButtonFunction : MonoBehaviour
     [SerializeField] GameObject[] arrayOfAllOtherMenus;
     [SerializeField] GameObject settingsButton;
     [SerializeField] GameObject permissionButton;
+    [SerializeField] GameObject fastRetryButton;
     [Space(10)]
     [SerializeField] GameObject _retryHardcoreRun_UI;
 
@@ -107,10 +108,12 @@ public class ButtonFunction : MonoBehaviour
                     Mouse.current.WarpCursorPosition(warpPosition);
                     InputState.Change(Mouse.current.position, warpPosition);
                     _retryHardcoreRun_UI.SetActive(true);
+                    
                     //Time.timeScale = 0;
 
                     EventSystem.current.SetSelectedGameObject(null);
                     EventSystem.current.SetSelectedGameObject(settingsButton);
+                    EventSystem.current.SetSelectedGameObject(fastRetryButton);
 
                     // disable camera movement in pause UI
                     Camera.main.GetComponent<CinemachineBrain>().enabled = false;
