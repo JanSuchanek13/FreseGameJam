@@ -18,7 +18,7 @@ public class DelaySound : MonoBehaviour
     [Header("Do you want the player to look at this audiosource when it plays?")]
     // do you want the player to look at this audiosource when it plays?
     [SerializeField] bool _activateFocusPlayerViewOnObjectWhenSoundPlays = false;
-    [SerializeField] float _lookAtThisForThisLong = 4f;
+    [SerializeField] float _lookAtThisForThisLong = 4.0f;
     [SerializeField] GameObject _lookAtThisObjectAfterwards;
     [SerializeField] int _thisCutscene_Nr;
     [SerializeField] GameObject _pointToLookAt;
@@ -46,9 +46,12 @@ public class DelaySound : MonoBehaviour
 
         // when using a delay:
         // example: cutscene in beginning looking at boat.
-        if (!_playOnTrigger)
+        if (!_playOnTrigger && PlayerPrefs.GetInt("HardcoreMode", 0) == 0) // the asking for hardcore mode may be redundant, as this only gets called in regular.
         {
             Invoke("PlaySound", _audioDelayTime);
+
+            // deactivate player input. This is for the very first cutscene.
+            _playerCharacter.GetComponent<InputHandler>().enabled = false;
         }
 
         // when using a default focus point:
@@ -61,6 +64,12 @@ public class DelaySound : MonoBehaviour
 
     public void PlaySound()
     {
+        // reactivate player input, if it was off. This is for the very first cutscene.
+        if (_playerCharacter.GetComponent<InputHandler>().enabled == false)
+        {
+            _playerCharacter.GetComponent<InputHandler>().enabled = true;
+        }
+
         if (_activateFocusPlayerViewOnObjectWhenSoundPlays)
         {
             if(_lookAtThisObjectAfterwards != null && !_calledTheNextFocusPointOnce)

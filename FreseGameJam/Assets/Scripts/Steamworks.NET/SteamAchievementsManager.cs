@@ -597,8 +597,11 @@ public class SteamAchievementsManager : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.KeypadEnter)) // save example achievement on ENTER
         {
-            UnlockAchievement(0);
-            Debug.Log("you've unlocked the test achievement - dont forget to delete it again by hitting ESC!");
+            //UnlockAchievement(0);
+            //Debug.Log("you've unlocked the test achievement - dont forget to delete it again by hitting ESC!");
+
+            FindAnyObjectByType<SteamStatsManager>().UpdateStat("stat_REG_lifetimeCrowns", 25);
+            Debug.Log("I added 25 reg lifetime crowns");
         }
 
         if (Input.GetKeyDown(KeyCode.Delete)) // delete all stats & achievements on ESC
@@ -632,6 +635,11 @@ public class SteamAchievementsManager : MonoBehaviour
         PlayerPrefs.SetFloat("GlideTimeOverLifetime", totalTime);
         PlayerPrefs.Save(); // this ensures data is written immediately.
         Debug.Log("lifetime glide time: " + totalTime);
+
+        // update steam stats tracking:
+        float _refactoredGlideTime = _sessionCraneTimeActive / 60.0f;
+        FindAnyObjectByType<SteamStatsManager>().UpdateStat("stat_ANY_lifetimeGlideTime", _refactoredGlideTime);
+        Debug.Log("Added: " + _refactoredGlideTime + " mins to total glide time");
     }
     #endregion
 
