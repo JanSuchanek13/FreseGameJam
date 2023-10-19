@@ -598,7 +598,7 @@ public class SteamAchievementsManager : MonoBehaviour
 
         // store all stats AND achievements to steam
         //SteamUserStats.StoreStats();
-
+        /* // turnt off for version 1.0
         if (Input.GetKeyUp(KeyCode.KeypadEnter)) // save example achievement on ENTER
         {
             //UnlockAchievement(0);
@@ -612,7 +612,7 @@ public class SteamAchievementsManager : MonoBehaviour
         {
             ResetAllStats(true);
             Debug.Log("good job, you've deleted all achievements!");
-        }
+        }*/
     }
 
     #region Managing global glide time:
