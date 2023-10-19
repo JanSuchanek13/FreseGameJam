@@ -39,6 +39,7 @@ public class WearACrown : MonoBehaviour
         }
         Debug.Log(activatedCrowns);
         PlayerPrefs.SetInt("ActiveCrown", activatedCrowns);
+        PutOnCrown(activatedCrowns);
     }
     
 

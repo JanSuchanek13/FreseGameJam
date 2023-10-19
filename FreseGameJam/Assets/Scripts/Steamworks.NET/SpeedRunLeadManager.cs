@@ -54,7 +54,7 @@ public class SpeedRunLeadManager : MonoBehaviour
 
     private void Awake()
     {
-        SteamAPICall_t hSteamAPICall = SteamUserStats.FindLeaderboard("Ori Speedrun Best Time");
+        SteamAPICall_t hSteamAPICall = SteamUserStats.FindLeaderboard("Ori Speedrun Best Time1");
         m_findResult.Set(hSteamAPICall, OnLeaderboardFindResult);
 
         CSteamID[] Users = { SteamUser.GetSteamID() }; // Local user steam id
@@ -113,10 +113,10 @@ public class SpeedRunLeadManager : MonoBehaviour
             LeaderboardDataset.Add(lD);
             Debug.Log($"User: {lD.username} - Score: {lD.score} - Rank: {lD.rank}");
             LeaderboardNames[i].text = lD.username;
-            int timer = lD.score / 100;
-            int minutes = (int)timer / 60;
-            int seconds = (int)timer - 60 * minutes;
-            int milliseconds = (int)(1000 * (timer - minutes * 60 - seconds));
+            int timer = lD.score;
+            int minutes = (int)timer / 60000;
+            int seconds = (int)timer / 1000 % 60;
+            int milliseconds = (int)timer % 1000;
             LeaderboardTimes[i].text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
 
             // Überprüfen, ob die Steam-ID der Eintrag des lokalen Benutzers entspricht
