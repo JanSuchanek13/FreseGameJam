@@ -37,6 +37,9 @@ public class ChangeControlsSign : MonoBehaviour
         keyboardControls.SetActive(false);
         ps4Controls.SetActive(false);
         xboxControls.SetActive(false);
+        keyboardHCControls.SetActive(false);
+        ps4HCControls.SetActive(false);
+        xboxHCControls.SetActive(false);
         controlSettings = PlayerPrefs.GetInt("controlsSettings");
 
         if (PlayerPrefs.GetInt("HardcoreMode") != 0)
