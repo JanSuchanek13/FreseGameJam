@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ChangeControlsSign : MonoBehaviour
 {
@@ -42,7 +43,7 @@ public class ChangeControlsSign : MonoBehaviour
         xboxHCControls.SetActive(false);
         controlSettings = PlayerPrefs.GetInt("controlsSettings");
 
-        if (PlayerPrefs.GetInt("HardcoreMode") != 0)
+        if (PlayerPrefs.GetInt("HardcoreMode") != 0 && keyboardHCControls.GetComponent<Image>().sprite != null)
         {
             //Debug.Log("test");
             switch (controlSettings)
