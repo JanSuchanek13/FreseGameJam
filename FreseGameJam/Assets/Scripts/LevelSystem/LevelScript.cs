@@ -148,8 +148,8 @@ public class LevelScript : MonoBehaviour
                     // stop music & play success-music:
                     //_gameManager.GetComponent<BackgroundSoundPlayer>().PauseMusic(); // pausing will just lower volume
                     _gameManager.GetComponent<BackgroundSoundPlayer>().TurnOffMusic();
-                    //_victorySound_pt1.Play();
-                    _victorySound_pt2.Play();
+                    // _victorySound_pt1.Play();
+                   // _victorySound_pt2.Play();
 
                     //GameObject.Find("Hardcore_UI").SetActive(false); // turn off the Hardcore_UI
                     //_hardcoreUI.SetActive(false);
@@ -171,7 +171,9 @@ public class LevelScript : MonoBehaviour
         if (PlayerPrefs.GetInt("HardcoreMode", 0) != 0)
         {
             Debug.Log("stopped hardcore clock");
+
             _victorySound_pt1.Play();
+            _victorySound_pt2.Play();
             FindObjectOfType<HardcoreMode>().stopTheClock = true;
         }else
         {

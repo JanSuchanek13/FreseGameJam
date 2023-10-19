@@ -89,7 +89,7 @@ manx27s-cry-122258 from pixabay.com
 https://pixabay.com/de/sound-effects/yay-6120/
 https://pixabay.com/de/sound-effects/yeow-103553/
 https://samplefocus.com/samples/basic-loud-aggressive-scream
-
+https://pixabay.com/de/sound-effects/victory-rock-guitar-tapping-104575/
 
 not public domain, needs attribution:
 
