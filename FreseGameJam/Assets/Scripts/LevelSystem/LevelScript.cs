@@ -14,8 +14,8 @@ public class LevelScript : MonoBehaviour
     [Header("Level Transition Settings:")]
     [SerializeField] Highscore _highscore;
     [SerializeField] float _timeBeforeLoadingNewLevel = 5.0f;
-    [SerializeField] AudioSource _choirSound;
-    [SerializeField] AudioSource _victorySound;
+    [SerializeField] AudioSource _victorySound_pt1;
+    [SerializeField] AudioSource _victorySound_pt2;
     //[SerializeField] GameObject _regularUI;
     //[SerializeField] GameObject _hardcoreUI;
 
@@ -122,8 +122,8 @@ public class LevelScript : MonoBehaviour
                     // changed these "finds" to serialized fields to manually controll end-sounds:
                     //GameObject.Find("AudioSource_Victory_1").GetComponent<AudioSource>().Play();
                     //GameObject.Find("AudioSource_ChoireHymn_1").GetComponent<AudioSource>().Play();
-                    _choirSound.Play();
-                    _victorySound.Play();
+                    _victorySound_pt1.Play();
+                    _victorySound_pt2.Play();
 
                     //GameObject.Find("UI_Crown_Counter").SetActive(false); // turn off the regular, ingame crown-counter and icon
                     GameObject.Find("Ingame_UI").SetActive(false); // turn off the regular, ingame crown-counter and icon
@@ -148,8 +148,8 @@ public class LevelScript : MonoBehaviour
                     // stop music & play success-music:
                     //_gameManager.GetComponent<BackgroundSoundPlayer>().PauseMusic(); // pausing will just lower volume
                     _gameManager.GetComponent<BackgroundSoundPlayer>().TurnOffMusic();
-                    _choirSound.Play();
-                    _victorySound.Play();
+                    //_victorySound_pt1.Play();
+                    _victorySound_pt2.Play();
 
                     //GameObject.Find("Hardcore_UI").SetActive(false); // turn off the Hardcore_UI
                     //_hardcoreUI.SetActive(false);
@@ -171,6 +171,7 @@ public class LevelScript : MonoBehaviour
         if (PlayerPrefs.GetInt("HardcoreMode", 0) != 0)
         {
             Debug.Log("stopped hardcore clock");
+            _victorySound_pt1.Play();
             FindObjectOfType<HardcoreMode>().stopTheClock = true;
         }else
         {
