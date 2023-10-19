@@ -17,7 +17,7 @@ public class ShowHiddenObj : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.H))
         {
             Debug.Log("Hidden Obj now shown");
-            hiddenObj.SetActive(true);
+            //hiddenObj.SetActive(true);
         }
     }
 }

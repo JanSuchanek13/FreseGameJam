@@ -7,6 +7,7 @@ using System;
 using Cinemachine;
 using UnityEngine.Serialization;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class SettingsMenu : MonoBehaviour
 {
@@ -58,6 +59,7 @@ public class SettingsMenu : MonoBehaviour
         if (PlayerPrefs.HasKey("controlsSettings") && controlsDropdown!=null)
         {
             controlsDropdown.value = PlayerPrefs.GetInt("controlsSettings");
+            controlsDropdown.gameObject.transform.GetChild(0).GetComponent<TMP_Text>().text = controlsDropdown.options[controlsDropdown.value].text;
         }
         if (PlayerPrefs.HasKey("glidingSettings") && glidingToggle!=null)
         {
