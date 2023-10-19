@@ -199,7 +199,7 @@ public class PPCamTrigger : MonoBehaviour
             lightFlashPP.GetComponent<Volume>().weight -= Time.deltaTime * lightFlashTransitionSpeed;
         }
         lightFlashPP.GetComponent<Volume>().enabled = false;
-        lightFlashPP.GetComponent<Volume>().weight = 0.7f;
+        lightFlashPP.GetComponent<Volume>().weight = 0.3f;
         inLightFlash = false;
     }
 
