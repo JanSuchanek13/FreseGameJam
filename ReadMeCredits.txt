@@ -86,6 +86,9 @@ Plop from pixabay.com
 DJ Sound Effect by beetpro from Pixabay.com
 DJ Stop Sound Effect - No Copyright from YouTube Sound Effects
 manx27s-cry-122258 from pixabay.com
+https://pixabay.com/de/sound-effects/yay-6120/
+https://pixabay.com/de/sound-effects/yeow-103553/
+https://samplefocus.com/samples/basic-loud-aggressive-scream
 
 
 not public domain, needs attribution:
