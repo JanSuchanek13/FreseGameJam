@@ -259,10 +259,14 @@ public class Highscore : MonoBehaviour
             PlayerPrefs.SetInt("HighscoreHardcoreTime_Deaths" + 0, PlayerPrefs.GetInt("HardcoreDeaths" + 0, 0));
 
             //Steam Leaderboard
-            Debug.Log(PlayerPrefs.GetFloat("HardcoreTime" + 0));
-            float hardcoreTimeMiliSec = PlayerPrefs.GetFloat("HardcoreTime" + 0) * 1000;
-            int hardcoreTimeInt = (int)hardcoreTimeMiliSec;
-            _hardcoreTime_LeadManager.UpdateScore(hardcoreTimeInt);
+            if(PlayerPrefs.GetFloat("HardcoreTime" + 0) != 0)
+            {
+                Debug.Log(PlayerPrefs.GetFloat("HardcoreTime" + 0));
+                float hardcoreTimeMiliSec = PlayerPrefs.GetFloat("HardcoreTime" + 0) * 1000;
+                int hardcoreTimeInt = (int)hardcoreTimeMiliSec;
+                _hardcoreTime_LeadManager.UpdateScore(hardcoreTimeInt);
+            }
+            
 
             // GAMESCOM STUFF:
             //_newSpeedRecord = true;
