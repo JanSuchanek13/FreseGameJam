@@ -13,6 +13,7 @@ public class LocalizeDropdown : MonoBehaviour
     [SerializeField] private List<LocalizedString> dropdownOptions;
     [Tooltip("Add the 'Item Label' from the Template inside the dropdown here:")]
     [SerializeField] TextMeshProUGUI _TemplateTMP; // used to change fonts
+    [SerializeField] TextMeshProUGUI _dropDownLabelTMP; // used to change font of label
 
     private TMP_Dropdown tmpDropdown;
     Locale currentLocale;
@@ -52,6 +53,7 @@ public class LocalizeDropdown : MonoBehaviour
         // change fonts of option items:
         string _currentLocaleIdentifier = LocalizationSettings.SelectedLocale.Identifier.Code;
         _TemplateTMP.font = FindAnyObjectByType<LocalizeFonts>().GetFontForLocale(_currentLocaleIdentifier);
+        _dropDownLabelTMP.font = FindAnyObjectByType<LocalizeFonts>().GetFontForLocale(_currentLocaleIdentifier);
     }
 
     private void Update()
