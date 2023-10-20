@@ -24,7 +24,7 @@ public class AttachToLavaTile : MonoBehaviour
             {
                 offset.x = transform.position.x - hit.transform.position.x;
                 offset.y = transform.position.z - hit.transform.position.z;
-                Vector3 direction = hit.transform.position - oldPos;
+                Vector3 direction = (hit.transform.position - oldPos) * Time.deltaTime;
                 transform.gameObject.GetComponent<CharacterController>().Move(direction.normalized / 20);
                 oldPos = hit.transform.position;
 
