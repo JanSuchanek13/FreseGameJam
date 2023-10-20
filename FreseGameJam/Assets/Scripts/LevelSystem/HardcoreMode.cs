@@ -7,8 +7,10 @@ using TMPro;
 
 public class HardcoreMode : MonoBehaviour
 {
-    [Header("Hardcore Mode settings:")]// cant this be turnt off?
-    public bool useHardcoreMode = false;// cant this be turnt off?
+    [Header("Hardcore Mode settings:")] // cant this be turnt off?
+    public bool useHardcoreMode = false; // cant this be turnt off?
+    //public bool hardcoreRunStarted = false;
+
     [Tooltip("The display will always show 3,2,1 --> but the time this takes can be adjusted here.")]
     [SerializeField] float _countdownTimeInSeconds = 3.0f;
     [SerializeField] GameObject _hardcoreUI;
@@ -45,7 +47,7 @@ public class HardcoreMode : MonoBehaviour
     int _minutes;
     int _seconds;
     int _milliseconds;
-    bool _runStarted = false;
+    public bool hardcoreRunStarted = false;
 
     public bool stopTheClock = false; // this gets updated by the Levelscript when the friend is reached!
     public bool runFinished = false; // this gets updated by the LevelScript when the bottom-trigger is reached falling!
@@ -105,7 +107,7 @@ public class HardcoreMode : MonoBehaviour
     void BeginnRun()
     {
         FindObjectOfType<BackgroundSoundPlayer>().StartHardcoreMusic(); //here the interrupt starts at "Go" so hardcore music doesnt start until counter is at 1 or 2 secs.
-        _runStarted = true;
+        hardcoreRunStarted = true;
         FindObjectOfType<InputHandler>().enabled = true;
     }
 
@@ -155,7 +157,7 @@ public class HardcoreMode : MonoBehaviour
 
     private void Update()
     {
-        if (_runStarted && !runFinished)
+        if (hardcoreRunStarted && !runFinished)
         {
             if (!stopTheClock)
             {
@@ -176,7 +178,7 @@ public class HardcoreMode : MonoBehaviour
             _milisecondTimer_txt.text = string.Format("{0:000}", _milliseconds);
 
         }
-        else if(_runStarted && runFinished) // = no longer update time
+        else if(hardcoreRunStarted && runFinished) // = no longer update time
         {
             _hardcoreUI.SetActive(false);
         }

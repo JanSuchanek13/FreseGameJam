@@ -215,8 +215,11 @@ public class ButtonFunction : MonoBehaviour
                 Camera.main.GetComponent<CinemachineBrain>().enabled = false;
             }else
             {
-                // activate Player Input
-                inputHandler.enabled = true;
+                // enable player input if its a regular run, or the hardcoreRun has actually begun!
+                if (FindAnyObjectByType<HardcoreMode>().hardcoreRunStarted || PlayerPrefs.GetInt("HardcoreMode", 0) == 0)
+                {
+                    inputHandler.enabled = true;
+                }
 
                 // increase volume or unpause music:
                 GameObject.Find("GameManager").GetComponent<BackgroundSoundPlayer>().UnpauseMusic();
