@@ -122,8 +122,11 @@ public class LevelScript : MonoBehaviour
                     // changed these "finds" to serialized fields to manually controll end-sounds:
                     //GameObject.Find("AudioSource_Victory_1").GetComponent<AudioSource>().Play();
                     //GameObject.Find("AudioSource_ChoireHymn_1").GetComponent<AudioSource>().Play();
-                    _victorySound_pt1.Play();
-                    _victorySound_pt2.Play();
+                    if(_victorySound_pt1 != null && _victorySound_pt2 != null)
+                    {
+                        _victorySound_pt1.Play();
+                        _victorySound_pt2.Play();
+                    }
 
                     //GameObject.Find("UI_Crown_Counter").SetActive(false); // turn off the regular, ingame crown-counter and icon
                     GameObject.Find("Ingame_UI").SetActive(false); // turn off the regular, ingame crown-counter and icon
