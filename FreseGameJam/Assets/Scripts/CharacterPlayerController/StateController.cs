@@ -404,7 +404,7 @@ public class StateController : MonoBehaviour
                         break;
                 }
 
-
+                /*
                 //chaet for switching
                 i = (int) playerInput.CharacterControls.Cheating.ReadValue<float>();
                 switch (i)//change Movement state
@@ -492,6 +492,7 @@ public class StateController : MonoBehaviour
                     default:
                         break;
                 }
+                */
             }
                     
                 
