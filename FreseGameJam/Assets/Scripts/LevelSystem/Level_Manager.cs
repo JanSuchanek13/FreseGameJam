@@ -38,6 +38,14 @@ public class Level_Manager : MonoBehaviour
 
     void Start()
     {
+        Debug.Log(PlayerPrefs.GetInt("FirstInstall"));
+        if(PlayerPrefs.GetInt("FirstInstall") == 0)
+        {
+            PlayerPrefs.SetInt("FirstInstall", 1);
+            ResetAllStats();
+            
+        }
+        
         // currently redundant - used to unlock future levels:
         levelIsUnlocked = PlayerPrefs.GetInt("levelIsUnlocked", 1);
         

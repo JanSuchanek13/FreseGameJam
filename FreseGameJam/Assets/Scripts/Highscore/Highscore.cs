@@ -222,54 +222,59 @@ public class Highscore : MonoBehaviour
             PlayerPrefs.SetInt("HCdeaths" + 0, PlayerPrefs.GetInt("deaths" + 0));
         }
 
-        // update highscore for hardcore crowns;
-        if (PlayerPrefs.GetInt("HardcoreCrowns" + 0) > PlayerPrefs.GetInt("HighscoreHardcoreCrowns_Crowns" + 0))
+        if (PlayerPrefs.GetInt("HardcoreMode", 0) != 0)
         {
-            PlayerPrefs.SetFloat("HighscoreHardcoreCrowns_Time" + 0, PlayerPrefs.GetFloat("HardcoreTime" + 0, 0.0f));
-            PlayerPrefs.SetInt("HighscoreHardcoreCrowns_Crowns" + 0, PlayerPrefs.GetInt("HardcoreCrowns" + 0, 0));
-            PlayerPrefs.SetInt("HighscoreHardcoreCrowns_Deaths" + 0, PlayerPrefs.GetInt("HardcoreDeaths" + 0, 0));
 
-            //Steam Leaderboard
-            Debug.Log(PlayerPrefs.GetFloat("HighscoreHardcoreCrowns_Time" + 0));
-            float hardcoreCrownTimeMiliSec = PlayerPrefs.GetFloat("HighscoreHardcoreCrowns_Time" + 0) * 1000;
-            int hardcoreCrownTimeInt = (int)hardcoreCrownTimeMiliSec;
-            _hardcoreCrowns_LeadManager.UpdateScore(PlayerPrefs.GetInt("HardcoreCrowns" + 0), hardcoreCrownTimeInt);
 
-            // GAMESCOM STUFF:
-            //_newCrownsRecord = true;
-        }
-        else if (PlayerPrefs.GetInt("HardcoreCrowns" + 0) == PlayerPrefs.GetInt("HighscoreHardcoreCrowns_Crowns" + 0) && PlayerPrefs.GetFloat("HardcoreTime" + 0) < PlayerPrefs.GetFloat("HighscoreHardcoreCrowns_Time" + 0))
-        {
-            PlayerPrefs.SetFloat("HighscoreHardcoreCrowns_Time" + 0, PlayerPrefs.GetFloat("HardcoreTime" + 0, 0.0f));
-            PlayerPrefs.SetInt("HighscoreHardcoreCrowns_Crowns" + 0, PlayerPrefs.GetInt("HardcoreCrowns" + 0, 0));
-            PlayerPrefs.SetInt("HighscoreHardcoreCrowns_Deaths" + 0, PlayerPrefs.GetInt("HardcoreDeaths" + 0, 0));
-
-            //Steam Leaderboard
-            Debug.Log(PlayerPrefs.GetFloat("HighscoreHardcoreCrowns_Time" + 0));
-            float hardcoreCrownTimeMiliSec = PlayerPrefs.GetFloat("HighscoreHardcoreCrowns_Time" + 0) * 1000;
-            int hardcoreCrownTimeInt = (int)hardcoreCrownTimeMiliSec;
-            _hardcoreCrowns_LeadManager.UpdateScore(PlayerPrefs.GetInt("HardcoreCrowns" + 0), hardcoreCrownTimeInt);
-        }
-
-        // update highscore for hardcore time:
-        if (PlayerPrefs.GetFloat("HardcoreTime" + 0) < PlayerPrefs.GetFloat("HighscoreHardcoreTime_Time" + 0) || PlayerPrefs.GetFloat("HighscoreHardcoreTime_Time" + 0) == 0)
-        {
-            PlayerPrefs.SetFloat("HighscoreHardcoreTime_Time" + 0, PlayerPrefs.GetFloat("HardcoreTime" + 0, 0.0f));
-            PlayerPrefs.SetInt("HighscoreHardcoreTime_Crowns" + 0, PlayerPrefs.GetInt("HardcoreCrowns" + 0, 0));
-            PlayerPrefs.SetInt("HighscoreHardcoreTime_Deaths" + 0, PlayerPrefs.GetInt("HardcoreDeaths" + 0, 0));
-
-            //Steam Leaderboard
-            if(PlayerPrefs.GetFloat("HardcoreTime" + 0) != 0)
+            // update highscore for hardcore crowns;
+            if (PlayerPrefs.GetInt("HardcoreCrowns" + 0) > PlayerPrefs.GetInt("HighscoreHardcoreCrowns_Crowns" + 0))
             {
-                Debug.Log(PlayerPrefs.GetFloat("HardcoreTime" + 0));
-                float hardcoreTimeMiliSec = PlayerPrefs.GetFloat("HardcoreTime" + 0) * 1000;
-                int hardcoreTimeInt = (int)hardcoreTimeMiliSec;
-                _hardcoreTime_LeadManager.UpdateScore(hardcoreTimeInt);
-            }
-            
+                PlayerPrefs.SetFloat("HighscoreHardcoreCrowns_Time" + 0, PlayerPrefs.GetFloat("HardcoreTime" + 0, 0.0f));
+                PlayerPrefs.SetInt("HighscoreHardcoreCrowns_Crowns" + 0, PlayerPrefs.GetInt("HardcoreCrowns" + 0, 0));
+                PlayerPrefs.SetInt("HighscoreHardcoreCrowns_Deaths" + 0, PlayerPrefs.GetInt("HardcoreDeaths" + 0, 0));
 
-            // GAMESCOM STUFF:
-            //_newSpeedRecord = true;
+                //Steam Leaderboard
+                Debug.Log(PlayerPrefs.GetFloat("HighscoreHardcoreCrowns_Time" + 0));
+                float hardcoreCrownTimeMiliSec = PlayerPrefs.GetFloat("HighscoreHardcoreCrowns_Time" + 0) * 1000;
+                int hardcoreCrownTimeInt = (int)hardcoreCrownTimeMiliSec;
+                _hardcoreCrowns_LeadManager.UpdateScore(PlayerPrefs.GetInt("HardcoreCrowns" + 0), hardcoreCrownTimeInt);
+
+                // GAMESCOM STUFF:
+                //_newCrownsRecord = true;
+            }
+            else if (PlayerPrefs.GetInt("HardcoreCrowns" + 0) == PlayerPrefs.GetInt("HighscoreHardcoreCrowns_Crowns" + 0) && PlayerPrefs.GetFloat("HardcoreTime" + 0) < PlayerPrefs.GetFloat("HighscoreHardcoreCrowns_Time" + 0))
+            {
+                PlayerPrefs.SetFloat("HighscoreHardcoreCrowns_Time" + 0, PlayerPrefs.GetFloat("HardcoreTime" + 0, 0.0f));
+                PlayerPrefs.SetInt("HighscoreHardcoreCrowns_Crowns" + 0, PlayerPrefs.GetInt("HardcoreCrowns" + 0, 0));
+                PlayerPrefs.SetInt("HighscoreHardcoreCrowns_Deaths" + 0, PlayerPrefs.GetInt("HardcoreDeaths" + 0, 0));
+
+                //Steam Leaderboard
+                Debug.Log(PlayerPrefs.GetFloat("HighscoreHardcoreCrowns_Time" + 0));
+                float hardcoreCrownTimeMiliSec = PlayerPrefs.GetFloat("HighscoreHardcoreCrowns_Time" + 0) * 1000;
+                int hardcoreCrownTimeInt = (int)hardcoreCrownTimeMiliSec;
+                _hardcoreCrowns_LeadManager.UpdateScore(PlayerPrefs.GetInt("HardcoreCrowns" + 0), hardcoreCrownTimeInt);
+            }
+
+            // update highscore for hardcore time:
+            if (PlayerPrefs.GetFloat("HardcoreTime" + 0) < PlayerPrefs.GetFloat("HighscoreHardcoreTime_Time" + 0) || PlayerPrefs.GetFloat("HighscoreHardcoreTime_Time" + 0) == 0)
+            {
+                PlayerPrefs.SetFloat("HighscoreHardcoreTime_Time" + 0, PlayerPrefs.GetFloat("HardcoreTime" + 0, 0.0f));
+                PlayerPrefs.SetInt("HighscoreHardcoreTime_Crowns" + 0, PlayerPrefs.GetInt("HardcoreCrowns" + 0, 0));
+                PlayerPrefs.SetInt("HighscoreHardcoreTime_Deaths" + 0, PlayerPrefs.GetInt("HardcoreDeaths" + 0, 0));
+
+                //Steam Leaderboard
+                if (PlayerPrefs.GetFloat("HardcoreTime" + 0) != 0)
+                {
+                    Debug.Log(PlayerPrefs.GetFloat("HardcoreTime" + 0));
+                    float hardcoreTimeMiliSec = PlayerPrefs.GetFloat("HardcoreTime" + 0) * 1000;
+                    int hardcoreTimeInt = (int)hardcoreTimeMiliSec;
+                    _hardcoreTime_LeadManager.UpdateScore(hardcoreTimeInt);
+                }
+
+
+                // GAMESCOM STUFF:
+                //_newSpeedRecord = true;
+            }
         }
 
         /*
