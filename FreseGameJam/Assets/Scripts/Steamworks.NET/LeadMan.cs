@@ -107,10 +107,10 @@ public class LeadMan : MonoBehaviour
 
     private void Awake()
     {
-        SteamAPICall_t hSteamAPICall = SteamUserStats.FindLeaderboard("Crowns1");
+        SteamAPICall_t hSteamAPICall = SteamUserStats.FindLeaderboard("Crowns2");
         m_findResult.Set(hSteamAPICall, OnLeaderboardFindResult);
 
-        SteamAPICall_t hSteamAPICallTime = SteamUserStats.FindLeaderboard("Crowns Time1");
+        SteamAPICall_t hSteamAPICallTime = SteamUserStats.FindLeaderboard("Crowns Time2");
         m_findResultTime.Set(hSteamAPICallTime, OnLeaderboardFindResultTime);
 
         CSteamID[] Users = { SteamUser.GetSteamID() }; // Local user steam id

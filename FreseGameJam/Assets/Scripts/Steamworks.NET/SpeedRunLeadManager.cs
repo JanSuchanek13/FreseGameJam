@@ -54,7 +54,7 @@ public class SpeedRunLeadManager : MonoBehaviour
 
     private void Awake()
     {
-        SteamAPICall_t hSteamAPICall = SteamUserStats.FindLeaderboard("Ori Speedrun Best Time1");
+        SteamAPICall_t hSteamAPICall = SteamUserStats.FindLeaderboard("Ori Speedrun Best Time2");
         m_findResult.Set(hSteamAPICall, OnLeaderboardFindResult);
 
         CSteamID[] Users = { SteamUser.GetSteamID() }; // Local user steam id
