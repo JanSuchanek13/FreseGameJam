@@ -478,7 +478,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 Rigidbody rig = j.GetComponent<Rigidbody>();
                 if (rig != null && rig.gameObject != this.gameObject)
                 {
-                    rig.AddExplosionForce(0.5f, transform.position, 0.7f, 1f, ForceMode.Force);
+                    rig.AddExplosionForce(0.5f, transform.position, 0.5f, 1f, ForceMode.Force);
                 }
             }
 
