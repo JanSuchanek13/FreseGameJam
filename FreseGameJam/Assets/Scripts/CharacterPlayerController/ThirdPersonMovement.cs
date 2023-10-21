@@ -320,6 +320,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if (isMovingToTarget) 
         {
             MoveCharacterToTarget();
+            Debug.Log("MOVE");
             return; // To prevent other updates.
         }
 
@@ -714,6 +715,14 @@ public class ThirdPersonMovement : MonoBehaviour
             controller.Move(velocity * Time.deltaTime);
         }
 
+        // part of Felix new logic to force-move player to target pos (see region at class end)
+        /*if (isMovingToTarget)
+        {
+            MoveCharacterToTarget();
+            Debug.Log("MOVE");
+            return; // To prevent other updates.
+        }*/
+
     }
 
     private void AfterJumpZenith()
@@ -769,8 +778,6 @@ public class ThirdPersonMovement : MonoBehaviour
         isCoyoteGrounded = Physics.SphereCast(groundCheck.position, groundDistance * 0.7f, -groundCheck.up, out hit, 0.2f, groundMask, QueryTriggerInteraction.Ignore);
         //vorher Physics.CheckSphere(groundCheck.position, groundDistance * 0.5f, groundMask, QueryTriggerInteraction.Ignore);
     }
-
-    // Felix Test:
 
     /// <summary>
     /// execute Dash of Capricorn
@@ -886,16 +893,30 @@ public class ThirdPersonMovement : MonoBehaviour
     public void MoveToTarget(Vector3 targetPos)
     {
         // disable player input:
-        //Destroy(GetComponent<PlayerInput>());
-        //playerInput.Disable();
         input.enabled = false;
 
+        // give a speed, otherwise it will more often than not revert to zero:
+        speed = 4;
+
+        // handling this mess of script to actually stop every other animation and allow to move forward... :D so angry
+        falling = false;
+        forcedFalling = false;
+        movingDownwards = false;
+        jumping = false;
+        isCoyoteGrounded = true;
+        isGrounded = true;
+
+        // this will enable the update to keep sending player towards his friend at max speed!
         isMovingToTarget = true;
         targetPosition = targetPos;
         transform.LookAt(targetPos);
     }
     void MoveCharacterToTarget()
     {
+        // pull player to the ground:
+        velocity.y = -4f;
+
+        // have player face the direction of movement:
         Vector3 directionToTarget = (targetPosition - transform.position).normalized;
 
         // move the player towards the target:
@@ -905,13 +926,8 @@ public class ThirdPersonMovement : MonoBehaviour
         if (Vector3.Distance(transform.position, targetPosition) < 1.45f) // The value 0.5f can be adjusted as per requirement
         {
             isMovingToTarget = false;
-            // Disable player input:
-            //playerInput.Disable();
-            //Debug.Log("disabled!");
-            // Enable player input:
-            //playerInput.Enable();
 
-            // start waving and cheering
+            // start waving and cheering is called in the RegularGameEnd-script
         }
     }
     #endregion

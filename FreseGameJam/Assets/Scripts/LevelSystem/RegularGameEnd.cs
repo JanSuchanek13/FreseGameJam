@@ -7,6 +7,8 @@ public class RegularGameEnd : MonoBehaviour
 {
     [Header("Regular Game End Settings:")]
     [SerializeField] Transform _targetTransform;
+    [SerializeField] Transform _pointToWaveAt;
+
     [Tooltip("This sound is played when the player arrives at the endgame-trigger and runs towards his friend")]
     [SerializeField] AudioSource _victorySound_1;
     [Tooltip("This sound is played when the player arrives at their friend after the forced-run")]
@@ -26,19 +28,21 @@ public class RegularGameEnd : MonoBehaviour
 
             // stopping the clock when end is reached, not need to fall to the trigger at the bottom!
             FindAnyObjectByType<LevelScript>().StopTheClock();
+            Debug.Log("1");
 
             // force the player to run towards friend:
             FindAnyObjectByType<ThirdPersonMovement>().MoveToTarget(_targetTransform.position);
-
+            Debug.Log("2");
             // start waving when reaching the friend:
             StartCoroutine("WaitUntilAtFriend");
             _player = other.gameObject;
-
+            Debug.Log("3");
             // play sound or music #1 for finishing the game upon arriving at target trigger:
-            if(_victorySound_1 != null)
+            if (_victorySound_1 != null)
             {
                 _victorySound_1.Play();
             }
+            Debug.Log("4");
         }
     }
 
@@ -53,6 +57,7 @@ public class RegularGameEnd : MonoBehaviour
 
         if (Vector3.Distance(_player.transform.position, _targetTransform.position) < _toleratedDistanceToStartWaving)
         {
+            _player.transform.LookAt(_pointToWaveAt);
             _player.transform.Find("GFX:/PaperMan_Form").GetComponent<SimpleAnimationController>().StartWaving();
 
             // play sound or music #2 after having run to the friend and starting to wave:
