@@ -399,7 +399,6 @@ public class SteamAchievementsManager : MonoBehaviour
         if (_checkForAchievement15 && _humanForm.activeInHierarchy && _goatForm.activeInHierarchy)
         {
             _checkForAchievement15 = false;
-            FindAnyObjectByType<WearACrown>().UnlockCharacterCrown(010);
             UnlockAchievement(15);
         }
 
@@ -417,6 +416,7 @@ public class SteamAchievementsManager : MonoBehaviour
         if (_checkForAchievement17 && PlayerPrefs.GetInt("WasFastestHardcoreRunner" + 0, 0) == 1)
         {
             _checkForAchievement17 = false;
+            FindAnyObjectByType<WearACrown>().UnlockCharacterCrown(010);
             UnlockAchievement(17);
         }
 
