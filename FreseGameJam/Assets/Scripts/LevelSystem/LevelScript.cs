@@ -115,7 +115,7 @@ public class LevelScript : MonoBehaviour
                         Invoke("DisplayText", 3.5f);
                     }
                     // stop music & play success-music:
-                    _gameManager.GetComponent<BackgroundSoundPlayer>().PauseMusic(); // lower volume or pause music
+                    //_gameManager.GetComponent<BackgroundSoundPlayer>().PauseMusic(); // lower volume or pause music
                                                                                      //_gameManager.GetComponent<BackgroundSoundPlayer>().TurnOffMusic(); // stop music
 
 
@@ -150,7 +150,7 @@ public class LevelScript : MonoBehaviour
 
                     // stop music & play success-music:
                     //_gameManager.GetComponent<BackgroundSoundPlayer>().PauseMusic(); // pausing will just lower volume
-                    _gameManager.GetComponent<BackgroundSoundPlayer>().TurnOffMusic();
+                    //_gameManager.GetComponent<BackgroundSoundPlayer>().TurnOffMusic();
                     // _victorySound_pt1.Play();
                    // _victorySound_pt2.Play();
 
@@ -171,9 +171,14 @@ public class LevelScript : MonoBehaviour
 
     public void StopTheClock()
     {
+        // pause (lower volume) if endgame trigger is hit to put focus on victory sounds
+        _gameManager.GetComponent<BackgroundSoundPlayer>().PauseMusic();
+
         if (PlayerPrefs.GetInt("HardcoreMode", 0) != 0)
         {
             Debug.Log("stopped hardcore clock");
+
+            //_gameManager.GetComponent<BackgroundSoundPlayer>().PauseMusic(); // pausing will just lower volume
 
             _victorySound_pt1.Play();
             _victorySound_pt2.Play();

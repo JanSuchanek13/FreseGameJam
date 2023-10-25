@@ -36,6 +36,7 @@ public class BackgroundSoundPlayer : MonoBehaviour
         if (_playMusicOnLoad)
         {
             Invoke("PlayTrack", .1f);
+            Debug.Log("play music was called");
         }
     }
 

@@ -20,6 +20,10 @@ public class MenuScript : MonoBehaviour
         {
             PlayerPrefs.SetInt("GameLaunched", 1);
             CallEpilepsyWarning();
+        }else
+        {
+            // start background music after closing warning:
+            FindAnyObjectByType<BackgroundSoundPlayer>().PlayTrack();
         }
     }
 
@@ -33,7 +37,7 @@ public class MenuScript : MonoBehaviour
 
     /// <summary>
     /// This gets called by the cofirm button of the initial language selection UI. This way
-    /// the warning will be localized on for the player.
+    /// the warning will be localized for the player.
     /// </summary>
     public void CallEpilepsyWarning()
     {
