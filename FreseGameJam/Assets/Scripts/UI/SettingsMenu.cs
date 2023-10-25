@@ -18,6 +18,7 @@ public class SettingsMenu : MonoBehaviour
     public Slider mouseSensitivitySlider;
     public Slider SoundSlider;
     public Slider MusicSlider;
+    public GameObject MusikParent;
     public TMPro.TMP_Dropdown controlsDropdown;
     public Toggle glidingToggle;
     public Toggle vibrationToggle;
@@ -47,12 +48,20 @@ public class SettingsMenu : MonoBehaviour
         if (PlayerPrefs.HasKey("volumeSettings"))
         {
             SoundSlider.value = PlayerPrefs.GetFloat("volumeSettings");
+            if(SoundSlider.value == SoundSlider.minValue)
+            {
+                AudioListener.volume = 0;
+            }
             //Debug.Log("Loaded a Sound Value of:" + SoundSlider.value);
             audioMixer.SetFloat("volume", SoundSlider.value);
         }
         if (PlayerPrefs.HasKey("musicSettings"))
         {
             MusicSlider.value = PlayerPrefs.GetFloat("musicSettings");
+            if (MusicSlider.value == MusicSlider.minValue)
+            {
+                MusikParent.SetActive(false);
+            }
             //Debug.Log("Loaded a Sound Value of:" + SoundSlider.value);
             musicMixer.SetFloat("volume", MusicSlider.value);
         }
@@ -114,7 +123,14 @@ public class SettingsMenu : MonoBehaviour
         PlayerPrefs.SetFloat("volumeSettings", volume);
         Debug.Log("Set volume to:" + volume);
 
-
+        if (volume == SoundSlider.minValue)
+        {
+            AudioListener.volume = 0;
+        }
+        else
+        {
+            AudioListener.volume = 1;
+        }
         audioMixer.SetFloat("volume", volume);
     }
 
@@ -126,7 +142,14 @@ public class SettingsMenu : MonoBehaviour
         PlayerPrefs.SetFloat("musicSettings", volume);
         Debug.Log("Set music to:" + volume);
 
-
+        if (volume == MusicSlider.minValue)
+        {
+            MusikParent.SetActive(false);
+        }
+        else
+        {
+            MusikParent.SetActive(true);
+        }
         musicMixer.SetFloat("volume", volume);
     }
 
