@@ -1,8 +1,25 @@
-ReadMe Credits
+Credits
+
+Origami Lovers - a game by Lone Flower Games
+
+Felix Mundschenk - Programming
+Jan Suchanek - Programming
+Paula Shrayber - 3D/2D Art, Sounds
+Susanne Bataloff - 3D/2D Art, VFX
+Nils Ostrowski - Community/Social Media Manager
+Matthias Riemensperger - Animation
+
+
+________________________________________________________
+
+
+
+Asset Credits
 
 
 
 Textures:
+
 Cardboard Texture: by qubodup, https://opengameart.org/content/tiling-cardboard-texture/n 
 Recycling Logo:https://pixabay.com/de/vectors/recycling-symbol-logo-grün-öko-304974/?download/n
 Barcode :https://pixabay.com/de/vectors/barcode-laser-code-schwarz-306926/ 
