@@ -93,20 +93,24 @@ public class Level_Manager : MonoBehaviour
         //Timer
         for (int i = 0; i < levelIsUnlocked; i++)
         {
-            timer[i] = PlayerPrefs.GetFloat("timer" + i, 0);
-
-            int minutes = (int)timer[i] / 60;
-            int seconds = (int)timer[i] - 60 * minutes;
-            int milliseconds = (int)(1000 * (timer[i] - minutes * 60 - seconds));
-
-            if (i < numberOfLevels)
+            if (PlayerPrefs.GetInt("HardcoreMode", 0) == 0)
             {
-                // show cur time in play window:
-                TimeCounters[i].text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
-                
-                // show cur time in highscore window:
-                HS_TimeCounters[i].text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds); // to display current stats in Highscore (HS) interface of start screen
+                timer[i] = PlayerPrefs.GetFloat("timer" + i, 0);
+
+                int minutes = (int)timer[i] / 60;
+                int seconds = (int)timer[i] - 60 * minutes;
+                int milliseconds = (int)(1000 * (timer[i] - minutes * 60 - seconds));
+
+                if (i < numberOfLevels)
+                {
+                    // show cur time in play window:
+                    TimeCounters[i].text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
+
+                    // show cur time in highscore window:
+                    HS_TimeCounters[i].text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds); // to display current stats in Highscore (HS) interface of start screen
+                }
             }
+            
         }
 
         //Death
@@ -153,6 +157,9 @@ public class Level_Manager : MonoBehaviour
 
     public void ResetHardcore()
     {
+        PlayerPrefs.SetInt("CollectedCrane", 0);
+        PlayerPrefs.SetInt("CollectedCapricorn", 0);
+
         //PlayerPrefs.SetInt("levelIsUnlocked", 1); // this enables continue button!
         PlayerPrefs.SetInt("_boatPosition", 0);
         PlayerPrefs.SetInt("HardcoreCrowns" + 0, 0);
@@ -179,6 +186,8 @@ public class Level_Manager : MonoBehaviour
             //highscore.SafeLastStats();
         }
 
+        PlayerPrefs.SetInt("CollectedCrane", 0);
+        PlayerPrefs.SetInt("CollectedCapricorn", 0);
         PlayerPrefs.SetInt("levelIsUnlocked", 1); // this enables continue button!
 
         // tell the boat that it hasn't reached the end of its travel yet (even if it has),

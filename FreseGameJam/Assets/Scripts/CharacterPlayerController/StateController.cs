@@ -48,6 +48,9 @@ public class StateController : MonoBehaviour
     [SerializeField] GameObject lamaVisuell;
     [SerializeField] GameObject jesusVisuell;
 
+    [SerializeField] GameObject craneCollactable;
+    [SerializeField] GameObject capricornCollactable;
+
 
     [SerializeField] AudioSource PickUpCrown_Sound;
     [SerializeField] AudioSource PickUpNewForm_Sound;
@@ -60,6 +63,14 @@ public class StateController : MonoBehaviour
     {
         playerInput = new PlayerInput();
         input = GetComponent<InputHandler>();
+        if(PlayerPrefs.GetInt("CollectedCrane") == 1)
+        {
+            craneCollactable.SetActive(false);
+        }
+        if (PlayerPrefs.GetInt("CollectedCapricorn") == 1)
+        {
+            capricornCollactable.SetActive(false);
+        }
     }
 
     /// <summary>
@@ -92,7 +103,9 @@ public class StateController : MonoBehaviour
                 PickUpNewForm_Sound.Play();
                 Destroy(other.gameObject, .3f); //please let this be at 0.3!!!! 
                 PlayerPrefs.SetInt("State" + 0, 1);
-            }else
+                PlayerPrefs.SetInt("CollectedCrane", 1);
+            }
+            else
             {
                 Debug.Log("HARDCORE-Crane");
                 availableCrane = true;
@@ -120,8 +133,9 @@ public class StateController : MonoBehaviour
                 PickUpNewForm_Sound.Play();
                 Destroy(other.gameObject, .3f); //please let this be at 0.3!!!! 
                 PlayerPrefs.SetInt("State" + 0, 2);
-
-            }else
+                PlayerPrefs.SetInt("CollectedCapricorn", 1);
+            }
+            else
             {
                 //Debug.Log("hit:Capricorn");
                 availableCapricorn = true;
