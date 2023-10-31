@@ -913,6 +913,14 @@ public class ThirdPersonMovement : MonoBehaviour
     }
     void MoveCharacterToTarget()
     {
+        // in case player is dashing/goat, stop that and return to human!
+        if (stateController.capricorn)
+        {
+            StopDash();
+
+            ChangeShapeToHuman();
+        }
+
         // pull player to the ground:
         velocity.y = -4f;
 
@@ -929,6 +937,24 @@ public class ThirdPersonMovement : MonoBehaviour
 
             // start waving and cheering is called in the RegularGameEnd-script
         }
+    }
+    void ChangeShapeToHuman()
+    {
+        GetComponent<StateController>().isChanging = true;
+        stateController.ball = false;
+        stateController.human = true;
+        stateController.frog = false;
+        stateController.crane = false;
+        stateController.capricorn = false;
+        stateController.lama = false;
+        StartCoroutine(GetComponent<StateController>().changeModell(1));
+    }
+    void StopDash()
+    {
+        action = false;
+        StopCoroutine("CapricornDash");
+        isInCooldown = true; // not resetting this should disallow changing to goat again!
+        //StartCoroutine("Cooldown");
     }
     #endregion
 }
