@@ -3849,7 +3849,6 @@ GameObject:
   - component: {fileID: 7695681256398591139}
   - component: {fileID: 1972805592169002618}
   - component: {fileID: 6488463887401959529}
-  - component: {fileID: 2843933055904308345}
   m_Layer: 5
   m_Name: Dropdown_Resolution
   m_TagString: Untagged
@@ -3964,7 +3963,7 @@ MonoBehaviour:
   m_Placeholder: {fileID: 0}
   m_ItemText: {fileID: 1457647528366981337}
   m_ItemImage: {fileID: 0}
-  m_Value: 0
+  m_Value: 1
   m_Options:
     m_Options:
     - m_Text: 1
@@ -3974,6 +3973,12 @@ MonoBehaviour:
     - m_Text: 3
       m_Image: {fileID: 0}
     - m_Text: Full HD
+      m_Image: {fileID: 0}
+    - m_Text: 5
+      m_Image: {fileID: 0}
+    - m_Text: 6
+      m_Image: {fileID: 0}
+    - m_Text: 7
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4005,56 +4010,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverSoundObject: {fileID: 0}
   selectSoundObject: {fileID: 0}
---- !u!114 &2843933055904308345
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5983046282019700533}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaa8b94bee4229b4cb26bd75bed29fee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dropdownOptions:
-  - m_TableReference:
-      m_TableCollectionName: GUID:400c0deceeb05654d8fc3c8e45399205
-    m_TableEntryReference:
-      m_KeyId: 360250715660288
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  - m_TableReference:
-      m_TableCollectionName: GUID:400c0deceeb05654d8fc3c8e45399205
-    m_TableEntryReference:
-      m_KeyId: 360252259164160
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  - m_TableReference:
-      m_TableCollectionName: GUID:400c0deceeb05654d8fc3c8e45399205
-    m_TableEntryReference:
-      m_KeyId: 360403958751232
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  - m_TableReference:
-      m_TableCollectionName: GUID:400c0deceeb05654d8fc3c8e45399205
-    m_TableEntryReference:
-      m_KeyId: 360403958751232
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  _TemplateTMP: {fileID: 1457647528366981337}
-  _dropDownLabelTMP: {fileID: 6961897455497714700}
-  references:
-    version: 2
-    RefIds: []
 --- !u!1 &6018654384601039294
 GameObject:
   m_ObjectHideFlags: 0
@@ -4745,7 +4700,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1
+  m_text: 2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 98073227dd6b0d44f917262997c01b11, type: 2}
   m_sharedMaterial: {fileID: -5078188820008520824, guid: 98073227dd6b0d44f917262997c01b11, type: 2}

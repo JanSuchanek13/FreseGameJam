@@ -212,15 +212,23 @@ public class SettingsMenu : MonoBehaviour
         PlayerPrefs.SetInt("lightningSettings", enableLightningInt);
     }
 
-    public void SetResolution(int _cachedResolution)
+    public void SetResolution(Int32 option)
     {
         if (!initialized) return;
         if (!Application.isPlaying) return;
+
+        Debug.Log(option);
+
+        int optionInt = (int)option;
+        _cachedResolution = optionInt;
 
         Screen.SetResolution(
             (int)_resolutions[_cachedResolution].x,
             (int)_resolutions[_cachedResolution].y,
             !_cachedWindowed);
+
+        // Debug log to check if the method is called
+        Debug.Log("Changing resolution..."+ _cachedResolution +"   " + _resolutions[_cachedResolution]);
         //PlayerPrefs.SetInt("lightningSettings", enableLightningInt);
     }
 }
