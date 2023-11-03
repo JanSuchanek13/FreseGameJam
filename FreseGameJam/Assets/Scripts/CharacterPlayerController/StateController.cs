@@ -529,7 +529,10 @@ public class StateController : MonoBehaviour
         humanVisuell.SetActive(false);
         frogVisuell.SetActive(false);
         craneVisuell.SetActive(false);
-        capricornVisuell.SetActive(false);
+        if(Random.Range(0, 50) != 1)
+        {
+            capricornVisuell.SetActive(false);
+        }
         lamaVisuell.SetActive(false);
         jesusVisuell.SetActive(false);
 
