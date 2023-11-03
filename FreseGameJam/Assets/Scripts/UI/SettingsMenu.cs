@@ -26,6 +26,21 @@ public class SettingsMenu : MonoBehaviour
     public AudioMixer musicMixer;
     public Toggle lightningToggle;
 
+
+    int _cachedResolution = 4;
+    bool _cachedWindowed = false;
+    Vector2[] _resolutions = new Vector2[]
+    {
+        new Vector2(800, 600),      // 0
+        new Vector2(1280, 720),     // 1
+        new Vector2(1440, 900),     // 2
+        new Vector2(1600, 900),     // 3
+        new Vector2(1920, 1080),    // 4
+        new Vector2(1920, 1200),    // 5
+        new Vector2(2560, 1080),    // 6
+        new Vector2(2560, 1440)     // 7
+    };
+
     private void Start()
     {
         if (PlayerPrefs.HasKey("mouseSensitivitySettings"))
@@ -195,5 +210,17 @@ public class SettingsMenu : MonoBehaviour
 
         int enableLightningInt = enableLightning ? 1 : 0;
         PlayerPrefs.SetInt("lightningSettings", enableLightningInt);
+    }
+
+    public void SetResolution(int _cachedResolution)
+    {
+        if (!initialized) return;
+        if (!Application.isPlaying) return;
+
+        Screen.SetResolution(
+            (int)_resolutions[_cachedResolution].x,
+            (int)_resolutions[_cachedResolution].y,
+            !_cachedWindowed);
+        //PlayerPrefs.SetInt("lightningSettings", enableLightningInt);
     }
 }
