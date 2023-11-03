@@ -38,7 +38,8 @@ public class SettingsMenu : MonoBehaviour
         new Vector2(1920, 1080),    // 4
         new Vector2(1920, 1200),    // 5
         new Vector2(2560, 1080),    // 6
-        new Vector2(2560, 1440)     // 7
+        new Vector2(2560, 1440),    // 7
+        new Vector2(3840, 2160)     // 8
     };
 
     private void Start()
