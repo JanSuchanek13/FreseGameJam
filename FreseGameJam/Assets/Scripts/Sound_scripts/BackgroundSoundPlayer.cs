@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class BackgroundSoundPlayer : MonoBehaviour
 {
@@ -19,10 +20,17 @@ public class BackgroundSoundPlayer : MonoBehaviour
     [SerializeField] AudioSource[] _arrayOfHardcoreMusic; // if a song is put in here, that will be the first song played on load
     [SerializeField] AudioSource[] _interruptingMusicSounds;
 
+    [Space(10)]
+    [SerializeField] bool _bandSignedContract = false;
+    [SerializeField] GameObject _songTitleUI;
+    [SerializeField] TextMeshProUGUI _songTitleTextWindow;
+    [SerializeField] float _showSongTitleThisLong = 5.0f;
+
     private AudioSource _randomTrack;
     private AudioSource _nextRandomTrack;
     private AudioSource _activeTrack; // this is for "FocusPlayerViewOnObject"-Script to pause the background music on demand;
 
+    [Space(10)]
     [SerializeField] float _lowerVolumeTo = 0.5f;
     float _timePausedAmt = 0.0f;
     bool _timePaused;
@@ -93,7 +101,9 @@ public class BackgroundSoundPlayer : MonoBehaviour
             }
         }else if (_thisIsHardcore)
         {
-            _randomTrack = _arrayOfHardcoreMusic[Random.Range(0, _arrayOfHardcoreMusic.Length)];
+            int trackID = Random.Range(0, _arrayOfHardcoreMusic.Length);
+            _randomTrack = _arrayOfHardcoreMusic[trackID];
+            //_randomTrack = _arrayOfHardcoreMusic[Random.Range(0, _arrayOfHardcoreMusic.Length)];
 
             // make sure there is more than one track in the array:
             // --> otherwise the next track would always be the same as the previous one!!!
@@ -108,6 +118,13 @@ public class BackgroundSoundPlayer : MonoBehaviour
                     _nextRandomTrack = _randomTrack;
                     _activeTrack = _randomTrack;
                     _activeTrack.Play();
+
+                    // only call this logic if the band signed the contract!
+                    if(_bandSignedContract && (trackID == 0 || trackID == 1 || trackID == 2))
+                    {
+                        StartCoroutine(DisplaySongTitle(trackID));
+                    }
+
                     StartCoroutine(PlayNextTrack());
                 }
             }else // in case there is only one track, just play that on repeat:
@@ -203,6 +220,30 @@ public class BackgroundSoundPlayer : MonoBehaviour
         //WindDownMusic();
     }
 
+    // Susi: Adjust the titles & Band names here as needed. Make sure the band signed the contract before placing their music in here!
+    IEnumerator DisplaySongTitle(int trackID)
+    {
+        _songTitleUI.SetActive(true);
+
+        switch (trackID)
+        {
+            case 0: _songTitleTextWindow.text = "XXX";
+                break;
+
+            case 1:
+                _songTitleTextWindow.text = "YYY";
+                break;
+
+            case 2:
+                _songTitleTextWindow.text = "ZZZ";
+                break;
+        }
+        Debug.Log("Hardcore AudioSource nr: " + trackID + " is being played"); // this will print in the console if the correct ID is being played
+                                                                               // 
+        yield return new WaitForSeconds(_showSongTitleThisLong);
+        
+        _songTitleUI.SetActive(false);
+    }
     /*
     void WindDownMusic()
     {
