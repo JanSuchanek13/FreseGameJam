@@ -227,15 +227,15 @@ public class BackgroundSoundPlayer : MonoBehaviour
 
         switch (trackID)
         {
-            case 0: _songTitleTextWindow.text = "XXX";
+            case 0: _songTitleTextWindow.text = "Brainwashed (Instrumental) - Absinth";
                 break;
 
             case 1:
-                _songTitleTextWindow.text = "YYY";
+                _songTitleTextWindow.text = "It's Not You (Instrumental) - Absinth";
                 break;
 
             case 2:
-                _songTitleTextWindow.text = "ZZZ";
+                _songTitleTextWindow.text = "Shoot Em Dead (Instrumental) - Absinth";
                 break;
         }
         Debug.Log("Hardcore AudioSource nr: " + trackID + " is being played"); // this will print in the console if the correct ID is being played
