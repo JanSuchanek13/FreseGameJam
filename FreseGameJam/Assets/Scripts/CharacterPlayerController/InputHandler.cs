@@ -161,6 +161,9 @@ public class InputHandler : MonoBehaviour
 
     private void Update()
     {
+        //StateSwitching
+        gameObject.GetComponent<StateController>().ReadInput();
+
         if ((PlayerPrefs.GetInt("controlsSettings") == 0 && controlType != ControlType.Keyboard) || (PlayerPrefs.GetInt("controlsSettings") >= 1 && controlType != ControlType.Controller))
         {
             OnDisable();

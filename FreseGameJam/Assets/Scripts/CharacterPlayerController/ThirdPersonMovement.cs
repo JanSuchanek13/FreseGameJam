@@ -21,6 +21,8 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public float speed = 6f;
     public float humanSpeed = 6f;
+    public float humanPush = 0.5f;
+    public float humanPushRadius = 0.5f;
 
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
@@ -319,6 +321,17 @@ public class ThirdPersonMovement : MonoBehaviour
         // part of Felix new logic to force-move player to target pos (see region at class end)
         if (isMovingToTarget) 
         {
+            //Move Rigidbody Obj
+            // create a small bubble-explosion at impact point:
+            Collider[] allObjects = Physics.OverlapSphere(transform.position, 1);
+            foreach (Collider j in allObjects)
+            {
+                Rigidbody rig = j.GetComponent<Rigidbody>();
+                if (rig != null && rig.gameObject != this.gameObject)
+                {
+                    rig.AddExplosionForce(humanPush, transform.position, humanPushRadius, 1f, ForceMode.Force);
+                }
+            }
             MoveCharacterToTarget();
             Debug.Log("MOVE");
             return; // To prevent other updates.
@@ -479,7 +492,7 @@ public class ThirdPersonMovement : MonoBehaviour
                 Rigidbody rig = j.GetComponent<Rigidbody>();
                 if (rig != null && rig.gameObject != this.gameObject)
                 {
-                    rig.AddExplosionForce(0.5f, transform.position, 0.5f, 1f, ForceMode.Force);
+                    rig.AddExplosionForce(humanPush, transform.position, humanPushRadius, 1f, ForceMode.Force);
                 }
             }
 
@@ -892,6 +905,10 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public void MoveToTarget(Vector3 targetPos)
     {
+        //set Human Push for Obj
+        humanPush = 100000;
+        humanPushRadius = 15;
+
         // disable player input:
         input.enabled = false;
 

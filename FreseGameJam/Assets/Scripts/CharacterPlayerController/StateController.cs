@@ -268,7 +268,7 @@ public class StateController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void ReadInput()
     {
         if (isChanging == false)
         {
