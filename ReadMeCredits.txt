@@ -109,6 +109,8 @@ https://samplefocus.com/samples/basic-loud-aggressive-scream
 https://pixabay.com/de/sound-effects/victory-rock-guitar-tapping-104575/
 075584_cardboard-rip-1-86541 from pixabay.com
 eating-an-apple-26976 from pixabay.com
+bamboo-hit-80186 from pixabay.com
+falling-bamboo-83469 from pixabay.com
 
 
 not public domain, needs attribution:
