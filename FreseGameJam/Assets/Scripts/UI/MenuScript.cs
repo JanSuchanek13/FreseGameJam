@@ -16,15 +16,28 @@ public class MenuScript : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        if(PlayerPrefs.GetInt("PlayerPickedInitialLanguage", 0) == 1 && PlayerPrefs.GetInt("GameLaunched", 0) == 0)
+        if (PlayerPrefs.GetInt("PlayerPickedInitialLanguage", 0) == 1)
         {
-            PlayerPrefs.SetInt("GameLaunched", 1);
-            CallEpilepsyWarning();
-        }else
-        {
-            // start background music after closing warning:
-            FindAnyObjectByType<BackgroundSoundPlayer>().PlayTrack();
-        }
+            if (PlayerPrefs.GetInt("GameLaunched", 0) == 0)
+            {
+                PlayerPrefs.SetInt("GameLaunched", 1);
+                CallEpilepsyWarning();
+            }else
+            {
+                // start background music after closing warning:
+                FindAnyObjectByType<BackgroundSoundPlayer>().PlayTrack();
+            }
+        } 
+    }
+
+    /// <summary>
+    /// Test first gamelaunch. (Use Button to call)
+    /// </summary>
+    public void TestFirstGameLaunch()
+    {
+        PlayerPrefs.SetInt("GameLaunched", 0);
+        PlayerPrefs.SetInt("PlayerPickedInitialLanguage", 0);
+        Debug.Log("Reset to simulating first launch of game");
     }
 
     /// <summary>
